@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Login</title>
+</head>
+
+<body>
+
+<h2>Login</h2>
+
+<input type="text" id="user" placeholder="Login">
+<input type="password" id="pass" placeholder="Parol">
+
+<button onclick="doLogin()">Kirish</button>
+
+<script src="auth.js"></script>
+
+<script>
+function doLogin(){
+    let u = document.getElementById("user").value;
+    let p = document.getElementById("pass").value;
+    login(u,p);
+}
+</script>
+
+</body>
+</html>

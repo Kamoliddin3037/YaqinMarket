@@ -384,10 +384,10 @@ body::after{
 <script>
 // ═══ DEVICE ═══
 function getDeviceId(){
-  var did=localStorage.getItem('mahalla_device_id');
+  var did=localStorage.getItem('sfu_device_id');
   if(!did){
     did='DEV_'+Date.now()+'_'+Math.random().toString(36).slice(2,8).toUpperCase();
-    localStorage.setItem('mahalla_device_id',did);
+    localStorage.setItem('sfu_device_id',did);
   }
   return did;
 }
@@ -476,7 +476,7 @@ function customerLogin(){
   DB.setSession({role:'customer',userId:user.id,name:name,phone:phone,device:dInfo});
 
   if(document.getElementById('rememberCustomer').checked){
-    localStorage.setItem('mahalla_remembered_customer',JSON.stringify({
+    localStorage.setItem('sfu_remembered_customer',JSON.stringify({
       userId:user.id,name:name,phone:phone,device:dInfo,savedAt:new Date().toISOString()
     }));
   }
@@ -507,17 +507,17 @@ async function sellerLogin(){
       return;
     }
     // Token saqlash
-    localStorage.setItem('mahalla_v1_token', data.token);
+    localStorage.setItem('sfu_v1_token', data.token);
     var sessionData = {
       role:'seller', name:data.name, employeeId:data.employeeId,
       permissions:data.permissions||['pos']
     };
-    localStorage.setItem('mahalla_v1_session', JSON.stringify(sessionData));
+    localStorage.setItem('sfu_v1_session', JSON.stringify(sessionData));
     DB._cache['session'] = sessionData;
     if(document.getElementById('rememberSeller').checked){
-      localStorage.setItem('mahalla_remembered_seller', JSON.stringify({login:login}));
+      localStorage.setItem('sfu_remembered_seller', JSON.stringify({login:login}));
     }
-    localStorage.setItem('mahalla_fs_locked','1');
+    localStorage.setItem('sfu_fs_locked','1');
     showToast('Xush kelibsiz, '+data.name+'!','success');
     document.documentElement.requestFullscreen().catch(function(){});
     setTimeout(function(){ window.location.href='pos.html'; }, 500);
@@ -544,10 +544,10 @@ async function adminLogin(){
       showToast(data.error||'Login yoki parol xato! ❌','error');
       return;
     }
-    localStorage.setItem('mahalla_v1_token', data.token);
+    localStorage.setItem('sfu_v1_token', data.token);
     var sessionData={role:'admin',name:'Admin'};
-    localStorage.setItem('mahalla_v1_session', JSON.stringify(sessionData));
-    localStorage.setItem('mahalla_fs_locked','1');
+    localStorage.setItem('sfu_v1_session', JSON.stringify(sessionData));
+    localStorage.setItem('sfu_fs_locked','1');
     DB._cache['session']=sessionData;
     showToast('Admin panelga xush kelibsiz! ✅','success');
     document.documentElement.requestFullscreen().catch(function(){});
@@ -577,7 +577,7 @@ function showToast(msg,type){
 
 // ═══ AUTO LOGIN ═══
 (function(){
-  var fsLocked = localStorage.getItem('mahalla_fs_locked') === '1';
+  var fsLocked = localStorage.getItem('sfu_fs_locked') === '1';
   var s = DB.getSession();
   // Faqat fs_locked=1 bo'lsagina avtomatik kirish
   if(fsLocked && s && s.role === 'admin') { window.location.href='dashboard.html'; return; }

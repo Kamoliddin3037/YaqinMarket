@@ -127,7 +127,7 @@ function _defaultProducts() {
 // DB — server + localStorage fallback (offline uchun)
 // ══════════════════════════════════════════════════════════════
 const DB = {
-  VERSION: 'mahalla_v1',
+  VERSION: 'sfu_v1',
   _BASE: 'http://localhost:8080',
 
   // ── Sync GET: serverdan o'qish ──────────────────────────────
@@ -366,7 +366,7 @@ function _isAdminOrSeller() {
 // Fullscreen qulfini yoqish (login dan keyin chaqiriladi)
 function lockFullscreen() {
   _fsLocked = true;
-  localStorage.setItem('mahalla_fs_locked', '1');
+  localStorage.setItem('sfu_fs_locked', '1');
   _enterFullscreen();
 }
 
@@ -374,12 +374,12 @@ function lockFullscreen() {
 function unlockFullscreen() {
   _fsLocked = false;
   window._logoutInProgress = true;
-  localStorage.removeItem('mahalla_fs_locked');
-  localStorage.removeItem('mahalla_v1_session');
-  localStorage.removeItem('mahalla_v1_token');
+  localStorage.removeItem('sfu_fs_locked');
+  localStorage.removeItem('sfu_v1_session');
+  localStorage.removeItem('sfu_v1_token');
   DB._cache = {};
   // Serverga logout xabari
-  var token = localStorage.getItem('mahalla_v1_token');
+  var token = localStorage.getItem('sfu_v1_token');
   if (token) {
     fetch('/auth/logout', {method:'POST', headers:{'Authorization':'Bearer '+token}}).catch(function(){});
   }
@@ -391,7 +391,7 @@ function unlockFullscreen() {
 
 // Sahifa yuklanganda: agar qulf yoqiq bo'lsa — fullscreenda bo'l
 function autoFullscreen() {
-  var locked = localStorage.getItem('mahalla_fs_locked') === '1';
+  var locked = localStorage.getItem('sfu_fs_locked') === '1';
   if (locked) _fsLocked = true;
 }
 
@@ -428,7 +428,7 @@ document.addEventListener('keydown', function(e) {
   // Faqat pos.html va dashboard.html da ishlaydi
   if (!['pos.html','dashboard.html','warehouse.html','orders.html','income.html','users.html'].includes(page)) return;
 
-  var PIN_KEY     = 'mahalla_v1_pin';
+  var PIN_KEY     = 'sfu_v1_pin';
   var PIN_TIMEOUT = 5 * 60 * 1000; // 5 daqiqa
   var _pinTimer   = null;
   var _pinActive  = false;

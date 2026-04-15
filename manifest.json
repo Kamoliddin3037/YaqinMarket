@@ -1,7 +1,7 @@
 {
   "name": "SellFlowUZ",
   "short_name": "M-Dukon",
-  "description": "Mahalla do'koni savdo tizimi",
+  "description": "SellFlowUZ savdo tizimi",
   "start_url": "./login.html",
   "display": "standalone",
   "background_color": "#03060d",

@@ -1166,7 +1166,7 @@ function init(){
         const res=JSON.parse(req.responseText);
         if(res.ok && Array.isArray(res.data) && res.data.length){
           dbProducts=res.data;
-          try{localStorage.setItem('mahalla_v1_products',JSON.stringify(dbProducts));}catch(e){}
+          try{localStorage.setItem('sfu_v1_products',JSON.stringify(dbProducts));}catch(e){}
         }
       }
     }catch(e){}
@@ -1880,7 +1880,7 @@ document.addEventListener('keydown',e=>{if(e.key==='F11'){e.preventDefault();tbF
 // ═══ LOGOUT ════════════════════════════════════
 function posLogout(){
   window._logoutInProgress=true;
-  DB.clearSession();localStorage.removeItem('mahalla_fs_locked');
+  DB.clearSession();localStorage.removeItem('sfu_fs_locked');
   const go=()=>{window._logoutInProgress=false;window.location.href='login.html';};
   if(document.fullscreenElement)document.exitFullscreen().then(go).catch(go);else go();
 }

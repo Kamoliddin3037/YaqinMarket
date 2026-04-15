@@ -1325,7 +1325,7 @@ var CATEGORIES = [
 function init(){
   // Session tekshirish
   var remembered = null;
-  try{ remembered = JSON.parse(localStorage.getItem('mahalla_remembered_customer')); }catch(e){}
+  try{ remembered = JSON.parse(localStorage.getItem('sfu_remembered_customer')); }catch(e){}
 
   var inIframe = window !== window.parent;
   var s = DB.getSession();
@@ -1359,7 +1359,7 @@ function init(){
       var xres=JSON.parse(xr.responseText);
       if(xres.ok && Array.isArray(xres.data) && xres.data.length){
         products=xres.data;
-        try{localStorage.setItem('mahalla_v1_products',JSON.stringify(products));}catch(e){}
+        try{localStorage.setItem('sfu_v1_products',JSON.stringify(products));}catch(e){}
       }
     }
   }catch(e){}
@@ -1444,8 +1444,8 @@ function showLoginModal(){
   var hdr=document.createElement('div');
   hdr.style.cssText='background:linear-gradient(135deg,#16a34a,#22c55e);padding:24px;text-align:center;';
   hdr.innerHTML='<div style="font-size:48px;margin-bottom:8px;">&#127978;</div>'+
-    '<div style="font-size:18px;font-weight:900;color:#fff;">SELLFLOWUZ</div>'+
-    '<div style="font-size:12px;color:rgba(255,255,255,.85);margin-top:4px;">Buyurtma berish uchun kiring</div>';
+    '<div style="font-size:18px;font-weight:900;color:#fff;">RO\'YXATDAN O\'TISH</div>'+
+    '<div style="font-size:12px;color:rgba(255,255,255,.85);margin-top:4px;">Buyurtma berish uchun ma\'lumotlaringizni kiriting</div>';
 
   // Body
   var body=document.createElement('div');
@@ -1498,26 +1498,44 @@ function showLoginModal(){
   // Ism
   var lbl2=document.createElement('div');
   lbl2.style.cssText='font-size:11px;font-weight:800;color:#555;margin-bottom:6px;letter-spacing:.5px;';
-  lbl2.innerHTML='ISM <span style="color:#999;font-weight:600;">(ixtiyoriy)</span>';
+  lbl2.innerHTML='ISM <span style="color:#e53e3e;">*</span>';
   body.appendChild(lbl2);
 
   var nameInp=document.createElement('input');
   nameInp.id='loginName';
   nameInp.type='text';
-  nameInp.placeholder='Ism familiya';
-  nameInp.style.cssText='width:100%;padding:13px;border:2px solid #e0e0e0;border-radius:12px;font-size:15px;font-family:Nunito,sans-serif;color:#111;outline:none;box-sizing:border-box;margin-bottom:20px;';
+  nameInp.placeholder='Ismingiz';
+  nameInp.style.cssText='width:100%;padding:13px;border:2px solid #e0e0e0;border-radius:12px;font-size:15px;font-family:Nunito,sans-serif;color:#111;outline:none;box-sizing:border-box;margin-bottom:14px;';
   nameInp.onfocus=function(){this.style.borderColor='#22c55e';};
   nameInp.onblur=function(){this.style.borderColor='#e0e0e0';};
-  // Enter tugmasi
-  nameInp.onkeydown=function(e){if(e.key==='Enter')doLogin();};
-  phoneInp.onkeydown=function(e){if(e.key==='Enter')doLogin();};
+  nameInp.oninput=function(){msg.style.display='none';};
   body.appendChild(nameInp);
+
+  // Familiya
+  var lbl3=document.createElement('div');
+  lbl3.style.cssText='font-size:11px;font-weight:800;color:#555;margin-bottom:6px;letter-spacing:.5px;';
+  lbl3.innerHTML='FAMILIYA <span style="color:#e53e3e;">*</span>';
+  body.appendChild(lbl3);
+
+  var lastNameInp=document.createElement('input');
+  lastNameInp.id='loginLastName';
+  lastNameInp.type='text';
+  lastNameInp.placeholder='Familiyangiz';
+  lastNameInp.style.cssText='width:100%;padding:13px;border:2px solid #e0e0e0;border-radius:12px;font-size:15px;font-family:Nunito,sans-serif;color:#111;outline:none;box-sizing:border-box;margin-bottom:20px;';
+  lastNameInp.onfocus=function(){this.style.borderColor='#22c55e';};
+  lastNameInp.onblur=function(){this.style.borderColor='#e0e0e0';};
+  lastNameInp.oninput=function(){msg.style.display='none';};
+  // Enter tugmasi
+  lastNameInp.onkeydown=function(e){if(e.key==='Enter')doLogin();};
+  nameInp.onkeydown=function(e){if(e.key==='Enter') lastNameInp.focus();};
+  phoneInp.onkeydown=function(e){if(e.key==='Enter') nameInp.focus();};
+  body.appendChild(lastNameInp);
 
   // Kirish tugmasi
   var loginBtn=document.createElement('button');
   loginBtn.id='loginBtn';
   loginBtn.style.cssText='width:100%;padding:15px;background:linear-gradient(135deg,#16a34a,#22c55e);border:none;border-radius:12px;color:#fff;font-size:16px;font-weight:900;cursor:pointer;font-family:Nunito,sans-serif;box-shadow:0 4px 14px rgba(22,163,74,.3);';
-  loginBtn.textContent='Kirish';
+  loginBtn.textContent='Ro\'yxatdan o\'tish / Kirish';
   loginBtn.onclick=doLogin;
   body.appendChild(loginBtn);
 
@@ -1556,14 +1574,30 @@ function showLoginMsg(text,type){
 
 function doLogin(){
   var phoneDigits=(document.getElementById('loginPhone')||{value:''}).value.replace(/\D/g,'');
-  var nameInput=(document.getElementById('loginName')||{value:''}).value.trim();
+  var firstNameInput=(document.getElementById('loginName')||{value:''}).value.trim();
+  var lastNameInput=(document.getElementById('loginLastName')||{value:''}).value.trim();
 
-  // Validatsiya
+  // Validatsiya — telefon
   if(phoneDigits.length!==9){
     showLoginMsg('9 ta raqam kiriting! Masalan: 90 123 45 67','error');
+    document.getElementById('loginPhone').focus();
     return;
   }
+  // Validatsiya — ism
+  if(!firstNameInput){
+    showLoginMsg('Ismingizni kiriting!','error');
+    document.getElementById('loginName').focus();
+    return;
+  }
+  // Validatsiya — familiya
+  if(!lastNameInput){
+    showLoginMsg('Familiyangizni kiriting!','error');
+    document.getElementById('loginLastName').focus();
+    return;
+  }
+
   var phoneNorm='+998'+phoneDigits;
+  var fullName=firstNameInput+' '+lastNameInput;
 
   // Loading
   var btn=document.getElementById('loginBtn');
@@ -1579,37 +1613,30 @@ function doLogin(){
   var uid, s, finalName;
 
   if(existing){
-    // Mavjud foydalanuvchi topildi
-    finalName = nameInput || existing.name || 'Mijoz';
+    // Mavjud foydalanuvchi — xush kelibsiz (ism yangilash yo'q, faqat kirish)
+    finalName = existing.name || fullName;
     uid = existing.userId || ('u_'+existing.id);
-
-    // Ism yangilash (kiritilgan bo'lsa)
-    if(nameInput && nameInput !== existing.name){
-      existing.name=nameInput;
-      existing.phone=phoneNorm;
-      DB.saveUsers(allUsers);
-    }
-
     s={role:'customer',userId:uid,name:finalName,phone:phoneNorm,device:uid};
     showLoginMsg('Xush kelibsiz, '+finalName+'!','ok');
 
   } else {
-    // Yangi foydalanuvchi
-    finalName = nameInput || 'Mijoz';
+    // Yangi foydalanuvchi — ro'yxatdan o'tkazish
+    finalName = fullName;
     uid='u_'+Date.now();
     allUsers.push({
       id:Date.now(), userId:uid,
-      name:finalName, phone:phoneNorm,
+      name:finalName, firstName:firstNameInput, lastName:lastNameInput,
+      phone:phoneNorm,
       role:'customer', debt:0, debtHistory:[],
       registeredAt:new Date().toISOString()
     });
     DB.saveUsers(allUsers);
     s={role:'customer',userId:uid,name:finalName,phone:phoneNorm,device:uid};
-    showLoginMsg('Tabriklaymiz! Royxatdan otdingiz.','ok');
+    showLoginMsg('Tabriklaymiz! Ro\'yxatdan o\'tdingiz.','ok');
   }
 
   if(window===window.parent) DB.setSession(s);
-  localStorage.setItem('mahalla_remembered_customer',JSON.stringify({
+  localStorage.setItem('sfu_remembered_customer',JSON.stringify({
     userId:uid, name:finalName, phone:phoneNorm, device:uid
   }));
 
@@ -2529,7 +2556,7 @@ function pollOrderStatuses(){
         if(idx>=0) all[idx]=fresh; else all.unshift(fresh);
       });
       DB._cache['orders'] = all;
-      localStorage.setItem('mahalla_v1_orders', JSON.stringify(all));
+      localStorage.setItem('sfu_v1_orders', JSON.stringify(all));
     }catch(e){}
 
     myOrders.forEach(function(o){
@@ -2673,9 +2700,9 @@ function saveProfile(){
   session.phone=phone;
   if(window===window.parent) DB.setSession(session);
   try{
-    var rem=JSON.parse(localStorage.getItem('mahalla_remembered_customer')||'{}');
+    var rem=JSON.parse(localStorage.getItem('sfu_remembered_customer')||'{}');
     rem.name=name;rem.phone=phone;
-    localStorage.setItem('mahalla_remembered_customer',JSON.stringify(rem));
+    localStorage.setItem('sfu_remembered_customer',JSON.stringify(rem));
   }catch(e){}
   document.getElementById('uName').textContent=name;
   document.getElementById('uPhone').textContent=phone;
@@ -2694,7 +2721,7 @@ function openContact(){
 
 function logout(){
   DB.clearSession();
-  localStorage.removeItem('mahalla_remembered_customer');
+  localStorage.removeItem('sfu_remembered_customer');
   window.location.href='login.html';
 }
 

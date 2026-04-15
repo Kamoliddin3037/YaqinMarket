@@ -36,7 +36,7 @@ logging.basicConfig(
         logging.StreamHandler(sys.stdout)
     ]
 )
-log = logging.getLogger('mahalla')
+log = logging.getLogger('sellflowuz')
 
 # ── TOKEN STORAGE (xotira, server qayta ishlaganda tozalanadi) ──
 _tokens = {}   # {token: {userId, role, name, expires}}

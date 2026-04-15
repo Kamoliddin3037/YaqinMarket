@@ -429,7 +429,7 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
 <aside class="sidebar" id="sidebar">
   <div class="sidebar-logo">
     <div class="logo-icon">🏪</div>
-    <div class="logo-text">MAHALLA<br>DUKONI</div>
+    <div class="logo-text">SellFlowUZ</div>
   </div>
   <nav class="sidebar-nav">
     <div class="nav-item active" data-tab="calendar" onclick="switchTab('calendar',this)"><span class="nav-icon">📅</span>Kalendar</div>
@@ -760,14 +760,14 @@ function init(){
   const s=DB.getSession();
   if(!s||(s.role!=='admin'&&s.role!=='seller')){window.location.href='login.html';return;}
   // Server tokenni tekshir (restart bo'lsa login ga qaytarish uchun)
-  const token=localStorage.getItem('mahalla_v1_token')||'';
+  const token=localStorage.getItem('sfu_v1_token')||'';
   if(token){
     fetch('/auth/verify',{headers:{'Authorization':'Bearer '+token}})
       .then(function(r){return r.json();})
       .then(function(d){
         if(!d.ok){
           DB.clearSession();
-          localStorage.removeItem('mahalla_v1_token');
+          localStorage.removeItem('sfu_v1_token');
           window.location.href='login.html';
         }
       })
@@ -1142,7 +1142,7 @@ async function _bnrUpload(file,idx,zone){
   zone.innerHTML='<div style="color:var(--cyan);font-weight:700;">⏳ Yuklanmoqda...</div>';
   showToast('Yuklanmoqda...','info');
   try{
-    var res=await fetch('/upload',{method:'POST',body:fd,headers:{'Authorization':'Bearer '+(localStorage.getItem('mahalla_v1_token')||'')}});
+    var res=await fetch('/upload',{method:'POST',body:fd,headers:{'Authorization':'Bearer '+(localStorage.getItem('sfu_v1_token')||'')}});
     var data=await res.json();
     if(data.ok){ _bnrs[idx].src=data.url; showToast('Yuklandi: '+data.url,'success'); _bnrRender(); }
     else{ showToast('Xato: '+(data.error||'?'),'error'); _bnrRender(); }
@@ -1152,7 +1152,7 @@ async function _bnrUpload(file,idx,zone){
 function _bnrSave(){
   fetch('/api/banners',{
     method:'POST',
-    headers:{'Content-Type':'application/json','Authorization':'Bearer '+(localStorage.getItem('mahalla_v1_token')||'')},
+    headers:{'Content-Type':'application/json','Authorization':'Bearer '+(localStorage.getItem('sfu_v1_token')||'')},
     body:JSON.stringify(_bnrs)
   }).then(function(r){return r.json();})
   .then(function(d){
@@ -1291,11 +1291,11 @@ var calNoteType = 'note';
 var calActiveDate = null;
 
 function getNotes(){
-  try{ return JSON.parse(localStorage.getItem('mahalla_v1_cal_notes')||'{}'); }
+  try{ return JSON.parse(localStorage.getItem('sfu_v1_cal_notes')||'{}'); }
   catch(e){ return {}; }
 }
 function saveNotes(notes){
-  localStorage.setItem('mahalla_v1_cal_notes', JSON.stringify(notes));
+  localStorage.setItem('sfu_v1_cal_notes', JSON.stringify(notes));
 }
 
 function renderCalendar(){
@@ -2201,11 +2201,11 @@ function showToast(msg,type=''){const t=document.getElementById('toast');t.textC
 /* LOGOUT */
 function logout(){
   window._logoutInProgress = true;
-  var token = localStorage.getItem('mahalla_v1_token');
+  var token = localStorage.getItem('sfu_v1_token');
   if(token) fetch('/auth/logout',{method:'POST',headers:{'Authorization':'Bearer '+token}}).catch(function(){});
   DB.clearSession();
-  localStorage.removeItem('mahalla_fs_locked');
-  localStorage.removeItem('mahalla_v1_token');
+  localStorage.removeItem('sfu_fs_locked');
+  localStorage.removeItem('sfu_v1_token');
   var go = function(){ window._logoutInProgress=false; window.location.href='login.html'; };
   if(document.fullscreenElement){ document.exitFullscreen().then(go).catch(go); } else { go(); }
 }
@@ -2276,7 +2276,7 @@ function exportCSV(){
   var blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8;'});
   var a=document.createElement('a');
   a.href=URL.createObjectURL(blob);
-  a.download='mahalla_hisobot_'+document.getElementById('rep-from').value+'_'+document.getElementById('rep-to').value+'.csv';
+  a.download='sellflowuz_hisobot_'+document.getElementById('rep-from').value+'_'+document.getElementById('rep-to').value+'.csv';
   a.click();
   showToast('✅ CSV yuklab olindi','success');
 }
@@ -2357,7 +2357,7 @@ function playNewOrderSound(){
 }
 
 function pollNewOrders(){
-  var token = localStorage.getItem('mahalla_v1_token')||'';
+  var token = localStorage.getItem('sfu_v1_token')||'';
   if(!token) return;
   fetch('/api/orders',{headers:{'Authorization':'Bearer '+token}})
   .then(function(r){return r.json();})
@@ -2387,7 +2387,7 @@ function pollNewOrders(){
     fresh.forEach(function(o){ _dashKnownOrders[o.id]=true; });
     orders = fresh;
     DB._cache['orders'] = fresh;
-    try{localStorage.setItem('mahalla_v1_orders',JSON.stringify(fresh));}catch(e){}
+    try{localStorage.setItem('sfu_v1_orders',JSON.stringify(fresh));}catch(e){}
     _dashLastOrderCount = fresh.length;
     // Badge yangilaymiz
     var newCount = fresh.filter(function(o){return o.status==='new';}).length;

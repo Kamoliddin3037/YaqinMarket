@@ -413,7 +413,7 @@ async function uploadFile(file, idx, zone){
   toast('Yuklanmoqda...', 'ok');
 
   try{
-    var res = await fetch('/upload',{method:'POST',body:fd,headers:{'Authorization':'Bearer '+(localStorage.getItem('mahalla_v1_token')||'')}});
+    var res = await fetch('/upload',{method:'POST',body:fd,headers:{'Authorization':'Bearer '+(localStorage.getItem('sfu_v1_token')||'')}});
     var data = await res.json();
     if(data.ok){
       _banners[idx].src = data.url;
@@ -433,7 +433,7 @@ async function uploadFile(file, idx, zone){
 function saveBanners(){
   fetch('/api/banners',{
     method:'POST',
-    headers:{'Content-Type':'application/json','Authorization':'Bearer '+(localStorage.getItem('mahalla_v1_token')||'')},
+    headers:{'Content-Type':'application/json','Authorization':'Bearer '+(localStorage.getItem('sfu_v1_token')||'')},
     body: JSON.stringify(_banners)
   })
   .then(function(r){ return r.json(); })

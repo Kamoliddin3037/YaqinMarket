@@ -322,7 +322,7 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
 <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
 <div class="toast" id="toast"></div>
 <aside class="sidebar" id="sidebar">
-  <div class="sidebar-logo"><div class="logo-icon">🏪</div><div class="logo-text">MAHALLA<br>DUKONI</div></div>
+  <div class="sidebar-logo"><div class="logo-icon">🏪</div><div class="logo-text">SellFlowUZ</div></div>
   <nav class="sidebar-nav">
     <div class="nav-item " onclick="window.location.href='dashboard.html'"><span class="nav-icon">📅</span>Kalendar</div>
     <div class="nav-item " onclick="window.location.href='orders.html'"><span class="nav-icon">📋</span>Buyurtmalar<span class="badge" id="newOrdersBadge" style="display:none">0</span></div>
@@ -365,7 +365,7 @@ function showToast(msg,type=''){const t=document.getElementById('toast');t.textC
 function logout(){
   window._logoutInProgress = true;
   DB.clearSession();
-  localStorage.removeItem('mahalla_fs_locked');
+  localStorage.removeItem('sfu_fs_locked');
   var go = function(){ window._logoutInProgress=false; window.location.href='login.html'; };
   if(document.fullscreenElement){ document.exitFullscreen().then(go).catch(go); } else { go(); }
 }

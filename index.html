@@ -663,7 +663,7 @@ body::after{content:'';position:fixed;inset:0;background-image:radial-gradient(c
 <header class="header">
   <div class="header-logo">🏪</div>
   <div class="header-info">
-    <div class="header-name">MAHALLA DUKONI</div>
+    <div class="header-name">SellFlowUZ</div>
     <div class="header-sub" id="headerSub">Min: 60 000 so'm</div>
   </div>
   <div class="header-actions">
@@ -988,9 +988,9 @@ body::after{content:'';position:fixed;inset:0;background-image:radial-gradient(c
         <span class="ci-icon">📱</span>
         <div class="ci-text">
           <h4>Telegram</h4>
-          <p>@mahalla_dukoni</p>
+          <p>@sellflowuz</p>
         </div>
-        <button class="ci-action" onclick="window.open('https://t.me/mahalla_dukoni')">Ochish</button>
+        <button class="ci-action" onclick="window.open('https://t.me/sellflowuz')">Ochish</button>
       </div>
       <div class="contact-item">
         <span class="ci-icon">📞</span>
@@ -1066,7 +1066,7 @@ var CATEGORIES = [
 function init(){
   // Session tekshirish
   var remembered = null;
-  try{ remembered = JSON.parse(localStorage.getItem('mahalla_remembered_customer')); }catch(e){}
+  try{ remembered = JSON.parse(localStorage.getItem('sfu_remembered_customer')); }catch(e){}
 
   var s = DB.getSession();
   if(!s || s.role !== 'customer'){
@@ -1144,7 +1144,7 @@ function showLoginModal(){
       '<div class="modal-body">' +
         '<div style="text-align:center;margin-bottom:20px;">' +
           '<div style="font-size:48px;margin-bottom:8px;">🏪</div>' +
-          '<div style="font-family:Orbitron,monospace;font-size:14px;color:var(--cyan);">MAHALLA DUKONI</div>' +
+          '<div style="font-family:Orbitron,monospace;font-size:14px;color:var(--cyan);">SellFlowUZ</div>' +
           '<div style="font-size:12px;color:var(--muted);margin-top:4px;">Online buyurtma tizimi</div>' +
         '</div>' +
         '<div class="form-group"><label class="form-label">Ismingiz</label><input class="form-input" id="loginName" placeholder="Ism familiya"></div>' +
@@ -1202,7 +1202,7 @@ function doLogin(){
 
   DB.setSession(s);
   if((document.getElementById('rememberMe')||{checked:true}).checked){
-    localStorage.setItem('mahalla_remembered_customer', JSON.stringify({userId:uid,name:name,phone:phoneNorm,device:uid}));
+    localStorage.setItem('sfu_remembered_customer', JSON.stringify({userId:uid,name:name,phone:phoneNorm,device:uid}));
   }
   var m = document.getElementById('loginModal');
   if(m) m.remove();
@@ -1569,7 +1569,7 @@ function showReceipt(o){
 
   document.getElementById('receiptContent').innerHTML=
     '<div class="receipt-wrap">'+
-      '<div class="r-title">🏪 MAHALLA DUKONI</div>'+
+      '<div class="r-title">🏪 SellFlowUZ</div>'+
       '<div class="r-sub">'+time+'</div>'+
       '<div class="r-sub" style="font-weight:700;">'+o.id+'</div>'+
       '<div class="r-hr"></div>'+
@@ -1600,7 +1600,7 @@ function downloadPDF(){
   var stars=o.rating>0?'<div style="text-align:center;font-size:20px;margin:8px 0;">'+'★'.repeat(o.rating)+'☆'.repeat(5-o.rating)+'</div>':'';
   var css='@media print{@page{size:80mm auto;margin:0;}.np{display:none!important;}body{padding:3mm;margin:0;}}body{font-family:"Courier New",monospace;font-size:12px;background:#fff;color:#111;width:72mm;margin:0 auto;padding:12px;}.np{display:flex;gap:8px;margin-bottom:14px;}.bp{flex:1;padding:11px;font-weight:700;border:none;border-radius:8px;cursor:pointer;font-size:13px;}.bk{background:#111;color:#fff;}.bd{background:#ef4444;color:#fff;}.logo{text-align:center;padding:8px 0 10px;border-bottom:2px solid #111;margin-bottom:8px;}.ln{font-size:15px;font-weight:900;letter-spacing:3px;}.ls{font-size:9px;color:#888;}.ir{display:flex;justify-content:space-between;font-size:10px;margin:2px 0;}.lb{color:#888;}.vl{font-weight:700;}hr{border:none;border-top:1px dashed #aaa;margin:5px 0;}table{width:100%;border-collapse:collapse;margin:6px 0;}th{font-size:9px;color:#888;padding:3px;text-align:left;border-bottom:1px solid #ccc;}td{padding:4px 3px;font-size:10px;border-bottom:1px dashed #eee;}.tb{background:#f5f5f5;border-radius:6px;padding:8px;margin:6px 0;}.tr{display:flex;justify-content:space-between;font-size:11px;padding:2px 0;}.tB{display:flex;justify-content:space-between;font-size:14px;font-weight:900;border-top:2px solid #111;padding-top:5px;margin-top:5px;}.ft{text-align:center;padding-top:8px;border-top:1px dashed #aaa;font-size:10px;color:#666;margin-top:8px;}';
   var body='<div class="np"><button class="bp bk" onclick="window.close()">← Qaytish</button><button class="bp bd" onclick="savePDF()">📄 PDF</button></div>'+
-    '<div class="logo"><div style="font-size:26px;">🏪</div><div class="ln">MAHALLA DUKONI</div><div class="ls">Online zakaz</div></div>'+
+    '<div class="logo"><div style="font-size:26px;">🏪</div><div class="ln">SellFlowUZ</div><div class="ls">Online zakaz</div></div>'+
     '<div class="ir"><span class="lb">Sana:</span><span class="vl">'+time+'</span></div>'+
     '<div class="ir"><span class="lb">Zakaz:</span><span class="vl">'+o.id+'</span></div>'+
     '<div class="ir"><span class="lb">Mijoz:</span><span class="vl">'+o.userName+'</span></div>'+
@@ -1622,7 +1622,7 @@ function downloadTXT(){
   var o=lastOrder;
   if(!o){showToast('Zakaz topilmadi','error');return;}
   var time=new Date(o.time).toLocaleString('uz-UZ');
-  var lines=['============================','     MAHALLA DUKONI','     Online Zakaz','============================',
+  var lines=['============================','     SellFlowUZ','     Online Zakaz','============================',
     'Sana:  '+time,'Zakaz: '+o.id,'Mijoz: '+o.userName,'Tel:   '+o.userPhone,
     '----------------------------','MAHSULOTLAR:'];
   (o.items||[]).forEach(function(i){ lines.push('  '+i.name+' x'+i.qty+' = '+Number(i.price*i.qty).toLocaleString('uz-UZ')+" so'm"); });
@@ -1909,9 +1909,9 @@ function saveProfile(){
   session.phone=phone;
   DB.setSession(session);
   try{
-    var rem=JSON.parse(localStorage.getItem('mahalla_remembered_customer')||'{}');
+    var rem=JSON.parse(localStorage.getItem('sfu_remembered_customer')||'{}');
     rem.name=name;rem.phone=phone;
-    localStorage.setItem('mahalla_remembered_customer',JSON.stringify(rem));
+    localStorage.setItem('sfu_remembered_customer',JSON.stringify(rem));
   }catch(e){}
   document.getElementById('uName').textContent=name;
   document.getElementById('uPhone').textContent=phone;
@@ -1930,7 +1930,7 @@ function openContact(){
 
 function logout(){
   DB.clearSession();
-  localStorage.removeItem('mahalla_remembered_customer');
+  localStorage.removeItem('sfu_remembered_customer');
   window.location.href='login.html';
 }
 

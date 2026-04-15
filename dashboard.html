@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mahalla Dukoni — Admin</title>
+<title>SellFlowUZ — Admin</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;900&family=Rajdhani:wght@400;500;600;700&display=swap');
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
@@ -460,7 +460,7 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
       <button class="hamburger" onclick="toggleSidebar()">☰</button>
       <div>
         <div class="page-title" id="pageTitle">KALENDAR</div>
-        <div class="page-breadcrumb">Mahalla Dukoni</div>
+        <div class="page-breadcrumb">SellFlowUZ</div>
       </div>
     </div>
     <div class="topbar-right">
@@ -1649,7 +1649,7 @@ function checkNotifications(){
   // Brauzer notification (agar ruxsat berilgan bo'lsa)
   alerts.filter(function(a){return a.urgent;}).forEach(function(a){
     if(Notification && Notification.permission==='granted'){
-      new Notification('🏪 Mahalla Dukoni', {body: a.msg, icon:'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">🏪</text></svg>'});
+      new Notification('🏪 SellFlowUZ', {body: a.msg, icon:'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">🏪</text></svg>'});
     }
   });
 
@@ -2083,7 +2083,7 @@ function showReceipt(o){
   }
   document.getElementById('receiptContent52').innerHTML=`
     <div class="receipt-52" id="receiptPrintArea">
-      <div class="r-title">🏪 MAHALLA DUKONI</div>
+      <div class="r-title">🏪 SELLFLOWUZ</div>
       <div style="text-align:center;font-size:10px;margin-bottom:5px;">${time}</div>
       <div style="text-align:center;font-size:10px;margin-bottom:5px;">${o.id}</div>
       <hr>
@@ -2137,7 +2137,7 @@ function downloadReceipt(){
     @media print{.save-btn{display:none;}}
   </style></head><body>
   <button class="save-btn" onclick="window.print()">🖨️ Print / PDF Saqlash</button>
-  <div class="title">MAHALLA DUKONI</div>
+  <div class="title">SELLFLOWUZ</div>
   <div class="sub">${time}</div>
   <div class="sub">Buyurtma: ${o.id}</div>
   <hr>
@@ -2297,7 +2297,7 @@ function exportPDF(){
   }).join('');
   var w=window.open('','_blank','width=900,height=700');
   w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8">
-  <title>Mahalla Dukoni Hisobot</title>
+  <title>SellFlowUZ Hisobot</title>
   <style>
     @media print{@page{size:A4;margin:15mm;}}
     body{font-family:Arial,sans-serif;font-size:12px;color:#000;}
@@ -2313,7 +2313,7 @@ function exportPDF(){
     tr:nth-child(even){background:#f8f8f8;}
     .total-row{font-weight:700;background:#f0f7ff!important;border-top:2px solid #1a3a5c;}
   </style></head><body>
-  <h1>🏪 MAHALLA DUKONI</h1>
+  <h1>🏪 SELLFLOWUZ</h1>
   <div class="sub">Hisobot: ${from} — ${to} | Yaratildi: ${new Date().toLocaleString('uz-UZ')}</div>
   <div class="stats">
     <div class="stat-box"><div class="stat-val">${data.length}</div><div class="stat-lbl">Jami savdo</div></div>
@@ -2414,7 +2414,7 @@ function startNoteTimer(){
         // Brauzer notification
         var title = note.type==='debt' ? ('💰 Qarz muddati: ' + (note.person||note.text)) : ('⏰ Eslatma: ' + note.text);
         if(Notification && Notification.permission==='granted'){
-          new Notification('🏪 Mahalla Dukoni — ' + nowTime, {
+          new Notification('🏪 SellFlowUZ — ' + nowTime, {
             body: title,
             icon: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">🏪</text></svg>'
           });

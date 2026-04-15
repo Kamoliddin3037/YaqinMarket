@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Buyurtmalar — Mahalla Dukoni</title>
+<title>Buyurtmalar — SellFlowUZ</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;900&family=Rajdhani:wght@400;500;600;700&display=swap');
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
@@ -344,7 +344,7 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
   <header class="topbar">
     <div class="topbar-left">
       <button class="hamburger" onclick="toggleSidebar()">☰</button>
-      <div><div class="page-title">BUYURTMALAR</div><div class="page-breadcrumb">Mahalla Dukoni</div></div>
+      <div><div class="page-title">BUYURTMALAR</div><div class="page-breadcrumb">SellFlowUZ</div></div>
     </div>
     <div class="topbar-right"><div class="ticker-wrap"><div class="ticker-inner" id="tickerInner">⏳ Yuklanmoqda...</div></div></div>
     <div style="display:flex;align-items:center;gap:8px;">
@@ -481,7 +481,7 @@ function showReceipt(o){
   const time=new Date(o.time).toLocaleString('uz-UZ');
   var rImg = o.receiptImg ? '<hr><div style="font-size:10px;font-weight:700;color:#555;margin-bottom:4px;">💳 TO\'LOV CHEKI:</div><img src="'+o.receiptImg+'" style="width:100%;border-radius:4px;border:1px solid #ddd;">' : '';
   document.getElementById('receiptContent52').innerHTML = `<div class="receipt-52" id="receiptPrintArea">
-    <div class="r-title">🏪 MAHALLA DUKONI</div>
+    <div class="r-title">🏪 SELLFLOWUZ</div>
     <div style="text-align:center;font-size:10px;margin-bottom:5px;">${time}</div>
     <div style="text-align:center;font-size:10px;margin-bottom:5px;">${o.id}</div>
     <hr>
@@ -495,7 +495,7 @@ function showReceipt(o){
   openModal('modalReceipt');
 }
 function printReceipt(){const c=document.getElementById('receiptPrintArea').outerHTML;const w=window.open('','_blank','width=300,height=600');w.document.write(`<html><head><style>body{margin:0;font-family:'Courier New',monospace;font-size:12px;}.receipt-52{width:200px;padding:10px;}.r-title{text-align:center;font-weight:700;font-size:14px;}.r-line{display:flex;justify-content:space-between;padding:1px 0;font-size:11px;}.r-line.bold{font-weight:700;border-top:1px dashed #999;}hr{border:none;border-top:1px dashed #999;margin:4px 0;}.r-footer{text-align:center;color:#666;font-size:10px;}</style></head><body>${c}<script>window.onload=()=>window.print();<\/script></body></html>`);w.document.close();}
-function downloadReceipt(){if(!lastReceiptData)return;const o=lastReceiptData;const time=new Date(o.time).toLocaleString('uz-UZ');const w=window.open('','_blank','width=320,height=700');if(!w){showToast('❌ Popup bloklangan','error');return;}w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Chek</title><style>@media print{@page{size:52mm auto;margin:2mm;}}body{font-family:'Courier New',monospace;font-size:12px;width:190px;margin:0 auto;padding:8px;background:white;color:#000;}.title{text-align:center;font-weight:700;font-size:14px;}.sub{text-align:center;font-size:10px;color:#555;}.line{display:flex;justify-content:space-between;padding:2px 0;font-size:11px;}.bold{font-weight:700;border-top:1px dashed #000;padding-top:4px;}hr{border:none;border-top:1px dashed #000;margin:5px 0;}.footer{text-align:center;font-size:10px;color:#666;}.save-btn{display:block;width:100%;margin:8px 0;padding:9px;background:#00ffe7;color:#000;border:none;border-radius:4px;font-weight:700;font-size:12px;cursor:pointer;}@media print{.save-btn{display:none;}}</style></head><body><button class="save-btn" onclick="window.print()">🖨️ Print</button><div class="title">MAHALLA DUKONI</div><div class="sub">${time}</div><div class="sub">${o.id}</div><hr>${o.items.map(i=>`<div class="line"><span>${i.name} x${i.qty}</span><span>${fmt(i.price*i.qty)}</span></div>`).join('')}<hr><div class="line bold"><span>JAMI:</span><span>${fmt(o.total)} so'm</span></div><div class="line"><span>To'lov:</span><span>${o.payment||'Naqd'}</span></div><hr><div class="footer">Rahmat!</div></body></html>`);w.document.close();}
+function downloadReceipt(){if(!lastReceiptData)return;const o=lastReceiptData;const time=new Date(o.time).toLocaleString('uz-UZ');const w=window.open('','_blank','width=320,height=700');if(!w){showToast('❌ Popup bloklangan','error');return;}w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Chek</title><style>@media print{@page{size:52mm auto;margin:2mm;}}body{font-family:'Courier New',monospace;font-size:12px;width:190px;margin:0 auto;padding:8px;background:white;color:#000;}.title{text-align:center;font-weight:700;font-size:14px;}.sub{text-align:center;font-size:10px;color:#555;}.line{display:flex;justify-content:space-between;padding:2px 0;font-size:11px;}.bold{font-weight:700;border-top:1px dashed #000;padding-top:4px;}hr{border:none;border-top:1px dashed #000;margin:5px 0;}.footer{text-align:center;font-size:10px;color:#666;}.save-btn{display:block;width:100%;margin:8px 0;padding:9px;background:#00ffe7;color:#000;border:none;border-radius:4px;font-weight:700;font-size:12px;cursor:pointer;}@media print{.save-btn{display:none;}}</style></head><body><button class="save-btn" onclick="window.print()">🖨️ Print</button><div class="title">SELLFLOWUZ</div><div class="sub">${time}</div><div class="sub">${o.id}</div><hr>${o.items.map(i=>`<div class="line"><span>${i.name} x${i.qty}</span><span>${fmt(i.price*i.qty)}</span></div>`).join('')}<hr><div class="line bold"><span>JAMI:</span><span>${fmt(o.total)} so'm</span></div><div class="line"><span>To'lov:</span><span>${o.payment||'Naqd'}</span></div><hr><div class="footer">Rahmat!</div></body></html>`);w.document.close();}
 let _prevNewCount = 0;
 let _notifGranted = false;
 
@@ -563,7 +563,7 @@ function autoRefresh(){
     playBeep();
     showToast('🔔 ' + diff + ' ta yangi buyurtma!', 'info');
     if(_notifGranted){
-      new Notification('🏪 Mahalla Dukoni', {
+      new Notification('🏪 SellFlowUZ', {
         body: diff + ' ta yangi buyurtma keldi!',
         icon: '🏪'
       });

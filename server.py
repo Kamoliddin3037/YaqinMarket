@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Mahalla Dukoni - Secure Backend Server
+SellFlowUZ - Secure Backend Server
 Port: 8080  |  DB: db.json  |  Logs: logs/app.log
 """
 import http.server
@@ -647,7 +647,7 @@ if __name__ == '__main__':
 
     http.server.HTTPServer.allow_reuse_address = True
     server = http.server.HTTPServer(('', PORT), Handler)
-    print(f'\n  🏪 MAHALLA DUKONI SERVER')
+    print(f'\n  🏪 SELLFLOWUZ SERVER')
     print(f'  ─────────────────────────────────')
     print(f'  URL:    http://localhost:{PORT}/login.html')
     print(f'  DB:     {DB_FILE}')

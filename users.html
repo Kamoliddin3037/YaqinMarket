@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mijozlar — Mahalla Dukoni</title>
+<title>Mijozlar — SellFlowUZ</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;900&family=Rajdhani:wght@400;500;600;700&display=swap');
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
@@ -429,7 +429,7 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
   <header class="topbar">
     <div class="topbar-left">
       <button class="hamburger" onclick="toggleSidebar()">☰</button>
-      <div><div class="page-title" id="pageTitle">MIJOZLAR</div><div class="page-breadcrumb">Mahalla Dukoni</div></div>
+      <div><div class="page-title" id="pageTitle">MIJOZLAR</div><div class="page-breadcrumb">SellFlowUZ</div></div>
     </div>
     <div class="topbar-right"><div class="ticker-wrap"><div class="ticker-inner" id="tickerInner">⏳ Yuklanmoqda...</div></div></div>
     <div style="display:flex;align-items:center;gap:8px;">
@@ -1150,7 +1150,7 @@ function showReceipt(o){
   const time=new Date(o.time).toLocaleString('uz-UZ');
   document.getElementById('receiptContent52').innerHTML=`
     <div class="receipt-52" id="receiptPrintArea">
-      <div class="r-title">🏪 MAHALLA DUKONI</div>
+      <div class="r-title">🏪 SELLFLOWUZ</div>
       <div style="text-align:center;font-size:10px;margin-bottom:5px;">${time}</div>
       <div style="text-align:center;font-size:10px;margin-bottom:5px;">${o.id}</div>
       <hr>
@@ -1202,7 +1202,7 @@ function downloadReceipt(){
     @media print{.save-btn{display:none;}}
   </style></head><body>
   <button class="save-btn" onclick="window.print()">🖨️ Print / PDF Saqlash</button>
-  <div class="title">MAHALLA DUKONI</div>
+  <div class="title">SELLFLOWUZ</div>
   <div class="sub">${time}</div>
   <div class="sub">Buyurtma: ${o.id}</div>
   <hr>
@@ -1457,7 +1457,7 @@ function openReceiptWindow(o){
     '</div>'+
     '<div class="logo">'+
       '<span class="logo-icon">&#127978;</span>'+
-      '<div class="logo-name">MAHALLA DUKONI</div>'+
+      '<div class="logo-name">SELLFLOWUZ</div>'+
       '<div class="logo-sub">Sifatli xizmat — qulay narx</div>'+
     '</div>'+
     '<hr class="sep-solid">'+
@@ -1478,7 +1478,7 @@ function openReceiptWindow(o){
     (change>0?'<div class="total-row change">&#10003; QAYTIM: '+Number(change).toLocaleString('uz-UZ')+" so'm</div>":'') +
     '<hr class="sep">'+
     '<div class="footer"><div class="footer-main">Rahmat! Yana keling &#128591;</div>'+
-    '<div class="footer-sub">Mahalla Dukoni<br>Xaridingiz uchun minnatdormiz</div></div>'+
+    '<div class="footer-sub">SellFlowUZ<br>Xaridingiz uchun minnatdormiz</div></div>'+
     '<script>function savePDF(){var opt={margin:[3,3],filename:"chek-'+o.id+'.pdf",image:{type:"jpeg",quality:.98},html2canvas:{scale:2},jsPDF:{unit:"mm",format:[80,200],orientation:"portrait"}};if(typeof html2pdf!=="undefined"){html2pdf().set(opt).from(document.body).save();}else{alert("Print tugmasidan foydalaning");}}<\/script>'+
     '<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"><\/script>'+
     '</body></html>'
@@ -1513,12 +1513,12 @@ function printDebtHistory(id){
     '.btn{display:block;width:100%;margin:8px 0;padding:9px;background:#00ffe7;color:#000;border:none;border-radius:4px;font-weight:700;font-size:12px;cursor:pointer;}'+
     '</style></head><body>'+
     '<button class="btn no-print" onclick="window.print()">Print / PDF Saqlash</button>'+
-    '<div class="title">MAHALLA DUKONI</div>'+
+    '<div class="title">SELLFLOWUZ</div>'+
     '<div class="sub">QARZ TARIXI</div>'+
     '<div class="sub">Mijoz: '+u.name+' | Tel: '+u.phone+'</div>'+
     '<div class="sub">Joriy qarz: '+Number(u.debt||0).toLocaleString('uz-UZ')+" so'm</div><hr>"+
     '<table><thead><tr><th>Sana/Vaqt</th><th>Summa</th><th>Izoh</th></tr></thead><tbody>'+rows+'</tbody></table>'+
-    '<hr><div class="footer">Mahalla Dukoni</div></body></html>'
+    '<hr><div class="footer">SellFlowUZ</div></body></html>'
   );
   w.document.close();
 }
@@ -1574,7 +1574,7 @@ function showChek(o){
   var drow=o.debt&&o.debt>0?'<div style="color:#c62828;font-weight:700;font-size:11px;text-align:center;margin-top:5px;padding:3px;background:#ffebee;border-radius:3px;">⚠ QARZ: '+fmt(o.debt)+" so'm</div>":'';
   var css='@media print{@page{size:80mm auto;margin:0;}.np{display:none!important;}body{margin:0;padding:3mm;}}body{font-family:"Courier New",monospace;font-size:12px;background:#fff;color:#111;width:72mm;margin:0 auto;padding:10px;}.np{display:flex;gap:6px;margin-bottom:10px;}.bp{flex:1;padding:9px;font-weight:700;border:none;border-radius:7px;cursor:pointer;font-size:13px;}.bk{background:#111;color:#fff;}.bd{background:#e63946;color:#fff;}.logo{text-align:center;margin-bottom:8px;border-bottom:2px solid #111;padding-bottom:6px;}.ln{font-size:15px;font-weight:900;letter-spacing:3px;}.ls{font-size:9px;color:#888;}.ir{display:flex;justify-content:space-between;font-size:10px;margin:2px 0;}.lb{color:#888;}.vl{font-weight:700;}hr{border:none;border-top:1px dashed #aaa;margin:5px 0;}.tot{display:flex;justify-content:space-between;font-size:14px;font-weight:900;border-top:2px solid #111;padding-top:5px;margin-top:4px;}.ft{text-align:center;font-size:10px;color:#666;margin-top:8px;line-height:1.6;}';
   var body='<div class="np"><button class="bp bk" onclick="window.close()">← Qaytish</button><button class="bp bd" onclick="sPDF()">📄 PDF</button></div>'+
-    '<div class="logo"><div style="font-size:22px;">🏪</div><div class="ln">MAHALLA DUKONI</div><div class="ls">'+typel+'</div></div>'+
+    '<div class="logo"><div style="font-size:22px;">🏪</div><div class="ln">SELLFLOWUZ</div><div class="ls">'+typel+'</div></div>'+
     '<div class="ir"><span class="lb">Sana:</span><span class="vl">'+time+'</span></div>'+
     '<div class="ir"><span class="lb">Chek:</span><span class="vl">'+o.id+seql+'</span></div>'+
     '<div class="ir"><span class="lb">Mijoz:</span><span class="vl">'+(o.userName||'—')+'</span></div>'+

@@ -1,4 +1,4 @@
-// ==================== MAHALLA DUKONI - DATA MODULE ====================
+// ==================== SELLFLOWUZ - DATA MODULE ====================
 // Ma'lumotlar db.json faylda saqlanadi (server orqali)
 // Barcha brauzer, inkognito, telefon — bir xil ma'lumot ko'radi
 
@@ -460,7 +460,7 @@ document.addEventListener('keydown', function(e) {
         .pin-setup{margin-top:20px;font-size:12px;color:#7ab3cc;cursor:pointer;text-decoration:underline;}
       </style>
       <div class="pin-logo">🔒</div>
-      <div class="pin-title">MAHALLA DUKONI</div>
+      <div class="pin-title">SELLFLOWUZ</div>
       <div class="pin-sub" id="pinSubText">PIN kodni kiriting</div>
       <div class="pin-dots" id="pinDots">
         <div class="pin-dot" id="pd0"></div><div class="pin-dot" id="pd1"></div>
@@ -780,7 +780,7 @@ document.addEventListener('keydown', function(e) {
       document.getElementById('ai-input').focus();
       document.getElementById('ai-badge').classList.remove('on');
       if (!window._aiHistory.length) {
-        _aiAddMsg('bot', 'Salom! 👋 Men Mahalla Dukoni AI maslahatchiiman. Do\'kon statistikasi, savdo tahlili, mahsulot tavsiyalari haqida savol bering!');
+        _aiAddMsg('bot', 'Salom! 👋 Men SellFlowUZ AI maslahatchiiman. Do\'kon statistikasi, savdo tahlili, mahsulot tavsiyalari haqida savol bering!');
       }
     } else {
       panel.classList.remove('open');
@@ -906,7 +906,7 @@ document.addEventListener('keydown', function(e) {
             ' — '+(o.userName||'Mijoz')+': '+o.total.toLocaleString()+" so'm";
         });
 
-      return '=== MAHALLA DUKONI — REAL MA\'LUMOTLAR ('+now.toLocaleDateString('uz-UZ')+') ===\n\n'+
+      return '=== SELLFLOWUZ — REAL MA\'LUMOTLAR ('+now.toLocaleDateString('uz-UZ')+') ===\n\n'+
         '📊 BUGUN ('+now.toLocaleDateString('uz-UZ')+'):\n'+
         '  Savdolar: '+todayS.length+' ta\n'+
         '  Tushum: '+todayRev.toLocaleString()+" so'm\n"+
@@ -940,7 +940,7 @@ document.addEventListener('keydown', function(e) {
         '🕐 SO\'NGGI 5 SAVDO:\n  '+(last5.length?last5.join('\n  '):'Yo\'q')+'\n\n'+
         'Joriy sahifa: '+window.location.pathname.split('/').pop();
     } catch(e) {
-      return 'Mahalla Dukoni do\'kon tizimi. Ma\'lumotlarni yuklab bo\'lmadi.';
+      return 'SellFlowUZ do\'kon tizimi. Ma\'lumotlarni yuklab bo\'lmadi.';
     }
   }
 

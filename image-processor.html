@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rasm Processor — Mahalla Dukoni</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;900&family=Rajdhani:wght@400;500;600;700&display=swap');
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#08111a; --bg2:#0f1e2e; --bg3:#152538;
+  --border:#1e3a55; --border2:#2a4a6a;
+  --cyan:#00ffe7; --cyan2:#00b4d8; --cyan3:#006d8f;
+  --amber:#ffb703; --red:#ff2d55; --green:#39ff14;
+  --text:#d0eeff; --muted:#5a8aaa;
+  --glow:0 0 20px rgba(0,255,231,.3);
+  --glow-sm:0 0 10px rgba(0,255,231,.15);
+}
+html,body{height:100%;font-family:'Rajdhani',sans-serif;color:var(--text);background:var(--bg);}
+body{display:flex;flex-direction:column;align-items:center;min-height:100vh;padding:20px;}
+body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(circle,rgba(0,255,231,.04) 1px,transparent 1px);background-size:28px 28px;pointer-events:none;z-index:0;}
+
+/* HEADER */
+.header{text-align:center;margin-bottom:32px;position:relative;z-index:1;}
+.header-logo{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:8px;}
+.logo-ico{width:44px;height:44px;background:linear-gradient(135deg,var(--cyan),var(--cyan2));border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:var(--glow-sm);}
+.logo-txt{font-family:'Orbitron',monospace;font-size:13px;color:var(--cyan);letter-spacing:2px;line-height:1.3;}
+.header h1{font-family:'Orbitron',monospace;font-size:18px;color:white;letter-spacing:3px;margin-bottom:6px;}
+.header p{font-size:14px;color:var(--muted);}
+
+/* MAIN LAYOUT */
+.main{display:grid;grid-template-columns:1fr 1fr;gap:20px;width:100%;max-width:900px;position:relative;z-index:1;}
+
+/* PANELS */
+.panel{background:var(--bg2);border:1px solid var(--border);border-radius:10px;overflow:hidden;}
+.panel-head{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.panel-title{font-family:'Orbitron',monospace;font-size:11px;color:var(--cyan);letter-spacing:2px;}
+.panel-body{padding:18px;}
+
+/* UPLOAD ZONE */
+.upload-zone{border:2px dashed var(--border2);border-radius:8px;padding:32px 20px;text-align:center;cursor:pointer;transition:all .2s;position:relative;}
+.upload-zone:hover,.upload-zone.drag{border-color:var(--cyan);background:rgba(0,255,231,.04);}
+.upload-zone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+.upload-ico{font-size:40px;margin-bottom:12px;display:block;}
+.upload-txt{font-size:14px;font-weight:600;color:var(--text);margin-bottom:4px;}
+.upload-hint{font-size:12px;color:var(--muted);}
+
+/* PREVIEW */
+.preview-wrap{background:#000;border-radius:8px;overflow:hidden;aspect-ratio:1;display:flex;align-items:center;justify-content:center;position:relative;min-height:200px;}
+.preview-wrap canvas{max-width:100%;max-height:100%;object-fit:contain;}
+.preview-empty{color:var(--muted);font-size:13px;text-align:center;}
+.preview-empty span{display:block;font-size:32px;margin-bottom:8px;opacity:.3;}
+
+/* SOURCE PREVIEW */
+.source-wrap{border-radius:8px;overflow:hidden;aspect-ratio:1;display:flex;align-items:center;justify-content:center;background:var(--bg3);border:1px solid var(--border);min-height:200px;}
+.source-wrap img{max-width:100%;max-height:100%;object-fit:contain;}
+
+/* CONTROLS */
+.control-group{margin-bottom:16px;}
+.control-label{display:flex;justify-content:space-between;font-size:12px;font-weight:700;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;}
+.control-label span{color:var(--cyan);font-family:'Orbitron',monospace;}
+input[type=range]{width:100%;height:4px;background:var(--border2);border-radius:2px;outline:none;-webkit-appearance:none;cursor:pointer;}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;background:var(--cyan);border-radius:50%;cursor:pointer;box-shadow:0 0 6px rgba(0,255,231,.4);}
+input[type=range]::-webkit-slider-track{background:var(--border2);height:4px;border-radius:2px;}
+
+/* BUTTONS */
+.btn{padding:10px 18px;border-radius:6px;font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;border:none;display:inline-flex;align-items:center;gap:8px;}
+.btn-cyan{background:linear-gradient(135deg,var(--cyan),var(--cyan2));color:var(--bg);}
+.btn-cyan:hover{box-shadow:var(--glow);}
+.btn-ghost{background:transparent;border:1px solid var(--border2);color:var(--text);}
+.btn-ghost:hover{border-color:var(--cyan);color:var(--cyan);}
+.btn-green{background:rgba(57,255,20,.1);border:1px solid rgba(57,255,20,.3);color:var(--green);}
+.btn-green:hover{background:rgba(57,255,20,.2);}
+.btn-full{width:100%;justify-content:center;}
+.btn-row{display:flex;gap:10px;margin-top:14px;}
+
+/* BG PRESETS */
+.bg-presets{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;}
+.bg-preset{width:36px;height:36px;border-radius:6px;border:2px solid transparent;cursor:pointer;transition:all .2s;}
+.bg-preset:hover,.bg-preset.active{border-color:var(--cyan);box-shadow:0 0 8px rgba(0,255,231,.3);}
+
+/* STATUS */
+.status{font-size:12px;color:var(--muted);text-align:center;margin-top:10px;height:18px;}
+.status.ok{color:var(--green);}
+.status.err{color:var(--red);}
+
+/* TOAST */
+.toast{position:fixed;bottom:20px;right:20px;background:var(--bg3);border:1px solid var(--border2);color:var(--text);padding:10px 18px;border-radius:8px;font-size:13px;font-weight:700;z-index:999;opacity:0;transform:translateY(8px);transition:all .3s;pointer-events:none;}
+.toast.show{opacity:1;transform:translateY(0);}
+.toast.ok{border-color:var(--green);color:var(--green);}
+
+/* STATS */
+.stat-row{display:flex;gap:10px;margin-bottom:16px;}
+.stat-box{flex:1;background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:10px;text-align:center;}
+.stat-val{font-family:'Orbitron',monospace;font-size:16px;color:var(--cyan);font-weight:700;}
+.stat-lbl{font-size:10px;color:var(--muted);margin-top:3px;letter-spacing:1px;}
+
+/* BACK */
+.back-btn{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;margin-bottom:20px;text-decoration:none;position:relative;z-index:1;}
+.back-btn:hover{color:var(--cyan);}
+
+@media(max-width:640px){.main{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<div class="toast" id="toast"></div>
+
+<a class="back-btn" href="products.html">← Mahsulotlarga qaytish</a>
+
+<div class="header">
+  <div class="header-logo">
+    <div class="logo-ico">🖼️</div>
+    <div class="logo-txt">MAHALLA<br>DUKONI</div>
+  </div>
+  <h1>RASM PROCESSOR</h1>
+  <p>Mahsulot rasmini dark fonga moslab tayyorlang</p>
+</div>
+
+<div class="main">
+
+  <!-- CHAP: Yuklash + Sozlamalar -->
+  <div>
+    <div class="panel" style="margin-bottom:16px;">
+      <div class="panel-head">
+        <div class="panel-title">📁 RASM YUKLASH</div>
+      </div>
+      <div class="panel-body">
+        <div class="upload-zone" id="uploadZone">
+          <input type="file" id="fileInput" accept="image/*" onchange="loadImage(this)">
+          <span class="upload-ico">📷</span>
+          <div class="upload-txt">Rasm yuklash uchun bosing</div>
+          <div class="upload-hint">JPG, PNG, WEBP — istalgan o'lcham</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head">
+        <div class="panel-title">⚙️ SOZLAMALAR</div>
+      </div>
+      <div class="panel-body">
+
+        <!-- Fon rangi -->
+        <div class="control-group">
+          <div class="control-label">Fon rangi (chiqish)</div>
+          <div class="bg-presets" id="bgPresets">
+            <div class="bg-preset active" data-bg="#000000" style="background:#000;" title="Qora"></div>
+            <div class="bg-preset" data-bg="#0a1628" style="background:#0a1628;" title="Dark ko'k"></div>
+            <div class="bg-preset" data-bg="#0f1e2e" style="background:#0f1e2e;" title="Dukoni foni"></div>
+            <div class="bg-preset" data-bg="#152538" style="background:#152538;" title="Sidebar foni"></div>
+            <div class="bg-preset" data-bg="#1a2d42" style="background:#1a2d42;" title="Panel foni"></div>
+            <div class="bg-preset" data-bg="transparent" style="background:repeating-conic-gradient(#888 0% 25%,#555 0% 50%) 0 0/12px 12px;" title="Transparent"></div>
+          </div>
+        </div>
+
+        <!-- Tolerance -->
+        <div class="control-group">
+          <div class="control-label">
+            Fon aniqlash sezgirlik
+            <span id="tolVal">35</span>
+          </div>
+          <input type="range" id="tolerance" min="5" max="100" value="35" oninput="document.getElementById('tolVal').textContent=this.value;processImage()">
+        </div>
+
+        <!-- Soft edge -->
+        <div class="control-group">
+          <div class="control-label">
+            Yumshoq chegara
+            <span id="softVal">15</span>
+          </div>
+          <input type="range" id="softEdge" min="0" max="60" value="15" oninput="document.getElementById('softVal').textContent=this.value;processImage()">
+        </div>
+
+        <!-- Padding -->
+        <div class="control-group">
+          <div class="control-label">
+            Chet bo'shliq (%)
+            <span id="padVal">8</span>
+          </div>
+          <input type="range" id="padding" min="0" max="25" value="8" oninput="document.getElementById('padVal').textContent=this.value;processImage()">
+        </div>
+
+        <!-- Output size -->
+        <div class="control-group">
+          <div class="control-label">
+            Chiqish o'lchami (px)
+            <span id="sizeVal">400</span>
+          </div>
+          <input type="range" id="outSize" min="200" max="800" step="50" value="400" oninput="document.getElementById('sizeVal').textContent=this.value;processImage()">
+        </div>
+
+        <div id="stats" class="stat-row" style="display:none;">
+          <div class="stat-box">
+            <div class="stat-val" id="statW">—</div>
+            <div class="stat-lbl">KENGLIK</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-val" id="statH">—</div>
+            <div class="stat-lbl">BALANDLIK</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-val" id="statRem">—</div>
+            <div class="stat-lbl">OLIB TASHLANDI</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- O'NG: Preview + Yuklab olish -->
+  <div>
+    <div class="panel" style="margin-bottom:16px;">
+      <div class="panel-head">
+        <div class="panel-title">👁️ ASL RASM</div>
+      </div>
+      <div class="panel-body">
+        <div class="source-wrap" id="sourceWrap">
+          <div class="preview-empty"><span>📷</span>Rasm yuklanmagan</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head">
+        <div class="panel-title">✨ TAYYOR RASM</div>
+        <div id="processStatus" class="status">—</div>
+      </div>
+      <div class="panel-body">
+        <div class="preview-wrap" id="previewWrap">
+          <div class="preview-empty"><span>🖼️</span>Bu yerda tayyor rasm chiqadi</div>
+        </div>
+
+        <div class="btn-row">
+          <button class="btn btn-cyan btn-full" onclick="downloadResult()" id="downloadBtn" disabled>
+            ⬇️ PNG Yuklab olish
+          </button>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-ghost btn-full" onclick="copyToClipboard()" id="copyBtn" disabled>
+            📋 Clipboard ga nusxalash
+          </button>
+        </div>
+        <div style="margin-top:12px;font-size:11px;color:var(--muted);text-align:center;line-height:1.6;">
+          Yuklab olgandan keyin mahsulot qo'shishda<br>shu rasmni tanlang
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Hidden canvas for processing -->
+<canvas id="workCanvas" style="display:none;"></canvas>
+
+<script>
+var sourceImg = null;
+var resultCanvas = null;
+var selectedBg = '#000000';
+
+// Drag & drop
+var zone = document.getElementById('uploadZone');
+zone.addEventListener('dragover', function(e){ e.preventDefault(); zone.classList.add('drag'); });
+zone.addEventListener('dragleave', function(){ zone.classList.remove('drag'); });
+zone.addEventListener('drop', function(e){
+  e.preventDefault(); zone.classList.remove('drag');
+  var file = e.dataTransfer.files[0];
+  if(file && file.type.startsWith('image/')) loadFile(file);
+});
+
+// BG presets
+document.querySelectorAll('.bg-preset').forEach(function(el){
+  el.addEventListener('click', function(){
+    document.querySelectorAll('.bg-preset').forEach(function(x){ x.classList.remove('active'); });
+    el.classList.add('active');
+    selectedBg = el.dataset.bg;
+    // Preview wrap foni
+    document.getElementById('previewWrap').style.background = selectedBg==='transparent'?'repeating-conic-gradient(#444 0% 25%,#222 0% 50%) 0 0/16px 16px':selectedBg;
+    processImage();
+  });
+});
+
+function loadImage(input){
+  if(!input.files[0]) return;
+  loadFile(input.files[0]);
+}
+
+function loadFile(file){
+  var reader = new FileReader();
+  reader.onload = function(e){
+    var img = new Image();
+    img.onload = function(){
+      sourceImg = img;
+      // Asl rasm ko'rsatish
+      var srcWrap = document.getElementById('sourceWrap');
+      srcWrap.innerHTML = '<img src="' + e.target.result + '" style="max-width:100%;max-height:250px;object-fit:contain;">';
+      document.getElementById('stats').style.display = 'flex';
+      document.getElementById('statW').textContent = img.width;
+      document.getElementById('statH').textContent = img.height;
+      processImage();
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+function processImage(){
+  if(!sourceImg) return;
+
+  var tolerance = parseInt(document.getElementById('tolerance').value);
+  var softEdge  = parseInt(document.getElementById('softEdge').value);
+  var padding   = parseInt(document.getElementById('padding').value) / 100;
+  var outSize   = parseInt(document.getElementById('outSize').value);
+
+  var status = document.getElementById('processStatus');
+  status.textContent = '⏳ Ishlanmoqda...';
+  status.className = 'status';
+
+  setTimeout(function(){
+    try {
+      var canvas = document.getElementById('workCanvas');
+      canvas.width  = sourceImg.naturalWidth;
+      canvas.height = sourceImg.naturalHeight;
+      var ctx = canvas.getContext('2d');
+      ctx.drawImage(sourceImg, 0, 0);
+
+      var imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      var data = imageData.data;
+      var W = canvas.width, H = canvas.height;
+
+      // Fon rangini 4 burchak + qirra o'rtachasidan topamiz
+      var samples = [];
+      var samplePoints = [
+        0, W-1, (H-1)*W, H*W-1, // 4 burchak
+        Math.floor(W/2), Math.floor(H/2)*W, // top va bottom o'rta
+        W-1 + Math.floor(H/2)*W*4/4 // o'ng o'rta
+      ];
+
+      // Qirra piksellarini sample qilamiz
+      for(var x=0; x<W; x+=4){
+        samples.push({r:data[x*4], g:data[x*4+1], b:data[x*4+2]});
+        var bot = ((H-1)*W+x)*4;
+        samples.push({r:data[bot], g:data[bot+1], b:data[bot+2]});
+      }
+      for(var y=0; y<H; y+=4){
+        var left = y*W*4;
+        samples.push({r:data[left], g:data[left+1], b:data[left+2]});
+        var right = (y*W+W-1)*4;
+        samples.push({r:data[right], g:data[right+1], b:data[right+2]});
+      }
+
+      // Eng ko'p uchraydigan rang (rounded to 20)
+      var freq = {};
+      samples.forEach(function(s){
+        var key = Math.round(s.r/20)*20 + ',' + Math.round(s.g/20)*20 + ',' + Math.round(s.b/20)*20;
+        freq[key] = (freq[key]||0) + 1;
+      });
+      var bgKey = Object.keys(freq).sort(function(a,b){ return freq[b]-freq[a]; })[0];
+      var bgParts = bgKey.split(',').map(Number);
+      var bgR = bgParts[0], bgG = bgParts[1], bgB = bgParts[2];
+
+      // Har bir pikselni tekshirish
+      var removed = 0;
+      for(var i=0; i<data.length; i+=4){
+        var r=data[i], g=data[i+1], b=data[i+2];
+        var diff = Math.sqrt(Math.pow(r-bgR,2)+Math.pow(g-bgG,2)+Math.pow(b-bgB,2));
+        if(diff < tolerance){
+          data[i+3] = 0;
+          removed++;
+        } else if(diff < tolerance + softEdge){
+          var alpha = Math.round(((diff-tolerance)/softEdge)*255);
+          data[i+3] = Math.min(data[i+3], alpha);
+        }
+      }
+
+      ctx.putImageData(imageData, 0, 0);
+
+      // Output canvas — padding bilan
+      var out = document.createElement('canvas');
+      out.width = outSize;
+      out.height = outSize;
+      var octx = out.getContext('2d');
+
+      // Fon chizish
+      if(selectedBg !== 'transparent'){
+        octx.fillStyle = selectedBg;
+        octx.fillRect(0, 0, outSize, outSize);
+      }
+
+      // Rasmni markazga, padding bilan
+      var pad = Math.round(outSize * padding);
+      var drawSize = outSize - pad*2;
+
+      // Aspect ratio saqlash
+      var aspect = canvas.width / canvas.height;
+      var dw, dh;
+      if(aspect > 1){ dw=drawSize; dh=Math.round(drawSize/aspect); }
+      else { dh=drawSize; dw=Math.round(drawSize*aspect); }
+      var dx = Math.round((outSize-dw)/2);
+      var dy = Math.round((outSize-dh)/2);
+
+      octx.drawImage(canvas, dx, dy, dw, dh);
+
+      resultCanvas = out;
+
+      // Preview
+      var wrap = document.getElementById('previewWrap');
+      out.style.cssText = 'max-width:100%;max-height:260px;border-radius:6px;';
+      wrap.innerHTML = '';
+      wrap.appendChild(out);
+
+      // Stats
+      var pct = Math.round(removed/(W*H)*100);
+      document.getElementById('statRem').textContent = pct + '%';
+
+      status.textContent = '✅ Tayyor!';
+      status.className = 'status ok';
+
+      document.getElementById('downloadBtn').disabled = false;
+      document.getElementById('copyBtn').disabled = false;
+
+    } catch(e) {
+      status.textContent = '❌ Xato: ' + e.message;
+      status.className = 'status err';
+    }
+  }, 50);
+}
+
+function downloadResult(){
+  if(!resultCanvas) return;
+  var link = document.createElement('a');
+  link.download = 'mahsulot-' + Date.now() + '.png';
+  link.href = resultCanvas.toDataURL('image/png');
+  link.click();
+  toast('✅ PNG yuklab olindi!');
+}
+
+function copyToClipboard(){
+  if(!resultCanvas) return;
+  resultCanvas.toBlob(function(blob){
+    try {
+      var item = new ClipboardItem({'image/png': blob});
+      navigator.clipboard.write([item]).then(function(){
+        toast('✅ Clipboard ga nusxalandi!');
+      });
+    } catch(e){
+      toast('❌ Clipboard ishlamadi — yuklab oling');
+    }
+  });
+}
+
+function toast(msg){
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast ok show';
+  setTimeout(function(){ t.className='toast'; }, 2500);
+}
+
+// ═══ UNIVERSAL FULLSCREEN ═══
+function tbFS(){
+  if(!document.fullscreenElement){
+    document.documentElement.requestFullscreen().catch(function(){});
+  } else {
+    document.exitFullscreen();
+  }
+}
+function posFS(){ tbFS(); }
+function _fsUpdate(){
+  var isFs=!!document.fullscreenElement;
+  ['fsBtn','navF11','tbF11','navF11Btn'].forEach(function(id){
+    var b=document.getElementById(id);
+    if(!b)return;
+    b.innerHTML=isFs?'&#x2715; ESC':'&#x26F6; F11';
+    b.style.color=isFs?'#00ffe7':'';
+    b.style.borderColor=isFs?'#00ffe7':'';
+  });
+}
+document.addEventListener('fullscreenchange',_fsUpdate);
+document.addEventListener('keydown',function(e){
+  if(e.key==='F11'){e.preventDefault();tbFS();}
+});
+
+</script>
+</body>
+</html>

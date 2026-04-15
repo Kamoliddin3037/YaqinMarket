@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Mahalla Dukoni — Kirish</title>
+<link rel="manifest" href="manifest.json">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Orbitron:wght@700;900&display=swap');
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+
+:root{
+  --bg:#0a0f1a;
+  --bg2:#0f1623;
+  --card:#141d2e;
+  --border:#1e2d42;
+  --border2:#253650;
+  --cyan:#00e5c8;
+  --cyan2:#00b4a0;
+  --amber:#f59e0b;
+  --red:#ef4444;
+  --green:#22c55e;
+  --text:#f0f6ff;
+  --muted:#6b8aaa;
+  --glow:0 0 28px rgba(0,229,200,.4);
+  --glow-sm:0 0 14px rgba(0,229,200,.22);
+}
+
+html,body{
+  height:100%;font-family:'Nunito',sans-serif;
+  background:var(--bg);color:var(--text);
+  overflow-x:hidden;
+}
+
+/* ANIMATED BACKGROUND */
+body::before{
+  content:'';position:fixed;inset:0;
+  background:
+    radial-gradient(ellipse 60% 40% at 20% 10%, rgba(0,229,200,.07) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 50% at 80% 80%, rgba(0,100,200,.06) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 30% at 50% 50%, rgba(0,229,200,.03) 0%, transparent 60%);
+  pointer-events:none;z-index:0;
+}
+body::after{
+  content:'';position:fixed;inset:0;
+  background-image:
+    radial-gradient(circle, rgba(0,229,200,.035) 1px, transparent 1px);
+  background-size:36px 36px;
+  pointer-events:none;z-index:0;
+  animation:gridMove 20s linear infinite;
+}
+@keyframes gridMove{from{background-position:0 0;}to{background-position:36px 36px;}}
+
+/* TOAST */
+.toast{
+  position:fixed;top:20px;left:50%;
+  transform:translateX(-50%) translateY(-80px);
+  background:var(--card);border:1px solid var(--border2);
+  color:var(--text);padding:12px 24px;border-radius:40px;
+  font-size:14px;font-weight:700;z-index:9999;
+  transition:transform .35s cubic-bezier(.34,1.56,.64,1);
+  white-space:nowrap;box-shadow:0 8px 32px rgba(0,0,0,.5);
+  pointer-events:none;
+}
+.toast.show{transform:translateX(-50%) translateY(0);}
+.toast.success{border-color:var(--green);color:var(--green);}
+.toast.error{border-color:var(--red);color:var(--red);}
+
+/* WRAPPER */
+.wrap{
+  min-height:100vh;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  padding:24px 16px;position:relative;z-index:1;
+}
+
+/* LOGO SECTION */
+.logo-area{text-align:center;margin-bottom:36px;animation:fadeDown .6s ease;}
+@keyframes fadeDown{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:translateY(0);}}
+
+.logo-circle{
+  width:80px;height:80px;
+  background:linear-gradient(135deg,var(--cyan),var(--cyan2));
+  border-radius:24px;margin:0 auto 16px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:38px;
+  box-shadow:var(--glow), 0 20px 40px rgba(0,0,0,.4);
+  animation:logoPulse 3s ease-in-out infinite;
+}
+@keyframes logoPulse{
+  0%,100%{box-shadow:var(--glow),0 20px 40px rgba(0,0,0,.4);}
+  50%{box-shadow:0 0 40px rgba(0,229,200,.6),0 20px 40px rgba(0,0,0,.4);}
+}
+.logo-title{
+  font-family:'Orbitron',monospace;font-size:20px;
+  font-weight:900;color:var(--text);letter-spacing:3px;
+  margin-bottom:6px;
+}
+.logo-sub{font-size:13px;color:var(--muted);letter-spacing:1px;}
+
+/* CARD */
+.login-card{
+  width:100%;max-width:420px;
+  background:rgba(20,29,46,.85);
+  border:1px solid var(--border2);
+  border-radius:24px;
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  box-shadow:0 32px 64px rgba(0,0,0,.5), 0 0 0 1px rgba(0,229,200,.05);
+  overflow:hidden;
+  animation:fadeUp .7s ease .1s both;
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
+
+/* ROLE TABS */
+.role-tabs{
+  display:flex;
+  border-bottom:1px solid var(--border);
+}
+.role-tab{
+  flex:1;padding:16px 8px;
+  text-align:center;cursor:pointer;
+  font-size:13px;font-weight:700;color:var(--muted);
+  transition:all .2s;position:relative;
+  display:flex;flex-direction:column;align-items:center;gap:4px;
+  border:none;background:none;font-family:'Nunito',sans-serif;
+}
+.role-tab .tab-ico{font-size:20px;}
+.role-tab::after{
+  content:'';position:absolute;bottom:0;left:20%;right:20%;
+  height:2px;border-radius:2px 2px 0 0;
+  background:var(--cyan);transform:scaleX(0);transition:transform .25s;
+}
+.role-tab.active{color:var(--text);}
+.role-tab.active::after{transform:scaleX(1);}
+.role-tab.active .tab-ico{filter:drop-shadow(0 0 6px var(--cyan));}
+
+/* FORMS */
+.forms-wrap{padding:28px 24px 32px;}
+
+.form-section{display:none;}
+.form-section.active{display:block;animation:formIn .3s ease;}
+@keyframes formIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+
+.form-title{
+  font-family:'Orbitron',monospace;font-size:12px;
+  color:var(--cyan);letter-spacing:2px;font-weight:700;
+  margin-bottom:20px;
+}
+
+/* INPUT GROUP */
+.inp-group{margin-bottom:16px;position:relative;}
+.inp-label{
+  display:block;font-size:10px;font-weight:700;
+  color:var(--muted);letter-spacing:2px;text-transform:uppercase;
+  margin-bottom:8px;
+}
+.inp-wrap{position:relative;}
+.inp-ico{
+  position:absolute;left:14px;top:50%;transform:translateY(-50%);
+  font-size:17px;pointer-events:none;
+}
+.inp-field{
+  width:100%;padding:13px 14px 13px 44px;
+  background:rgba(10,15,26,.6);
+  border:1.5px solid var(--border2);
+  border-radius:12px;color:var(--text);
+  font-family:'Nunito',sans-serif;font-size:15px;font-weight:600;
+  outline:none;transition:all .2s;
+}
+.inp-field:focus{
+  border-color:var(--cyan);
+  background:rgba(0,229,200,.04);
+  box-shadow:var(--glow-sm);
+}
+.inp-field::placeholder{color:var(--muted);}
+.inp-field.err{border-color:var(--red);}
+
+/* PASSWORD EYE */
+.eye-btn{
+  position:absolute;right:14px;top:50%;transform:translateY(-50%);
+  background:none;border:none;cursor:pointer;font-size:18px;
+  color:var(--muted);transition:color .2s;padding:4px;
+}
+.eye-btn:hover{color:var(--cyan);}
+.inp-field.has-eye{padding-right:46px;}
+
+/* REMEMBER */
+.remember-row{
+  display:flex;align-items:center;gap:10px;
+  margin-bottom:20px;cursor:pointer;
+  font-size:13px;color:var(--muted);font-weight:600;
+}
+.remember-row input[type=checkbox]{
+  width:18px;height:18px;border-radius:4px;
+  accent-color:var(--cyan);cursor:pointer;
+}
+
+/* LOGIN BUTTON */
+.login-btn{
+  width:100%;padding:16px;
+  background:linear-gradient(135deg,var(--cyan),var(--cyan2));
+  color:#000;border:none;border-radius:14px;
+  font-family:'Orbitron',monospace;font-size:12px;
+  font-weight:700;letter-spacing:3px;cursor:pointer;
+  transition:all .25s;
+  box-shadow:0 8px 24px rgba(0,229,200,.3);
+}
+.login-btn:hover{
+  box-shadow:var(--glow);transform:translateY(-2px);
+}
+.login-btn:active{transform:translateY(0) scale(.98);}
+
+/* DIVIDER */
+.or-divider{
+  display:flex;align-items:center;gap:12px;
+  margin:16px 0;color:var(--muted);font-size:12px;font-weight:600;
+}
+.or-divider::before,.or-divider::after{
+  content:'';flex:1;height:1px;background:var(--border2);
+}
+
+/* CUSTOMER NOTE */
+.customer-note{
+  background:rgba(0,229,200,.06);
+  border:1px solid rgba(0,229,200,.15);
+  border-radius:10px;padding:12px 14px;
+  font-size:12px;color:var(--muted);
+  margin-top:16px;line-height:1.6;
+  display:flex;gap:10px;align-items:flex-start;
+}
+.customer-note .ni{font-size:18px;flex-shrink:0;}
+
+/* SECURITY NOTE */
+.security-badge{
+  display:flex;align-items:center;gap:8px;
+  justify-content:center;margin-top:20px;
+  font-size:11px;color:var(--muted);
+}
+
+/* PHONE FLAG */
+.phone-flag{
+  position:absolute;left:14px;top:50%;transform:translateY(-50%);
+  font-size:17px;pointer-events:none;display:flex;align-items:center;
+  gap:4px;
+}
+.phone-code{
+  font-size:13px;font-weight:700;color:var(--muted);font-family:'Nunito',sans-serif;
+}
+</style>
+</head>
+<body>
+<div class="toast" id="toast"></div>
+
+<div class="wrap">
+  <!-- LOGO -->
+  <div class="logo-area">
+    <div class="logo-circle">🏪</div>
+    <div class="logo-title">MAHALLA DUKONI</div>
+    <div class="logo-sub">Savdo boshqaruv tizimi</div>
+  </div>
+
+  <!-- CARD -->
+  <div class="login-card">
+    <!-- ROLE TABS -->
+    <div class="role-tabs">
+      <button class="role-tab active" id="tabCustomer" onclick="switchRole('customer')">
+        <span class="tab-ico">🛍️</span>Xaridor
+      </button>
+      <button class="role-tab" id="tabSeller" onclick="switchRole('seller')">
+        <span class="tab-ico">🧑‍💼</span>Sotuvchi
+      </button>
+      <button class="role-tab" id="tabAdmin" onclick="switchRole('admin')">
+        <span class="tab-ico">⚙️</span>Admin
+      </button>
+    </div>
+
+    <div class="forms-wrap">
+
+      <!-- ─── XARIDOR ─── -->
+      <div class="form-section active" id="customerForm">
+        <div class="form-title">XARIDOR KIRISHI</div>
+
+        <div class="inp-group">
+          <label class="inp-label">Ism Familiya</label>
+          <div class="inp-wrap">
+            <span class="inp-ico">👤</span>
+            <input class="inp-field" id="custName" type="text"
+              placeholder="Ismingizni kiriting" autocomplete="name">
+          </div>
+        </div>
+
+        <div class="inp-group">
+          <label class="inp-label">Telefon raqam</label>
+          <div class="inp-wrap">
+            <div class="phone-flag">🇺🇿<span class="phone-code">+998</span></div>
+            <input class="inp-field" id="custPhone" type="tel"
+              placeholder="90 123 45 67" autocomplete="tel"
+              style="padding-left:72px;"
+              oninput="formatPhone(this)">
+          </div>
+        </div>
+
+        <label class="remember-row">
+          <input type="checkbox" id="rememberCustomer" checked>
+          Qurilmada eslab qolsin
+        </label>
+
+        <button class="login-btn" onclick="customerLogin()">KIRISH</button>
+
+        <div class="customer-note">
+          <span class="ni">ℹ️</span>
+          <span>Birinchi marta kirganingizda avtomatik ro'yxatdan o'tiladi. Keyingi safar telefon raqami bilan tezkor kirish.</span>
+        </div>
+      </div>
+
+      <!-- ─── SOTUVCHI ─── -->
+      <div class="form-section" id="sellerForm">
+        <div class="form-title">SOTUVCHI KIRISHI</div>
+
+        <div class="inp-group">
+          <label class="inp-label">Login</label>
+          <div class="inp-wrap">
+            <span class="inp-ico">👤</span>
+            <input class="inp-field" id="sellerLogin" type="text"
+              placeholder="seller" autocomplete="username">
+          </div>
+        </div>
+
+        <div class="inp-group">
+          <label class="inp-label">Parol</label>
+          <div class="inp-wrap">
+            <span class="inp-ico">🔒</span>
+            <input class="inp-field has-eye" id="sellerPass" type="password"
+              placeholder="••••••••" autocomplete="current-password">
+            <button class="eye-btn" onclick="togglePass('sellerPass',this)">👁️</button>
+          </div>
+        </div>
+
+        <label class="remember-row">
+          <input type="checkbox" id="rememberSeller" checked>
+          Qurilmada eslab qolsin
+        </label>
+
+        <button class="login-btn" onclick="sellerLogin()">KIRISH</button>
+      </div>
+
+      <!-- ─── ADMIN ─── -->
+      <div class="form-section" id="adminForm">
+        <div class="form-title">ADMIN KIRISHI</div>
+
+        <div class="inp-group">
+          <label class="inp-label">Login</label>
+          <div class="inp-wrap">
+            <span class="inp-ico">🔑</span>
+            <input class="inp-field" id="adminLogin" type="text"
+              placeholder="admin" autocomplete="username">
+          </div>
+        </div>
+
+        <div class="inp-group">
+          <label class="inp-label">Parol</label>
+          <div class="inp-wrap">
+            <span class="inp-ico">🔐</span>
+            <input class="inp-field has-eye" id="adminPass" type="password"
+              placeholder="••••••••" autocomplete="current-password">
+            <button class="eye-btn" onclick="togglePass('adminPass',this)">👁️</button>
+          </div>
+        </div>
+
+        <button class="login-btn" onclick="adminLogin()">KIRISH</button>
+      </div>
+
+    </div><!-- /forms-wrap -->
+  </div><!-- /login-card -->
+
+  <div class="security-badge">
+    🔒 &nbsp; Ma'lumotlar xavfsiz saqlanadi
+  </div>
+</div>
+
+<script src="data.js"></script>
+<script>
+// ═══ DEVICE ═══
+function getDeviceId(){
+  var did=localStorage.getItem('mahalla_device_id');
+  if(!did){
+    did='DEV_'+Date.now()+'_'+Math.random().toString(36).slice(2,8).toUpperCase();
+    localStorage.setItem('mahalla_device_id',did);
+  }
+  return did;
+}
+function getDeviceInfo(){
+  var ua=navigator.userAgent,device='Noma\'lum';
+  if(/iPhone/.test(ua))device='iPhone';
+  else if(/iPad/.test(ua))device='iPad';
+  else if(/Android/.test(ua))device='Android';
+  else if(/Windows/.test(ua))device='Windows PC';
+  else if(/Mac/.test(ua))device='Mac';
+  return{deviceId:getDeviceId(),device:device,ua:ua.slice(0,80)};
+}
+
+// ═══ PHONE FORMAT ═══
+function formatPhone(inp){
+  var v=inp.value.replace(/\D/g,'');
+  if(v.startsWith('998'))v=v.slice(3);
+  if(v.length>9)v=v.slice(0,9);
+  // Format: XX XXX XX XX
+  var f='';
+  if(v.length>0)f=v.slice(0,2);
+  if(v.length>2)f+=' '+v.slice(2,5);
+  if(v.length>5)f+=' '+v.slice(5,7);
+  if(v.length>7)f+=' '+v.slice(7,9);
+  inp.value=f;
+}
+
+function getFullPhone(val){
+  var digits=val.replace(/\D/g,'');
+  if(digits.length===9)return'+998'+digits;
+  if(digits.length===12&&digits.startsWith('998'))return'+'+digits;
+  return'+998'+digits;
+}
+
+// ═══ ROLE SWITCH ═══
+var activeRole='customer';
+function switchRole(r){
+  activeRole=r;
+  ['customer','seller','admin'].forEach(function(x){
+    document.getElementById('tab'+x.charAt(0).toUpperCase()+x.slice(1)).classList.toggle('active',x===r);
+    document.getElementById(x+'Form').classList.toggle('active',x===r);
+  });
+}
+
+// ═══ TOGGLE PASSWORD ═══
+function togglePass(id,btn){
+  var inp=document.getElementById(id);
+  var isPass=inp.type==='password';
+  inp.type=isPass?'text':'password';
+  btn.textContent=isPass?'🙈':'👁️';
+}
+
+// ═══ CUSTOMER LOGIN ═══
+function customerLogin(){
+  var name=document.getElementById('custName').value.trim();
+  var phoneRaw=document.getElementById('custPhone').value.trim();
+  var phone=getFullPhone(phoneRaw);
+
+  if(!name){
+    document.getElementById('custName').classList.add('err');
+    showToast('Ismingizni kiriting!','error');return;
+  }
+  document.getElementById('custName').classList.remove('err');
+
+  if(phoneRaw.replace(/\D/g,'').length<9){
+    document.getElementById('custPhone').classList.add('err');
+    showToast('Telefon raqam kiriting!','error');return;
+  }
+  document.getElementById('custPhone').classList.remove('err');
+
+  var dInfo=getDeviceInfo();
+  var users=DB.getUsers();
+  var user=users.find(function(u){return u.phone===phone;});
+  if(!user){
+    user={id:Date.now(),name:name,phone:phone,
+      registeredAt:new Date().toISOString(),
+      deviceId:dInfo.deviceId,device:dInfo.device,
+      purchases:0,totalSpent:0,debt:0,debtHistory:[]};
+    users.push(user);
+  } else {
+    user.name=name;
+    user.deviceId=dInfo.deviceId;
+    user.device=dInfo.device;
+  }
+  DB.saveUsers(users);
+  DB.setSession({role:'customer',userId:user.id,name:name,phone:phone,device:dInfo});
+
+  if(document.getElementById('rememberCustomer').checked){
+    localStorage.setItem('mahalla_remembered_customer',JSON.stringify({
+      userId:user.id,name:name,phone:phone,device:dInfo,savedAt:new Date().toISOString()
+    }));
+  }
+
+  showToast('Xush kelibsiz, '+name+'!','success');
+  setTimeout(function(){window.location.href='shop.html';},700);
+}
+
+// ═══ SELLER LOGIN ═══
+async function sellerLogin(){
+  var login = document.getElementById('sellerLogin').value.trim().toLowerCase();
+  var pass  = document.getElementById('sellerPass').value;
+  if(!login || !pass){
+    showToast('Login va parolni kiriting!','error'); return;
+  }
+
+  try {
+    var res  = await fetch('/auth/login', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({role:'seller', login:login, password:pass})
+    });
+    var data = await res.json();
+    if(!data.ok){
+      document.getElementById('sellerLogin').classList.add('err');
+      document.getElementById('sellerPass').classList.add('err');
+      showToast(data.error||'Login yoki parol xato!','error');
+      return;
+    }
+    // Token saqlash
+    localStorage.setItem('mahalla_v1_token', data.token);
+    var sessionData = {
+      role:'seller', name:data.name, employeeId:data.employeeId,
+      permissions:data.permissions||['pos']
+    };
+    localStorage.setItem('mahalla_v1_session', JSON.stringify(sessionData));
+    DB._cache['session'] = sessionData;
+    if(document.getElementById('rememberSeller').checked){
+      localStorage.setItem('mahalla_remembered_seller', JSON.stringify({login:login}));
+    }
+    localStorage.setItem('mahalla_fs_locked','1');
+    showToast('Xush kelibsiz, '+data.name+'!','success');
+    document.documentElement.requestFullscreen().catch(function(){});
+    setTimeout(function(){ window.location.href='pos.html'; }, 500);
+  } catch(e) {
+    showToast('Server bilan bog\'lanib bo\'lmadi. python3 server.py ni ishga tushiring.','error');
+  }
+}
+
+// ═══ ADMIN LOGIN ═══
+async function adminLogin(){
+  var login=document.getElementById('adminLogin').value.trim();
+  var pass =document.getElementById('adminPass').value;
+  if(!login||!pass){ showToast('Login va parolni kiriting!','error'); return; }
+  try {
+    var res  = await fetch('/auth/login', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({role:'admin', login:login, password:pass})
+    });
+    var data = await res.json();
+    if(!data.ok){
+      document.getElementById('adminLogin').classList.add('err');
+      document.getElementById('adminPass').classList.add('err');
+      showToast(data.error||'Login yoki parol xato! ❌','error');
+      return;
+    }
+    localStorage.setItem('mahalla_v1_token', data.token);
+    var sessionData={role:'admin',name:'Admin'};
+    localStorage.setItem('mahalla_v1_session', JSON.stringify(sessionData));
+    localStorage.setItem('mahalla_fs_locked','1');
+    DB._cache['session']=sessionData;
+    showToast('Admin panelga xush kelibsiz! ✅','success');
+    document.documentElement.requestFullscreen().catch(function(){});
+    setTimeout(function(){window.location.href='dashboard.html';},400);
+  } catch(e) {
+    showToast('Server bilan bog\'lanib bo\'lmadi. python3 server.py ni ishga tushiring.','error');
+  }
+}
+
+// ═══ ENTER KEY ═══
+document.addEventListener('keydown',function(e){
+  if(e.key==='Enter'){
+    if(activeRole==='customer'){ customerLogin(); return; }
+    // Seller yoki Admin: login + fullscreen
+    if(activeRole==='seller') sellerLogin();
+    else adminLogin();
+  }
+});
+
+// ═══ TOAST ═══
+function showToast(msg,type){
+  var t=document.getElementById('toast');
+  t.textContent=msg;
+  t.className='toast show '+(type||'');
+  setTimeout(function(){t.className='toast';},2800);
+}
+
+// ═══ AUTO LOGIN ═══
+(function(){
+  var fsLocked = localStorage.getItem('mahalla_fs_locked') === '1';
+  var s = DB.getSession();
+  // Faqat fs_locked=1 bo'lsagina avtomatik kirish
+  if(fsLocked && s && s.role === 'admin') { window.location.href='dashboard.html'; return; }
+  if(fsLocked && s && s.role === 'seller') { window.location.href='pos.html'; return; }
+  // fs_locked yo'q = logout qilingan, sessionni tozala
+  if(!fsLocked) {
+    DB.clearSession();
+  }
+})();
+
+// ═══ F11 ═══
+function tbFS(){if(!document.fullscreenElement){document.documentElement.requestFullscreen().catch(function(){});}else{document.exitFullscreen();}}
+document.addEventListener('keydown',function(e){if(e.key==='F11'){e.preventDefault();tbFS();}});
+</script>
+</body>
+</html>

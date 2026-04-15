@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Xodimlar — Mahalla Dukoni</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;900&family=Rajdhani:wght@400;500;600;700&display=swap');
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0d1b2a;--bg2:#1a2d42;--panel:#1e3448;
+  --border:#2a4a6a;--border2:#2d5278;
+  --cyan:#00ffe7;--cyan2:#00b4d8;--cyan3:#006d8f;
+  --amber:#ffb703;--red:#ff2d55;--green:#39ff14;--purple:#b44cf5;
+  --text:#e0f2fe;--muted:#7ab3cc;--muted2:#3a6080;
+  --glow:0 0 20px rgba(0,255,231,.3);
+  --sidebar:220px;
+}
+html,body{height:100%;overflow-x:hidden}
+body{background:linear-gradient(135deg,#0d1b2a,#152538);font-family:'Rajdhani',sans-serif;color:var(--text);display:flex;min-height:100vh;}
+body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(circle,rgba(0,255,231,.05) 1px,transparent 1px);background-size:32px 32px;pointer-events:none;z-index:0;}
+
+/* MAIN */
+.main{margin-left:0;flex:1;min-width:0;display:flex;flex-direction:column;}
+.topbar{background:#152030;border-bottom:1px solid var(--border);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;}
+.page-title{font-family:'Orbitron',monospace;font-size:13px;color:white;letter-spacing:2px;}
+.topbar-time{font-family:'Orbitron',monospace;font-size:13px;color:var(--cyan);letter-spacing:2px;}
+.content{padding:20px 24px;flex:1;position:relative;z-index:1;}
+
+/* PANEL */
+.panel-card{background:var(--bg2);border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-bottom:20px;}
+.panel-head{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+.panel-head-title{font-family:'Orbitron',monospace;font-size:12px;color:var(--cyan);letter-spacing:2px;}
+
+/* STATS */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px;}
+.stat-card{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:14px;position:relative;overflow:hidden;}
+.stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
+.stat-card.c1::before{background:linear-gradient(90deg,var(--cyan),var(--cyan2));}
+.stat-card.c2::before{background:linear-gradient(90deg,var(--amber),#ff8c00);}
+.stat-card.c3::before{background:linear-gradient(90deg,var(--green),#00cc00);}
+.stat-card.c4::before{background:linear-gradient(90deg,var(--purple),#7b2fff);}
+.stat-label{font-size:10px;color:var(--muted);font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;}
+.stat-value{font-family:'Orbitron',monospace;font-size:20px;font-weight:700;color:white;margin-bottom:2px;}
+.stat-sub{font-size:11px;color:var(--muted);}
+
+/* TABLE */
+.data-table{width:100%;border-collapse:collapse;}
+.data-table th{padding:11px 13px;background:rgba(0,0,0,.2);color:var(--muted);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;text-align:left;border-bottom:1px solid var(--border);}
+.data-table td{padding:11px 13px;border-bottom:1px solid rgba(42,74,106,.4);font-size:13px;}
+.data-table tr:hover td{background:rgba(0,255,231,.025);}
+
+/* BUTTONS */
+.btn{padding:8px 16px;border-radius:4px;font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;border:none;display:inline-flex;align-items:center;gap:6px;}
+.btn-cyan{background:linear-gradient(135deg,var(--cyan),var(--cyan2));color:var(--bg);}
+.btn-cyan:hover{box-shadow:var(--glow);}
+.btn-ghost{background:transparent;border:1px solid var(--border);color:var(--text);}
+.btn-ghost:hover{border-color:var(--cyan);color:var(--cyan);}
+.btn-danger{background:rgba(255,45,85,.15);border:1px solid rgba(255,45,85,.3);color:var(--red);}
+.btn-sm{padding:5px 11px;font-size:12px;}
+.btn-amber{background:rgba(255,183,3,.15);border:1px solid rgba(255,183,3,.3);color:var(--amber);}
+
+/* XODIM CARD */
+.staff-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;padding:18px;}
+.staff-card{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:16px;position:relative;transition:all .2s;}
+.staff-card:hover{border-color:var(--border2);}
+.staff-card.active-shift{border-color:var(--green);box-shadow:0 0 12px rgba(57,255,20,.1);}
+.staff-card.inactive{opacity:.7;}
+.staff-avatar{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--cyan3),var(--purple));display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:12px;}
+.staff-name{font-size:16px;font-weight:700;color:white;margin-bottom:2px;}
+.staff-role{font-size:11px;color:var(--cyan);font-family:'Orbitron',monospace;letter-spacing:1px;margin-bottom:8px;}
+.staff-meta{font-size:12px;color:var(--muted);margin-bottom:4px;}
+.staff-badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:10px;font-weight:700;margin-bottom:10px;}
+.badge-active{background:rgba(57,255,20,.12);color:var(--green);border:1px solid rgba(57,255,20,.3);}
+.badge-shift{background:rgba(0,255,231,.1);color:var(--cyan);border:1px solid rgba(0,255,231,.2);}
+.badge-inactive{background:rgba(255,45,85,.1);color:var(--red);border:1px solid rgba(255,45,85,.2);}
+.staff-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0;background:rgba(0,0,0,.2);border-radius:6px;padding:10px;}
+.staff-stat-item{text-align:center;}
+.staff-stat-val{font-family:'Orbitron',monospace;font-size:13px;color:var(--amber);font-weight:700;}
+.staff-stat-lbl{font-size:9px;color:var(--muted);letter-spacing:1px;}
+.staff-actions{display:flex;gap:6px;flex-wrap:wrap;}
+
+/* MODAL */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.78);backdrop-filter:blur(7px);z-index:500;display:none;align-items:center;justify-content:center;padding:16px;}
+.modal.open{display:flex;animation:fadeIn .2s;}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes staffTickerMove{0%{transform:translateX(100vw)}100%{transform:translateX(-100%)}}
+.modal-box{background:var(--bg2);border:1px solid var(--border);border-radius:8px;width:100%;max-width:460px;max-height:92vh;overflow-y:auto;}
+.modal-head{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:var(--bg2);}
+.modal-title{font-family:'Orbitron',monospace;font-size:11px;color:var(--cyan);letter-spacing:2px;}
+.modal-close{background:none;border:none;color:var(--muted);font-size:22px;cursor:pointer;}
+.modal-close:hover{color:var(--red);}
+.modal-body{padding:18px;}
+.form-group{margin-bottom:14px;}
+.form-label{display:block;font-size:11px;font-weight:700;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;}
+.form-input,.form-select{width:100%;padding:10px 13px;background:var(--bg);border:1px solid var(--border);border-radius:4px;color:white;font-family:'Rajdhani',sans-serif;font-size:14px;outline:none;transition:all .2s;}
+.form-input:focus,.form-select:focus{border-color:var(--cyan);}
+.form-select option{background:var(--bg2);}
+.submit-btn{width:100%;padding:13px;background:linear-gradient(135deg,var(--cyan),var(--cyan2));color:var(--bg);border:none;border-radius:4px;font-family:'Orbitron',monospace;font-size:11px;font-weight:700;letter-spacing:3px;cursor:pointer;margin-top:4px;}
+.submit-btn:hover{box-shadow:var(--glow);}
+
+/* SHIFT TABLE */
+.shift-row-active{background:rgba(57,255,20,.04)!important;}
+.shift-badge{padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700;}
+.shift-open{background:rgba(57,255,20,.12);color:var(--green);}
+.shift-closed{background:rgba(42,74,106,.3);color:var(--muted);}
+
+/* TABS */
+.tab-row{display:flex;gap:6px;padding:14px 18px;border-bottom:1px solid var(--border);}
+.tab-btn{padding:7px 16px;border-radius:4px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;}
+.tab-btn.active{background:rgba(0,255,231,.08);border-color:var(--cyan);color:var(--cyan);}
+
+/* TOAST */
+.ptime-btn{padding:6px 12px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:'Rajdhani',sans-serif;font-size:12px;font-weight:700;cursor:pointer;transition:all .15s;}
+.ptime-btn:hover{border-color:var(--amber);color:var(--amber);}
+.ptime-btn.active{background:rgba(255,183,3,.12);border-color:var(--amber);color:var(--amber);}
+.perm-row{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:6px;background:var(--bg);border:1px solid var(--border);cursor:pointer;transition:all .15s;}
+.perm-row:hover{border-color:var(--cyan2);}
+.perm-row.checked{border-color:var(--cyan);background:rgba(0,255,231,.04);}
+.perm-row input{accent-color:var(--cyan);width:16px;height:16px;cursor:pointer;}
+.toast{position:fixed;bottom:24px;right:24px;background:var(--bg2);border:1px solid var(--border);color:var(--text);padding:11px 18px;border-radius:6px;font-size:13px;font-weight:600;z-index:2000;opacity:0;transform:translateY(10px);transition:all .3s;pointer-events:none;max-width:300px;}
+.toast.show{opacity:1;transform:translateY(0);}
+.toast.success{border-color:var(--green);color:var(--green);}
+.toast.error{border-color:var(--red);color:var(--red);}
+.toast.info{border-color:var(--cyan);color:var(--cyan);}
+</style>
+</head>
+<body>
+<div class="toast" id="toast"></div>
+
+<!-- MAIN -->
+<div class="main">
+  <header class="topbar">
+    <div class="page-title">👔 XODIMLAR</div>
+    <div style="flex:1;overflow:hidden;margin:0 16px;height:32px;display:flex;align-items:center;">
+      <div id="staffTickerWrap" style="overflow:hidden;width:100%;height:100%;display:flex;align-items:center;">
+        <div id="staffTicker" style="white-space:nowrap;font-size:11px;color:var(--amber);display:inline-block;"></div>
+      </div>
+    </div>
+    <div class="topbar-time" id="clock">--:--:--</div>
+  </header>
+  <div class="content" id="mainContent">
+    <div style="text-align:center;padding:40px;color:var(--muted);">Yuklanmoqda...</div>
+  </div>
+</div>
+
+<!-- XODIM QO'SHISH/TAHRIRLASH MODAL -->
+<div class="modal" id="staffModal">
+  <div class="modal-box">
+    <div class="modal-head">
+      <div class="modal-title" id="staffModalTitle">XODIM QO'SHISH</div>
+      <button class="modal-close" onclick="closeStaffModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="sf_id">
+      <div class="form-group">
+        <label class="form-label">Ism Familiya</label>
+        <input class="form-input" id="sf_name" placeholder="Sardor Karimov" oninput="capName(this)">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Telefon</label>
+        <input class="form-input" id="sf_phone" placeholder="+998 90 123 45 67" maxlength="17" oninput="phoneMask(this)">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Login (username)</label>
+        <input class="form-input" id="sf_login" placeholder="sardor01" autocomplete="off">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Parol</label>
+        <input class="form-input" id="sf_pass" type="password" placeholder="••••••" autocomplete="new-password">
+        <div style="font-size:10px;color:var(--muted);margin-top:4px;">Tahrirlashda bo'sh qoldirsangiz o'zgarmaydi</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Lavozim</label>
+        <select class="form-select" id="sf_role">
+          <option value="seller">Sotuvchi</option>
+          <option value="cashier">Kassir</option>
+          <option value="manager">Menejer</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Minimal oylik maosh (so'm)</label>
+        <input class="form-input" id="sf_base" type="text" inputmode="numeric" placeholder="2,000,000" oninput="this.value=this.value.replace(/[^\d]/g,'').replace(/\B(?=(\d{3})+(?!\d))/g,',')">
+        <div style="font-size:10px;color:var(--muted);margin-top:4px;">Kafolatlangan oylik. Foiz bonusi ustiga qo'shiladi.</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Foiz stavka (%) — savdodan qo'shimcha bonus</label>
+        <input class="form-input" id="sf_pct" type="number" min="0" max="100" step="0.1" placeholder="2" value="2">
+        <div style="font-size:10px;color:var(--muted);margin-top:4px;">Jami maosh = Minimal oylik + Savdo foizi</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Holat</label>
+        <select class="form-select" id="sf_active">
+          <option value="1">✅ Faol</option>
+          <option value="0">❌ Nofaol</option>
+        </select>
+      </div>
+      <div id="sf_err" style="color:var(--red);font-size:12px;margin-bottom:8px;"></div>
+      <button class="submit-btn" onclick="saveStaff()">SAQLASH</button>
+    </div>
+  </div>
+</div>
+
+<!-- SMENA DETAIL MODAL -->
+<div class="modal" id="shiftModal">
+
+<!-- RUXSATLAR MODAL -->
+<div class="modal" id="permModal" style="display:none;">
+  <div class="modal-box" style="max-width:400px;">
+    <div class="modal-head">
+      <div class="modal-title" id="permTitle">🔐 RUXSATLAR</div>
+      <button class="modal-close" onclick="document.getElementById('permModal').style.display='none'">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="perm_emp_id">
+      <div style="font-size:11px;color:var(--muted);margin-bottom:14px;" id="permEmpInfo"></div>
+      <div style="font-family:Orbitron,monospace;font-size:10px;color:var(--cyan);letter-spacing:2px;margin-bottom:10px;">BO'LIMLAR</div>
+      <div id="permChecks" style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px;"></div>
+      <div style="border-top:1px solid var(--border);padding-top:14px;margin-bottom:14px;">
+        <div style="font-family:Orbitron,monospace;font-size:10px;color:var(--amber);letter-spacing:2px;margin-bottom:10px;">⏱ VAQTINCHALIK</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;" id="permTimeBtns">
+          <button onclick="setPermTime(0)"  id="pt_0"   class="ptime-btn active">♾ Doimiy</button>
+          <button onclick="setPermTime(10)" id="pt_10"  class="ptime-btn">10 min</button>
+          <button onclick="setPermTime(30)" id="pt_30"  class="ptime-btn">30 min</button>
+          <button onclick="setPermTime(60)" id="pt_60"  class="ptime-btn">1 soat</button>
+          <button onclick="setPermTime(480)"id="pt_480" class="ptime-btn">8 soat</button>
+        </div>
+      </div>
+      <button onclick="revokeAllPerms()" style="width:100%;padding:10px;background:rgba(255,45,85,.1);border:1px solid rgba(255,45,85,.3);color:var(--red);border-radius:4px;font-family:Rajdhani,sans-serif;font-size:13px;font-weight:700;cursor:pointer;margin-bottom:8px;">🚫 Barcha ruxsatlarni olish</button>
+      <button class="submit-btn" onclick="savePermissions()">💾 SAQLASH</button>
+    </div>
+  </div>
+</div>
+  <div class="modal-box" style="max-width:600px;">
+    <div class="modal-head">
+      <div class="modal-title" id="shiftModalTitle">SMENA TAFSILOTI</div>
+      <button class="modal-close" onclick="document.getElementById('shiftModal').classList.remove('open')">✕</button>
+    </div>
+    <div class="modal-body" id="shiftModalBody"></div>
+  </div>
+</div>
+
+<script src="data.js"></script>
+<script>
+// ── STATE ────────────────────────────────────────────────────
+var staff, shifts, offlineSales, orders;
+var currentTab = 'xodimlar';
+
+// ── INIT ─────────────────────────────────────────────────────
+function init(){
+  var s = DB.getSession();
+  if(!s || s.role !== 'admin'){
+    // Agar iframe ichida bo'lsa dashboard ga yo'naltir, aks holda login ga
+    if(window !== window.parent) {
+      document.getElementById('mainContent').innerHTML = '<div style="text-align:center;padding:60px;color:var(--muted);">Ruxsat yo\'q. Admin sifatida kiring.</div>';
+    } else {
+      window.location.href = 'login.html';
+    }
+    return;
+  }
+
+  staff       = DB.getStaff();
+  shifts      = DB.getShifts();
+  offlineSales= DB.getOffline();
+  orders      = DB.getOrders();
+
+  startClock();
+  render();
+}
+
+function startClock(){
+  var u = function(){ document.getElementById('clock').textContent = new Date().toLocaleTimeString('uz-UZ'); };
+  u(); setInterval(u, 1000);
+}
+
+function logout(){
+  window._logoutInProgress = true;
+  DB.clearSession();
+  localStorage.removeItem('mahalla_fs_locked');
+  var go = function(){ window._logoutInProgress=false; window.location.href='login.html'; };
+  if(document.fullscreenElement){ document.exitFullscreen().then(go).catch(go); } else { go(); }
+}
+
+// ── RENDER ───────────────────────────────────────────────────
+function render(){
+  var html = '';
+
+  // Topbar ticker — diskont mahsulotlar
+  var allProducts = DB.getProducts() || [];
+  var discItems = allProducts.filter(function(p){
+    if(!p.expiryDate||p.stock<=0) return false;
+    var d=Math.ceil((new Date(p.expiryDate)-new Date())/86400000);
+    return d>0&&d<=7;
+  });
+  var ticker = document.getElementById('staffTicker');
+  if(ticker){
+    if(discItems.length>0){
+      var tickText = discItems.map(function(p){
+        var d=Math.ceil((new Date(p.expiryDate)-new Date())/86400000);
+        var disc=Math.min(15,Math.ceil(15/d));
+        var fp=Math.floor(p.sellPrice*(100-disc)/100);
+        return '🔥 '+p.name+' \u2014-'+disc+'% '+fmt(fp)+' so\'m | '+d+' kun qoldi';
+      }).join('&nbsp;&nbsp;🔸&nbsp;&nbsp;');
+      ticker.innerHTML=tickText;
+      ticker.style.animation='staffTickerMove '+(discItems.length*8+10)+'s linear infinite';
+    } else {
+      ticker.innerHTML='';
+      ticker.style.animation='none';
+    }
+  }
+
+  // Stats
+  var activeCount = staff.filter(function(s){ return s.active; }).length;
+  var onShift = getOnShiftStaff();
+  var todaySales = getTodaySales();
+  var totalSalary = calcTotalSalary();
+
+  // 2x2 stat cards + maosh chart
+  html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;">';
+
+  // Stat cards 2x2
+  html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">';
+  html += '<div class="stat-card c1" style="position:relative;overflow:hidden;">';
+  html += '<div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--cyan),var(--cyan2));"></div>';
+  html += '<div class="stat-label">JAMI XODIM</div><div class="stat-value">'+staff.length+'</div><div class="stat-sub">'+activeCount+' ta faol</div></div>';
+
+  html += '<div class="stat-card c2" style="position:relative;overflow:hidden;">';
+  html += '<div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--amber),#ff8c00);"></div>';
+  html += '<div class="stat-label">HOZIR SMENADA</div><div class="stat-value">'+onShift.length+'</div><div class="stat-sub">ta xodim</div></div>';
+
+  html += '<div class="stat-card c3" style="position:relative;overflow:hidden;">';
+  html += '<div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--green),#00cc00);"></div>';
+  html += '<div class="stat-label">BUGUNGI SAVDO</div><div class="stat-value">'+todaySales.length+'</div><div class="stat-sub">xodimlar orqali</div></div>';
+
+  html += '<div class="stat-card c4" style="position:relative;overflow:hidden;">';
+  html += '<div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--purple),#7b2fff);"></div>';
+  html += '<div class="stat-label">OY MAOSHI</div><div class="stat-value">'+fmtShort(totalSalary)+'</div><div class="stat-sub">so\'m</div></div>';
+  html += '</div>';
+
+  // Maosh chart
+  html += '<div class="panel-card" style="padding:16px;">';
+  html += '<div style="font-family:Orbitron,monospace;font-size:10px;color:var(--cyan);letter-spacing:2px;margin-bottom:14px;">💰 MAOSH TAQSIMOTI</div>';
+  var activeStaff = staff.filter(function(e){return e.active;});
+  var maxSal = 0;
+  activeStaff.forEach(function(e){ var s=calcSalaryForStaff(e.id); if(s>maxSal)maxSal=s; });
+  activeStaff.forEach(function(emp){
+    var sal = calcSalaryForStaff(emp.id);
+    var pct = maxSal>0 ? Math.round(sal/maxSal*100) : 0;
+    var base = emp.baseSalary||0;
+    var bonus = sal - base;
+    html += '<div style="margin-bottom:14px;">';
+    html += '<div style="display:flex;justify-content:space-between;margin-bottom:5px;">';
+    html += '<div><span style="font-size:13px;font-weight:700;color:white;">'+emp.name+'</span> <span style="font-size:10px;color:var(--muted);">'+({seller:'Sotuvchi',cashier:'Kassir',manager:'Menejer'}[emp.role]||emp.role)+'</span></div>';
+    html += '<span style="font-size:13px;color:var(--amber);font-weight:700;">'+fmtShort(sal)+" so'm</span></div>";
+    html += '<div style="height:8px;background:rgba(255,255,255,.06);border-radius:4px;overflow:hidden;margin-bottom:3px;">';
+    html += '<div style="height:100%;width:'+pct+'%;background:linear-gradient(90deg,var(--cyan),var(--amber));border-radius:4px;transition:width .5s;"></div></div>';
+    if(base>0||bonus>0){
+      html += '<div style="display:flex;gap:12px;font-size:10px;color:var(--muted);">';
+      if(base>0) html += '<span>Minimal: <b style="color:var(--cyan);">'+fmtShort(base)+'</b></span>';
+      if(bonus>0) html += '<span>+Bonus: <b style="color:var(--green);">'+fmtShort(bonus)+'</b></span>';
+      html += '</div>';
+    }
+    html += '</div>';
+  });
+  if(!activeStaff.length) html += '<div style="text-align:center;padding:30px;color:var(--muted);font-size:13px;">Xodim yo\'q</div>';
+  html += '</div>';
+  html += '</div>'; // grid end
+
+  // Tabs
+  html += '<div class="panel-card">';
+  html += '<div class="tab-row">';
+  html += '<button class="tab-btn '+(currentTab==='xodimlar'?'active':'')+'" onclick="switchTab(\'xodimlar\')">👔 Xodimlar</button>';
+  html += '<button class="tab-btn '+(currentTab==='smenalar'?'active':'')+'" onclick="switchTab(\'smenalar\')">⏱ Smenalar</button>';
+  html += '<button class="tab-btn '+(currentTab==='hisobot'?'active':'')+'" onclick="switchTab(\'hisobot\')">💰 Maosh hisobi</button>';
+  html += '</div>';
+
+  if(currentTab === 'xodimlar') html += renderStaffTab();
+  else if(currentTab === 'smenalar') html += renderShiftsTab();
+  else if(currentTab === 'hisobot') html += renderSalaryTab();
+
+  html += '</div>';
+
+  document.getElementById('mainContent').innerHTML = html;
+}
+
+function switchTab(t){ currentTab = t; render(); }
+
+// ── XODIMLAR TAB ─────────────────────────────────────────────
+function renderStaffTab(){
+  var html = '<div style="display:flex;justify-content:flex-end;padding:14px 18px;border-bottom:1px solid var(--border);">';
+  html += '<button class="btn btn-cyan btn-sm" onclick="openStaffModal()">+ Xodim qo\'shish</button>';
+  html += '</div>';
+  html += '<div class="staff-grid">';
+
+  if(!staff.length){
+    html += '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--muted);">Hozircha xodim yo\'q. + Xodim qo\'shish tugmasini bosing.</div>';
+  }
+
+  staff.forEach(function(emp){
+    var onShift = isOnShift(emp.id);
+    var empSales = getSalesForStaff(emp.id);
+    var todaySalesEmp = getTodaySalesForStaff(emp.id);
+    var salary = calcSalaryForStaff(emp.id);
+    var roleLabel = {seller:'Sotuvchi', cashier:'Kassir', manager:'Menejer'}[emp.role] || emp.role;
+
+    html += '<div class="staff-card '+(onShift?'active-shift':'')+(emp.active?'':' inactive')+'">';
+    html += '<div class="staff-avatar">'+(emp.name?emp.name[0].toUpperCase():'?')+'</div>';
+    html += '<div class="staff-name">'+emp.name+'</div>';
+    html += '<div class="staff-role">'+roleLabel+'</div>';
+    if(onShift){
+      html += '<span class="staff-badge badge-shift">🟢 Smenada</span>';
+    } else if(emp.active){
+      html += '<span class="staff-badge badge-active">⚪ Bo\'sh</span>';
+    } else {
+      html += '<span class="staff-badge badge-inactive">❌ Nofaol</span>';
+    }
+    html += '<div class="staff-meta">📱 '+emp.phone+'</div>';
+    html += '<div class="staff-meta">🔑 Login: <strong style="color:var(--cyan);">'+emp.login+'</strong></div>';
+    html += '<div class="staff-meta">📊 Stavka: <strong style="color:var(--amber);">'+emp.pct+'%</strong>'+(emp.baseSalary?' + <strong style="color:var(--green);">'+fmtShort(emp.baseSalary)+' so\'m</strong> bazaviy':'')+'</div>';
+
+    var now2=new Date(); var mStart=new Date(now2.getFullYear(),now2.getMonth(),1);
+    var mSales=getSalesForStaff(emp.id).filter(function(s){return new Date(s.time)>=mStart;});
+    var mTotal=mSales.reduce(function(a,s){return a+s.total;},0);
+    var bonus=Math.round(mTotal*emp.pct/100);
+    var base=emp.baseSalary||0;
+
+    html += '<div class="staff-stats">';
+    html += '<div class="staff-stat-item"><div class="staff-stat-val">'+todaySalesEmp+'</div><div class="staff-stat-lbl">BUGUN SAVDO</div></div>';
+    html += '<div class="staff-stat-item"><div class="staff-stat-val">'+empSales.length+'</div><div class="staff-stat-lbl">JAMI SAVDO</div></div>';
+    html += '<div class="staff-stat-item"><div class="staff-stat-val" style="color:var(--green);">'+fmtShort(salary)+'</div><div class="staff-stat-lbl">JAMI MAOSH</div></div>';
+    html += '<div class="staff-stat-item"><div class="staff-stat-val">'+emp.pct+'%</div><div class="staff-stat-lbl">STAVKA</div></div>';
+    html += '</div>';
+    if(base>0||bonus>0){
+      html += '<div style="background:rgba(0,0,0,.2);border-radius:6px;padding:8px 10px;margin-bottom:10px;font-size:11px;">';
+      if(base>0) html += '<div style="display:flex;justify-content:space-between;margin-bottom:3px;"><span style="color:var(--muted);">Minimal oylik:</span><span style="color:var(--cyan);">'+fmt(base)+" so'm</span></div>";
+      if(bonus>0) html += '<div style="display:flex;justify-content:space-between;margin-bottom:3px;"><span style="color:var(--muted);">Savdo bonusi (+'+emp.pct+'%):</span><span style="color:var(--amber);">+'+fmt(bonus)+" so'm</span></div>";
+      html += '<div style="display:flex;justify-content:space-between;border-top:1px solid var(--border);padding-top:4px;margin-top:2px;"><span style="color:var(--muted);font-weight:700;">JAMI:</span><span style="color:var(--green);font-family:Orbitron,monospace;font-weight:700;">'+fmt(salary)+" so'm</span></div>";
+      html += '</div>';
+    }
+
+    html += '<div class="staff-actions">';
+    html += '<button class="btn btn-ghost btn-sm" onclick="openStaffModal('+emp.id+')">✏️ Tahrir</button>';
+    html += '<button class="btn btn-amber btn-sm" onclick="viewStaffShifts('+emp.id+')">⏱ Smenalar</button>';
+    html += '<button class="btn btn-sm" style="background:rgba(180,76,245,.12);border:1px solid rgba(180,76,245,.35);color:#b44cf5;" onclick="openPermModal('+emp.id+')">🔐 Ruxsatlar</button>';
+    html += '<button class="btn btn-danger btn-sm" onclick="deleteStaff('+emp.id+')">🗑</button>';
+    html += '</div>';
+    html += '</div>';
+  });
+
+  html += '</div>';
+  return html;
+}
+
+// ── SMENALAR TAB ─────────────────────────────────────────────
+function renderShiftsTab(){
+  var sorted = shifts.slice().sort(function(a,b){ return new Date(b.start)-new Date(a.start); });
+  var html = '<div style="overflow-x:auto;"><table class="data-table">';
+  html += '<thead><tr><th>#</th><th>Xodim</th><th>Smena boshlandi</th><th>Smena tugadi</th><th>Davomiyligi</th><th>Savdolar</th><th>Jami</th><th>Maosh</th><th>Holat</th></tr></thead><tbody>';
+
+  if(!sorted.length){
+    html += '<tr><td colspan="9" style="text-align:center;color:var(--muted);padding:30px;">Smena yo\'q</td></tr>';
+  }
+
+  sorted.forEach(function(sh, i){
+    var emp = staff.find(function(e){ return e.id === sh.employeeId; });
+    var name = emp ? emp.name : 'Nomalum';
+    var pct  = emp ? emp.pct : 0;
+    var start = new Date(sh.start).toLocaleString('uz-UZ');
+    var end   = sh.end ? new Date(sh.end).toLocaleString('uz-UZ') : '—';
+    var dur   = sh.end ? calcDuration(sh.start, sh.end) : '🟢 Davom etmoqda';
+    var shSales = getShiftSales(sh);
+    var total   = shSales.reduce(function(a,s){ return a+s.total; }, 0);
+    var salary  = Math.round(total * pct / 100);
+
+    html += '<tr class="'+(sh.end?'':'shift-row-active')+'">';
+    html += '<td style="color:var(--muted);">'+(i+1)+'</td>';
+    html += '<td style="font-weight:700;color:white;">'+name+'</td>';
+    html += '<td style="font-size:12px;color:var(--muted);">'+start+'</td>';
+    html += '<td style="font-size:12px;color:var(--muted);">'+end+'</td>';
+    html += '<td style="color:var(--cyan);">'+dur+'</td>';
+    html += '<td style="color:var(--cyan);">'+shSales.length+' ta</td>';
+    html += '<td style="color:var(--amber);">'+fmt(total)+" so'm</td>";
+    html += '<td style="color:var(--green);">'+fmt(salary)+" so'm</td>";
+    html += '<td><span class="shift-badge '+(sh.end?'shift-closed':'shift-open')+'">'+(sh.end?'Yopiq':'🟢 Ochiq')+'</span></td>';
+    html += '</tr>';
+  });
+
+  html += '</tbody></table></div>';
+  return html;
+}
+
+// ── MAOSH HISOBI TAB ─────────────────────────────────────────
+function renderSalaryTab(){
+  var now = new Date();
+  var monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+  var monthEnd   = new Date(now.getFullYear(), now.getMonth()+1, 0);
+  var monthName  = ['Yanvar','Fevral','Mart','Aprel','May','Iyun','Iyul','Avgust','Sentabr','Oktabr','Noyabr','Dekabr'][now.getMonth()];
+
+  var html = '<div style="padding:14px 18px;border-bottom:1px solid var(--border);font-family:Orbitron,monospace;font-size:11px;color:var(--amber);">📅 '+monthName.toUpperCase()+' '+now.getFullYear()+' — MAOSH HISOBI</div>';
+  html += '<div style="overflow-x:auto;"><table class="data-table">';
+  html += '<thead><tr><th>Xodim</th><th>Lavozim</th><th>Stavka</th><th>Savdolar soni</th><th>Jami savdo</th><th>Hisoblangan maosh</th><th>Amal</th></tr></thead><tbody>';
+
+  var grandTotal = 0;
+  staff.filter(function(e){ return e.active; }).forEach(function(emp){
+    var empSales = getSalesForStaff(emp.id).filter(function(s){
+      var d = new Date(s.time);
+      return d >= monthStart && d <= monthEnd;
+    });
+    var total  = empSales.reduce(function(a,s){ return a+s.total; }, 0);
+    var salary = Math.round(total * emp.pct / 100);
+    grandTotal += salary;
+    var roleLabel = {seller:'Sotuvchi', cashier:'Kassir', manager:'Menejer'}[emp.role] || emp.role;
+
+    html += '<tr>';
+    html += '<td><div style="font-weight:700;color:white;">'+emp.name+'</div><div style="font-size:11px;color:var(--muted);">'+emp.login+'</div></td>';
+    html += '<td style="color:var(--muted);">'+roleLabel+'</td>';
+    html += '<td style="color:var(--amber);font-weight:700;">'+emp.pct+'%</td>';
+    html += '<td style="color:var(--cyan);">'+empSales.length+' ta</td>';
+    html += '<td style="color:var(--amber);">'+fmt(total)+" so'm</td>";
+    html += '<td><span style="font-family:Orbitron,monospace;font-size:14px;color:var(--green);font-weight:700;">'+fmt(salary)+" so'm</span></td>";
+    html += '<td><button class="btn btn-ghost btn-sm" onclick="viewStaffShifts('+emp.id+')">📋 Tafsilot</button></td>';
+    html += '</tr>';
+  });
+
+  html += '<tr style="border-top:2px solid var(--border);background:rgba(0,0,0,.2);">';
+  html += '<td colspan="5" style="text-align:right;font-weight:700;color:white;font-size:14px;">JAMI MAOSH:</td>';
+  html += '<td style="font-family:Orbitron,monospace;font-size:16px;color:var(--green);font-weight:900;">'+fmt(grandTotal)+" so'm</td>";
+  html += '<td></td></tr>';
+
+  html += '</tbody></table></div>';
+  return html;
+}
+
+// ── XODIM QO'SHISH / TAHRIRLASH ──────────────────────────────
+function openStaffModal(id){
+  document.getElementById('sf_err').textContent = '';
+  document.getElementById('sf_pass').value = '';
+  if(id){
+    var emp = staff.find(function(e){ return e.id===id; });
+    if(!emp) return;
+    document.getElementById('staffModalTitle').textContent = 'XODIMNI TAHRIRLASH';
+    document.getElementById('sf_id').value    = id;
+    document.getElementById('sf_name').value  = emp.name;
+    document.getElementById('sf_phone').value = emp.phone;
+    document.getElementById('sf_login').value = emp.login;
+    document.getElementById('sf_role').value  = emp.role;
+    document.getElementById('sf_pct').value   = emp.pct;
+    document.getElementById('sf_base').value  = emp.baseSalary ? Number(emp.baseSalary).toLocaleString('uz-UZ') : '';
+    document.getElementById('sf_active').value= emp.active ? '1' : '0';
+  } else {
+    document.getElementById('staffModalTitle').textContent = 'YANGI XODIM';
+    document.getElementById('sf_id').value    = '';
+    document.getElementById('sf_name').value  = '';
+    document.getElementById('sf_phone').value = '';
+    document.getElementById('sf_login').value = '';
+    document.getElementById('sf_role').value  = 'seller';
+    document.getElementById('sf_pct').value   = '2';
+    document.getElementById('sf_base').value  = '';
+    document.getElementById('sf_active').value= '1';
+  }
+  document.getElementById('staffModal').classList.add('open');
+}
+
+function closeStaffModal(){
+  document.getElementById('staffModal').classList.remove('open');
+}
+
+function saveStaff(){
+  var id    = document.getElementById('sf_id').value;
+  var name  = document.getElementById('sf_name').value.trim();
+  var phone = document.getElementById('sf_phone').value.trim();
+  var login = document.getElementById('sf_login').value.trim().toLowerCase();
+  var pass  = document.getElementById('sf_pass').value;
+  var role  = document.getElementById('sf_role').value;
+  var pct   = parseFloat(document.getElementById('sf_pct').value) || 0;
+  var base  = parseInt((document.getElementById('sf_base').value||'').replace(/\D/g,'')) || 0;
+  var active= document.getElementById('sf_active').value === '1';
+  var errEl = document.getElementById('sf_err');
+
+  if(!name){ errEl.textContent='❌ Ism kiriting'; return; }
+  if(!login){ errEl.textContent='❌ Login kiriting'; return; }
+  if(!id && !pass){ errEl.textContent='❌ Parol kiriting'; return; }
+
+  // Login tekshirish (bir xil login bo'lmasin)
+  var dup = staff.find(function(e){ return e.login===login && String(e.id)!==String(id); });
+  if(dup){ errEl.textContent='❌ Bu login band: '+dup.name; return; }
+
+  if(id){
+    var emp = staff.find(function(e){ return String(e.id)===String(id); });
+    if(emp){
+      emp.name=name; emp.phone=phone; emp.login=login; emp.role=role; emp.pct=pct; emp.baseSalary=base; emp.active=active;
+      if(pass) emp.pass = btoa(pass);
+    }
+  } else {
+    staff.push({
+      id: Date.now(),
+      name, phone, login,
+      pass: btoa(pass),
+      role, pct, baseSalary: base, active,
+      createdAt: new Date().toISOString()
+    });
+  }
+
+  DB.saveStaff(staff);
+  closeStaffModal();
+  render();
+  showToast('✅ Saqlandi!','success');
+}
+
+function deleteStaff(id){
+  if(!confirm('O\'chirishni tasdiqlaysizmi?')) return;
+  staff = staff.filter(function(e){ return e.id!==id; });
+  DB.saveStaff(staff);
+  render();
+  showToast('🗑 O\'chirildi','info');
+}
+
+// ── SMENA FUNKSIYALARI ───────────────────────────────────────
+function isOnShift(empId){
+  return shifts.some(function(sh){ return sh.employeeId===empId && !sh.end; });
+}
+
+function getOnShiftStaff(){
+  return staff.filter(function(e){ return isOnShift(e.id); });
+}
+
+function viewStaffShifts(empId){
+  var emp = staff.find(function(e){ return e.id===empId; });
+  if(!emp) return;
+  var empShifts = shifts.filter(function(sh){ return sh.employeeId===empId; })
+    .sort(function(a,b){ return new Date(b.start)-new Date(a.start); });
+
+  var html = '<div style="font-size:14px;color:var(--muted);margin-bottom:14px;">'+emp.name+' — '+empShifts.length+' ta smena</div>';
+  html += '<div style="overflow-x:auto;"><table class="data-table">';
+  html += '<thead><tr><th>Boshlandi</th><th>Tugadi</th><th>Davomiyligi</th><th>Savdo</th><th>Jami</th><th>Maosh ('+emp.pct+'%)</th></tr></thead><tbody>';
+
+  var grandSalary = 0;
+  empShifts.forEach(function(sh){
+    var shSales = getShiftSales(sh);
+    var total   = shSales.reduce(function(a,s){ return a+s.total; }, 0);
+    var salary  = Math.round(total * emp.pct / 100);
+    grandSalary += salary;
+    html += '<tr>';
+    html += '<td style="font-size:12px;">'+new Date(sh.start).toLocaleString('uz-UZ')+'</td>';
+    html += '<td style="font-size:12px;color:var(--muted);">'+(sh.end?new Date(sh.end).toLocaleString('uz-UZ'):'🟢 Ochiq')+'</td>';
+    html += '<td style="color:var(--cyan);">'+(sh.end?calcDuration(sh.start,sh.end):'—')+'</td>';
+    html += '<td>'+shSales.length+' ta</td>';
+    html += '<td style="color:var(--amber);">'+fmt(total)+" so'm</td>";
+    html += '<td style="color:var(--green);font-weight:700;">'+fmt(salary)+" so'm</td>";
+    html += '</tr>';
+  });
+
+  html += '<tr style="border-top:2px solid var(--border);"><td colspan="5" style="text-align:right;font-weight:700;">JAMI MAOSH:</td>';
+  html += '<td style="color:var(--green);font-family:Orbitron,monospace;font-weight:700;">'+fmt(grandSalary)+" so'm</td></tr>";
+  html += '</tbody></table></div>';
+
+  document.getElementById('shiftModalTitle').textContent = emp.name.toUpperCase()+' — SMENALAR';
+  document.getElementById('shiftModalBody').innerHTML = html;
+  document.getElementById('shiftModal').classList.add('open');
+}
+
+// ── HELPER FUNKSIYALAR ───────────────────────────────────────
+function getSalesForStaff(empId){
+  var allSales = offlineSales.concat(orders);
+  return allSales.filter(function(s){ return s.employeeId === empId; });
+}
+
+function getTodaySalesForStaff(empId){
+  var today = new Date().toDateString();
+  return getSalesForStaff(empId).filter(function(s){
+    return new Date(s.time).toDateString() === today;
+  }).length;
+}
+
+function getTodaySales(){
+  var today = new Date().toDateString();
+  var allSales = offlineSales.concat(orders);
+  return allSales.filter(function(s){
+    return s.employeeId && new Date(s.time).toDateString() === today;
+  });
+}
+
+function getShiftSales(sh){
+  var allSales = offlineSales.concat(orders);
+  return allSales.filter(function(s){
+    if(s.employeeId !== sh.employeeId) return false;
+    var t = new Date(s.time);
+    var start = new Date(sh.start);
+    var end   = sh.end ? new Date(sh.end) : new Date();
+    return t >= start && t <= end;
+  });
+}
+
+function calcSalaryForStaff(empId){
+  var emp = staff.find(function(e){ return e.id===empId; });
+  if(!emp) return 0;
+  var now = new Date();
+  var monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+  var sales = getSalesForStaff(empId).filter(function(s){
+    return new Date(s.time) >= monthStart;
+  });
+  var total = sales.reduce(function(a,s){ return a+s.total; }, 0);
+  var bonus = Math.round(total * emp.pct / 100);
+  var base  = emp.baseSalary || 0;
+  return base + bonus;
+}
+
+function calcTotalSalary(){
+  return staff.filter(function(e){ return e.active; }).reduce(function(a,e){
+    return a + calcSalaryForStaff(e.id);
+  }, 0);
+}
+
+function calcDuration(start, end){
+  var ms = new Date(end) - new Date(start);
+  var h  = Math.floor(ms / 3600000);
+  var m  = Math.floor((ms % 3600000) / 60000);
+  return h+'s '+m+'d';
+}
+
+function fmt(n){ return Number(n).toLocaleString('uz-UZ'); }
+function fmtShort(n){ if(n>=1000000) return (n/1000000).toFixed(1)+'M'; if(n>=1000) return (n/1000).toFixed(0)+'K'; return n.toString(); }
+
+function capName(el){
+  var pos = el.selectionStart;
+  el.value = el.value.replace(/\b\w/g, function(c){ return c.toUpperCase(); });
+  el.setSelectionRange(pos, pos);
+}
+
+function phoneMask(inp){
+  var d = inp.value.replace(/\D/g,'');
+  if(!d.startsWith('998')) d='998';
+  d=d.slice(0,12);
+  var r='+998';
+  if(d.length>3) r+=' '+d.slice(3,5);
+  if(d.length>5) r+=' '+d.slice(5,8);
+  if(d.length>8) r+=' '+d.slice(8,10);
+  if(d.length>10) r+=' '+d.slice(10,12);
+  inp.value=r;
+}
+
+function showToast(msg, type){
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast ' + (type||'');
+  t.classList.add('show');
+  setTimeout(function(){ t.classList.remove('show'); }, 3000);
+}
+
+// ── RUXSATLAR ────────────────────────────────────────────────
+var ALL_PERMS = [
+  {id:'calendar', label:'📅 Kalendar',       desc:'Statistika'},
+  {id:'pos',      label:'🏪 Do\'konda savdo', desc:'Kassa'},
+  {id:'orders',   label:'📋 Buyurtmalar',     desc:'Online buyurtmalar'},
+  {id:'products', label:'📦 Mahsulotlar',     desc:'Tovarlar & Ombor'},
+  {id:'income',   label:'📥 Kirim',           desc:'Tovar kirimi'},
+  {id:'users',    label:'👥 Mijozlar',         desc:'Mijozlar & Qarzlar'},
+  {id:'staff',    label:'👔 Xodimlar',         desc:'Xodimlar boshqaruvi'},
+];
+var DEFAULT_SELLER_PERMS = ['calendar','pos','orders'];
+var _permEmpId = null, _permTime = 0;
+
+function openPermModal(empId){
+  var emp = staff.find(function(e){return e.id===empId;});
+  if(!emp) return;
+  _permEmpId = empId; _permTime = 0;
+  document.getElementById('permTitle').textContent = '🔐 '+emp.name+' — Ruxsatlar';
+  document.getElementById('permEmpInfo').textContent = ({seller:'Sotuvchi',cashier:'Kassir',manager:'Menejer'}[emp.role]||emp.role)+' · '+emp.login;
+  var now = Date.now();
+  var cur = (emp.tempPermissions&&emp.tempPermissions.until>now) ? emp.tempPermissions.list : (emp.permissions||DEFAULT_SELLER_PERMS);
+  var html='';
+  ALL_PERMS.forEach(function(p){
+    var chk = cur.includes(p.id);
+    html+='<label class="perm-row '+(chk?'checked':'')+'">';
+    html+='<input type="checkbox" value="'+p.id+'" '+(chk?'checked':'')+' onchange="this.closest(\'.perm-row\').classList.toggle(\'checked\',this.checked)">';
+    html+='<div style="flex:1;font-size:13px;font-weight:600;">'+p.label+'</div>';
+    html+='<div style="font-size:10px;color:var(--muted);">'+p.desc+'</div>';
+    html+='</label>';
+  });
+  document.getElementById('permChecks').innerHTML = html;
+  setPermTime(0);
+  document.getElementById('permModal').style.display='flex';
+}
+
+function setPermTime(mins){
+  _permTime = mins;
+  document.querySelectorAll('.ptime-btn').forEach(function(b){b.classList.remove('active');});
+  var b=document.getElementById('pt_'+mins); if(b) b.classList.add('active');
+}
+
+function getSelectedPerms(){
+  var p=[];
+  document.querySelectorAll('#permChecks input[type=checkbox]').forEach(function(cb){if(cb.checked)p.push(cb.value);});
+  return p;
+}
+
+function savePermissions(){
+  var emp=staff.find(function(e){return e.id===_permEmpId;});
+  if(!emp) return;
+  var perms=getSelectedPerms();
+  if(_permTime>0){
+    if(!emp.savedPermissions) emp.savedPermissions=emp.permissions||DEFAULT_SELLER_PERMS;
+    emp.tempPermissions={list:perms,until:Date.now()+_permTime*60000,savedPerms:emp.savedPermissions};
+  } else {
+    emp.permissions=perms; emp.tempPermissions=null; emp.savedPermissions=null;
+  }
+  DB.saveStaff(staff);
+  // Refresh signal
+  var sig=DB._get('refresh_signals',{})||{};
+  sig[_permEmpId]=Date.now(); DB._set('refresh_signals',sig);
+  document.getElementById('permModal').style.display='none';
+  render(); showToast('✅ Ruxsatlar saqlandi!','success');
+}
+
+function revokeAllPerms(){
+  var emp=staff.find(function(e){return e.id===_permEmpId;});
+  if(!emp) return;
+  emp.permissions=[]; emp.tempPermissions=null; emp.savedPermissions=null;
+  DB.saveStaff(staff);
+  var sig=DB._get('refresh_signals',{})||{};
+  sig[_permEmpId]=Date.now(); DB._set('refresh_signals',sig);
+  document.getElementById('permModal').style.display='none';
+  render(); showToast('🚫 Barcha ruxsatlar olindi','info');
+}
+
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>

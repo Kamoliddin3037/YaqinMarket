@@ -1,0 +1,3076 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Mahalla Dukoni</title>
+<link rel="manifest" href="manifest.json">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Orbitron:wght@700;900&display=swap');
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+:root{
+  --bg:#ffffff;
+  --bg2:#f5faf6;
+  --card:#ffffff;
+  --border:#e0ede0;
+  --orange:#2ecc71;
+  --orange2:#27ae60;
+  --yellow:#a8e6c0;
+  --green:#2ecc71;
+  --green2:#27ae60;
+  --red:#EF4444;
+  --blue:#3B82F6;
+  --text:#111111;
+  --text2:#333333;
+  --muted:#888888;
+  --muted2:#f0f8f2;
+  --cyan:#2ecc71;
+  --cyan2:#27ae60;
+  --glow:0 4px 20px rgba(46,204,113,.3);
+  --glow-sm:0 2px 10px rgba(46,204,113,.2);
+  --r:12px;
+  --header-h:60px;
+  --nav-h:60px;
+}
+html,body{height:100%;font-family:'Nunito',sans-serif;color:var(--text);background:#f5f5f5;overflow-x:hidden;}
+
+/* ── HEADER ── */
+.header{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  height:var(--header-h);
+  background:#2ecc71;
+  border-bottom:none;
+  box-shadow:0 2px 12px rgba(46,204,113,.3);
+  display:flex;align-items:center;padding:0 16px;gap:12px;
+}
+.header-logo{
+  width:40px;height:40px;
+  background:rgba(255,255,255,.25);
+  border-radius:12px;display:flex;align-items:center;
+  justify-content:center;font-size:22px;flex-shrink:0;
+}
+.header-info{flex:1;min-width:0;}
+.header-name{font-family:'Nunito',sans-serif;font-size:18px;color:#fff;letter-spacing:0;font-weight:900;}
+.header-sub{font-size:11px;color:rgba(255,255,255,.8);margin-top:1px;font-weight:600;}
+.header-actions{display:flex;gap:8px;align-items:center;}
+.hbtn{
+  width:38px;height:38px;border-radius:10px;
+  background:rgba(255,255,255,.2);border:none;
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;cursor:pointer;transition:all .2s;position:relative;
+}
+.hbtn:hover{border-color:var(--cyan);}
+.hbtn .badge{
+  position:absolute;top:-4px;right:-4px;
+  background:var(--red);color:white;
+  width:16px;height:16px;border-radius:50%;
+  font-size:9px;font-weight:800;
+  display:none;align-items:center;justify-content:center;
+}
+.hbtn .badge.on{display:flex;}
+.logout-btn{
+  padding:8px 14px;background:rgba(255,255,255,.2);
+  border:1px solid rgba(255,255,255,.4);border-radius:8px;
+  color:#fff;font-family:'Nunito',sans-serif;
+  font-size:12px;font-weight:800;cursor:pointer;
+}
+
+/* ── USER BAR ── */
+/* user-bar removed */
+
+/* ── MAIN ── */
+.page-wrap{
+  padding-top:calc(var(--header-h));
+  padding-bottom:calc(var(--nav-h) + 16px);
+  min-height:100vh;position:relative;z-index:1;
+}
+
+/* ── SEARCH ── */
+.search-area{padding:14px 12px 0;}
+.search-box{
+  background:#fff;
+  border:1.5px solid #e0e0e0;
+  border-radius:12px;
+  display:flex;align-items:center;
+  gap:10px;padding:11px 14px;
+  transition:all .25s;
+  box-shadow:0 0 0 0 rgba(0,200,180,0);
+  position:relative;
+}
+
+.search-box:focus-within{
+  border-color:#2ecc71;
+  box-shadow:0 0 0 2px rgba(46,204,113,.15);
+}
+.search-box input{
+  flex:1;background:none;border:none;outline:none;
+  color:#111;font-family:'Nunito',sans-serif;
+  font-size:14px;font-weight:600;
+}
+.search-box input::placeholder{color:#aaa;font-weight:500;}
+.search-ico{font-size:18px;color:#aaa;}
+
+/* ── CATEGORY TABS ── */
+.cat-tabs{display:none;}
+.cat-tabs-x{
+  display:flex;gap:8px;overflow-x:auto;
+  padding:12px 16px 0;scrollbar-width:none;
+}
+.cat-tabs::-webkit-scrollbar{display:none;}
+.cat-tab{
+  flex-shrink:0;padding:8px 18px;
+  background:var(--card);border:1.5px solid var(--border);
+  border-radius:40px;color:var(--muted);
+  font-size:13px;font-weight:700;cursor:pointer;
+  transition:all .2s;white-space:nowrap;
+  display:flex;align-items:center;gap:6px;
+}
+.cat-tab:hover{border-color:#2ecc71;color:#2ecc71;}
+.cat-tab.active{
+  background:#2ecc71;color:#fff;border-color:#2ecc71;font-weight:800;box-shadow:0 4px 10px rgba(46,204,113,.3);
+  background:linear-gradient(135deg,rgba(0,255,231,.18),rgba(0,180,216,.1));
+  border-color:var(--cyan);color:var(--cyan);
+  box-shadow:0 0 18px rgba(0,255,231,.22),inset 0 1px 0 rgba(255,255,255,.08);
+  text-shadow:0 0 8px rgba(0,255,231,.4);
+}
+.cat-emoji{font-size:16px;}
+.cat-tab .out-badge{
+  position:absolute;top:-4px;right:-4px;
+  background:var(--red);color:white;
+  font-size:8px;font-weight:800;padding:2px 4px;
+  border-radius:10px;white-space:nowrap;
+}
+
+/* ── SECTION TITLE ── */
+.section-title{
+  font-family:'Orbitron',monospace;font-size:10px;
+  color:#16a34a;letter-spacing:1px;font-weight:900;
+  padding:16px 16px 10px;display:flex;align-items:center;gap:8px;
+}
+.section-title::after{
+  content:'';flex:1;height:1px;
+  background:linear-gradient(90deg,var(--border),transparent);
+}
+
+/* ── PRODUCT GRID ── */
+.prod-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;padding:0 12px;
+}
+@media(min-width:480px){.prod-grid{grid-template-columns:repeat(4,1fr);}}
+@media(min-width:700px){.prod-grid{grid-template-columns:repeat(6,1fr);}}
+
+.prod-card{
+  background:#fff;
+  border:1px solid #e8e8e8;
+  border-radius:12px;overflow:hidden;
+  cursor:pointer;transition:all .2s;position:relative;
+  box-shadow:0 1px 4px rgba(0,0,0,.06);
+  display:flex;flex-direction:column;
+}
+.prod-card:active{transform:scale(.97);}
+.prod-card.in-cart{
+  border-color:#2ecc71;border-width:3px;
+  background:#f0fdf4;
+  box-shadow:0 0 0 3px rgba(46,204,113,.25);
+}
+.prod-card.out{opacity:.45;pointer-events:none;}
+
+.pc-img-wrap{
+  height:130px;background:#f8f8f8;
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;position:relative;flex-shrink:0;
+}
+.pc-img{
+  max-width:90%;max-height:120px;
+  object-fit:contain;
+  transition:transform .2s;
+}
+.prod-card:hover{border-color:#2ecc71;box-shadow:0 4px 12px rgba(46,204,113,.2);transform:translateY(-2px);}
+.prod-card:hover .pc-img{transform:scale(1.06);}
+.pc-emoji{font-size:52px;}
+
+.pc-disc{
+  position:absolute;top:8px;left:8px;
+  background:#EF4444;color:#fff;font-weight:800;font-size:10px;padding:3px 8px;border-radius:4px;
+  font-size:9px;font-weight:800;
+  padding:2px 7px;border-radius:20px;
+  letter-spacing:.5px;
+}
+.pc-cart-badge{
+  position:absolute;top:8px;right:8px;
+  background:#16a34a;color:#fff;
+  min-width:26px;height:26px;border-radius:13px;
+  padding:0 6px;
+  font-size:13px;font-weight:900;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 2px 8px rgba(0,0,0,.25);
+  border:2px solid #fff;
+  z-index:5;
+}
+
+.pc-body{padding:6px 8px 10px;flex:1;}
+.pc-name{font-size:13px;font-weight:700;color:#111;margin-bottom:6px;line-height:1.35;}
+.stock-left{
+  color:#FF6B00;font-size:11px;font-weight:700;
+  margin-bottom:4px;display:flex;align-items:center;gap:4px;
+}
+.stock-left::before{content:'⚠️';font-size:10px;}
+.pc-price{
+  font-family:'Orbitron',monospace;font-size:13px;
+  color:#16a085;font-weight:900;
+}
+.pc-price.sale{color:#27ae60;}
+.pc-orig{font-size:11px;color:#aaa;text-decoration:line-through;margin-bottom:3px;}
+.pc-stock{font-size:11px;color:#888;margin-top:3px;}
+
+.out-badge{
+  background:#e53935;color:#fff;
+  padding:4px 8px;border-radius:20px;
+  font-size:10px;font-weight:800;
+  display:inline-block;
+}
+
+.pc-add-btn{
+  width:100%;padding:7px;margin-top:6px;
+  background:#22C55E;
+  color:#fff;border:none;border-radius:10px;
+  font-family:'Nunito',sans-serif;font-size:12px;
+  font-weight:800;cursor:pointer;color:#fff;
+  transition:all .2s;
+}
+.pc-add-btn:hover{background:#16A34A;filter:brightness(1.05);}
+.pc-add-btn:disabled{background:#f0f0f0;color:#bbb;cursor:not-allowed;}
+
+/* ── BOTTOM NAV ── */
+.bottom-nav{
+  position:fixed;bottom:0;left:0;right:0;
+  height:var(--nav-h);z-index:200;
+  background:#fff;
+  border-top:2px solid #e8e8e8;
+  box-shadow:0 -4px 16px rgba(0,0,0,.1);
+  padding-bottom:env(safe-area-inset-bottom);
+  display:flex;align-items:stretch;
+}
+.nav-item{
+  flex:1;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  gap:3px;cursor:pointer;transition:all .2s;
+  position:relative;font-size:10px;font-weight:800;
+  color:#aaa;font-weight:600;
+}
+.nav-item.active{color:#2ecc71;}
+.nav-item.active::before{
+  content:'';position:absolute;top:0;left:15%;right:15%;
+  height:3px;background:#022e2d;border-radius:0 0 4px 4px;
+}
+.nav-ico{font-size:26px;}
+.nav-cart{position:relative;}
+.nav-cart-badge{
+  position:absolute;top:-4px;right:-8px;
+  background:var(--red);color:white;
+  min-width:18px;height:18px;border-radius:9px;
+  font-size:10px;font-weight:800;
+  display:none;align-items:center;justify-content:center;
+  padding:0 4px;
+}
+.nav-cart-badge.on{display:flex;}
+
+/* ── TOAST ── */
+.toast{
+  position:fixed;bottom:calc(var(--nav-h) + 12px);
+  left:50%;transform:translateX(-50%) translateY(12px);
+  background:#fff;border:1.5px solid var(--border);
+  color:var(--text);padding:10px 20px;border-radius:40px;
+  font-size:13px;font-weight:700;z-index:999;
+  opacity:0;transition:all .3s;pointer-events:none;
+  white-space:nowrap;box-shadow:0 4px 20px rgba(0,0,0,.4);
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+.toast.success{border-color:#22C55E;color:#22C55E;}
+.toast.error{border-color:var(--red);color:var(--red);}
+.toast.info{border-color:#2ecc71;color:#2ecc71;}
+
+/* ── MODAL ── */
+.modal{
+  position:fixed;inset:0;background:rgba(0,0,0,.82);
+  backdrop-filter:blur(14px);z-index:400;
+  display:none;align-items:flex-end;justify-content:center;
+}
+.modal.open{display:flex;animation:fadeIn .2s ease;}
+.modal.center{align-items:center;}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+
+.modal-sheet{
+  background:#ffffff;
+  border:1.5px solid var(--border);
+  border-radius:20px 20px 0 0;
+  box-shadow:0 -4px 24px rgba(0,0,0,.12);
+  width:100%;max-width:600px;
+  max-height:92vh;overflow-y:auto;
+  animation:slideUp .3s cubic-bezier(.32,.72,0,1);
+}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.modal-sheet.full{max-height:100vh;border-radius:0;height:100vh;}
+
+.modal-box{
+  background:#ffffff;
+  border:1.5px solid var(--border);
+  border-radius:20px;
+  box-shadow:0 20px 60px rgba(0,0,0,.7),0 0 30px rgba(0,255,231,.04);width:calc(100% - 32px);
+  max-width:380px;max-height:90vh;overflow-y:auto;
+  animation:popIn .25s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes popIn{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:scale(1)}}
+
+.modal-handle{
+  width:40px;height:4px;background:var(--border);
+  border-radius:2px;margin:12px auto 4px;
+}
+.modal-head{
+  padding:14px 18px;border-bottom:1px solid var(--border);
+  display:flex;justify-content:space-between;align-items:center;
+  position:sticky;top:0;background:#fff;z-index:1;border-bottom:2px solid #f0f0f0;
+}
+.modal-title{
+  font-family:'Orbitron',monospace;font-size:11px;
+  color:#16a34a;letter-spacing:1px;font-weight:900;
+}
+.modal-close{
+  background:none;border:none;color:var(--muted);
+  font-size:22px;cursor:pointer;transition:color .2s;
+  width:32px;height:32px;display:flex;align-items:center;justify-content:center;
+  border-radius:6px;
+}
+.modal-close:hover{color:var(--red);background:rgba(239,68,68,.1);}
+.modal-body{padding:16px 18px 24px;}
+
+/* ── CART ITEMS ── */
+.cart-item{
+  display:flex;align-items:center;gap:12px;
+  padding:14px 0;border-bottom:1px solid #e8e8e8;
+}
+.ci-img{width:52px;height:52px;background:#f0f9f6;border-radius:10px;object-fit:contain;flex-shrink:0;}
+.ci-emoji{font-size:30px;flex-shrink:0;width:52px;text-align:center;}
+.ci-info{flex:1;}
+.ci-name{font-size:14px;font-weight:800;color:#111;}
+.ci-price{font-size:13px;color:#2ecc71;font-weight:700;margin-top:2px;}
+.ci-qty{display:flex;align-items:center;gap:8px;margin-top:6px;}
+.cqb{
+  width:34px;height:34px;border-radius:8px;border:none;
+  font-size:18px;font-weight:700;cursor:pointer;transition:all .15s;
+  display:flex;align-items:center;justify-content:center;
+}
+.cqb.m{background:#fee2e2;color:#e53935;border:1.5px solid #fca5a5;}
+.cqb.p{background:#dcfce7;color:#16a34a;border:1.5px solid #86efac;}
+.cqb:active{transform:scale(.9);}
+.cqn{font-size:16px;font-weight:900;color:#111;min-width:24px;text-align:center;}
+
+/* ── PROFILE MENU ITEMS ── */
+.profile-menu-item{
+  display:flex;align-items:center;gap:16px;
+  padding:16px;background:#fff;
+  border:1px solid #e8e8e8;border-radius:12px;
+  cursor:pointer;transition:all .2s;margin-bottom:8px;
+  box-shadow:0 1px 4px rgba(0,0,0,.06);
+}
+.profile-menu-item:hover{
+  border-color:#2ecc71;
+  transform:translateY(-1px);
+  box-shadow:0 4px 12px rgba(46,204,113,.15);
+}
+.profile-menu-icon{
+  font-size:26px;width:44px;height:44px;
+  display:flex;align-items:center;justify-content:center;
+  background:#e8f8ed;border-radius:10px;flex-shrink:0;
+}
+.profile-menu-content{flex:1;}
+.profile-menu-title{
+  font-size:15px;font-weight:800;color:#111;margin-bottom:2px;
+}
+.profile-menu-sub{
+  font-size:12px;color:#888;font-weight:600;
+}
+.profile-menu-arrow{
+  color:#2ecc71;font-size:20px;font-weight:900;
+}
+
+/* ─── ADDRESS ITEM ─── */
+.address-item{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:12px;padding:14px;margin-bottom:10px;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.address-info{flex:1;}
+.address-type{
+  font-size:11px;color:var(--cyan);font-weight:700;margin-bottom:2px;
+}
+.address-text{font-size:13px;color:white;margin-bottom:4px;}
+.address-actions{display:flex;gap:8px;}
+
+/* ─── PAYMENT METHOD ─── */
+.payment-item{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:12px;padding:14px;margin-bottom:10px;
+  display:flex;align-items:center;gap:12px;
+}
+.payment-icon{font-size:24px;width:40px;text-align:center;}
+.payment-info{flex:1;}
+.payment-name{font-size:14px;font-weight:700;color:white;}
+.payment-detail{font-size:11px;color:var(--muted);}
+.payment-remove{color:var(--red);font-size:18px;cursor:pointer;padding:6px;}
+
+/* ─── LANGUAGE SELECTOR ─── */
+.lang-item{
+  display:flex;align-items:center;gap:12px;
+  padding:14px;background:var(--card);
+  border:1px solid var(--border);border-radius:12px;
+  margin-bottom:8px;cursor:pointer;
+}
+.lang-item.active{
+  border-color:var(--cyan);
+  background:rgba(0,229,200,.06);
+}
+.lang-flag{font-size:22px;width:36px;text-align:center;}
+.lang-name{font-size:15px;font-weight:700;color:#111;flex:1;}
+.lang-check{color:var(--cyan);font-size:18px;display:none;}
+.lang-item.active .lang-check{display:block;}
+
+/* ── DELIVERY BOX ── */
+.del-box{
+  background:#f8f9fa;border:1.5px solid #e0e0e0;
+  border-radius:12px;padding:14px;margin:14px 0;
+}
+.del-title{
+  font-size:11px;font-weight:800;color:#555;
+  letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;
+}
+.del-info{font-size:12px;color:#666;margin-bottom:10px;}
+.del-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.km-inp{
+  width:80px;padding:8px 10px;
+  background:#fff;border:1.5px solid #ccc;
+  border-radius:8px;color:#111;
+  font-family:'Nunito',sans-serif;font-size:15px;
+  text-align:center;outline:none;font-weight:700;
+}
+.km-inp:focus{border-color:var(--cyan);}
+.del-price{
+  font-family:'Orbitron',monospace;font-size:12px;
+  color:#f59e0b;font-weight:800;font-size:14px;
+}
+
+/* ── KM PRESETS ── */
+.km-presets{
+  display:flex;flex-wrap:wrap;gap:6px;
+  margin-top:10px;
+}
+.km-btn{
+  padding:5px 11px;
+  background:#f0f0f0;
+  border:1.5px solid #ddd;
+  border-radius:20px;
+  color:#555;
+  font-size:12px;font-weight:700;
+  cursor:pointer;transition:all .18s;
+  font-family:'Nunito',sans-serif;
+}
+.km-btn:hover{border-color:#2ecc71;color:#16a34a;background:#f0fdf4;}
+.km-btn.active{
+  background:#dcfce7;
+  border-color:#2ecc71;color:#16a34a;
+  font-weight:800;
+}
+
+/* ── RECEIPT UPLOAD ── */
+.receipt-upload-area{
+  margin-top:12px;
+  background:#f8fdf9;
+  border:1.5px dashed #86efac;
+  border-radius:10px;
+  padding:12px 14px;
+}
+.receipt-upload-label{
+  font-size:13px;font-weight:700;color:#111;
+  margin-bottom:3px;
+}
+.receipt-upload-hint{
+  font-size:11px;color:#666;margin-bottom:10px;
+}
+.receipt-upload-btn{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:9px 18px;
+  background:#f0fdf4;
+  border:1.5px solid #2ecc71;
+  border-radius:8px;color:#16a34a;
+  font-size:13px;font-weight:700;
+  cursor:pointer;transition:all .2s;
+  font-family:'Nunito',sans-serif;
+}
+.receipt-upload-btn:hover{
+  background:linear-gradient(135deg,rgba(0,255,240,.28),rgba(0,212,255,.2));
+  box-shadow:0 0 14px rgba(0,255,240,.3);
+}
+
+
+/* ── WARN BOX ── */
+.warn-box{
+  padding:11px 14px;border-radius:10px;
+  margin:8px 0;font-size:13px;font-weight:700;
+  display:none;
+}
+.warn-box.show{display:block;}
+.warn-box.warn{background:#fef2f2;border:1.5px solid #fca5a5;color:#dc2626;}
+.warn-box.ok{background:#f0fdf4;border:1.5px solid #86efac;color:#16a34a;}
+
+/* ── TOTAL ROW ── */
+.total-row{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:14px 0;border-top:1px solid var(--border);
+  font-size:18px;font-weight:800;color:#111;
+}
+.total-val{
+  font-family:'Nunito',monospace;font-size:20px;color:#16a34a;font-weight:900;
+}
+
+/* ── FORM ── */
+.form-group{margin-bottom:14px;}
+.form-label{
+  display:block;font-size:10px;font-weight:700;
+  color:#666;letter-spacing:1px;
+  text-transform:uppercase;margin-bottom:7px;
+}
+.form-input,.form-select,.form-textarea{
+  width:100%;padding:12px 14px;
+  background:var(--card);border:1.5px solid var(--border);
+  border-radius:10px;color:white;
+  font-family:'Nunito',sans-serif;font-size:14px;
+  font-weight:600;outline:none;transition:all .2s;
+}
+.form-input:focus,.form-select:focus,.form-textarea:focus{
+  border-color:var(--cyan);box-shadow:var(--glow-sm);
+}
+.form-input::placeholder,.form-textarea::placeholder{color:var(--muted);}
+.form-select option{background:var(--bg2);}
+.form-textarea{resize:vertical;min-height:70px;}
+
+/* ── STAR RATING ── */
+.star-row{display:flex;gap:6px;margin-bottom:10px;}
+.star{font-size:32px;cursor:pointer;color:#334155;transition:all .15s;user-select:none;}
+.star.on{color:var(--amber);text-shadow:0 0 10px rgba(245,158,11,.4);}
+.star:hover{transform:scale(1.15);}
+
+/* ── ORDER BTN ── */
+.order-btn{
+  width:100%;padding:14px;margin-top:14px;
+  background:linear-gradient(135deg,#16a34a,#22c55e);
+  color:#fff;border:none;border-radius:12px;
+  font-size:15px;font-weight:900;cursor:pointer;
+  font-family:'Nunito',sans-serif;
+  box-shadow:0 4px 14px rgba(22,163,74,.35);
+  transition:all .2s;
+}
+.order-btn:hover{box-shadow:0 6px 20px rgba(22,163,74,.4);transform:translateY(-1px);}
+.order-btn:disabled{
+  background:var(--muted2);color:var(--muted);
+  cursor:not-allowed;transform:none;box-shadow:none;
+}
+.order-btn.secondary{
+  background:transparent;
+  border:1.5px solid var(--cyan);color:var(--cyan);
+}
+.order-btn.danger{
+  background:rgba(239,68,68,.15);
+  border:1.5px solid var(--red);color:var(--red);
+}
+
+/* ── RECEIPT ── */
+.receipt-wrap{
+  background:white;color:#111;border-radius:8px;
+  padding:16px;font-family:'Courier New',monospace;
+  font-size:12px;max-width:240px;margin:0 auto;
+}
+.r-title{text-align:center;font-weight:700;font-size:15px;margin-bottom:4px;}
+.r-sub{text-align:center;font-size:10px;color:#666;margin-bottom:2px;}
+.r-line{display:flex;justify-content:space-between;padding:2px 0;font-size:11px;}
+.r-line.bold{font-weight:700;border-top:1px dashed #aaa;padding-top:4px;margin-top:3px;}
+.r-hr{border:none;border-top:1px dashed #aaa;margin:5px 0;}
+.r-footer{text-align:center;font-size:10px;color:#666;margin-top:6px;line-height:1.6;}
+.r-stars{text-align:center;font-size:16px;margin:4px 0;}
+
+/* ── ORDERS LIST ── */
+.order-item{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:12px;padding:14px;margin-bottom:10px;
+}
+.oi-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+.oi-id{font-family:'Orbitron',monospace;font-size:12px;color:var(--cyan);font-weight:700;}
+.oi-status{
+  font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;
+}
+.oi-status.new{background:rgba(0,229,200,.1);color:var(--cyan);}
+.oi-status.accepted{background:rgba(245,158,11,.1);color:var(--amber);}
+.oi-status.delivering{background:rgba(34,197,94,.1);color:var(--green);}
+.oi-status.done{background:rgba(100,116,139,.1);color:var(--muted);}
+.oi-status.cancelled{background:rgba(239,68,68,.1);color:var(--red);}
+.oi-items{font-size:12px;color:var(--muted);margin-bottom:6px;}
+.oi-total{font-family:'Orbitron',monospace;font-size:14px;color:white;font-weight:700;}
+.oi-time{font-size:11px;color:var(--muted);}
+
+/* ── PAYMENT BLOCK ── */
+.pay-block{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:12px;padding:14px;margin:10px 0;
+}
+.pay-detail{font-size:13px;color:var(--text);margin-top:8px;line-height:1.6;}
+.copy-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  background:none;border:1px solid var(--border);
+  color:var(--cyan);padding:5px 12px;border-radius:6px;
+  font-size:12px;font-weight:600;cursor:pointer;
+  margin-top:8px;transition:all .2s;
+  font-family:'Nunito',sans-serif;
+}
+.copy-btn:hover{background:rgba(0,229,200,.06);}
+
+/* ── CONTACT BOX ── */
+.contact-item{
+  display:flex;align-items:center;gap:14px;
+  background:var(--card);border:1px solid var(--border);
+  border-radius:12px;padding:14px;margin-bottom:10px;
+}
+.ci-icon{font-size:28px;flex-shrink:0;}
+.ci-text h4{font-size:14px;font-weight:700;color:white;margin-bottom:2px;}
+.ci-text p{font-size:12px;color:var(--muted);}
+.ci-action{
+  margin-left:auto;padding:8px 16px;
+  background:linear-gradient(135deg,var(--cyan),var(--cyan2));
+  color:#000;border:none;border-radius:8px;
+  font-size:12px;font-weight:700;cursor:pointer;
+  white-space:nowrap;flex-shrink:0;
+  font-family:'Nunito',sans-serif;
+}
+
+/* ── MISC ── */
+::-webkit-scrollbar{width:3px;height:3px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
+
+.pay-modal{position:fixed;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(8px);z-index:800;display:none;align-items:center;justify-content:center;padding:16px;}
+.pay-modal.open{display:flex;}
+.pay-box{background:#fff;border:1px solid #e0e0e0;border-radius:16px;width:100%;max-width:380px;overflow:hidden;}
+.pay-box-head{padding:14px 18px;border-bottom:1px solid #e0e0e0;display:flex;justify-content:space-between;align-items:center;}
+.pay-box-title{font-size:13px;font-weight:900;color:#111;letter-spacing:0;}
+.pay-box-close{background:none;border:none;color:#888;font-size:22px;cursor:pointer;}
+.pay-tabs{display:flex;border-bottom:2px solid #f0f0f0;}
+.pay-tab{flex:1;padding:10px;background:transparent;border:none;color:#888;font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;border-bottom:2px solid transparent;}
+.pay-tab.active{color:#16a34a;border-bottom-color:#2ecc71;background:#f0fdf4;}
+.pay-content{padding:20px;text-align:center;}
+.pay-qr-area{background:#fff;border-radius:12px;padding:16px;display:inline-flex;align-items:center;justify-content:center;margin-bottom:14px;min-width:160px;min-height:160px;}
+.pay-qr-placeholder{font-size:80px;}
+.pay-card-num{font-family:'Nunito',monospace;font-size:16px;color:#111;letter-spacing:3px;margin:8px 0;font-weight:900;}
+.pay-copy-btn{padding:8px 20px;background:#f0fdf4;border:1.5px solid #2ecc71;border-radius:6px;color:#16a34a;font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;margin-top:4px;}
+.pay-copy-btn:hover{background:rgba(0,255,231,.2);}
+
+
+.pay-method-card:hover{transform:translateY(-2px);box-shadow:0 4px 14px rgba(46,204,113,.2);}
+.pay-method-card.selected{border-color:#2ecc71!important;background:#f0fdf4!important;}
+
+/* ── BANNER ── */
+.banner-wrap{position:relative;margin:10px 12px;border-radius:16px;overflow:hidden;height:180px;}
+.banner-track{display:flex;transition:transform .4s ease;height:100%;}
+.banner-slide{
+  min-width:100%;height:180px;display:flex;align-items:center;
+  padding:20px;border-radius:16px;position:relative;overflow:hidden;
+}
+.banner-slide-img{
+  min-width:100%;height:180px;position:relative;overflow:hidden;cursor:pointer;
+}
+.banner-slide-img img,.banner-slide-img video{
+  width:100%;height:180px;object-fit:cover;border-radius:16px;display:block;
+}
+.banner-text{flex:1;z-index:2;}
+.banner-tag{font-size:11px;font-weight:800;color:rgba(255,255,255,.9);background:rgba(0,0,0,.2);display:inline-block;padding:3px 10px;border-radius:20px;margin-bottom:8px;}
+.banner-title{font-size:20px;font-weight:900;color:#fff;line-height:1.2;margin-bottom:4px;}
+.banner-sub{font-size:12px;color:rgba(255,255,255,.85);margin-bottom:12px;}
+.banner-btn{display:inline-block;background:rgba(255,255,255,.25);color:#fff;padding:7px 18px;border-radius:20px;font-size:12px;font-weight:800;cursor:pointer;border:1.5px solid rgba(255,255,255,.5);}
+.banner-emoji{font-size:90px;position:absolute;right:-10px;bottom:-10px;opacity:.35;line-height:1;}
+.banner-prev,.banner-next{
+  position:absolute;top:50%;transform:translateY(-50%);
+  background:rgba(255,255,255,.3);border:none;border-radius:50%;
+  width:32px;height:32px;font-size:18px;cursor:pointer;color:#fff;
+  display:flex;align-items:center;justify-content:center;z-index:10;
+  backdrop-filter:blur(4px);
+}
+.banner-prev{left:8px;}.banner-next{right:8px;}
+.banner-dots{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);display:flex;gap:6px;}
+.banner-dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.5);cursor:pointer;transition:all .2s;}
+.banner-dot.active{background:#fff;width:20px;border-radius:4px;}
+
+/* ── KATTA KATEGORIYA IKONKALAR ── */
+.cat-icons-wrap{padding:14px 12px 0;overflow-x:auto;scrollbar-width:none;}
+.cat-icons-wrap::-webkit-scrollbar{display:none;}
+.cat-icons{display:flex;gap:12px;width:max-content;}
+.cat-icon-item{
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  cursor:pointer;min-width:64px;transition:transform .15s;
+}
+.cat-icon-item:active{transform:scale(.93);}
+.cat-icon-box{
+  width:60px;height:60px;border-radius:16px;
+  background:linear-gradient(135deg,#FF6B00,#FF9A00);
+  display:flex;align-items:center;justify-content:center;
+  font-size:30px;box-shadow:0 4px 12px rgba(255,107,0,.3);
+  transition:all .2s;
+}
+.cat-icon-item:hover .cat-icon-box{transform:translateY(-2px);box-shadow:0 6px 16px rgba(255,107,0,.4);}
+.cat-icon-item.active .cat-icon-box{background:linear-gradient(135deg,#022e2d,#0a5a55);}
+.cat-icon-name{font-size:11px;font-weight:700;color:#333;text-align:center;max-width:64px;line-height:1.2;}
+
+/* ── SECTION ── */
+.section-hd{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 12px 8px;
+}
+.section-hd-title{font-size:16px;font-weight:900;color:#111;}
+.section-hd-more{font-size:13px;font-weight:700;color:#2ecc71;cursor:pointer;}
+
+/* ── PRODUCT GRID ── */
+.prod-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:8px;padding:0 12px 8px;
+}
+@media(min-width:480px){.prod-grid{grid-template-columns:repeat(3,1fr);}}
+@media(min-width:680px){.prod-grid{grid-template-columns:repeat(4,1fr);}}
+@media(min-width:900px){.prod-grid{grid-template-columns:repeat(5,1fr);}}
+
+/* Savatga qo'shish btn */
+.pc-add-btn{
+  width:100%;padding:9px;margin-top:8px;border-radius:10px;border:none;
+  font-family:'Nunito',sans-serif;font-size:12px;font-weight:800;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:6px;
+}
+
+/* ── ORDER PROGRESS TRACKER ── */
+.pg-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+.pg-title{font-size:13px;font-weight:800;color:#16a085;}
+.pg-sub{font-size:11px;color:#888;}
+.pg-track{position:relative;display:flex;align-items:center;justify-content:space-between;padding:0 8px;}
+.pg-step{display:flex;flex-direction:column;align-items:center;gap:4px;flex:1;position:relative;z-index:2;}
+.pg-icon{width:36px;height:36px;border-radius:50%;background:#f0f0f0;border:2px solid #ddd;display:flex;align-items:center;justify-content:center;font-size:18px;transition:all .4s;}
+.pg-step.active .pg-icon{background:#d1fae5;border-color:#22c55e;box-shadow:0 0 0 4px rgba(34,197,94,.2);animation:pg-pulse 1.2s infinite;}
+.pg-step.done .pg-icon{background:#22c55e;border-color:#16a34a;font-size:16px;color:#fff;}
+.pg-label{font-size:10px;color:#999;font-weight:700;text-align:center;}
+.pg-step.active .pg-label{color:#16a085;}
+.pg-step.done .pg-label{color:#16a34a;}
+.pg-line{flex:1;height:3px;background:#e5e7eb;border-radius:2px;margin-bottom:20px;z-index:1;transition:background .4s;}
+.pg-line.done{background:#22c55e;}
+.pg-person{position:absolute;top:-6px;font-size:22px;transition:left .8s cubic-bezier(.34,1.56,.64,1);z-index:3;}
+@keyframes pg-pulse{0%,100%{box-shadow:0 0 0 4px rgba(34,197,94,.2)}50%{box-shadow:0 0 0 8px rgba(34,197,94,.1)}}
+
+</style>
+</head>
+<body>
+
+<div class="toast" id="toast"></div>
+
+<div class="pay-modal" id="payModal">
+  <div class="pay-box" style="max-width:420px;border-radius:20px 20px 0 0;background:#fff;">
+    <div class="pay-box-head" style="background:#2ecc71;border-radius:20px 20px 0 0;padding:16px 20px;display:flex;justify-content:space-between;align-items:center;">
+      <div style="font-size:16px;font-weight:900;color:#022e2d;letter-spacing:-.3px;">💳 To'lov usulini tanlang</div>
+      <button onclick="closePayModal()" style="background:rgba(2,46,45,.15);border:none;width:32px;height:32px;border-radius:50%;font-size:18px;cursor:pointer;color:#022e2d;display:flex;align-items:center;justify-content:center;">✕</button>
+    </div>
+    <!-- To'lov tizimlar grid -->
+    <div style="padding:20px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;" id="payMethodsGrid">
+      <div class="pay-method-card" onclick="selectPayMethod('uzum')" style="border:2px solid #e8e0f5;border-radius:14px;padding:16px 10px;text-align:center;cursor:pointer;transition:all .2s;background:#faf8ff;">
+        <div style="font-size:28px;margin-bottom:6px;">🟣</div>
+        <div style="font-size:12px;font-weight:800;color:#5b2d8c;">Uzum Bank</div>
+      </div>
+      <div class="pay-method-card" onclick="selectPayMethod('plum')" style="border:2px solid #ddf0ff;border-radius:14px;padding:16px 10px;text-align:center;cursor:pointer;transition:all .2s;background:#f5fbff;">
+        <div style="font-size:28px;margin-bottom:6px;">🔵</div>
+        <div style="font-size:12px;font-weight:800;color:#1a6fad;">Plum</div>
+      </div>
+      <div class="pay-method-card" onclick="selectPayMethod('click')" style="border:2px solid #d0eaff;border-radius:14px;padding:16px 10px;text-align:center;cursor:pointer;transition:all .2s;background:#f5faff;">
+        <div style="font-size:28px;margin-bottom:6px;">🔷</div>
+        <div style="font-size:12px;font-weight:800;color:#0066cc;">Click</div>
+      </div>
+      <div class="pay-method-card" onclick="selectPayMethod('payme')" style="border:2px solid #ffe0e0;border-radius:14px;padding:16px 10px;text-align:center;cursor:pointer;transition:all .2s;background:#fff8f8;">
+        <div style="font-size:28px;margin-bottom:6px;">🔴</div>
+        <div style="font-size:12px;font-weight:800;color:#cc0000;">Payme</div>
+      </div>
+      <div class="pay-method-card" onclick="selectPayMethod('humo')" style="border:2px solid #1a1a2e;border-radius:14px;padding:16px 10px;text-align:center;cursor:pointer;transition:all .2s;background:#0f0f1e;">
+        <div style="font-size:28px;margin-bottom:6px;">⭐</div>
+        <div style="font-size:12px;font-weight:800;color:#d4af37;">Humo</div>
+      </div>
+      <div class="pay-method-card" onclick="selectPayMethod('paynet')" style="border:2px solid #d0ffe0;border-radius:14px;padding:16px 10px;text-align:center;cursor:pointer;transition:all .2s;background:#f5fff8;">
+        <div style="font-size:28px;margin-bottom:6px;">🟢</div>
+        <div style="font-size:12px;font-weight:800;color:#1a8a40;">Paynet</div>
+      </div>
+    </div>
+    <!-- QR / Raqam ko'rsatish -->
+    <div id="payDetail" style="display:none;padding:0 20px 24px;">
+      <div style="background:#f5f5f5;border-radius:12px;padding:16px;text-align:center;margin-bottom:12px;">
+        <div id="payQRBox" style="width:160px;height:160px;background:#fff;border-radius:10px;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-size:80px;box-shadow:0 2px 8px rgba(0,0,0,.1);"></div>
+        <div style="font-size:11px;color:#888;margin-bottom:4px;" id="payMethodLabel">Click raqami</div>
+        <div style="font-size:18px;font-weight:900;color:#022e2d;letter-spacing:2px;margin-bottom:12px;" id="payNumber">8800 1234 5678</div>
+        <button onclick="copyPayNum()" style="padding:10px 28px;background:#4fc95b;border:none;border-radius:10px;color:#022e2d;font-size:14px;font-weight:800;cursor:pointer;">📋 Nusxalash</button>
+      </div>
+      <button onclick="document.getElementById('payDetail').style.display='none';document.getElementById('payMethodsGrid').style.display='grid';" 
+        style="width:100%;padding:11px;background:#f0f0f0;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;color:#555;">← Orqaga</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- HEADER -->
+<header class="header">
+  <div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0;">
+    <div class="header-logo">🏪</div>
+    <div class="header-info">
+      <div class="header-name">MAHALLA DUKONI</div>
+      <div class="header-sub" id="headerSub">Tez yetkazib berish</div>
+    </div>
+  </div>
+  <div class="header-actions" style="gap:6px;">
+    <div class="hbtn" onclick="openMyOrders()" title="Buyurtmalar">
+      📋<div class="badge" id="orderBadge"></div>
+    </div>
+    <div onclick="openProfile()" title="Profil" id="headerProfileBtn"
+      style="display:flex;align-items:center;gap:7px;background:rgba(255,255,255,.2);
+      border-radius:22px;padding:5px 12px 5px 8px;cursor:pointer;border:1.5px solid rgba(255,255,255,.35);">
+      <div style="width:30px;height:30px;border-radius:50%;background:#fff;
+        display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">👤</div>
+      <div id="headerUserInfo" style="display:none;">
+        <div id="headerUserName" style="font-size:12px;font-weight:800;color:#fff;line-height:1.2;"></div>
+        <div id="headerUserPhone" style="font-size:10px;color:rgba(255,255,255,.8);"></div>
+      </div>
+    </div>
+    <button class="logout-btn" onclick="logout()">Chiqish</button>
+  </div>
+</header>
+
+<!-- ORDER PROGRESS BANNER -->
+<div id="orderProgressBanner" style="display:none;background:#fff;border-bottom:2px solid #e0f2e9;padding:10px 16px 12px;"></div>
+
+<!-- USER BAR -->
+<!-- hidden user info -->
+<div style="display:none;" id="userBar">
+  <span id="uName"></span>
+  <span id="uPhone"></span>
+</div>
+
+<!-- PAGE WRAP -->
+<div class="page-wrap" id="pageWrap">
+
+  <!-- SEARCH -->
+  <div class="search-area">
+    <div class="search-box">
+      <span class="search-ico">🔍</span>
+      <input type="text" id="searchInput" placeholder="Mahsulot qidirish..." oninput="onSearch()">
+      <button onclick="doSearch()" style="background:#2ecc71;border:none;border-radius:8px;padding:7px 14px;color:#fff;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;flex-shrink:0;">Izlash</button>
+    </div>
+  </div>
+
+  <!-- BANNER SLIDER -->
+  <div class="banner-wrap" id="bannerWrap">
+    <div class="banner-track" id="bannerTrack">
+      <!-- BANNERLAR DB dan yuklanadi — initBanner() da -->
+      <div class="banner-slide" style="background:linear-gradient(135deg,#2ecc71,#27ae60);">
+        <div class="banner-text">
+          <div class="banner-tag">🔥 AKSIYA</div>
+          <div class="banner-title">Yangi Mahsulotlar</div>
+          <div class="banner-sub">Har kuni yangi chegirmalar</div>
+          <div class="banner-btn" onclick="setCategory('Aksiya')">Ko'rish →</div>
+        </div>
+        <div class="banner-emoji">🎉</div>
+      </div>
+      <div class="banner-slide" style="background:linear-gradient(135deg,#1abc9c,#16a085);">
+        <div class="banner-text">
+          <div class="banner-tag">🌿 YANGI</div>
+          <div class="banner-title">Sabzavot va Mevalar</div>
+          <div class="banner-sub">Har kuni yangi mahsulotlar</div>
+          <div class="banner-btn" onclick="setCategory('Sabzavot')">Ko'rish →</div>
+        </div>
+        <div class="banner-emoji">🥦</div>
+      </div>
+      <div class="banner-slide" style="background:linear-gradient(135deg,#3498db,#2980b9);">
+        <div class="banner-text">
+          <div class="banner-tag">🥛 SUT</div>
+          <div class="banner-title">Sut mahsulotlari</div>
+          <div class="banner-sub">Toza va sifatli sutli mahsulotlar</div>
+          <div class="banner-btn" onclick="setCategory('Sut')">Ko'rish →</div>
+        </div>
+        <div class="banner-emoji">🥛</div>
+      </div>
+      <div class="banner-slide" style="background:linear-gradient(135deg,#9b59b6,#8e44ad);">
+        <div class="banner-text">
+          <div class="banner-tag">🥩 GO'SHT</div>
+          <div class="banner-title">Yangi Go'sht</div>
+          <div class="banner-sub">Sifatli va arzon go'sht mahsulotlari</div>
+          <div class="banner-btn" onclick="setCategory('Gosht')">Ko'rish →</div>
+        </div>
+        <div class="banner-emoji">🥩</div>
+      </div>
+    </div>
+    <button class="banner-prev" onclick="bannerSlide(-1)">‹</button>
+    <button class="banner-next" onclick="bannerSlide(1)">›</button>
+    <div class="banner-dots" id="bannerDots"></div>
+  </div>
+
+  <!-- KATEGORIYA TABLAR (scroll) -->
+  <div id="catTabs"></div>
+
+  <!-- KATTA KATEGORIYA IKONKALAR -->
+  <div class="cat-icons-wrap">
+    <div class="cat-icons" id="catIcons"></div>
+  </div>
+
+  <!-- PRODUCTS -->
+  <div id="prodArea"></div>
+</div>
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+  <div class="nav-item active" id="navMenu" onclick="switchTab('menu')">
+    <span class="nav-ico">🏠</span><span>Menyu</span>
+  </div>
+  <div class="nav-item" id="navOrders" onclick="openMyOrders()">
+    <span class="nav-ico nav-cart">📋<span class="nav-cart-badge" id="navOrderBadge"></span></span>Buyurtmalar
+  </div>
+  <div class="nav-item" id="navCart" onclick="openCart()">
+    <span class="nav-ico nav-cart">🛒<span class="nav-cart-badge" id="cartBadge"></span></span>Savat
+  </div>
+  <div class="nav-item" id="navProfile" onclick="openProfile()">
+    <span class="nav-ico">👤</span><span>Profil</span>
+  </div>
+</nav>
+
+<!-- ═══ CART MODAL ═══ -->
+<div class="modal" id="cartModal" style="align-items:flex-end;">
+  <div class="modal-sheet full">
+    <div class="modal-handle"></div>
+    <div class="modal-head">
+      <div class="modal-title">🛒 SAVAT</div>
+      <button class="modal-close" onclick="closeModal('cartModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div id="cartItems"></div>
+
+      <!-- Delivery -->
+      <div class="del-box">
+        <div class="del-title">Yetkazib berish</div>
+        <div class="del-info">3 km gacha tekin &nbsp;·&nbsp; 3 km dan keyin: 5 000 so'm/km</div>
+        <div class="del-row">
+          <span style="font-size:13px;color:var(--text);">Masofa:</span>
+          <input class="km-inp" id="kmInput" type="number" value="0" min="0" max="99" oninput="updateCartTotal()">
+          <span style="font-size:13px;color:var(--text);">km</span>
+          <span class="del-price" id="delPriceTag">0 so'm</span>
+        </div>
+        <div class="km-presets">
+          <button class="km-btn" onclick="setKm(0)">0</button>
+          <button class="km-btn" onclick="setKm(4)">4</button>
+          <button class="km-btn" onclick="setKm(5)">5</button>
+          <button class="km-btn" onclick="setKm(6)">6</button>
+          <button class="km-btn" onclick="setKm(7)">7</button>
+          <button class="km-btn" onclick="setKm(8)">8</button>
+          <button class="km-btn" onclick="setKm(9)">9</button>
+          <button class="km-btn" onclick="setKm(10)">10</button>
+          <button class="km-btn" onclick="setKm(15)">15</button>
+        </div>
+      </div>
+
+      <div class="warn-box warn" id="warnMin">⚠️ Minimal buyurtma: 60 000 so'm</div>
+      <div class="warn-box ok" id="warnOk">✅ Buyurtma berish mumkin</div>
+
+      <div class="total-row">
+        <span>JAMI:</span>
+        <span class="total-val" id="cartTotal">0 so'm</span>
+      </div>
+
+      <!-- Payment -->
+      <div class="form-group">
+        <label class="form-label">To'lov turi</label>
+        <select class="form-select" id="payMethod" onchange="renderPayDetails()">
+          <option value="cash">💵 Naqd pul</option>
+          <option value="click">📱 Click</option>
+          <option value="payme">📱 Payme</option>
+          <option value="card">💳 Plastik karta</option>
+        </select>
+      </div>
+      <div id="payDetailsArea"></div>
+
+      <!-- Address/Note -->
+      <div class="form-group">
+        <label class="form-label">📍 Manzil / Izoh</label>
+        <textarea class="form-textarea" id="noteInput" placeholder="Ko'cha, uy raqami, qo'shimcha izoh..."></textarea>
+        <button onclick="attachLocation()" id="locBtn" style="margin-top:8px;width:100%;padding:10px;background:rgba(0,229,200,.06);border:1px solid var(--border);border-radius:8px;color:var(--cyan);font-size:12px;font-weight:700;cursor:pointer;font-family:Nunito,sans-serif;display:flex;align-items:center;justify-content:center;gap:8px;">
+          📍 Lokatsiyamni ulash
+        </button>
+        <div id="locStatus" style="font-size:11px;color:var(--muted);margin-top:4px;display:none;"></div>
+      </div>
+
+      <!-- Rating -->
+      <div class="form-group">
+        <label class="form-label">⭐ Xizmat sifatini baholang</label>
+        <div class="star-row" id="starRow">
+          <span class="star" data-v="1" onclick="setStar(1)">★</span>
+          <span class="star" data-v="2" onclick="setStar(2)">★</span>
+          <span class="star" data-v="3" onclick="setStar(3)">★</span>
+          <span class="star" data-v="4" onclick="setStar(4)">★</span>
+          <span class="star" data-v="5" onclick="setStar(5)">★</span>
+        </div>
+        <textarea class="form-textarea" id="reviewInput" placeholder="Fikringizni yozing (ixtiyoriy)..." style="min-height:60px;"></textarea>
+      </div>
+
+      <div style="display:flex;gap:10px;margin-top:0;">
+        <button onclick="cancelOrder()" style="flex:1;padding:14px;background:#fff;border:2px solid #ef4444;border-radius:12px;color:#ef4444;font-size:14px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;">✕ Bekor qilish</button>
+        <button class="order-btn" id="orderBtn" onclick="placeOrder()" disabled style="flex:2;margin-top:0;">✓ BUYURTMA BERISH</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ RECEIPT MODAL ═══ -->
+<div class="modal center" id="receiptModal" style="z-index:600;">
+  <div class="modal-box">
+    <div class="modal-head">
+      <div class="modal-title">✅ ZAKAZ QABUL QILINDI</div>
+      <button class="modal-close" onclick="closeModal('receiptModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div id="receiptContent"></div>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-top:16px;">
+        <div style="display:flex;gap:8px;">
+          <button class="order-btn" style="margin-top:0;flex:1;" onclick="downloadPDF()">📄 PDF</button>
+          <button class="order-btn secondary" style="margin-top:0;flex:1;" onclick="downloadTXT()">📝 TXT</button>
+        </div>
+        <button class="order-btn secondary" style="margin-top:0;" onclick="closeModal('receiptModal')">← Xaridga qaytish</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MY ORDERS MODAL ═══ -->
+<div class="modal" id="ordersModal" style="align-items:flex-end;">
+  <div class="modal-sheet full">
+    <div class="modal-handle"></div>
+    <div class="modal-head">
+      <div class="modal-title">📋 MENING BUYURTMALARIM</div>
+      <button class="modal-close" onclick="closeModal('ordersModal')">✕</button>
+    </div>
+    <div class="modal-body" id="myOrdersList"></div>
+  </div>
+</div>
+
+<!-- ═══ FULL PROFILE MODAL ═══ -->
+<div class="modal" id="profileFullModal" style="align-items:flex-end;">
+  <div class="modal-sheet full">
+    <div class="modal-handle"></div>
+    <div class="modal-head">
+      <div class="modal-title">👤 SHAXSIY KABINET</div>
+      <button class="modal-close" onclick="closeModal('profileFullModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div style="text-align:center;margin-bottom:24px;">
+        <div style="width:80px;height:80px;background:linear-gradient(135deg,#16a34a,#22c55e);border-radius:50%;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-size:36px;">
+          👤
+        </div>
+        <div style="font-size:20px;font-weight:800;color:#111;" id="profileFullName">—</div>
+        <div style="font-size:14px;color:#666;margin-bottom:10px;" id="profileFullPhone">—</div>
+        <button onclick="openEditProfile()" style="padding:8px 20px;background:#f0fdf4;border:2px solid #22c55e;border-radius:20px;color:#16a34a;font-weight:800;font-size:13px;cursor:pointer;font-family:Nunito,sans-serif;">✏️ Tahrirlash</button>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div class="profile-menu-item" onclick="openMyOrders()">
+          <span class="profile-menu-icon">📋</span>
+          <div class="profile-menu-content">
+            <div class="profile-menu-title">Buyurtmalarim</div>
+            <div class="profile-menu-sub">Tarix va holat</div>
+          </div>
+          <span class="profile-menu-arrow">›</span>
+        </div>
+
+        <div class="profile-menu-item" onclick="openAddresses()">
+          <span class="profile-menu-icon">📍</span>
+          <div class="profile-menu-content">
+            <div class="profile-menu-title">Mening manzillarim</div>
+            <div class="profile-menu-sub">Saqlangan manzillar</div>
+          </div>
+          <span class="profile-menu-arrow">›</span>
+        </div>
+
+        <div class="profile-menu-item" onclick="openPaymentMethods()">
+          <span class="profile-menu-icon">💳</span>
+          <div class="profile-menu-content">
+            <div class="profile-menu-title">To'lov usullari</div>
+            <div class="profile-menu-sub">Kartalar, Click, Payme</div>
+          </div>
+          <span class="profile-menu-arrow">›</span>
+        </div>
+
+        <div class="profile-menu-item" onclick="openLanguage()">
+          <span class="profile-menu-icon">🌐</span>
+          <div class="profile-menu-content">
+            <div class="profile-menu-title">Til</div>
+            <div class="profile-menu-sub">O'zbekcha / Русский / English</div>
+          </div>
+          <span class="profile-menu-arrow">›</span>
+        </div>
+
+        <div class="profile-menu-item" onclick="openContact()">
+          <span class="profile-menu-icon">💬</span>
+          <div class="profile-menu-content">
+            <div class="profile-menu-title">Bog'lanish</div>
+            <div class="profile-menu-sub">Yordam va aloqa</div>
+          </div>
+          <span class="profile-menu-arrow">›</span>
+        </div>
+      </div>
+
+      <button onclick="logout()" style="width:100%;margin-top:24px;padding:16px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);border-radius:12px;color:var(--red);font-weight:700;cursor:pointer;font-size:14px;">
+        🚪 Chiqish
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ ADDRESSES MODAL ═══ -->
+<div class="modal" id="addressesModal" style="align-items:flex-end;">
+  <div class="modal-sheet full">
+    <div class="modal-handle"></div>
+    <div class="modal-head">
+      <div class="modal-title">📍 MANZILLARIM</div>
+      <button class="modal-close" onclick="closeModal('addressesModal')">✕</button>
+    </div>
+    <div class="modal-body" id="addressesList"></div>
+  </div>
+</div>
+
+<!-- ═══ PAYMENT METHODS MODAL ═══ -->
+<div class="modal" id="paymentMethodsModal" style="align-items:flex-end;">
+  <div class="modal-sheet full">
+    <div class="modal-handle"></div>
+    <div class="modal-head">
+      <div class="modal-title">💳 TO'LOV USULLARI</div>
+      <button class="modal-close" onclick="closeModal('paymentMethodsModal')">✕</button>
+    </div>
+    <div class="modal-body" id="paymentMethodsList"></div>
+  </div>
+</div>
+
+<!-- ═══ LANGUAGE MODAL ═══ -->
+<div class="modal center" id="languageModal">
+  <div style="background:#fff;border-radius:20px;width:calc(100% - 40px);max-width:380px;overflow:hidden;animation:popIn .25s cubic-bezier(.34,1.56,.64,1);">
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:18px 20px;border-bottom:1px solid #f0f0f0;">
+      <div style="font-size:17px;font-weight:900;color:#022e2d;">Tilni o'zgartirish</div>
+      <button onclick="closeModal('languageModal')" style="background:none;border:none;font-size:22px;cursor:pointer;color:#888;width:32px;height:32px;display:flex;align-items:center;justify-content:center;">✕</button>
+    </div>
+    <div style="padding:16px 20px;">
+      <div class="lang-item-new active" onclick="setLanguage('uz')" id="lang_uz"
+        style="display:flex;align-items:center;gap:14px;padding:14px 16px;border:1.5px solid #e0e0e0;border-radius:14px;margin-bottom:10px;cursor:pointer;transition:all .2s;background:#fff;">
+        <span style="font-size:26px;">🇺🇿</span>
+        <span style="font-size:15px;font-weight:700;color:#022e2d;flex:1;">O'zbekcha</span>
+        <span class="lang-radio" style="width:22px;height:22px;border-radius:50%;border:2px solid #ccc;display:flex;align-items:center;justify-content:center;flex-shrink:0;"></span>
+      </div>
+      <div class="lang-item-new" onclick="setLanguage('en')" id="lang_en"
+        style="display:flex;align-items:center;gap:14px;padding:14px 16px;border:1.5px solid #e0e0e0;border-radius:14px;margin-bottom:10px;cursor:pointer;transition:all .2s;background:#fff;">
+        <span style="font-size:26px;">🇬🇧</span>
+        <span style="font-size:15px;font-weight:700;color:#022e2d;flex:1;">English</span>
+        <span class="lang-radio" style="width:22px;height:22px;border-radius:50%;border:2px solid #ccc;display:flex;align-items:center;justify-content:center;flex-shrink:0;"></span>
+      </div>
+      <div class="lang-item-new" onclick="setLanguage('ru')" id="lang_ru"
+        style="display:flex;align-items:center;gap:14px;padding:14px 16px;border:1.5px solid #e0e0e0;border-radius:14px;margin-bottom:10px;cursor:pointer;transition:all .2s;background:#fff;">
+        <span style="font-size:26px;">🇷🇺</span>
+        <span style="font-size:15px;font-weight:700;color:#022e2d;flex:1;">Русский</span>
+        <span class="lang-radio" style="width:22px;height:22px;border-radius:50%;border:2px solid #ccc;display:flex;align-items:center;justify-content:center;flex-shrink:0;"></span>
+      </div>
+    </div>
+    <div style="display:flex;gap:10px;padding:0 20px 20px;">
+      <button onclick="closeModal('languageModal')" style="flex:1;padding:13px;background:#f0f0f0;border:none;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer;color:#555;font-family:'Nunito',sans-serif;">Bekor qilish</button>
+      <button onclick="saveLang()" style="flex:1;padding:13px;background:#2ecc71;border:none;border-radius:12px;font-size:14px;font-weight:800;cursor:pointer;color:#fff;font-family:'Nunito',sans-serif;">Saqlash</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ EDIT PROFILE MODAL ═══ -->
+<div class="modal center" id="editModal">
+  <div class="modal-box" style="max-width:340px;">
+    <div class="modal-head" style="background:#fff;">
+      <div class="modal-title" style="color:#111;font-size:15px;font-weight:900;font-family:Nunito,sans-serif;letter-spacing:0;">✏️ Ma'lumotlarni tahrirlash</div>
+      <button class="modal-close" onclick="closeModal('editModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label" style="color:#555;">ISM</label>
+        <input class="form-input" id="editName" placeholder="Ismingiz" style="border:2px solid #e0e0e0;border-radius:10px;color:#111;font-size:15px;">
+      </div>
+      <div class="form-group">
+        <label class="form-label" style="color:#555;">TELEFON RAQAMI</label>
+        <div style="display:flex;border:2px solid #e0e0e0;border-radius:10px;overflow:hidden;">
+          <div style="padding:12px 14px;background:#f5f5f5;font-weight:800;color:#111;border-right:1px solid #e0e0e0;">🇺🇿 +998</div>
+          <input id="editPhone" type="tel" inputmode="numeric" maxlength="9" placeholder="90 123 45 67"
+            style="flex:1;border:none;outline:none;padding:12px;font-size:16px;font-weight:700;font-family:Nunito,sans-serif;color:#111;"
+            oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,9)">
+        </div>
+      </div>
+      <button onclick="saveProfile()" style="width:100%;padding:13px;background:linear-gradient(135deg,#16a34a,#22c55e);border:none;border-radius:12px;color:#fff;font-size:15px;font-weight:900;cursor:pointer;font-family:Nunito,sans-serif;">Saqlash</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ CONTACT MODAL ═══ -->
+<div class="modal center" id="contactModal">
+  <div class="modal-box">
+    <div class="modal-head">
+      <div class="modal-title">💬 BOG'LANISH</div>
+      <button class="modal-close" onclick="closeModal('contactModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <!-- SMS CHAT -->
+      <div style="background:rgba(0,229,200,.06);border:1.5px solid rgba(0,229,200,.3);border-radius:12px;padding:14px;margin-bottom:10px;">
+        <div style="font-size:13px;font-weight:800;color:var(--cyan);margin-bottom:8px;">💬 SMS Chat — Admin bilan yozishuv</div>
+        <div id="shopChatMessages" style="max-height:200px;overflow-y:auto;display:flex;flex-direction:column;gap:8px;margin-bottom:10px;min-height:60px;">
+          <div style="text-align:center;color:var(--muted);font-size:12px;padding:16px;">Xabar yozing...</div>
+        </div>
+        <div style="display:flex;gap:8px;">
+          <input id="shopChatInput" style="flex:1;padding:10px 12px;background:var(--card);border:1.5px solid var(--border);border-radius:8px;color:white;font-family:Nunito,sans-serif;font-size:13px;outline:none;" placeholder="Xabar..." onkeydown="if(event.key==='Enter')sendShopChat()">
+          <button onclick="sendShopChat()" style="width:42px;height:42px;background:linear-gradient(135deg,var(--cyan),var(--cyan2));border:none;border-radius:8px;color:#000;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;">➤</button>
+        </div>
+      </div>
+      <div class="contact-item">
+        <span class="ci-icon">📱</span>
+        <div class="ci-text">
+          <h4>Telegram</h4>
+          <p>@mahalla_dukoni</p>
+        </div>
+        <button class="ci-action" onclick="window.open('https://t.me/mahalla_dukoni')">Ochish</button>
+      </div>
+      <div class="contact-item">
+        <span class="ci-icon">📞</span>
+        <div class="ci-text">
+          <h4>Telefon</h4>
+          <p>+998 90 123 45 67</p>
+        </div>
+        <button class="ci-action" onclick="window.open('tel:+998901234567')">Qo'ng'iroq</button>
+      </div>
+      <div class="contact-item">
+        <span class="ci-icon">📍</span>
+        <div class="ci-text">
+          <h4>Ish vaqti</h4>
+          <p>08:00 – 22:00 har kuni</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PAYMENT INFO MODAL ═══ -->
+<div class="modal center" id="payInfoModal">
+  <div class="modal-box">
+    <div class="modal-head">
+      <div class="modal-title">💳 TO'LOV USULLARI</div>
+      <button class="modal-close" onclick="closeModal('payInfoModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="pay-block">
+        <strong>📱 Click / Payme</strong>
+        <div class="pay-detail">Karta: <strong>8600 1234 5678 9012</strong></div>
+        <button class="copy-btn" onclick="copyText('8600123456789012')">📋 Nusxalash</button>
+      </div>
+      <div class="pay-block">
+        <strong>💵 Naqd pul</strong>
+        <div class="pay-detail">Yetkazib berganda to'lash mumkin</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="data.js"></script>
+<script>
+// ═══ STATE ═══
+var products=[], orders=[], offlineSales=[], users=[], incomes=[];
+var cart={}, session=null, lastOrder=null;
+var activeCategory='Hammasi';
+var _starVal=0;
+var userAddresses = [];
+var userPaymentMethods = [];
+
+var EMOJIS={
+  'Non':'🍞','Sut':'🥛','Gosht':'🥩','Meva':'🍎',
+  'Sabzavot':'🥦','Ichimlik':'🥤','Oziq':'🛒',
+  'Kimyo':'🧴','Bolalar':'👶','Gigiena':'🧼','Boshqa':'📦'
+};
+
+// Skrinshotdagi kategoriyalar tartibi va sonlari
+var CATEGORIES = [
+  { id: 'Gosht', name: "Go'sht", emoji: '🥩', count: 11 },
+  { id: 'Sut', name: 'Sut', emoji: '🥛', count: 8 },
+  { id: 'Non', name: 'Non', emoji: '🍞', count: 5 },
+  { id: 'Meva', name: 'Meva', emoji: '🍎', count: 5 },
+  { id: 'Sabzavot', name: 'Sabzavot', emoji: '🥦', count: 6 },
+  { id: 'Ichimlik', name: 'Ichimlik', emoji: '🥤', count: 4 },
+  { id: 'Oziq', name: 'Oziq-ovqat', emoji: '🛒', count: 25 },
+  { id: 'Kimyo', name: 'Kimyo', emoji: '🧴', count: 2 },
+  { id: 'Bolalar', name: 'Bolalar', emoji: '👶', count: 3 },
+  { id: 'Gigiena', name: 'Gigiena', emoji: '🧼', count: 3 },
+  { id: 'Aksiya', name: 'Aksiya', emoji: '🔥', count: 0 },
+  { id: 'Boshqa', name: 'Boshqa', emoji: '📦', count: 0 }
+];
+
+// ═══ INIT ═══
+function init(){
+  // Session tekshirish
+  var remembered = null;
+  try{ remembered = JSON.parse(localStorage.getItem('mahalla_remembered_customer')); }catch(e){}
+
+  var inIframe = window !== window.parent;
+  var s = DB.getSession();
+  // Login KERAK EMAS — faqat buyurtma qilganda so'raladi
+  if(!s || s.role !== 'customer'){
+    if(remembered && remembered.name && remembered.phone){
+      var allU = DB.getUsers();
+      var rd = remembered.phone.replace(/\D/g,'').slice(-9);
+      var existU = allU.find(function(u){
+        return u.phone && u.phone.replace(/\D/g,'').slice(-9) === rd;
+      });
+      var uid = existU ? (existU.userId||('u_'+existU.id)) : remembered.userId;
+      var norm = '+998' + rd;
+      if(!inIframe) DB.setSession({role:'customer', userId:uid, name:remembered.name, phone:norm, device:uid});
+      s = {role:'customer', userId:uid, name:remembered.name, phone:norm, device:uid};
+    } else {
+      // Mehmon sifatida kiradi — login kerak emas
+      var guestId = 'guest_preview';
+      s = {role:'customer', userId:guestId, name:'Mehmon', phone:'', device:guestId, isGuest:true};
+      if(!inIframe) DB.setSession(s);
+    }
+  }
+  session = s;
+
+  // AVVAL server dan yukla (eng ishonchli)
+  try{
+    var xr=new XMLHttpRequest();
+    xr.open('GET','/api/products',false);
+    xr.send();
+    if(xr.status===200){
+      var xres=JSON.parse(xr.responseText);
+      if(xres.ok && Array.isArray(xres.data) && xres.data.length){
+        products=xres.data;
+        try{localStorage.setItem('mahalla_v1_products',JSON.stringify(products));}catch(e){}
+      }
+    }
+  }catch(e){}
+
+  // Fallback: localStorage dan
+  if(!products||!products.length) products=DB.getProducts();
+
+  orders      = DB.getOrders();
+  offlineSales= DB.getOffline();
+  users       = DB.getUsers();
+
+  // User bar
+  var ub = document.getElementById('userBar');
+  // user bar yashirin
+  var sname = session.name||'';
+  var sphone = session.phone||'';
+  document.getElementById('uName').textContent = sname;
+  document.getElementById('uPhone').textContent = sphone;
+  document.getElementById('profileFullName').textContent = sname||'Mehmon';
+  document.getElementById('profileFullPhone').textContent = sphone;
+  // Header profil tugmasi
+  if(sname && sname !== 'Mehmon'){
+    var hui = document.getElementById('headerUserInfo');
+    if(hui){
+      hui.style.display='block';
+      document.getElementById('headerUserName').textContent = sname;
+      document.getElementById('headerUserPhone').textContent = sphone;
+    }
+  }
+
+  // Load user data
+  loadUserData();
+
+  renderCatTabs();
+  renderCatIcons();
+  initBanner();
+  renderProducts();
+  updateOrderDot();
+  seedStatuses();
+
+  // Modals click outside
+  document.querySelectorAll('.modal').forEach(function(m){
+    m.addEventListener('click',function(e){ if(e.target===m) closeModal(m.id); });
+  });
+}
+
+function loadUserData(){
+  // Load addresses
+  try{
+    var addr = localStorage.getItem('user_addresses_' + session.userId);
+    if(addr) userAddresses = JSON.parse(addr);
+  }catch(e){}
+
+  // Load payment methods
+  try{
+    var pay = localStorage.getItem('user_payments_' + session.userId);
+    if(pay) userPaymentMethods = JSON.parse(pay);
+  }catch(e){}
+}
+
+function saveUserData(){
+  try{
+    localStorage.setItem('user_addresses_' + session.userId, JSON.stringify(userAddresses));
+    localStorage.setItem('user_payments_' + session.userId, JSON.stringify(userPaymentMethods));
+  }catch(e){}
+}
+
+// ═══ LOGIN MODAL ═══
+function showLoginModal(){
+  var old=document.getElementById('loginModal');
+  if(old) old.remove();
+
+  // Modal DOM bilan qilamiz
+  var overlay=document.createElement('div');
+  overlay.id='loginModal';
+  overlay.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:9998;display:flex;align-items:center;justify-content:center;padding:16px;';
+
+  var box=document.createElement('div');
+  box.style.cssText='background:#fff;border-radius:20px;width:100%;max-width:360px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.3);';
+
+  // Header
+  var hdr=document.createElement('div');
+  hdr.style.cssText='background:linear-gradient(135deg,#16a34a,#22c55e);padding:24px;text-align:center;';
+  hdr.innerHTML='<div style="font-size:48px;margin-bottom:8px;">&#127978;</div>'+
+    '<div style="font-size:18px;font-weight:900;color:#fff;">MAHALLA DUKONI</div>'+
+    '<div style="font-size:12px;color:rgba(255,255,255,.85);margin-top:4px;">Buyurtma berish uchun kiring</div>';
+
+  // Body
+  var body=document.createElement('div');
+  body.style.padding='24px';
+
+  // Xabar bloki
+  var msg=document.createElement('div');
+  msg.id='loginMsg';
+  msg.style.cssText='display:none;padding:10px 14px;border-radius:10px;margin-bottom:14px;font-size:13px;font-weight:700;';
+  body.appendChild(msg);
+
+  // Telefon label
+  var lbl1=document.createElement('div');
+  lbl1.style.cssText='font-size:11px;font-weight:800;color:#555;margin-bottom:6px;letter-spacing:.5px;';
+  lbl1.textContent='TELEFON RAQAMI *';
+  body.appendChild(lbl1);
+
+  // Telefon box
+  var phoneBox=document.createElement('div');
+  phoneBox.id='phoneBox';
+  phoneBox.style.cssText='display:flex;border:2px solid #e0e0e0;border-radius:12px;overflow:hidden;transition:border .2s;margin-bottom:4px;';
+
+  var prefix=document.createElement('div');
+  prefix.style.cssText='padding:13px 14px;background:#f5f5f5;font-weight:800;color:#111;border-right:1px solid #e0e0e0;white-space:nowrap;font-size:15px;';
+  prefix.textContent='+998';
+
+  var phoneInp=document.createElement('input');
+  phoneInp.id='loginPhone';
+  phoneInp.type='tel';
+  phoneInp.setAttribute('inputmode','numeric');
+  phoneInp.maxLength=9;
+  phoneInp.placeholder='90 123 45 67';
+  phoneInp.style.cssText='flex:1;border:none;outline:none;padding:13px;font-size:17px;font-weight:700;font-family:Nunito,sans-serif;color:#111;background:#fff;';
+  phoneInp.oninput=function(){
+    this.value=this.value.replace(/[^0-9]/g,'').slice(0,9);
+    msg.style.display='none';
+  };
+  phoneInp.onfocus=function(){phoneBox.style.borderColor='#22c55e';};
+  phoneInp.onblur=function(){phoneBox.style.borderColor='#e0e0e0';};
+
+  phoneBox.appendChild(prefix);
+  phoneBox.appendChild(phoneInp);
+  body.appendChild(phoneBox);
+
+  var hint=document.createElement('div');
+  hint.style.cssText='font-size:11px;color:#999;margin-bottom:16px;margin-top:4px;';
+  hint.textContent='9 ta raqam kiriting (masalan: 90 123 45 67)';
+  body.appendChild(hint);
+
+  // Ism
+  var lbl2=document.createElement('div');
+  lbl2.style.cssText='font-size:11px;font-weight:800;color:#555;margin-bottom:6px;letter-spacing:.5px;';
+  lbl2.innerHTML='ISM <span style="color:#999;font-weight:600;">(ixtiyoriy)</span>';
+  body.appendChild(lbl2);
+
+  var nameInp=document.createElement('input');
+  nameInp.id='loginName';
+  nameInp.type='text';
+  nameInp.placeholder='Ism familiya';
+  nameInp.style.cssText='width:100%;padding:13px;border:2px solid #e0e0e0;border-radius:12px;font-size:15px;font-family:Nunito,sans-serif;color:#111;outline:none;box-sizing:border-box;margin-bottom:20px;';
+  nameInp.onfocus=function(){this.style.borderColor='#22c55e';};
+  nameInp.onblur=function(){this.style.borderColor='#e0e0e0';};
+  // Enter tugmasi
+  nameInp.onkeydown=function(e){if(e.key==='Enter')doLogin();};
+  phoneInp.onkeydown=function(e){if(e.key==='Enter')doLogin();};
+  body.appendChild(nameInp);
+
+  // Kirish tugmasi
+  var loginBtn=document.createElement('button');
+  loginBtn.id='loginBtn';
+  loginBtn.style.cssText='width:100%;padding:15px;background:linear-gradient(135deg,#16a34a,#22c55e);border:none;border-radius:12px;color:#fff;font-size:16px;font-weight:900;cursor:pointer;font-family:Nunito,sans-serif;box-shadow:0 4px 14px rgba(22,163,74,.3);';
+  loginBtn.textContent='Kirish';
+  loginBtn.onclick=doLogin;
+  body.appendChild(loginBtn);
+
+  // Bekor qilish
+  var cancelBtn=document.createElement('button');
+  cancelBtn.style.cssText='width:100%;padding:10px;background:none;border:none;color:#999;font-size:13px;cursor:pointer;margin-top:8px;font-family:Nunito,sans-serif;';
+  cancelBtn.textContent='Bekor qilish';
+  cancelBtn.onclick=function(){overlay.remove();};
+  body.appendChild(cancelBtn);
+
+  box.appendChild(hdr);
+  box.appendChild(body);
+  overlay.appendChild(box);
+  document.body.appendChild(overlay);
+  setTimeout(function(){phoneInp.focus();},200);
+}
+
+function showLoginMsg_unused(){}
+// delete old string version if exists
+function loginPhoneInput(inp){
+  inp.value=inp.value.replace(/[^0-9]/g,'').slice(0,9);
+  // Xabarni tozala
+  var msg=document.getElementById('loginMsg');
+  if(msg){msg.style.display='none';}
+}
+
+function showLoginMsg(text,type){
+  var msg=document.getElementById('loginMsg');
+  if(!msg) return;
+  msg.textContent=text;
+  msg.style.display='block';
+  msg.style.background=type==='error'?'#fef2f2':type==='warn'?'#fffbeb':'#f0fdf4';
+  msg.style.color=type==='error'?'#dc2626':type==='warn'?'#d97706':'#16a34a';
+  msg.style.border='1.5px solid '+(type==='error'?'#fca5a5':type==='warn'?'#fcd34d':'#86efac');
+}
+
+function doLogin(){
+  var phoneDigits=(document.getElementById('loginPhone')||{value:''}).value.replace(/\D/g,'');
+  var nameInput=(document.getElementById('loginName')||{value:''}).value.trim();
+
+  // Validatsiya
+  if(phoneDigits.length!==9){
+    showLoginMsg('9 ta raqam kiriting! Masalan: 90 123 45 67','error');
+    return;
+  }
+  var phoneNorm='+998'+phoneDigits;
+
+  // Loading
+  var btn=document.getElementById('loginBtn');
+  if(btn){btn.disabled=true;btn.textContent='Tekshirilmoqda...';}
+
+  var allUsers=DB.getUsers();
+
+  // Telefon bo'yicha mavjud foydalanuvchini qidirish
+  var existing=allUsers.find(function(u){
+    return u.phone && u.phone.replace(/\D/g,'').slice(-9)===phoneDigits;
+  });
+
+  var uid, s, finalName;
+
+  if(existing){
+    // Mavjud foydalanuvchi topildi
+    finalName = nameInput || existing.name || 'Mijoz';
+    uid = existing.userId || ('u_'+existing.id);
+
+    // Ism yangilash (kiritilgan bo'lsa)
+    if(nameInput && nameInput !== existing.name){
+      existing.name=nameInput;
+      existing.phone=phoneNorm;
+      DB.saveUsers(allUsers);
+    }
+
+    s={role:'customer',userId:uid,name:finalName,phone:phoneNorm,device:uid};
+    showLoginMsg('Xush kelibsiz, '+finalName+'!','ok');
+
+  } else {
+    // Yangi foydalanuvchi
+    finalName = nameInput || 'Mijoz';
+    uid='u_'+Date.now();
+    allUsers.push({
+      id:Date.now(), userId:uid,
+      name:finalName, phone:phoneNorm,
+      role:'customer', debt:0, debtHistory:[],
+      registeredAt:new Date().toISOString()
+    });
+    DB.saveUsers(allUsers);
+    s={role:'customer',userId:uid,name:finalName,phone:phoneNorm,device:uid};
+    showLoginMsg('Tabriklaymiz! Royxatdan otdingiz.','ok');
+  }
+
+  if(window===window.parent) DB.setSession(s);
+  localStorage.setItem('mahalla_remembered_customer',JSON.stringify({
+    userId:uid, name:finalName, phone:phoneNorm, device:uid
+  }));
+
+  // Modal yopish va davom etish
+  setTimeout(function(){
+    var m=document.getElementById('loginModal');
+    if(m) m.remove();
+    session=s;
+    // Header yangilash
+    var hn=document.getElementById('headerUserName');if(hn)hn.textContent=finalName;
+    var hp=document.getElementById('headerUserPhone');if(hp)hp.textContent=phoneNorm;
+    var hui=document.getElementById('headerUserInfo');if(hui&&finalName!=='Mehmon')hui.style.display='block';
+    var un=document.getElementById('uName');if(un)un.textContent=finalName;
+    var up=document.getElementById('uPhone');if(up)up.textContent=phoneNorm;
+    // Pending order
+    var pending=window._pendingOrder;
+    window._pendingOrder=false;
+    if(pending){
+      renderProducts();
+      setTimeout(function(){placeOrder();},300);
+    } else {
+      renderProducts();
+    }
+  },800);
+}
+
+// ═══ CATEGORIES ═══
+function renderCatTabs(){
+  var html = '<div class="cat-tabs">';
+  html += '<div class="cat-tab '+(activeCategory==='Hammasi'?'active':'')+'" onclick="setCategory(\'Hammasi\')">🏪 Hammasi <span style="color: var(--muted);">('+products.length+')</span></div>';
+
+  CATEGORIES.forEach(function(cat){
+    var catProducts = products.filter(function(p){ return p.category === cat.id; });
+    var outCount = catProducts.filter(function(p){ return p.stock <= 0; }).length;
+    html += '<div class="cat-tab '+(activeCategory===cat.id?'active':'')+'" onclick="setCategory(\''+cat.id+'\')" style="position:relative;">'+
+      '<span class="cat-emoji">'+cat.emoji+'</span> '+cat.name+
+      '<span style="color: var(--muted);"> ('+catProducts.length+')</span>';
+    if(outCount > 0){
+      html += '<span class="out-badge">TUGAGAN</span>';
+    }
+    html += '</div>';
+  });
+
+  html += '</div>';
+  var ct=document.getElementById('catTabs'); if(ct) ct.innerHTML = html;
+}
+
+function setCategory(cat){
+  activeCategory=cat;
+  renderCatTabs();
+  renderCatIcons();
+  renderProducts();
+  // Scroll top
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ═══ PRODUCTS ═══
+function renderProducts(){
+  var area = document.getElementById('prodArea');
+  if(!area) return;
+  var rawQ = (document.getElementById('searchInput')||{value:''}).value;
+  var q = rawQ.toLowerCase().trim();
+
+  // Filter products
+  if(!products||!products.length){
+    area.innerHTML='<div style="text-align:center;padding:40px;color:#888;">⏳ Mahsulotlar yuklanmoqda...</div>';
+    return;
+  }
+  var _today=new Date(); _today.setHours(0,0,0,0);
+  var allList = products.filter(function(p){
+    if(!p.expiryDate) return true;
+    return new Date(p.expiryDate)>=_today;
+  });
+  if(activeCategory!=='Hammasi') allList=allList.filter(function(p){return p.category===activeCategory;});
+  if(q) allList=allList.filter(function(p){return p.name.toLowerCase().includes(q)||(p.barcode||'').includes(q);});
+
+  // Sort: discounted in-stock first, then in-stock, then out-of-stock
+  allList.sort(function(a,b){
+    var aOut = a.stock<=0, bOut = b.stock<=0;
+    if(aOut && !bOut) return 1;
+    if(!aOut && bOut) return -1;
+    var aDisc=calcDiscount(a).discount, bDisc=calcDiscount(b).discount;
+    return bDisc - aDisc;
+  });
+
+  var area = document.getElementById('prodArea');
+  if(!allList.length){
+    area.innerHTML='<div style="text-align:center;padding:60px 20px;color:var(--muted);font-size:14px;">Mahsulot topilmadi</div>';
+    return;
+  }
+
+  // Split into in-stock and out-of-stock
+  var inStock = allList.filter(function(p){ return p.stock > 0; });
+  var outOfStock = allList.filter(function(p){ return p.stock <= 0; });
+
+  var html = '';
+
+  // Aksiyalar section (only if active category is 'Hammasi' and no search)
+  if(activeCategory==='Hammasi' && !q){
+    var discounted = inStock.filter(function(p){return calcDiscount(p).discount>0;});
+    if(discounted.length){
+      html += '<div class="section-hd"><span class="section-hd-title">🔥 Aksiya va Chegirmalar</span><span class="section-hd-more" onclick="setCategory(\'Aksiya\')">Barchasini ko\'rish →</span></div>';
+      html += '<div class="prod-grid">'+discounted.map(prodCard).join('')+'</div>';
+    }
+  }
+
+  // In-stock products by category
+  if(activeCategory==='Hammasi' && !q){
+    CATEGORIES.forEach(function(cat){
+      var catProds = inStock.filter(function(p){ return p.category === cat.id; });
+      if(!catProds.length) return;
+
+      html += '<div class="section-hd"><span class="section-hd-title">'+cat.emoji+' '+cat.name+'</span><span class="section-hd-more">'+catProds.length+' ta</span></div>';
+      html += '<div class="prod-grid">'+catProds.map(prodCard).join('')+'</div>';
+    });
+  } else {
+    // Filtered view
+    var emoji2 = activeCategory==='Hammasi' ? '🔍' : (CATEGORIES.find(function(c){return c.id===activeCategory;})?.emoji || '🔍');
+    html += '<div class="section-hd"><span class="section-hd-title">'+emoji2+' '+(q?'Qidiruv natijalari':activeCategory)+'</span><span class="section-hd-more">'+inStock.length+' ta</span></div>';
+    html += '<div class="prod-grid">'+inStock.map(prodCard).join('')+'</div>';
+  }
+
+  // Out of stock section
+  if(outOfStock.length > 0){
+    html += '<div class="section-hd" style="margin-top:16px;"><span class="section-hd-title" style="color:#EF4444;">⚠️ Tugagan mahsulotlar</span><span class="section-hd-more">'+outOfStock.length+' ta</span></div>';
+    html += '<div class="prod-grid">'+outOfStock.map(function(p){
+      return '<div class="prod-card out" style="opacity:0.6;pointer-events:none;">'+
+        '<div class="pc-img-wrap">'+
+          (p.img ? '<img class="pc-img" src="'+p.img+'" style="filter:grayscale(100%);">' : '<span class="pc-emoji">'+(EMOJIS[p.category]||'📦')+'</span>')+
+        '</div>'+
+        '<div class="pc-body">'+
+          '<div class="pc-name">'+p.name+'</div>'+
+          '<div style="display:flex;justify-content:space-between;align-items:center;">'+
+            '<span class="pc-price" style="color:var(--muted);">'+fmt(p.sellPrice)+' so\'m</span>'+
+            '<span style="background:var(--red);color:white;padding:4px 8px;border-radius:20px;font-size:10px;font-weight:800;">TUGAGAN</span>'+
+          '</div>'+
+        '</div>'+
+      '</div>';
+    }).join('')+'</div>';
+  }
+
+  area.innerHTML = html;
+}
+
+function prodCard(p){
+  if(!p) return '';
+  var disc=calcDiscount(p);
+  var realPrice=(disc.finalPrice>0)?disc.finalPrice:(p.sellPrice||0);
+  var hasDisc=disc.discount>0&&disc.finalPrice>0&&disc.finalPrice<p.sellPrice;
+  var inCart=cart[p.id]||0;
+
+  var stockLeft = '';
+  if(p.stock > 0 && p.stock <= 3){
+    stockLeft = '<div class="stock-left">'+p.stock+' DONA QOLDI</div>';
+  }
+
+  var imgHtml = p.img
+    ? '<div class="pc-img-wrap"><img class="pc-img" src="'+p.img+'"></div>'
+    : '<div class="pc-img-wrap"><span class="pc-emoji">'+(EMOJIS[p.category]||'📦')+'</span></div>';
+
+  var realPrice = (disc.finalPrice>0)?disc.finalPrice:(p.sellPrice||0);
+  var hasDisc = disc.discount>0 && disc.finalPrice>0 && disc.finalPrice<p.sellPrice;
+
+  var inCartOverlay = inCart>0
+    ? '<div style="position:absolute;top:0;left:0;right:0;bottom:0;background:rgba(46,204,113,.12);pointer-events:none;border-radius:10px 10px 0 0;display:flex;align-items:center;justify-content:center;">' +
+      '<div style="background:#16a34a;color:#fff;border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900;box-shadow:0 4px 12px rgba(0,0,0,.3);border:3px solid #fff;">'+inCart+'</div>' +
+      '</div>'
+    : '';
+
+  var cardStyle = inCart>0
+    ? 'position:relative;border:3px solid #16a34a;background:#f0fdf4;box-shadow:0 0 0 3px rgba(22,163,74,.2);'
+    : 'position:relative;';
+
+  var addBtn = p.stock>0
+    ? (inCart>0
+        ? '<div style="padding:0 8px 10px;"><button class="pc-add-btn" style="background:#16a34a;color:#fff;font-size:13px;" onclick="addToCart('+p.id+')">✓ '+inCart+' ta  +</button></div>'
+        : '<div style="padding:0 8px 10px;"><button class="pc-add-btn" style="background:#22C55E;color:#fff;" onclick="addToCart('+p.id+')">&#128722; Savatga</button></div>'
+      )
+    : '<div style="padding:0 8px 10px;"><button class="pc-add-btn" disabled style="background:#f0f0f0;color:#bbb;">Tugagan</button></div>';
+
+  return '<div class="prod-card" style="'+cardStyle+'" data-pid="'+p.id+'">' +
+    '<div onclick="addToCart('+p.id+')" style="position:relative;">' +
+    imgHtml +
+    (hasDisc?'<div class="pc-disc">-'+disc.discount+'%</div>':'')+
+    (inCart>0?'<div class="pc-cart-badge">'+inCart+'</div>':'')+
+    '<div class="pc-body">'+
+      '<div class="pc-name">'+p.name+'</div>'+
+      stockLeft+
+      '<div style="margin-top:4px;">'+
+        '<div class="pc-price'+(hasDisc?' sale':'')+'">'+fmt(realPrice)+" so'm</div>"+
+        (hasDisc?'<div class="pc-orig">'+fmt(p.sellPrice)+" so'm</div>":'')+
+      '</div>'+
+    '</div>'+
+    '</div>'+
+    addBtn+
+  '</div>';
+}
+
+// ═══ CART ═══
+var _shopAudioCtx=null;
+function _getShopAudio(){
+  if(!_shopAudioCtx){
+    try{ _shopAudioCtx=new(window.AudioContext||window.webkitAudioContext)(); }catch(e){}
+  }
+  return _shopAudioCtx;
+}
+function beepCart(){
+  try{
+    var ctx=_getShopAudio(); if(!ctx) return;
+    var play=function(){
+      var o=ctx.createOscillator(),g=ctx.createGain();
+      o.connect(g);g.connect(ctx.destination);
+      o.type='sine';o.frequency.value=1200;
+      g.gain.setValueAtTime(0.3,ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.1);
+      o.start(ctx.currentTime);o.stop(ctx.currentTime+0.1);
+    };
+    if(ctx.state==='suspended') ctx.resume().then(play); else play();
+  }catch(e){}
+}
+// iOS Safari: AudioContext ni birinchi click da jonlantirish
+document.addEventListener('touchstart',function(){
+  var ctx=_getShopAudio();
+  if(ctx&&ctx.state==='suspended') ctx.resume();
+},{once:true,passive:true});
+document.addEventListener('click',function(){
+  var ctx=_getShopAudio();
+  if(ctx&&ctx.state==='suspended') ctx.resume();
+},{once:true});
+
+function addToCart(id){
+  var p=products.find(function(x){return x.id==id;});
+  if(!p||p.stock<=0){showToast('Mahsulot tugagan','error');return;}
+  var cur=cart[id]||0;
+  if(cur>=p.stock){showToast('Omborda yetarli emas','error');return;}
+  cart[id]=cur+1;
+  beepCart();
+  updateCartBadge();
+  renderProducts();
+}
+
+function updateSingleCard(id){
+  var qty=cart[id]||0;
+  // data-pid orqali topamiz
+  var cards=document.querySelectorAll('.prod-card[data-pid="'+id+'"]');
+  if(!cards.length){ renderProducts(); return; }
+  cards.forEach(function(card){
+    // In-cart class
+    card.classList.toggle('in-cart', qty>0);
+    // Badge
+    var badge=card.querySelector('.pc-cart-badge');
+    if(qty>0){
+      if(!badge){
+        badge=document.createElement('div');
+        badge.className='pc-cart-badge';
+        card.appendChild(badge);
+      }
+      badge.textContent=qty;
+    } else {
+      if(badge) badge.remove();
+    }
+    // Overlay (img ustida yashil)
+    var overlay=card.querySelector('.cart-overlay');
+    if(qty>0){
+      if(!overlay){
+        overlay=document.createElement('div');
+        overlay.className='cart-overlay';
+        overlay.style.cssText='position:absolute;top:0;left:0;right:0;height:130px;background:rgba(46,204,113,.22);pointer-events:none;display:flex;align-items:center;justify-content:center;z-index:4;border-radius:10px 10px 0 0;transition:all .2s;';
+        var num=document.createElement('div');
+        num.className='cart-overlay-num';
+        num.style.cssText='background:#16a34a;color:#fff;border-radius:50%;width:48px;height:48px;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900;box-shadow:0 4px 14px rgba(0,0,0,.3);border:3px solid #fff;';
+        num.textContent=qty;
+        overlay.appendChild(num);
+        card.insertBefore(overlay, card.firstChild);
+      } else {
+        var n=overlay.querySelector('.cart-overlay-num');
+        if(n) n.textContent=qty;
+      }
+    } else {
+      if(overlay) overlay.remove();
+    }
+  });
+}
+
+function changeQty(id,delta){
+  var cur=cart[id]||0;
+  var nw=cur+delta;
+  if(nw<=0){delete cart[id];}
+  else{
+    var p=products.find(function(x){return x.id==id;});
+    if(p&&nw>p.stock){showToast('Omborda yetarli emas','error');return;}
+    cart[id]=nw;
+  }
+  updateCartBadge();
+  updateHeaderCart();
+  renderCart();
+  renderProducts();
+  updateCartTotal();
+}
+
+function updateCartBadge(){
+  var total=Object.values(cart).reduce(function(a,b){return a+(b||0);},0);
+  var cb=document.getElementById('cartBadge');
+  if(cb){cb.textContent=total;cb.classList.toggle('on',total>0);}
+}
+
+function openCart(){
+  var items=Object.keys(cart).filter(function(k){return cart[k]>0;});
+  if(!items.length){showToast('Savat bo\'sh!','info');return;}
+  renderCart();
+  updateCartTotal();
+  openModal('cartModal');
+}
+
+function renderCart(){
+  var items=Object.entries(cart).filter(function(e){return e[1]>0;});
+  if(!items.length){closeModal('cartModal');return;}
+  var html='';
+  items.forEach(function(e){
+    var id=e[0],qty=e[1];
+    var p=products.find(function(x){return x.id==id;});
+    if(!p)return;
+    var disc=calcDiscount(p);
+    var imgHtml=p.img?'<img class="ci-img" src="'+p.img+'">'
+      :'<span class="ci-emoji">'+(EMOJIS[p.category]||'📦')+'</span>';
+    html+='<div class="cart-item">'+imgHtml+
+      '<div class="ci-info">'+
+        '<div class="ci-name">'+p.name+'</div>'+
+        '<div class="ci-price">'+fmt(disc.finalPrice)+" so'm × "+qty+' = '+fmt(disc.finalPrice*qty)+" so'm</div>"+
+        '<div class="ci-qty">'+
+          '<button class="cqb m" onclick="changeQty('+id+',-1)">−</button>'+
+          '<span class="cqn">'+qty+'</span>'+
+          '<button class="cqb p" onclick="changeQty('+id+',+1)">+</button>'+
+        '</div>'+
+      '</div>'+
+    '</div>';
+  });
+  document.getElementById('cartItems').innerHTML=html;
+}
+
+function calcDelivery(km){
+  if(km<=3)return 0;
+  return(km-3)*5000;
+}
+
+function setKm(val){
+  var inp=document.getElementById('kmInput');
+  if(inp){inp.value=val;updateCartTotal();}
+  // Active button highlight
+  document.querySelectorAll('.km-btn').forEach(function(b){
+    b.classList.toggle('active', parseInt(b.textContent)===val);
+  });
+}
+
+
+function updateCartTotal(){
+  var km=parseInt(document.getElementById('kmInput').value)||0;
+  var delPrice=calcDelivery(km);
+  var prodTotal=Object.entries(cart).reduce(function(a,e){
+    var p=products.find(function(x){return x.id==e[0];});
+    if(!p||!e[1])return a;
+    return a+calcDiscount(p).finalPrice*e[1];
+  },0);
+  var total=prodTotal+delPrice;
+  document.getElementById('delPriceTag').textContent=fmt(delPrice)+" so'm";
+  document.getElementById('cartTotal').textContent=fmt(total)+" so'm";
+  var ok=prodTotal>=60000;
+  document.getElementById('warnMin').classList.toggle('show',!ok);
+  document.getElementById('warnOk').classList.toggle('show',ok);
+  document.getElementById('orderBtn').disabled=!ok;
+}
+
+function renderPayDetails(){
+  var m=document.getElementById('payMethod').value;
+  var numbers={click:'8600 1234 5678 9012',payme:'8600 1234 5678 9012',card:'9860 1234 5678 9012'};
+  if(m!=='cash'&&numbers[m]){
+    document.getElementById('payDetailsArea').innerHTML=
+      '<div class="pay-block">'+
+        '<strong>📱 '+{click:'Click',payme:'Payme',card:'Plastik'}[m]+'</strong>'+
+        '<div class="pay-detail">Karta: <strong>'+numbers[m]+'</strong></div>'+
+        '<button class="copy-btn" onclick="copyText(\''+numbers[m].replace(/\s/g,'')+'\')">📋 Nusxalash</button>'+
+        '<div class="receipt-upload-area" id="receiptUploadArea">'+
+          '<div class="receipt-upload-label">📎 To\'lov chekini biriktiring</div>'+
+          '<div class="receipt-upload-hint">Pul o\'tkazmasi screenshoti yoki chek rasmini yuklang</div>'+
+          '<label class="receipt-upload-btn" for="receiptFileInput">'+
+            '<span>📷 Rasm tanlash</span>'+
+          '</label>'+
+          '<input type="file" id="receiptFileInput" accept="image/*" style="display:none;" onchange="previewReceipt(this)">'+
+          '<div id="receiptPreviewWrap" style="display:none;margin-top:8px;">'+
+            '<div style="position:relative;display:inline-block;">'+
+              '<img id="receiptPreviewImg" src="" style="max-width:100%;max-height:180px;border-radius:8px;border:2px solid var(--cyan);object-fit:contain;">'+
+              '<button onclick="clearReceipt()" style="position:absolute;top:-8px;right:-8px;width:22px;height:22px;border-radius:50%;background:var(--red);border:none;color:white;font-size:13px;cursor:pointer;line-height:1;">✕</button>'+
+            '</div>'+
+            '<div id="receiptFileSize" style="font-size:10px;color:var(--muted);margin-top:4px;"></div>'+
+          '</div>'+
+        '</div>'+
+      '</div>';
+  } else {
+    document.getElementById('payDetailsArea').innerHTML='';
+  }
+}
+
+function previewReceipt(input){
+  var file=input.files[0];
+  if(!file){return;}
+  var maxMb=5;
+  if(file.size>maxMb*1024*1024){showToast('Fayl 5 MB dan katta!','error');input.value='';return;}
+  var reader=new FileReader();
+  reader.onload=function(e){
+    document.getElementById('receiptPreviewImg').src=e.target.result;
+    document.getElementById('receiptPreviewWrap').style.display='block';
+    var kb=(file.size/1024).toFixed(0);
+    document.getElementById('receiptFileSize').textContent='📁 '+file.name+' ('+kb+' KB)';
+    window._receiptBase64=e.target.result;
+    window._receiptFileName=file.name;
+    showToast('✅ Chek biriktirildi','success');
+  };
+  reader.readAsDataURL(file);
+}
+
+function clearReceipt(){
+  document.getElementById('receiptPreviewWrap').style.display='none';
+  document.getElementById('receiptFileInput').value='';
+  window._receiptBase64=null;
+  window._receiptFileName=null;
+}
+
+// ═══ STAR RATING ═══
+function setStar(v){
+  _starVal=v;
+  document.querySelectorAll('.star').forEach(function(el){
+    el.classList.toggle('on',parseInt(el.dataset.v)<=v);
+  });
+}
+
+// ═══ PLACE ORDER ═══
+function cancelOrder(){
+  if(!Object.keys(cart).length){ showToast('Savat bo\'sh!','info'); return; }
+  if(!confirm('Savatdagi barcha tovarlarni bekor qilasizmi?')) return;
+  cart={};
+  updateCartBadge();
+  renderProducts();
+  closeModal('cartModal');
+  showToast('Savat tozalandi','success');
+}
+
+function placeOrder(){
+  // Guest bo'lsa login so'ra
+  if(!session || session.isGuest || !session.name || session.name==='Mehmon'){
+    showLoginModal();
+    // Login bo'lgandan keyin davom et
+    window._pendingOrder = true;
+    return;
+  }
+  var km=parseInt(document.getElementById('kmInput').value)||0;
+  var payment=document.getElementById('payMethod').value;
+  var note=(document.getElementById('noteInput')||{value:''}).value.trim();
+  var review=(document.getElementById('reviewInput')||{value:''}).value.trim();
+  var rating=_starVal;
+
+  var items=[]; var prodTotal=0; var profit=0;
+  for(var id in cart){
+    if(!cart[id])continue;
+    var qty=cart[id];
+    var p=products.find(function(x){return x.id==id;});
+    if(!p||p.stock<qty){showToast('Mahsulot yetarli emas','error');return;}
+    var disc=calcDiscount(p);
+    items.push({name:p.name,qty:qty,price:disc.finalPrice,costPrice:p.costPrice,originalPrice:p.sellPrice,discount:disc.discount});
+    prodTotal+=disc.finalPrice*qty;
+    profit+=(disc.finalPrice-p.costPrice)*qty;
+    p.stock-=qty;
+  }
+
+  if(prodTotal<60000){showToast('Minimal buyurtma 60 000 so\'m!','error');return;}
+
+  var delPrice=calcDelivery(km);
+  var total=prodTotal+delPrice;
+  var pLabels={cash:'Naqd pul',click:'Click',payme:'Payme',card:'Plastik karta'};
+
+  var order={
+    id:'#'+String(Date.now()).slice(-6),
+    userId:session.userId,
+    userName:session.name,
+    userPhone:session.phone,
+    items:items,
+    productsTotal:prodTotal,
+    deliveryKm:km,
+    deliveryPrice:delPrice,
+    total:total,
+    payment:pLabels[payment]||payment,
+    note:note,
+    review:review,
+    rating:rating,
+    status:'new',
+    time:new Date().toISOString(),
+    profit:profit,
+    type:'online',
+    receiptImg: window._receiptBase64 || null,
+    receiptFileName: window._receiptFileName || null
+  };
+
+  orders=DB.getOrders();
+  orders.unshift(order);
+  DB.saveOrders(orders);
+  DB.saveProducts(products);
+
+  // Serverga buyurtma yuborish (tokensiz, xavfsiz)
+  try {
+    fetch('/api/order/new', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(order)
+    }).catch(function(){});
+  } catch(e) {}
+
+  // Telegram notification
+  sendTelegramNotification(order);
+
+  lastOrder=order;
+  cart={};
+  _starVal=0;
+  document.querySelectorAll('.star').forEach(function(el){el.classList.remove('on');});
+  if(document.getElementById('reviewInput')) document.getElementById('reviewInput').value='';
+  updateCartBadge();
+  closeModal('cartModal');
+  renderProducts();
+  updateOrderDot();
+  playOrderPlacedSound(); showToast('Buyurtma qabul qilindi!','success');
+  setTimeout(function(){showReceipt(order);},400);
+}
+
+// ═══ TELEGRAM NOTIFICATION ═══
+var TELEGRAM_BOT_TOKEN = ''; // Bot tokenini shu yerga kiriting
+var TELEGRAM_CHAT_ID   = ''; // Admin chat ID
+
+function sendTelegramNotification(order){
+  if(!TELEGRAM_BOT_TOKEN||!TELEGRAM_CHAT_ID) return;
+  var itemsText = order.items.map(function(i){
+    return '  • '+i.name+' × '+i.qty+' = '+Number(i.price*i.qty).toLocaleString('uz-UZ')+" so'm";
+  }).join('\n');
+  var msg =
+    '🔔 YANGI ZAKAZ #'+order.id+'\n'+
+    '━━━━━━━━━━━━━━━━\n'+
+    '👤 Mijoz: '+order.userName+'\n'+
+    '📱 Tel: '+order.userPhone+'\n'+
+    '📦 Mahsulotlar:\n'+itemsText+'\n'+
+    '─────────────────\n'+
+    (order.deliveryPrice>0?'🚚 Yetkazish: '+Number(order.deliveryPrice).toLocaleString('uz-UZ')+" so'm\n":'')+
+    '💰 JAMI: '+Number(order.total).toLocaleString('uz-UZ')+" so'm\n"+
+    '💳 To\'lov: '+order.payment+'\n'+
+    (order.note?'📍 Manzil: '+order.note+'\n':'')+
+    (order.rating>0?'⭐ Baho: '+order.rating+'/5\n':'')+
+    '⏰ '+new Date(order.time).toLocaleString('uz-UZ');
+
+  fetch('https://api.telegram.org/bot'+TELEGRAM_BOT_TOKEN+'/sendMessage',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({chat_id:TELEGRAM_CHAT_ID,text:msg,parse_mode:'HTML'})
+  }).catch(function(){});
+}
+
+// ═══ RECEIPT ═══
+function showReceipt(o){
+  lastOrder=o;
+  var time=new Date(o.time).toLocaleString('uz-UZ');
+  var itemsHtml='';
+  (o.items||[]).forEach(function(i){
+    itemsHtml+='<div class="r-line"><span>'+i.name+' ×'+i.qty+'</span><span>'+fmt(i.price*i.qty)+"</span></div>";
+  });
+  var starsHtml=o.rating>0?'<div class="r-stars">'+'★'.repeat(o.rating)+'☆'.repeat(5-o.rating)+'</div>':'';
+
+  document.getElementById('receiptContent').innerHTML=
+    '<div class="receipt-wrap">'+
+      '<div class="r-title">🏪 MAHALLA DUKONI</div>'+
+      '<div class="r-sub">'+time+'</div>'+
+      '<div class="r-sub" style="font-weight:700;">'+o.id+'</div>'+
+      '<div class="r-hr"></div>'+
+      itemsHtml+
+      '<div class="r-hr"></div>'+
+      (o.deliveryPrice>0?'<div class="r-line"><span>Yetkazish:</span><span>'+fmt(o.deliveryPrice)+'</span></div>':'')+
+      '<div class="r-line bold"><span>JAMI:</span><span>'+fmt(o.total)+" so'm</span></div>"+
+      '<div class="r-line"><span>To\'lov:</span><span>'+o.payment+'</span></div>'+
+      '<div class="r-hr"></div>'+
+      '<div class="r-footer">👤 '+o.userName+'<br>'+o.userPhone+'</div>'+
+      starsHtml+
+      (o.review?'<div class="r-footer" style="font-style:italic;">"'+o.review+'"</div>':'')+
+      '<div class="r-footer">Rahmat! Yana keling 🙏</div>'+
+    '</div>';
+  openModal('receiptModal');
+}
+
+function downloadPDF(){
+  var o=lastOrder;
+  if(!o){showToast('Zakaz topilmadi','error');return;}
+  var w=window.open('','_blank','width=400,height=750,left=80,top=40');
+  if(!w){showToast('Popup bloklangan!','error');return;}
+  var time=new Date(o.time).toLocaleString('uz-UZ');
+  var rows='';
+  (o.items||[]).forEach(function(i){
+    rows+='<tr><td>'+i.name+'</td><td style="text-align:center">'+i.qty+'</td><td style="text-align:right">'+Number(i.price*i.qty).toLocaleString('uz-UZ')+'</td></tr>';
+  });
+  var stars=o.rating>0?'<div style="text-align:center;font-size:20px;margin:8px 0;">'+'★'.repeat(o.rating)+'☆'.repeat(5-o.rating)+'</div>':'';
+  var css='@media print{@page{size:80mm auto;margin:0;}.np{display:none!important;}body{padding:3mm;margin:0;}}body{font-family:"Courier New",monospace;font-size:12px;background:#fff;color:#111;width:72mm;margin:0 auto;padding:12px;}.np{display:flex;gap:8px;margin-bottom:14px;}.bp{flex:1;padding:11px;font-weight:700;border:none;border-radius:8px;cursor:pointer;font-size:13px;}.bk{background:#111;color:#fff;}.bd{background:#ef4444;color:#fff;}.logo{text-align:center;padding:8px 0 10px;border-bottom:2px solid #111;margin-bottom:8px;}.ln{font-size:15px;font-weight:900;letter-spacing:3px;}.ls{font-size:9px;color:#888;}.ir{display:flex;justify-content:space-between;font-size:10px;margin:2px 0;}.lb{color:#888;}.vl{font-weight:700;}hr{border:none;border-top:1px dashed #aaa;margin:5px 0;}table{width:100%;border-collapse:collapse;margin:6px 0;}th{font-size:9px;color:#888;padding:3px;text-align:left;border-bottom:1px solid #ccc;}td{padding:4px 3px;font-size:10px;border-bottom:1px dashed #eee;}.tb{background:#f5f5f5;border-radius:6px;padding:8px;margin:6px 0;}.tr{display:flex;justify-content:space-between;font-size:11px;padding:2px 0;}.tB{display:flex;justify-content:space-between;font-size:14px;font-weight:900;border-top:2px solid #111;padding-top:5px;margin-top:5px;}.ft{text-align:center;padding-top:8px;border-top:1px dashed #aaa;font-size:10px;color:#666;margin-top:8px;}';
+  var body='<div class="np"><button class="bp bk" onclick="window.close()">← Qaytish</button><button class="bp bd" onclick="savePDF()">📄 PDF</button></div>'+
+    '<div class="logo"><div style="font-size:26px;">🏪</div><div class="ln">MAHALLA DUKONI</div><div class="ls">Online zakaz</div></div>'+
+    '<div class="ir"><span class="lb">Sana:</span><span class="vl">'+time+'</span></div>'+
+    '<div class="ir"><span class="lb">Zakaz:</span><span class="vl">'+o.id+'</span></div>'+
+    '<div class="ir"><span class="lb">Mijoz:</span><span class="vl">'+o.userName+'</span></div>'+
+    '<div class="ir"><span class="lb">Tel:</span><span class="vl">'+o.userPhone+'</span></div>'+
+    '<hr><table><thead><tr><th>Mahsulot</th><th>Son</th><th style="text-align:right">Jami</th></tr></thead><tbody>'+rows+'</tbody></table>'+
+    '<div class="tb">'+
+      (o.deliveryPrice>0?'<div class="tr"><span>Yetkazish:</span><span>'+Number(o.deliveryPrice).toLocaleString('uz-UZ')+" so'm</span></div>":'')+'<div class="tB"><span>JAMI:</span><span>'+Number(o.total).toLocaleString('uz-UZ')+" so'm</span></div></div>"+
+    '<div class="ir"><span class="lb">To\'lov:</span><span class="vl">'+o.payment+'</span></div>'+
+    stars+(o.review?'<div style="text-align:center;font-size:10px;font-style:italic;color:#555;margin:4px 0;">'+o.review+'</div>':'')+
+    '<div class="ft">Rahmat! Yana keling 🙏</div>';
+  w.document.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Zakaz</title><style>'+css+'</style></head><body>'+body+
+    '<scr'+'ipt>function savePDF(){var opt={margin:[3,3],filename:"zakaz-'+o.id+'.pdf",image:{type:"jpeg",quality:.98},html2canvas:{scale:2},jsPDF:{unit:"mm",format:[80,220],orientation:"portrait"}};if(typeof html2pdf!=="undefined"){html2pdf().set(opt).from(document.body).save();}else{window.print();}}<\/scr'+'ipt>'+
+    '<scr'+'ipt src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"><\/scr'+'ipt>'+
+    '</body></html>');
+  w.document.close();
+}
+
+function downloadTXT(){
+  var o=lastOrder;
+  if(!o){showToast('Zakaz topilmadi','error');return;}
+  var time=new Date(o.time).toLocaleString('uz-UZ');
+  var lines=['============================','     MAHALLA DUKONI','     Online Zakaz','============================',
+    'Sana:  '+time,'Zakaz: '+o.id,'Mijoz: '+o.userName,'Tel:   '+o.userPhone,
+    '----------------------------','MAHSULOTLAR:'];
+  (o.items||[]).forEach(function(i){ lines.push('  '+i.name+' x'+i.qty+' = '+Number(i.price*i.qty).toLocaleString('uz-UZ')+" so'm"); });
+  lines.push('----------------------------');
+  if(o.deliveryPrice>0) lines.push('Yetkazish: '+Number(o.deliveryPrice).toLocaleString('uz-UZ')+" so'm");
+  lines.push('JAMI: '+Number(o.total).toLocaleString('uz-UZ')+" so'm");
+  lines.push("To'lov: "+o.payment);
+  if(o.rating>0) lines.push('Baho: '+'★'.repeat(o.rating)+'☆'.repeat(5-o.rating));
+  if(o.review) lines.push('Izoh: '+o.review);
+  lines.push('============================','Rahmat! Yana keling 🙏');
+  var blob=new Blob([lines.join('\n')],{type:'text/plain;charset=utf-8'});
+  var a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='zakaz-'+o.id+'.txt';
+  a.click();
+  URL.revokeObjectURL(a.href);
+  showToast('TXT yuklab olindi!','success');
+}
+
+// ═══ MY ORDERS ═══
+function openMyOrders(){
+  orders=DB.getOrders();
+  var myOrders=orders.filter(function(o){
+    return o.userId===session.userId||o.userPhone===session.phone;
+  }).sort(function(a,b){return new Date(b.time)-new Date(a.time);});
+
+  var sl={new:'YANGI',accepted:'QABUL QILINDI',delivering:'YO\'LDA',done:'YETKAZILDI',cancelled:'BEKOR'};
+  var html='';
+  if(!myOrders.length){
+    html='<div style="text-align:center;padding:40px;color:var(--muted);">Hali buyurtma yo\'q</div>';
+  } else {
+    myOrders.forEach(function(o){
+      var st=o.status||'done';
+      var stCls={'new':'new','accepted':'accepted','delivering':'delivering','done':'done','cancelled':'cancelled'}[st]||'done';
+      var items=(o.items||[]).slice(0,3).map(function(i){return i.name+' ×'+i.qty;}).join(', ');
+      if((o.items||[]).length>3) items+=' ...';
+      var stars=o.rating>0?'<span style="color:var(--amber);font-size:12px;">'+'★'.repeat(o.rating)+'</span>':'';
+      var oJson=JSON.stringify(o).replace(/'/g,'&#39;').replace(/"/g,'&quot;');
+      html+='<div class="order-item">'+
+        '<div class="oi-top">'+
+          '<span class="oi-id">'+o.id+'</span>'+
+          '<span class="oi-status '+stCls+'">'+(sl[st]||st)+'</span>'+
+        '</div>'+
+        '<div class="oi-items">'+items+'</div>'+
+        '<div style="display:flex;justify-content:space-between;align-items:center;margin-top:6px;">'+
+          '<span class="oi-total">'+fmt(o.total)+" so'm</span>"+
+          '<span class="oi-time">'+new Date(o.time).toLocaleDateString('uz-UZ')+'</span>'+
+        '</div>'+
+        stars+
+        (o.review?'<div style="font-size:11px;color:var(--muted);font-style:italic;margin-top:4px;">"'+o.review+'"</div>':'')+
+        '<div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;">'+
+          '<button onclick=\'viewOrderReceipt("'+o.id+'")\' style="flex:1;padding:9px;background:rgba(0,229,200,.08);border:1px solid rgba(0,229,200,.3);color:var(--cyan);border-radius:8px;font-weight:700;font-size:12px;cursor:pointer;font-family:Nunito,sans-serif;min-width:70px;">🧾 Chek</button>'+
+          '<button onclick=\'downloadOrderPDF("'+o.id+'")\' style="flex:1;padding:9px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.3);color:var(--red);border-radius:8px;font-weight:700;font-size:12px;cursor:pointer;font-family:Nunito,sans-serif;min-width:70px;">📄 PDF</button>'+
+          (st==='cancelled'?'<button onclick=\'reorderFromCancelled("'+o.id+'")\' style="flex:1;padding:9px;background:#f0fdf4;border:2px solid #22c55e;color:#16a34a;border-radius:8px;font-weight:800;font-size:12px;cursor:pointer;font-family:Nunito,sans-serif;min-width:90px;">🔄 Qayta yuborish</button>':'')+
+        '</div>'+
+      '</div>';
+    });
+  }
+  document.getElementById('myOrdersList').innerHTML=html;
+
+  // Close profile modal if open and open orders modal
+  closeModal('profileFullModal');
+  openModal('ordersModal');
+}
+
+function reorderFromCancelled(orderId){
+  orders = DB.getOrders();
+  var o = orders.find(function(x){return x.id===orderId;});
+  if(!o){showToast('Buyurtma topilmadi','error');return;}
+
+  // Savatni tozalab, o'sha tovarlarni qo'shamiz
+  cart = {};
+  var missing = [];
+  (o.items||[]).forEach(function(item){
+    var p = products.find(function(pr){return pr.name===item.name;});
+    if(p && p.stock>0){
+      cart[p.id] = Math.min(item.qty, p.stock);
+    } else {
+      missing.push(item.name);
+    }
+  });
+
+  updateCartBadge();
+  renderProducts();
+  closeModal('ordersModal');
+
+  if(missing.length){
+    showToast(missing.join(', ')+' - mavjud emas, qolganlar savatga qoshildi','info');
+  } else {
+    showToast('Tovarlar savatga qoshildi! Buyurtma berishingiz mumkin.','success');
+  }
+
+  // Savatni ochamiz
+  setTimeout(function(){openCart();}, 500);
+}
+
+function viewOrderReceipt(orderId){
+  orders=DB.getOrders();
+  var o=orders.find(function(x){return x.id===orderId;});
+  if(!o){showToast('Zakaz topilmadi','error');return;}
+  showReceipt(o);
+}
+
+function downloadOrderPDF(orderId){
+  orders=DB.getOrders();
+  var o=orders.find(function(x){return x.id===orderId;});
+  if(!o){showToast('Zakaz topilmadi','error');return;}
+  lastOrder=o;
+  downloadPDF();
+}
+
+// ═══ PROFILE FUNCTIONS ═══
+function openProfile(){
+  closeModal('cartModal');
+  closeModal('ordersModal');
+  openModal('profileFullModal');
+}
+
+function openAddresses(){
+  var html = '';
+  if(userAddresses.length === 0){
+    html = '<div style="text-align:center;padding:40px;color:var(--muted);">Manzillar mavjud emas</div>';
+  } else {
+    userAddresses.forEach(function(addr, index){
+      html += '<div class="address-item">'+
+        '<div class="address-info">'+
+          '<div class="address-type">'+addr.type+'</div>'+
+          '<div class="address-text">'+addr.address+'</div>'+
+          (addr.note ? '<div style="font-size:11px;color:var(--muted);">'+addr.note+'</div>' : '')+
+        '</div>'+
+        '<div class="address-actions">'+
+          '<button onclick="editAddress('+index+')" style="background:none;border:none;color:var(--cyan);font-size:16px;cursor:pointer;">✏️</button>'+
+          '<button onclick="deleteAddress('+index+')" style="background:none;border:none;color:var(--red);font-size:16px;cursor:pointer;">🗑️</button>'+
+        '</div>'+
+      '</div>';
+    });
+  }
+
+  html += '<button onclick="addNewAddress()" style="width:100%;padding:14px;background:rgba(0,229,200,.1);border:1px solid rgba(0,229,200,.3);border-radius:12px;color:var(--cyan);font-weight:700;cursor:pointer;margin-top:8px;">+ Yangi manzil qo\'shish</button>';
+
+  document.getElementById('addressesList').innerHTML = html;
+  closeModal('profileFullModal');
+  openModal('addressesModal');
+}
+
+function addNewAddress(){
+  var addr = prompt('Manzilni kiriting (ko\'cha, uy, xonadon):');
+  if(!addr) return;
+  var type = prompt('Manzil turi (Uy / Ish / Boshqa):', 'Uy');
+  var note = prompt('Qo\'shimcha ma\'lumot (ixtiyoriy):');
+
+  userAddresses.push({
+    type: type || 'Uy',
+    address: addr,
+    note: note || ''
+  });
+  saveUserData();
+  openAddresses(); // Refresh
+}
+
+function editAddress(index){
+  var addr = userAddresses[index];
+  var newAddr = prompt('Manzilni tahrirlash:', addr.address);
+  if(!newAddr) return;
+  var newType = prompt('Manzil turi:', addr.type);
+  var newNote = prompt('Qo\'shimcha ma\'lumot:', addr.note);
+
+  userAddresses[index] = {
+    type: newType || addr.type,
+    address: newAddr,
+    note: newNote || ''
+  };
+  saveUserData();
+  openAddresses(); // Refresh
+}
+
+function deleteAddress(index){
+  if(confirm('Manzilni o\'chirishni tasdiqlaysizmi?')){
+    userAddresses.splice(index, 1);
+    saveUserData();
+    openAddresses(); // Refresh
+  }
+}
+
+function openPaymentMethods(){
+  var html = '';
+  if(userPaymentMethods.length === 0){
+    html = '<div style="text-align:center;padding:40px;color:var(--muted);">To\'lov usullari mavjud emas</div>';
+  } else {
+    userPaymentMethods.forEach(function(pay, index){
+      html += '<div class="payment-item">'+
+        '<span class="payment-icon">'+(pay.type === 'card' ? '💳' : (pay.type === 'click' ? '📱' : '📱'))+'</span>'+
+        '<div class="payment-info">'+
+          '<div class="payment-name">'+(pay.type === 'card' ? 'Plastik karta' : (pay.type === 'click' ? 'Click' : 'Payme'))+'</div>'+
+          '<div class="payment-detail">'+pay.number+'</div>'+
+        '</div>'+
+        '<span class="payment-remove" onclick="deletePayment('+index+')">🗑️</span>'+
+      '</div>';
+    });
+  }
+
+  html += '<button onclick="addNewPayment()" style="width:100%;padding:14px;background:rgba(0,229,200,.1);border:1px solid rgba(0,229,200,.3);border-radius:12px;color:var(--cyan);font-weight:700;cursor:pointer;margin-top:8px;">+ Yangi to\'lov usuli qo\'shish</button>';
+
+  document.getElementById('paymentMethodsList').innerHTML = html;
+  closeModal('profileFullModal');
+  openModal('paymentMethodsModal');
+}
+
+function addNewPayment(){
+  var type = prompt('To\'lov turi (card / click / payme):', 'card');
+  if(!type || !['card','click','payme'].includes(type)) return;
+  var number = prompt('Karta raqami yoki ID:');
+  if(!number) return;
+
+  userPaymentMethods.push({
+    type: type,
+    number: number
+  });
+  saveUserData();
+  openPaymentMethods(); // Refresh
+}
+
+function deletePayment(index){
+  if(confirm('To\'lov usulini o\'chirishni tasdiqlaysizmi?')){
+    userPaymentMethods.splice(index, 1);
+    saveUserData();
+    openPaymentMethods(); // Refresh
+  }
+}
+
+function openLanguage(){
+  closeModal('profileFullModal');
+  openModal('languageModal');
+}
+
+var _selectedLang = localStorage.getItem('shop_lang') || 'uz';
+
+function openLanguage(){
+  closeModal('profileFullModal');
+  // Aktiv tilni belgilaymiz
+  ['uz','en','ru'].forEach(function(l){
+    var el=document.getElementById('lang_'+l);
+    if(!el) return;
+    var isActive=l===_selectedLang;
+    el.style.border=isActive?'2px solid #2ecc71':'1.5px solid #e0e0e0';
+    el.style.background=isActive?'#f0fff4':'#fff';
+    var radio=el.querySelector('.lang-radio');
+    if(radio) radio.innerHTML=isActive?'<div style="width:12px;height:12px;border-radius:50%;background:#4fc95b;"></div>':'';
+  });
+  openModal('languageModal');
+}
+
+function setLanguage(lang){
+  _selectedLang=lang;
+  ['uz','en','ru'].forEach(function(l){
+    var el=document.getElementById('lang_'+l);
+    if(!el) return;
+    var isActive=l===lang;
+    el.style.border=isActive?'2px solid #2ecc71':'1.5px solid #e0e0e0';
+    el.style.background=isActive?'#f0fff4':'#fff';
+    var radio=el.querySelector('.lang-radio');
+    if(radio) radio.innerHTML=isActive?'<div style="width:12px;height:12px;border-radius:50%;background:#4fc95b;"></div>':'';
+  });
+}
+
+function saveLang(){
+  localStorage.setItem('shop_lang', _selectedLang);
+  showToast('Til saqlandi ✓', 'success');
+  closeModal('languageModal');
+}
+
+// ═══ STATUS SOUND POLLING ═══
+var _lastKnownStatuses = {};
+
+function pollOrderStatuses(){
+  // Serverdan yangi ma'lumot olish (cache bypass)
+  var phone = (session&&session.phone)||'';
+  var uid   = (session&&session.userId)||'';
+  if(!phone && !uid) return;
+
+  var url = '/api/orders/mine?phone='+encodeURIComponent(phone)+'&uid='+encodeURIComponent(uid);
+  fetch(url).then(function(r){return r.json();}).then(function(res){
+    if(!res.ok) return;
+    var myOrders = res.data || [];
+    // localStorage ni ham yangilaymiz
+    try{
+      var all = DB.getOrders();
+      myOrders.forEach(function(fresh){
+        var idx = all.findIndex(function(x){return x.id===fresh.id;});
+        if(idx>=0) all[idx]=fresh; else all.unshift(fresh);
+      });
+      DB._cache['orders'] = all;
+      localStorage.setItem('mahalla_v1_orders', JSON.stringify(all));
+    }catch(e){}
+
+    myOrders.forEach(function(o){
+      var prev = _lastKnownStatuses[o.id];
+      if(prev !== undefined && prev !== o.status){
+        _handleStatusChange(o, o.status);
+      }
+      _lastKnownStatuses[o.id] = o.status;
+    });
+
+    // Progress UI yangilansin
+    _updateProgressUI(myOrders);
+  }).catch(function(){
+    // Offline fallback
+    var fresh = DB.getOrders();
+    var myOrders = fresh.filter(function(o){return o.userId===session.userId||o.userPhone===session.phone;});
+    myOrders.forEach(function(o){
+      var prev = _lastKnownStatuses[o.id];
+      if(prev !== undefined && prev !== o.status) _handleStatusChange(o, o.status);
+      _lastKnownStatuses[o.id] = o.status;
+    });
+    _updateProgressUI(myOrders);
+  });
+}
+
+function _handleStatusChange(o, status){
+  if(status==='accepted'){
+    playStatusSound('accepted');
+    showToast('✅ Buyurtmangiz qabul qilindi!','success');
+  } else if(status==='delivering'){
+    playStatusSound('delivering');
+    showToast('🚴 Buyurtmangiz yo\'lda!','info');
+  } else if(status==='done'){
+    playStatusSound('done');
+    showToast('🎉 Buyurtmangiz yetkazildi!','success');
+  } else if(status==='cancelled'){
+    playStatusSound('cancelled');
+    showToast('❌ Buyurtmangiz bekor qilindi','error');
+  }
+}
+
+// ═══ PROGRESS TRACKER UI ═══
+var _progressBannerEl = null;
+
+function _updateProgressUI(myOrders){
+  // Faqat aktiv buyurtmalar
+  var active = myOrders.filter(function(o){
+    return ['new','accepted','delivering'].includes(o.status);
+  });
+  var el = document.getElementById('orderProgressBanner');
+  if(!el) return;
+  if(!active.length){ el.style.display='none'; return; }
+  var o = active[0]; // Eng so'nggi aktiv buyurtma
+  el.style.display='block';
+  var steps = [
+    {key:'new',      icon:'📝', label:'Qabul kutilmoqda'},
+    {key:'accepted', icon:'👨‍🍳', label:'Tayyorlanmoqda'},
+    {key:'delivering',icon:'🚴', label:'Yo\'lda'},
+    {key:'done',     icon:'🎉', label:'Yetkazildi'},
+  ];
+  var si = steps.findIndex(function(s){return s.key===o.status;});
+  var stepsHtml = steps.map(function(s,i){
+    var done   = i < si;
+    var active = i === si;
+    return '<div class="pg-step'+(done?' done':'')+(active?' active':'')+'">'+
+      '<div class="pg-icon">'+(done?'✓':s.icon)+'</div>'+
+      '<div class="pg-label">'+s.label+'</div>'+
+      '</div>';
+  }).join('<div class="pg-line'+(si>0?' done':'')+'"></div>');
+
+  el.innerHTML =
+    '<div class="pg-header">'+
+      '<span class="pg-title">📦 Buyurtma #'+(o.id||'')+'</span>'+
+      '<span class="pg-sub">'+new Date(o.time).toLocaleTimeString('uz-UZ',{hour:'2-digit',minute:'2-digit'})+'</span>'+
+    '</div>'+
+    '<div class="pg-track">'+
+      '<div class="pg-person" style="left:'+Math.min(92,si*31)+'%">🛵</div>'+
+      stepsHtml+
+    '</div>';
+}
+
+function playStatusSound(type){
+  try{
+    var ctx=new(window.AudioContext||window.webkitAudioContext)();
+    var plays={
+      accepted:[[523,.1,.3],[659,.1,.3],[784,.15,.4]],
+      delivering:[[440,.08,.2],[550,.08,.2],[660,.1,.3],[880,.18,.4]],
+      done:[[523,.1,.4],[659,.1,.4],[784,.1,.4],[1047,.25,.5]],
+      cancelled:[[440,.15,.3],[330,.15,.3],[220,.2,.2]]
+    };
+    var seq=plays[type]||plays.accepted;
+    var t=ctx.currentTime;
+    seq.forEach(function(s,i){
+      var osc=ctx.createOscillator(),g=ctx.createGain();
+      osc.connect(g);g.connect(ctx.destination);
+      osc.frequency.value=s[0];
+      g.gain.setValueAtTime(s[2],t+i*0.13);
+      g.gain.exponentialRampToValueAtTime(0.001,t+i*0.13+s[1]+0.1);
+      osc.start(t+i*0.13);osc.stop(t+i*0.13+s[1]+0.15);
+    });
+  }catch(e){}
+}
+
+function updateOrderDot(){
+  orders=DB.getOrders();
+  var active=orders.filter(function(o){
+    return (o.userId===session.userId||o.userPhone===session.phone)&&['new','accepted','delivering'].includes(o.status);
+  });
+  var badge=document.getElementById('orderBadge');
+  var nb=document.getElementById('navOrderBadge');
+  if(badge){badge.textContent=active.length;badge.classList.toggle('on',active.length>0);}
+  if(nb){nb.textContent=active.length;nb.classList.toggle('on',active.length>0);}
+}
+
+// ═══ EDIT PROFILE ═══
+function openEditProfile(){
+  document.getElementById('editName').value=session.name||'';
+  // +998 ni olib, faqat 9 raqamni ko'rsatamiz
+  var ph=(session.phone||'').replace(/\D/g,'');
+  if(ph.startsWith('998')) ph=ph.slice(3);
+  document.getElementById('editPhone').value=ph.slice(0,9);
+  closeModal('profileFullModal');
+  openModal('editModal');
+}
+
+function saveProfile(){
+  var name=document.getElementById('editName').value.trim();
+  var ph=document.getElementById('editPhone').value.replace(/\D/g,'').slice(0,9);
+  if(ph.length!==9){showToast('9 raqamli telefon kiriting!','error');return;}
+  var phone='+998'+ph;
+
+  // Boshqa foydalanuvchida shu telefon bormi?
+  var allU=DB.getUsers();
+  var dup=allU.find(function(u){
+    return u.phone && u.phone.replace(/\D/g,'').slice(-9)===ph && (u.userId||'u_'+u.id)!==session.userId;
+  });
+  if(dup){showToast('Bu raqam allaqachon ro\'yxatdan o\'tgan!','error');return;}
+
+  if(!name) name=session.name||'Mijoz';
+  session.name=name;
+  session.phone=phone;
+  if(window===window.parent) DB.setSession(session);
+  try{
+    var rem=JSON.parse(localStorage.getItem('mahalla_remembered_customer')||'{}');
+    rem.name=name;rem.phone=phone;
+    localStorage.setItem('mahalla_remembered_customer',JSON.stringify(rem));
+  }catch(e){}
+  document.getElementById('uName').textContent=name;
+  document.getElementById('uPhone').textContent=phone;
+  document.getElementById('profileFullName').textContent=name;
+  document.getElementById('profileFullPhone').textContent=phone;
+  closeModal('editModal');
+  showToast('Saqlandi!','success');
+}
+
+// ═══ CONTACT ═══
+function openContact(){
+  closeModal('profileFullModal');
+  openModal('contactModal');
+  renderShopChatMessages();
+}
+
+function logout(){
+  DB.clearSession();
+  localStorage.removeItem('mahalla_remembered_customer');
+  window.location.href='login.html';
+}
+
+function switchTab(tab){}
+
+// ═══ UTILS ═══
+function fmt(n){return Number(n||0).toLocaleString('uz-UZ');}
+function copyText(t){
+  navigator.clipboard.writeText(t).then(function(){showToast('Nusxalandi!','success');})
+  .catch(function(){showToast('Nusxalashda xato','error');});
+}
+function openModal(id){var m=document.getElementById(id);if(m)m.classList.add('open');}
+function closeModal(id){var m=document.getElementById(id);if(m)m.classList.remove('open');}
+function showToast(msg,type){
+  var t=document.getElementById('toast');
+  t.textContent=msg;t.className='toast show '+(type||'info');
+  setTimeout(function(){t.className='toast';},3000);
+}
+
+// ═══ F11 ═══
+function tbFS(){
+  if(!document.fullscreenElement){document.documentElement.requestFullscreen().catch(function(){});}
+  else{document.exitFullscreen();}
+}
+document.addEventListener('keydown',function(e){if(e.key==='F11'){e.preventDefault();tbFS();}});
+
+// ═══ PAYMENT MODAL ═══
+var PAY_INFO = {
+  uzum:   {number:'+998 90 123 45 67', label:'Uzum Bank raqami', emoji:'🟣', qr:true},
+  plum:   {number:'8800 2222 3333',    label:'Plum raqami',      emoji:'🔵', qr:true},
+  click:  {number:'8800 1234 5678',    label:'Click raqami',     emoji:'🔷', qr:true},
+  payme:  {number:'8800 8765 4321',    label:'Payme raqami',     emoji:'🔴', qr:true},
+  humo:   {number:'9860 1234 5678 9012', label:'Humo karta',     emoji:'⭐', qr:false},
+  paynet: {number:'+998 90 123 45 67', label:'Paynet raqami',    emoji:'🟢', qr:true}
+};
+var _activePayMethod = 'click';
+
+function openPayModal(){
+  document.getElementById('payModal').classList.add('open');
+  document.getElementById('payDetail').style.display='none';
+  document.getElementById('payMethodsGrid').style.display='grid';
+}
+function closePayModal(){
+  document.getElementById('payModal').classList.remove('open');
+}
+function selectPayMethod(type){
+  _activePayMethod = type;
+  var info = PAY_INFO[type];
+  document.getElementById('payMethodLabel').textContent = info.label;
+  document.getElementById('payNumber').textContent = info.number;
+  // QR
+  var qrBox = document.getElementById('payQRBox');
+  if(info.qr){
+    qrBox.innerHTML = '';
+    if(typeof QRCode !== 'undefined'){
+      new QRCode(qrBox, {text:info.number.replace(/\s/g,''), width:140, height:140, colorDark:'#022e2d', colorLight:'#ffffff'});
+    } else {
+      var s=document.createElement('script');
+      s.src='https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js';
+      s.onload=function(){qrBox.innerHTML='';new QRCode(qrBox,{text:info.number.replace(/\s/g,''),width:140,height:140,colorDark:'#022e2d',colorLight:'#ffffff'});};
+      document.head.appendChild(s);
+      qrBox.innerHTML='<span style="font-size:60px;">'+info.emoji+'</span>';
+    }
+  } else {
+    qrBox.innerHTML='<span style="font-size:60px;">'+info.emoji+'</span>';
+  }
+  document.getElementById('payMethodsGrid').style.display='none';
+  document.getElementById('payDetail').style.display='block';
+}
+function copyPayNum(){
+  var num = PAY_INFO[_activePayMethod].number.replace(/\s/g,'');
+  navigator.clipboard.writeText(num).then(function(){
+    showToast('Nusxalandi: '+PAY_INFO[_activePayMethod].number,'success');
+  }).catch(function(){ showToast(PAY_INFO[_activePayMethod].number,'info'); });
+}
+// eski switchPayTab — boshqa joyda ishlatilsa
+function switchPayTab(type){ selectPayMethod(type); }
+
+function playShopBeep(freq,dur,vol){
+  try{
+    var ctx=new(window.AudioContext||window.webkitAudioContext)();
+    var osc=ctx.createOscillator(),gain=ctx.createGain();
+    osc.connect(gain);gain.connect(ctx.destination);
+    osc.frequency.value=freq||880;
+    gain.gain.setValueAtTime(vol||0.2,ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+(dur||0.12));
+    osc.start();osc.stop(ctx.currentTime+(dur||0.12));
+  }catch(e){}
+}
+function playAddToCartSound(){
+  playShopBeep(660,0.08,0.2);
+  setTimeout(function(){playShopBeep(880,0.1,0.2);},90);
+}
+function playOrderPlacedSound(){
+  playShopBeep(523,0.1,0.3);
+  setTimeout(function(){playShopBeep(659,0.1,0.3);},110);
+  setTimeout(function(){playShopBeep(784,0.1,0.3);},220);
+  setTimeout(function(){playShopBeep(1046,0.25,0.4);},330);
+}
+
+// ═══ LOCATION ═══
+function attachLocation(){
+  var btn=document.getElementById('locBtn');
+  var status=document.getElementById('locStatus');
+  if(!navigator.geolocation){showToast('Brauzer lokatsiyani qo\'llab quvvatlamaydi','error');return;}
+  btn.textContent='⏳ Aniqlanmoqda...';
+  btn.disabled=true;
+  navigator.geolocation.getCurrentPosition(
+    function(pos){
+      var lat=pos.coords.latitude.toFixed(6);
+      var lng=pos.coords.longitude.toFixed(6);
+      var mapsLink='https://maps.google.com/?q='+lat+','+lng;
+      var cur=(document.getElementById('noteInput').value||'').trim();
+      var locText='📍 Lokatsiya: '+lat+', '+lng+' ('+mapsLink+')';
+      document.getElementById('noteInput').value=cur?(cur+'\n'+locText):locText;
+      btn.textContent='✅ Lokatsiya ulandi';
+      btn.style.color='var(--green)';
+      btn.style.borderColor='rgba(34,197,94,.4)';
+      status.style.display='block';
+      status.innerHTML='<a href="'+mapsLink+'" target="_blank" style="color:var(--cyan);">🗺 Xaritada ko\'rish</a>';
+      showToast('Lokatsiya ulandi!','success');
+    },
+    function(err){
+      btn.textContent='📍 Lokatsiyamni ulash';
+      btn.disabled=false;
+      var msgs={1:'Ruxsat berilmadi',2:'Aniqlab bo\'lmadi',3:'Vaqt tugadi'};
+      showToast('Lokatsiya xatosi: '+(msgs[err.code]||err.message),'error');
+    },
+    {enableHighAccuracy:true,timeout:10000}
+  );
+}
+
+// ═══ SHOP SMS CHAT ═══
+function _shopChatKey(){
+  return 'chat_'+(session&&session.userId?session.userId:'guest');
+}
+function _shopGetChats(){
+  try{return JSON.parse(localStorage.getItem(_shopChatKey())||'[]');}catch(e){return[];}
+}
+function _shopSaveChats(msgs){
+  localStorage.setItem(_shopChatKey(),JSON.stringify(msgs));
+}
+
+function renderShopChatMessages(){
+  var msgs=_shopGetChats();
+  var el=document.getElementById('shopChatMessages');
+  if(!el)return;
+  if(!msgs.length){
+    el.innerHTML='<div style="text-align:center;color:var(--muted);font-size:12px;padding:16px;">Xabar yozing...</div>';
+    return;
+  }
+  el.innerHTML=msgs.map(function(m){
+    var isAdmin=m.from==='admin';
+    var d=new Date(m.time);
+    var ts=d.toLocaleTimeString('uz-UZ',{hour:'2-digit',minute:'2-digit'});
+    return '<div style="display:flex;flex-direction:column;align-items:'+(isAdmin?'flex-start':'flex-end')+';">'+
+      '<div style="max-width:80%;padding:8px 12px;border-radius:10px;font-size:12px;line-height:1.4;'+
+        (isAdmin?'background:rgba(42,52,64,.8);border:1px solid var(--border);border-bottom-left-radius:2px;':'background:rgba(0,229,200,.12);border:1px solid rgba(0,229,200,.25);border-bottom-right-radius:2px;')+
+        '">'+m.text+'</div>'+
+      '<div style="font-size:9px;color:var(--muted);margin-top:2px;">'+ts+(isAdmin?' · Admin':' · Men')+'</div>'+
+    '</div>';
+  }).join('');
+  el.scrollTop=el.scrollHeight;
+}
+
+function sendShopChat(){
+  var inp=document.getElementById('shopChatInput');
+  if(!inp)return;
+  var text=(inp.value||'').trim();
+  if(!text)return;
+  var msgs=_shopGetChats();
+  msgs.push({from:'user',text:text,time:new Date().toISOString(),read:false,userName:session?session.name:'Mijoz',userPhone:session?session.phone:''});
+  _shopSaveChats(msgs);
+  inp.value='';
+  renderShopChatMessages();
+  // Simulate admin auto-reply after 2-4s
+  var replies=[
+    'Salom! Xabaringizni oldik, tez orada javob beramiz.',
+    'Rahmat murojaat uchun! Bir oz kuting...',
+    'OK, ko\'rib chiqamiz!',
+    'Ha, albatta yordamlashamiz 👍',
+    'Qaysi mahsulot haqida so\'ramoqdasiz?'
+  ];
+  setTimeout(function(){
+    var fr=_shopGetChats();
+    fr.push({from:'admin',text:replies[Math.floor(Math.random()*replies.length)],time:new Date().toISOString(),read:true});
+    _shopSaveChats(fr);
+    renderShopChatMessages();
+  },2000+Math.random()*2000);
+}
+
+// ═══ DISCOUNT CALCULATION ═══
+function calcDiscount(product){
+  if(!product) return {discount:0, finalPrice:0, daysLeft:null};
+
+  var finalPrice = product.sellPrice || 0;
+  var discount = 0;
+  var daysLeft = null;
+
+  // Expiry date discount
+  if(product.expiryDate){
+    var today = new Date();
+    var expiry = new Date(product.expiryDate);
+    var diffTime = expiry - today;
+    var diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+    if(diffDays <= 7 && diffDays > 0){
+      daysLeft = diffDays;
+      discount = Math.max(discount, 30); // 30% discount for expiring products
+    }
+  }
+
+  // Apply discount
+  if(discount > 0){
+    finalPrice = Math.round(product.sellPrice * (100 - discount) / 100);
+  }
+
+  return {discount: discount, finalPrice: finalPrice, daysLeft: daysLeft};
+}
+
+// ═══ START POLLING ═══
+function seedStatuses(){
+  var my=DB.getOrders().filter(function(o){return o.userId===session.userId||o.userPhone===session.phone;});
+  my.forEach(function(o){_lastKnownStatuses[o.id]=o.status;});
+}
+// Poll every 5 seconds
+setInterval(function(){
+  if(session) pollOrderStatuses();
+},5000);
+
+// ═══ BANNER SLIDER ═══════════════════════════
+var _bannerIdx = 0;
+var _bannerTimer = null;
+
+function initBanner(){
+  loadBannersFromDB();
+}
+
+function loadBannersFromDB(){
+  try{
+    var req=new XMLHttpRequest();
+    req.open('GET','/api/banners',false);
+    req.send();
+    if(req.status===200){
+      var res=JSON.parse(req.responseText);
+      if(res.ok && Array.isArray(res.data) && res.data.length){
+        renderBannerSlides(res.data);
+        return;
+      }
+    }
+  }catch(e){}
+  // Default bannerlar (HTML dagi)
+  buildBannerDots();
+  startBannerAuto();
+}
+
+function renderBannerSlides(banners){
+  var track=document.getElementById('bannerTrack');
+  if(!track) return;
+  var frags=[];
+  for(var i=0;i<banners.length;i++){
+    var b=banners[i];
+    var div=document.createElement('div');
+    if(b.type==='video'){
+      div.className='banner-slide-img';
+      var vid=document.createElement('video');
+      vid.src=b.src||''; vid.autoplay=true; vid.muted=true; vid.loop=true;
+      vid.setAttribute('playsinline','');
+      div.appendChild(vid);
+      if(b.title){var ot=document.createElement('div');ot.className='banner-overlay-title';ot.textContent=b.title;div.appendChild(ot);}
+    } else if(b.type==='image'||b.type==='gif'){
+      div.className='banner-slide-img';
+      if(b.link){div.style.cursor='pointer';(function(lnk){div.onclick=function(){setCategory(lnk);};})(b.link);}
+      var img=document.createElement('img');img.src=b.src||'';img.alt=b.title||'';div.appendChild(img);
+      if(b.title){var ot2=document.createElement('div');ot2.className='banner-overlay-title';ot2.textContent=b.title;div.appendChild(ot2);}
+    } else {
+      div.className='banner-slide';
+      div.style.background=b.bg||'linear-gradient(135deg,#2ecc71,#27ae60)';
+      var txt=document.createElement('div');txt.className='banner-text';
+      if(b.tag){var tg=document.createElement('div');tg.className='banner-tag';tg.textContent=b.tag;txt.appendChild(tg);}
+      var ti=document.createElement('div');ti.className='banner-title';ti.textContent=b.title||'';txt.appendChild(ti);
+      var sb=document.createElement('div');sb.className='banner-sub';sb.textContent=b.sub||'';txt.appendChild(sb);
+      if(b.link){var btn=document.createElement('div');btn.className='banner-btn';btn.textContent="Ko'rish →";(function(lnk){btn.onclick=function(){setCategory(lnk);};})(b.link);txt.appendChild(btn);}
+      div.appendChild(txt);
+      var em=document.createElement('div');em.className='banner-emoji';em.textContent=b.emoji||'';div.appendChild(em);
+    }
+    frags.push(div);
+  }
+  track.innerHTML='';
+  frags.forEach(function(d){track.appendChild(d);});
+  buildBannerDots();
+  startBannerAuto();
+}
+
+function buildBannerDots(){
+  var track=document.getElementById('bannerTrack');
+  var slides=track?track.children.length:0;
+  var dotsEl=document.getElementById('bannerDots');
+  if(!dotsEl||!slides) return;
+  dotsEl.innerHTML='';
+  for(var i=0;i<slides;i++){
+    (function(idx){
+      var d=document.createElement('div');
+      d.className='banner-dot'+(idx===0?' active':'');
+      d.onclick=function(){ goToBanner(idx); };
+      dotsEl.appendChild(d);
+    })(i);
+  }
+}
+
+function startBannerAuto(){
+  if(_bannerTimer) clearInterval(_bannerTimer);
+  _bannerTimer = setInterval(function(){ bannerSlide(1); }, 4000);
+}
+
+function bannerSlide(dir){
+  var track=document.getElementById('bannerTrack');
+  if(!track) return;
+  var slides=track.children.length;
+  if(!slides) return;
+  _bannerIdx=(_bannerIdx+dir+slides)%slides;
+  goToBanner(_bannerIdx);
+}
+
+function goToBanner(idx){
+  _bannerIdx=idx;
+  var track=document.getElementById('bannerTrack');
+  if(track) track.style.transform='translateX(-'+idx*100+'%)';
+  document.querySelectorAll('.banner-dot').forEach(function(d,i){
+    d.classList.toggle('active',i===idx);
+  });
+  if(_bannerTimer){
+    clearInterval(_bannerTimer);
+    _bannerTimer=setInterval(function(){bannerSlide(1);},4000);
+  }
+}
+
+// ═══ KATEGORIYA IKONKALAR ═══════════════════
+function renderCatIcons(){
+  var el=document.getElementById('catIcons');
+  if(!el) return;
+  el.innerHTML='';
+  var cats=[
+    {id:'Hammasi',name:'Hammasi',emoji:'🏪',bg:'linear-gradient(135deg,#2ecc71,#27ae60)'},
+    {id:'Gosht',emoji:'🥩',name:"Go'sht",bg:'linear-gradient(135deg,#e74c3c,#c0392b)'},
+    {id:'Sut',emoji:'🥛',name:'Sut',bg:'linear-gradient(135deg,#3498db,#2980b9)'},
+    {id:'Non',emoji:'🍞',name:'Non',bg:'linear-gradient(135deg,#f39c12,#d68910)'},
+    {id:'Meva',emoji:'🍎',name:'Meva',bg:'linear-gradient(135deg,#e91e63,#c2185b)'},
+    {id:'Sabzavot',emoji:'🥦',name:'Sabzavot',bg:'linear-gradient(135deg,#27ae60,#1e8449)'},
+    {id:'Ichimlik',emoji:'🥤',name:'Ichimlik',bg:'linear-gradient(135deg,#9b59b6,#7d3c98)'},
+    {id:'Oziq',emoji:'🛒',name:'Oziq-ovqat',bg:'linear-gradient(135deg,#f57c00,#e65100)'},
+    {id:'Kimyo',emoji:'🧴',name:'Kimyo',bg:'linear-gradient(135deg,#00bcd4,#0097a7)'},
+    {id:'Bolalar',emoji:'👶',name:'Bolalar',bg:'linear-gradient(135deg,#ff80ab,#f50057)'},
+    {id:'Gigiena',emoji:'🧼',name:'Gigiena',bg:'linear-gradient(135deg,#1abc9c,#16a085)'},
+    {id:'Boshqa',emoji:'📦',name:'Boshqa',bg:'linear-gradient(135deg,#7f8c8d,#636e72)'}
+  ];
+  var catHtml='';
+  cats.forEach(function(cat){
+    var isActive=activeCategory===cat.id;
+    var bg=isActive?'linear-gradient(135deg,#022e2d,#0a5a55)':cat.bg;
+    var div=document.createElement('div');
+    div.className='cat-icon-item'+(isActive?' active':'');
+    div.setAttribute('onclick','setCategory("'+cat.id+'")');
+    div.innerHTML='<div class="cat-icon-box" style="background:'+bg+';">'+cat.emoji+'</div><span class="cat-icon-name">'+cat.name+'</span>';
+    el.appendChild(div);
+  });
+}
+
+// overlay title CSS
+var _bannerCss=document.createElement('style');
+_bannerCss.textContent='.banner-overlay-title{position:absolute;bottom:14px;left:14px;right:14px;background:rgba(0,0,0,.55);color:#fff;font-size:15px;font-weight:900;padding:8px 14px;border-radius:10px;backdrop-filter:blur(4px);}';
+document.head.appendChild(_bannerCss);
+
+// START
+init();
+
+</script>
+</body>
+</html>

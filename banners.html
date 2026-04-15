@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bannerlar — Mahalla Dukoni</title>
+<script src="data.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;900&family=Rajdhani:wght@400;500;600;700&display=swap');
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0d1b2a; --bg2:#1a2d42; --panel:#1e3448;
+  --border:#2a4a6a; --border2:#2d5278;
+  --cyan:#00ffe7; --cyan2:#00b4d8;
+  --amber:#ffb703; --red:#ff2d55; --green:#39ff14;
+  --text:#e0f2fe; --muted:#7ab3cc; --muted2:#3a6080;
+  --glow:0 0 20px rgba(0,255,231,.3);
+  --sidebar:220px;
+}
+html,body{height:100%;overflow-x:hidden}
+body{background:linear-gradient(135deg,#0d1b2a,#152538);font-family:'Rajdhani',sans-serif;color:var(--text);display:flex;min-height:100vh;}
+body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(circle,rgba(0,255,231,.05) 1px,transparent 1px);background-size:32px 32px;pointer-events:none;z-index:0;}
+
+/* MAIN */
+.main{margin-left:0;flex:1;display:flex;flex-direction:column;min-height:100vh;position:relative;z-index:1;}
+.topbar{padding:16px 24px;background:rgba(21,32,48,.9);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;backdrop-filter:blur(10px);position:sticky;top:0;z-index:50;}
+.page-title{font-family:'Orbitron',monospace;font-size:16px;color:var(--cyan);letter-spacing:2px;}
+.content{padding:24px;flex:1;}
+
+/* CARDS */
+.banner-card{background:var(--bg2);border:1px solid var(--border);border-radius:14px;margin-bottom:14px;overflow:hidden;transition:border .2s;}
+.banner-card:hover{border-color:var(--cyan2);}
+.banner-preview{height:80px;overflow:hidden;position:relative;}
+.banner-preview img,.banner-preview video{width:100%;height:80px;object-fit:cover;}
+.banner-body{padding:16px;}
+.field-label{font-size:10px;color:var(--muted);font-weight:700;letter-spacing:1px;margin-bottom:4px;text-transform:uppercase;}
+.field-input{width:100%;padding:9px 12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'Rajdhani',sans-serif;font-size:14px;outline:none;transition:border .2s;box-sizing:border-box;}
+.field-input:focus{border-color:var(--cyan);}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:12px;}
+.color-swatch{width:34px;height:34px;border-radius:8px;cursor:pointer;border:3px solid transparent;box-shadow:0 2px 8px rgba(0,0,0,.4);transition:transform .15s;flex-shrink:0;}
+.color-swatch:hover{transform:scale(1.1);}
+.color-swatch.selected{border-color:#fff;}
+.color-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;}
+
+.btn{padding:9px 18px;border-radius:8px;font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:700;cursor:pointer;border:none;transition:all .2s;}
+.btn-cyan{background:linear-gradient(135deg,var(--cyan),var(--cyan2));color:#000;}
+.btn-cyan:hover{box-shadow:var(--glow);}
+.btn-danger{background:rgba(255,45,85,.15);border:1px solid rgba(255,45,85,.3);color:var(--red);}
+.btn-ghost{background:rgba(0,255,231,.08);border:1px solid rgba(0,255,231,.2);color:var(--cyan);}
+.btn-sm{padding:5px 12px;font-size:12px;}
+
+.upload-zone{border:2px dashed var(--border);border-radius:10px;padding:16px;text-align:center;cursor:pointer;transition:all .2s;margin-bottom:8px;}
+.upload-zone:hover{border-color:var(--cyan);background:rgba(0,255,231,.03);}
+.upload-zone.dragover{border-color:var(--cyan);background:rgba(0,255,231,.06);}
+
+.save-bar{position:sticky;bottom:0;background:rgba(13,27,42,.95);border-top:1px solid var(--border);padding:14px 24px;display:flex;gap:12px;backdrop-filter:blur(10px);}
+
+.toast{position:fixed;bottom:20px;right:20px;padding:12px 20px;border-radius:10px;font-weight:700;font-size:14px;z-index:9999;display:none;box-shadow:0 4px 20px rgba(0,0,0,.4);}
+.toast.show{display:block;animation:fadeIn .3s;}
+.toast.ok{background:#1a3d2a;border:1px solid var(--green);color:var(--green);}
+.toast.err{background:#3d1a1a;border:1px solid var(--red);color:var(--red);}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+
+<div class="toast" id="toast"></div>
+
+<div id="sidebarUserName" style="display:none"></div>
+<div id="sidebarUserRole" style="display:none"></div>
+
+<!-- MAIN -->
+<div class="main" style="margin-left:0;">
+  <div class="topbar" style="position:sticky;top:0;z-index:10;">
+    <div class="page-title">&#128444; BANNERLAR</div>
+    <button class="btn btn-cyan" onclick="addBanner()">+ Yangi banner</button>
+  </div>
+
+  <div class="content">
+    <!-- Qollanma -->
+    <div style="background:rgba(0,255,231,.05);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:20px;">
+      <div style="font-weight:700;color:var(--cyan);margin-bottom:8px;font-family:'Orbitron',monospace;font-size:12px;letter-spacing:1px;">QOLLANMA</div>
+      <div style="font-size:13px;color:var(--muted2);line-height:2.0;">
+        📝 <b style="color:var(--text);">Rang+Matn</b> — fon rangi, sarlavha, emoji (rasm kerak emas)<br>
+        🖼️ <b style="color:var(--text);">Rasm</b> — JPG, PNG, WEBP (max 5MB)<br>
+        🎞️ <b style="color:var(--text);">GIF</b> — animatsiyali rasm (max 5MB)<br>
+        🎬 <b style="color:var(--text);">Video</b> — MP4 format (max 20MB)<br>
+        <span style="color:var(--amber);">&#9889; Saqlash tugmasini bosishni unutmang! shop.html da darhol yangilanadi.</span>
+      </div>
+    </div>
+
+    <div id="bannerList"></div>
+  </div>
+
+  <!-- Sticky save bar -->
+  <div class="save-bar">
+    <button class="btn btn-cyan" style="flex:1;padding:13px;" onclick="saveBanners()">&#128190; Saqlash</button>
+    <button class="btn btn-ghost" onclick="addBanner()">+ Yangi</button>
+  </div>
+</div>
+
+<script>
+var _banners = [];
+var _fileIds = {};
+
+// ── INIT ──
+function init(){
+  // banners.html to'g'ridan-to'g'ri ochilmasin — dashboard orqali ishlaydi
+  window.location.replace('dashboard.html');
+}
+
+function logout(){
+  if(window !== window.parent) return;
+  DB.clearSession();
+  window.location.href = 'login.html';
+}
+
+// ── LOAD ──
+function loadBanners(){
+  fetch('/api/banners')
+    .then(function(r){return r.json();})
+    .then(function(d){
+      if(d.ok && Array.isArray(d.data)) _banners = d.data;
+      renderBanners();
+    })
+    .catch(function(){ renderBanners(); });
+}
+
+// ── RENDER ──
+var GRADIENTS = [
+  'linear-gradient(135deg,#2ecc71,#27ae60)',
+  'linear-gradient(135deg,#e74c3c,#c0392b)',
+  'linear-gradient(135deg,#3498db,#2980b9)',
+  'linear-gradient(135deg,#9b59b6,#8e44ad)',
+  'linear-gradient(135deg,#f39c12,#d68910)',
+  'linear-gradient(135deg,#1abc9c,#16a085)',
+  'linear-gradient(135deg,#e91e63,#c2185b)',
+  'linear-gradient(135deg,#00ffe7,#00b4d8)',
+  'linear-gradient(135deg,#FF6B00,#FF9A00)',
+  'linear-gradient(135deg,#6c5ce7,#a29bfe)'
+];
+
+var LINKS = [
+  ['','Havola yoq'],['Aksiya','Aksiya'],["Gosht","Go'sht"],
+  ['Sut','Sut'],['Non','Non'],['Meva','Meva'],
+  ['Sabzavot','Sabzavot'],['Ichimlik','Ichimlik'],
+  ['Oziq','Oziq-ovqat'],['Kimyo','Kimyo'],['Bolalar','Bolalar']
+];
+
+function renderBanners(){
+  var el = document.getElementById('bannerList');
+  if(!el) return;
+  el.innerHTML = '';
+
+  if(!_banners.length){
+    el.innerHTML = '<div style="text-align:center;padding:60px;color:var(--muted);">Banner yoq. + Yangi banner bosing.</div>';
+    return;
+  }
+
+  _banners.forEach(function(b, i){
+    var card = document.createElement('div');
+    card.className = 'banner-card';
+
+    // Preview
+    var prev = document.createElement('div');
+    prev.className = 'banner-preview';
+    if(b.type === 'color'){
+      prev.style.background = b.bg || '#2ecc71';
+      prev.style.display = 'flex';
+      prev.style.alignItems = 'center';
+      prev.style.padding = '0 20px';
+      prev.style.gap = '12px';
+      prev.innerHTML = '<span style="font-size:32px;">'+(b.emoji||'')+'</span>'+
+        '<div><div style="color:#fff;font-weight:900;font-size:18px;">'+(b.title||'')+'</div>'+
+        '<div style="color:rgba(255,255,255,.8);font-size:13px;">'+(b.sub||'')+'</div></div>';
+    } else if(b.src){
+      if(b.type === 'video'){
+        prev.innerHTML = '<video src="'+b.src+'" muted style="width:100%;height:80px;object-fit:cover;"></video>';
+      } else {
+        prev.innerHTML = '<img src="'+b.src+'" style="width:100%;height:80px;object-fit:cover;">';
+      }
+    } else {
+      prev.style.cssText = 'background:var(--bg);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:13px;';
+      prev.textContent = 'Preview yoq — Fayl yuklang';
+    }
+    card.appendChild(prev);
+
+    // Body
+    var body = document.createElement('div');
+    body.className = 'banner-body';
+
+    // Header row
+    var hrow = document.createElement('div');
+    hrow.style.cssText = 'display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;';
+    hrow.innerHTML = '<span style="font-family:Orbitron,monospace;font-size:11px;color:var(--cyan);letter-spacing:1px;">BANNER #'+(i+1)+'</span>';
+    var hbtns = document.createElement('div');
+    hbtns.style.display = 'flex';
+    hbtns.style.gap = '6px';
+    if(i > 0){
+      var ub = mkBtn('↑','ghost sm');
+      ub.onclick = function(){ moveBanner(i,-1); };
+      hbtns.appendChild(ub);
+    }
+    if(i < _banners.length-1){
+      var db = mkBtn('↓','ghost sm');
+      db.onclick = function(){ moveBanner(i,1); };
+      hbtns.appendChild(db);
+    }
+    var del = mkBtn('✕ Ochirish','danger sm');
+    del.onclick = function(){ removeBanner(i); };
+    hbtns.appendChild(del);
+    hrow.appendChild(hbtns);
+    body.appendChild(hrow);
+
+    // Type + Link
+    var g2 = document.createElement('div');
+    g2.className = 'grid-2';
+
+    var typeDiv = document.createElement('div');
+    typeDiv.innerHTML = '<div class="field-label">TURI</div>';
+    var typeSel = document.createElement('select');
+    typeSel.className = 'field-input';
+    [['color','Rang + Matn'],['image','Rasm (JPG/PNG)'],['gif','GIF'],['video','Video (MP4)']].forEach(function(t){
+      var o = document.createElement('option');
+      o.value = t[0]; o.textContent = t[1];
+      if(b.type === t[0]) o.selected = true;
+      typeSel.appendChild(o);
+    });
+    typeSel.onchange = function(){ changeBannerType(i, this.value); };
+    typeDiv.appendChild(typeSel);
+
+    var linkDiv = document.createElement('div');
+    linkDiv.innerHTML = '<div class="field-label">HAVOLA</div>';
+    var linkSel = document.createElement('select');
+    linkSel.className = 'field-input';
+    LINKS.forEach(function(lnk){
+      var o = document.createElement('option');
+      o.value = lnk[0]; o.textContent = lnk[1];
+      if((b.link||'') === lnk[0]) o.selected = true;
+      linkSel.appendChild(o);
+    });
+    linkSel.onchange = function(){ _banners[i].link = this.value; };
+    linkDiv.appendChild(linkSel);
+
+    g2.appendChild(typeDiv);
+    g2.appendChild(linkDiv);
+    body.appendChild(g2);
+
+    // Fields based on type
+    if(b.type === 'color'){
+      // Title, Sub, Emoji
+      var g3 = document.createElement('div');
+      g3.className = 'grid-3';
+      g3.appendChild(mkField('SARLAVHA', b.title||'', 'Sarlavha', function(v){_banners[i].title=v;updatePreview(card,i);}));
+      g3.appendChild(mkField('TAVSIF', b.sub||'', 'Tavsif', function(v){_banners[i].sub=v;updatePreview(card,i);}));
+      g3.appendChild(mkField('EMOJI', b.emoji||'', '*', function(v){_banners[i].emoji=v;updatePreview(card,i);}));
+      body.appendChild(g3);
+
+      // Gradient
+      var bgDiv = document.createElement('div');
+      bgDiv.innerHTML = '<div class="field-label">FON RANGI</div>';
+      var bgInp = document.createElement('input');
+      bgInp.className = 'field-input';
+      bgInp.value = b.bg || '';
+      bgInp.placeholder = 'linear-gradient(...)';
+      bgInp.oninput = function(){_banners[i].bg=this.value;updatePreview(card,i);};
+      bgDiv.appendChild(bgInp);
+
+      // Color swatches
+      var swatchRow = document.createElement('div');
+      swatchRow.className = 'color-row';
+      GRADIENTS.forEach(function(g){
+        var sw = document.createElement('div');
+        sw.className = 'color-swatch' + (b.bg===g?' selected':'');
+        sw.style.background = g;
+        sw.title = g;
+        sw.onclick = function(){
+          _banners[i].bg = g;
+          bgInp.value = g;
+          swatchRow.querySelectorAll('.color-swatch').forEach(function(s){s.classList.remove('selected');});
+          sw.classList.add('selected');
+          updatePreview(card,i);
+        };
+        swatchRow.appendChild(sw);
+      });
+      bgDiv.appendChild(swatchRow);
+      body.appendChild(bgDiv);
+
+    } else {
+      // Title
+      var titleDiv = document.createElement('div');
+      titleDiv.style.marginBottom = '10px';
+      titleDiv.appendChild(mkField('SARLAVHA (ixtiyoriy)', b.title||'', 'Rasm ustida matn', function(v){_banners[i].title=v;}));
+      body.appendChild(titleDiv);
+
+      // Upload zone
+      var fid = 'bf_'+i+'_'+Date.now();
+      _fileIds[i] = fid;
+      var accept = b.type==='video' ? 'video/mp4,video/*' : 'image/*,.gif';
+      var maxTxt = b.type==='video' ? 'MP4 (max 20MB)' : 'JPG, PNG, GIF (max 5MB)';
+
+      var uzDiv = document.createElement('div');
+      uzDiv.innerHTML = '<div class="field-label">FAYL YUKLASH</div>';
+
+      var uz = document.createElement('div');
+      uz.className = 'upload-zone';
+      uz.innerHTML =
+        '<input type="file" id="'+fid+'" accept="'+accept+'" style="display:none;">'+
+        '<div style="font-size:22px;margin-bottom:6px;">📤</div>'+
+        '<div style="color:var(--cyan);font-weight:700;font-size:14px;">Fayl tanlash uchun bosing</div>'+
+        '<div style="font-size:11px;color:var(--muted);margin-top:4px;">'+maxTxt+'</div>'+
+        (b.src?'<div style="color:var(--green);font-size:12px;margin-top:6px;font-weight:700;">Yuklangan: '+b.src+'</div>':'');
+
+      uz.onclick = function(){ document.getElementById(fid).click(); };
+      uz.ondragover = function(e){ e.preventDefault(); uz.classList.add('dragover'); };
+      uz.ondragleave = function(){ uz.classList.remove('dragover'); };
+      uz.ondrop = function(e){
+        e.preventDefault(); uz.classList.remove('dragover');
+        if(e.dataTransfer.files[0]) uploadFile(e.dataTransfer.files[0], i, uz);
+      };
+
+      var finp = uz.querySelector('input[type=file]');
+      if(finp) finp.onchange = function(){ if(this.files[0]) uploadFile(this.files[0], i, uz); };
+
+      uzDiv.appendChild(uz);
+
+      // URL input
+      var urlDiv = document.createElement('div');
+      urlDiv.innerHTML = '<div class="field-label" style="margin-top:8px;">YOKI URL KIRITING</div>';
+      urlDiv.appendChild(mkField('', b.src||'', '/images/banner.jpg', function(v){_banners[i].src=v;}));
+      uzDiv.appendChild(urlDiv);
+      body.appendChild(uzDiv);
+    }
+
+    card.appendChild(body);
+    el.appendChild(card);
+  });
+}
+
+function updatePreview(card, i){
+  var b = _banners[i];
+  var prev = card.querySelector('.banner-preview');
+  if(!prev || b.type !== 'color') return;
+  prev.style.background = b.bg || '#2ecc71';
+  prev.innerHTML = '<span style="font-size:32px;padding-left:20px;">'+(b.emoji||'')+'</span>'+
+    '<div style="padding-left:12px;"><div style="color:#fff;font-weight:900;font-size:18px;">'+(b.title||'')+'</div>'+
+    '<div style="color:rgba(255,255,255,.8);font-size:13px;">'+(b.sub||'')+'</div></div>';
+}
+
+// ── HELPERS ──
+function mkBtn(txt, cls){
+  var b = document.createElement('button');
+  b.className = 'btn btn-'+(cls.includes('ghost')?'ghost':cls.includes('danger')?'danger':'ghost')+
+    (cls.includes('sm')?' btn-sm':'');
+  b.textContent = txt;
+  return b;
+}
+
+function mkField(label, val, placeholder, onchange){
+  var d = document.createElement('div');
+  if(label) d.innerHTML = '<div class="field-label">'+label+'</div>';
+  var inp = document.createElement('input');
+  inp.className = 'field-input';
+  inp.value = val;
+  inp.placeholder = placeholder;
+  inp.oninput = function(){ onchange(this.value); };
+  d.appendChild(inp);
+  return d;
+}
+
+// ── ACTIONS ──
+function addBanner(){
+  _banners.push({type:'color', bg:'linear-gradient(135deg,#00ffe7,#00b4d8)', title:'Yangi banner', sub:'Tavsif', emoji:'', link:''});
+  renderBanners();
+  setTimeout(function(){
+    var last = document.getElementById('bannerList').lastElementChild;
+    if(last) last.scrollIntoView({behavior:'smooth', block:'start'});
+  }, 100);
+}
+
+function removeBanner(i){
+  if(!confirm("Bu bannerni o'chirasizmi?")) return;
+  _banners.splice(i, 1);
+  renderBanners();
+}
+
+function moveBanner(i, dir){
+  var j = i+dir;
+  if(j<0 || j>=_banners.length) return;
+  var t = _banners[i]; _banners[i] = _banners[j]; _banners[j] = t;
+  renderBanners();
+}
+
+function changeBannerType(i, type){
+  _banners[i].type = type;
+  if(type==='color' && !_banners[i].bg) _banners[i].bg = 'linear-gradient(135deg,#2ecc71,#27ae60)';
+  renderBanners();
+}
+
+// ── UPLOAD ──
+async function uploadFile(file, idx, zone){
+  var maxMB = file.type.startsWith('video') ? 20 : 5;
+  if(file.size > maxMB*1024*1024){
+    toast('Fayl juda katta! Max '+maxMB+'MB', 'err');
+    return;
+  }
+  var fd = new FormData();
+  fd.append('file', file);
+  fd.append('filename', Date.now()+'_'+file.name.replace(/[^a-zA-Z0-9._-]/g,'_'));
+
+  zone.innerHTML = '<div style="color:var(--cyan);font-weight:700;">⏳ Yuklanmoqda...</div>';
+  toast('Yuklanmoqda...', 'ok');
+
+  try{
+    var res = await fetch('/upload',{method:'POST',body:fd,headers:{'Authorization':'Bearer '+(localStorage.getItem('mahalla_v1_token')||'')}});
+    var data = await res.json();
+    if(data.ok){
+      _banners[idx].src = data.url;
+      toast('Yuklandi: '+data.url, 'ok');
+      renderBanners();
+    } else {
+      toast('Xato: '+(data.error||'?'), 'err');
+      renderBanners();
+    }
+  }catch(e){
+    toast('Server bilan ulanishda xato', 'err');
+    renderBanners();
+  }
+}
+
+// ── SAVE ──
+function saveBanners(){
+  fetch('/api/banners',{
+    method:'POST',
+    headers:{'Content-Type':'application/json','Authorization':'Bearer '+(localStorage.getItem('mahalla_v1_token')||'')},
+    body: JSON.stringify(_banners)
+  })
+  .then(function(r){ return r.json(); })
+  .then(function(d){
+    if(d.ok) toast('Saqlandi! shop.html da yangilandi.', 'ok');
+    else toast('Saqlashda xato', 'err');
+  })
+  .catch(function(){
+    toast('Server bilan ulanishda xato', 'err');
+  });
+}
+
+// ── TOAST ──
+function toast(msg, type){
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show '+(type==='err'?'err':'ok');
+  clearTimeout(t._timer);
+  t._timer = setTimeout(function(){t.classList.remove('show');}, 3000);
+}
+
+window.onload = init;
+</script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+# macOS
+.DS_Store
+
+# IDE
+.idea/
+.vscode/
+
+# Logs (app log, lekin backuplar kirsin)
+logs/app.log
+
+# Environment variables
+.env
+*.env
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo

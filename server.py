@@ -15,6 +15,7 @@ import logging
 import re
 import shutil
 import threading
+import socketserver
 from urllib.parse import urlparse, parse_qs, quote
 
 # ── PATHS ──────────────────────────────────────────────────────
@@ -107,27 +108,36 @@ def get_token_from_headers(headers):
     return None
 
 # ══════════════════════════════════════════════════════════════
-# DB
+# DB  (thread-safe lock — concurrent writes fayl buzilmasin)
 # ══════════════════════════════════════════════════════════════
+_db_lock = threading.Lock()
+
 def load_db():
-    if not os.path.exists(DB_FILE):
-        save_db(DEFAULT_DB)
-        return dict(DEFAULT_DB)
-    try:
-        with open(DB_FILE, 'r', encoding='utf-8') as f:
-            data = json.load(f)
-        for k, v in DEFAULT_DB.items():
-            if k not in data:
-                data[k] = v
-        return data
-    except Exception as e:
-        log.error(f'[DB] Yuklash xatosi: {e}')
-        return dict(DEFAULT_DB)
+    with _db_lock:
+        if not os.path.exists(DB_FILE):
+            _write_db(DEFAULT_DB)
+            return dict(DEFAULT_DB)
+        try:
+            with open(DB_FILE, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+            for k, v in DEFAULT_DB.items():
+                if k not in data:
+                    data[k] = v
+            return data
+        except Exception as e:
+            log.error(f'[DB] Yuklash xatosi: {e}')
+            return dict(DEFAULT_DB)
+
+def _write_db(data):
+    tmp = DB_FILE + '.tmp'
+    with open(tmp, 'w', encoding='utf-8') as f:
+        json.dump(data, f, ensure_ascii=False, indent=2)
+    os.replace(tmp, DB_FILE)   # atomic replace — yarım yozilgan fayl yo'q
 
 def save_db(data):
     try:
-        with open(DB_FILE, 'w', encoding='utf-8') as f:
-            json.dump(data, f, ensure_ascii=False, indent=2)
+        with _db_lock:
+            _write_db(data)
         return True
     except Exception as e:
         log.error(f'[DB] Saqlash xatosi: {e}')
@@ -213,6 +223,75 @@ class Handler(http.server.SimpleHTTPRequestHandler):
 
         if path == '/favicon.ico':
             self.send_response(204); self.end_headers(); return
+
+        # ── CLEAN URL ROUTING ────────────────────────────────
+        ROUTES = {
+            '/':            'login.html',
+            '/login':       'login.html',
+            '/dashboard':   'dashboard.html',
+            '/buyurtmalar': 'orders.html',
+            '/mahsulotlar': 'products.html',
+            '/ombor':       'warehouse.html',
+            '/daromad':     'income.html',
+            '/pos':         'pos.html',
+            '/mijozlar':    'users.html',
+            '/xodimlar':    'staff.html',
+            '/bannerlar':      'banners.html',
+            '/shop':           'shop.html',
+            '/integratsiya':   'integratsiya.html',
+            '/host':           'host.html',
+        }
+
+        # Eski .html URL → clean URL redirect (301)
+        HTML_REDIRECTS = {
+            '/login.html':     '/login',
+            '/dashboard.html': '/dashboard',
+            '/orders.html':    '/buyurtmalar',
+            '/products.html':  '/mahsulotlar',
+            '/warehouse.html': '/ombor',
+            '/income.html':    '/daromad',
+            '/pos.html':       '/pos',
+            '/users.html':     '/mijozlar',
+            '/staff.html':     '/xodimlar',
+            '/banners.html':   '/bannerlar',
+            '/shop.html':      '/shop',
+        }
+
+        if path in HTML_REDIRECTS:
+            self.send_response(301)
+            self.send_header('Location', HTML_REDIRECTS[path])
+            self.end_headers()
+            return
+
+        if path in ROUTES:
+            filename = ROUTES[path]
+            filepath = os.path.join(BASE_DIR, filename)
+            if os.path.exists(filepath):
+                try:
+                    with open(filepath, 'rb') as f:
+                        body = f.read()
+                    self.send_response(200)
+                    self.send_header('Content-Type', 'text/html; charset=utf-8')
+                    self.send_header('Content-Length', str(len(body)))
+                    self.send_header('Cache-Control', 'no-cache, no-store, must-revalidate')
+                    self.end_headers()
+                    self.wfile.write(body)
+                except Exception as e:
+                    log.error(f'[ROUTE] Fayl o\'qish xatosi: {e}')
+                    self.send_response(500); self.end_headers()
+            else:
+                self.send_response(404); self.end_headers()
+            return
+
+        # CONFIG: public config (cashback pct, etc.)
+        if path == '/config':
+            cfg = load_config()
+            public = {
+                'CASHBACK_PCT': cfg.get('CASHBACK_PCT', 2),
+                'NAKAPITEL_LIMIT': cfg.get('NAKAPITEL_LIMIT', 1000),
+            }
+            self.send_json(public)
+            return
 
         # TTS: GET /tts?t=matn
         if path == '/tts':
@@ -489,8 +568,6 @@ class Handler(http.server.SimpleHTTPRequestHandler):
 
         # ── AI ────────────────────────────────────────────────
         if path == '/ai':
-            user = self.require_auth()
-            if not user: return
             import urllib.request as _req
             cfg    = load_config()
             AI_KEY = os.environ.get('GEMINI_API_KEY', '') or cfg.get('GEMINI_API_KEY', '')
@@ -645,11 +722,14 @@ if __name__ == '__main__':
     t = threading.Thread(target=auto_backup, daemon=True)
     t.start()
 
-    http.server.HTTPServer.allow_reuse_address = True
-    server = http.server.HTTPServer(('', PORT), Handler)
+    class ThreadedHTTPServer(socketserver.ThreadingMixIn, http.server.HTTPServer):
+        daemon_threads = True
+        allow_reuse_address = True
+
+    server = ThreadedHTTPServer(('', PORT), Handler)
     print(f'\n  🏪 SELLFLOWUZ SERVER')
     print(f'  ─────────────────────────────────')
-    print(f'  URL:    http://localhost:{PORT}/login.html')
+    print(f'  URL:    http://localhost:{PORT}/login')
     print(f'  DB:     {DB_FILE}')
     print(f'  Logs:   {LOG_DIR}/app.log')
     print(f'  Stop:   Ctrl+C\n')

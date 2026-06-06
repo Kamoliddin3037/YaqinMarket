@@ -4,71 +4,50 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ombor — SellFlowUZ</title>
+<link rel="stylesheet" href="style.css">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;900&family=Rajdhani:wght@400;500;600;700&display=swap');
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-:root{
-  --bg:#0d1b2a; --bg2:#1a2d42; --panel:#1e3448; --panelS:#1e3448;
-  --border:#2a4a6a; --border2:#2d5278;
-  --cyan:#00ffe7; --cyan2:#00b4d8; --cyan3:#006d8f;
-  --amber:#ffb703; --red:#ff2d55; --green:#39ff14; --purple:#b44cf5;
-  --text:#e0f2fe; --muted:#7ab3cc; --muted2:#3a6080;
-  --glow:0 0 20px rgba(0,255,231,.3);
-  --glow-sm:0 0 10px rgba(0,255,231,.2);
-  --sidebar:220px;
-}
+:root{--panelS:var(--panel);--sidebar:var(--sidebar-w);}
 html,body{height:100%;overflow-x:hidden}
-body{background:linear-gradient(135deg,#0d1b2a,#152538);font-family:'Rajdhani',sans-serif;color:var(--text);display:flex;min-height:100vh;}
-body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(circle,rgba(0,255,231,.05) 1px,transparent 1px);background-size:32px 32px;pointer-events:none;z-index:0;}
+body{background:linear-gradient(135deg,#0d1b2a,#152538);font-family:var(--font-body);color:var(--text);display:flex;min-height:100vh;}
+body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(circle,rgba(0,229,255,.05) 1px,transparent 1px);background-size:32px 32px;pointer-events:none;z-index:0;}
 
-/* SIDEBAR */
-.sidebar{width:var(--sidebar);min-height:100vh;background:#152030;border-right:1px solid var(--border);display:flex;flex-direction:column;position:fixed;left:0;top:0;bottom:0;z-index:100;transition:transform .3s;}
+.sidebar{width:var(--sidebar);min-height:100vh;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;position:fixed;left:0;top:0;bottom:0;z-index:100;transition:transform .3s;}
 .sidebar-logo{padding:20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;}
 .logo-icon{width:38px;height:38px;background:linear-gradient(135deg,var(--cyan),var(--cyan2));border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:var(--glow-sm);}
-.logo-text{font-family:'Orbitron',monospace;font-size:11px;color:var(--cyan);letter-spacing:1.5px;line-height:1.3;}
+.logo-text{font-family:var(--font-mono);font-size:11px;color:var(--cyan);letter-spacing:1.5px;line-height:1.3;}
 .sidebar-nav{flex:1;padding:12px 0;overflow-y:auto;}
-.nav-section{padding:10px 16px 4px;font-size:10px;color:var(--muted2);font-weight:700;letter-spacing:3px;text-transform:uppercase;}
 .nav-item{display:flex;align-items:center;gap:12px;padding:11px 20px;color:var(--muted);cursor:pointer;transition:all .2s;border-left:2px solid transparent;font-size:14px;font-weight:600;}
-.nav-item:hover{color:var(--text);background:rgba(0,255,231,.04);}
-.nav-item.active{color:var(--cyan);background:rgba(0,255,231,.07);border-left-color:var(--cyan);}
-.nav-item .badge{margin-left:auto;background:var(--red);color:white;font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;}
+.nav-item:hover{color:var(--text);background:rgba(0,229,255,.04);}
+.nav-item.active{color:var(--cyan);background:rgba(0,229,255,.07);border-left-color:var(--cyan);}
 .nav-icon{font-size:17px;width:22px;text-align:center;}
 .sidebar-bottom{padding:14px;border-top:1px solid var(--border);}
 .sidebar-user{display:flex;align-items:center;gap:10px;padding:8px;margin-bottom:10px;}
 .user-avatar{width:34px;height:34px;background:linear-gradient(135deg,var(--cyan3),var(--cyan2));border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;}
-.user-info-name{font-size:13px;font-weight:700;color:white;}
-.user-info-role{font-size:10px;color:var(--cyan);font-family:'Orbitron',monospace;letter-spacing:1px;}
-.logout-btn{width:100%;padding:9px;background:rgba(255,45,85,.1);border:1px solid rgba(255,45,85,.3);color:var(--red);border-radius:4px;font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;}
+.user-info-name{font-size:13px;font-weight:700;color:var(--text);}
+.user-info-role{font-size:10px;color:var(--cyan);font-family:var(--font-mono);letter-spacing:1px;}
+.logout-btn{width:100%;padding:9px;background:rgba(255,45,85,.1);border:1px solid rgba(255,45,85,.3);color:var(--red);border-radius:4px;font-family:var(--font-body);font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;}
 .logout-btn:hover{background:rgba(255,45,85,.2);}
 
-/* MAIN */
 .main{margin-left:var(--sidebar);flex:1;min-width:0;display:flex;flex-direction:column;}
-.topbar{background:#152030;border-bottom:1px solid var(--border);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;}
-:fullscreen .topbar,:-webkit-full-screen .topbar{top:14px;}
+.topbar{background:rgba(10,22,40,.95);border-bottom:1px solid var(--border);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;}
 .topbar-left{display:flex;align-items:center;gap:14px;}
 .hamburger{display:none;background:none;border:none;color:var(--text);font-size:24px;cursor:pointer;}
-.page-title{font-family:'Orbitron',monospace;font-size:13px;color:white;letter-spacing:2px;}
+.page-title{font-family:var(--font-mono);font-size:13px;color:var(--text);letter-spacing:2px;}
 .page-breadcrumb{font-size:12px;color:var(--muted);}
 .topbar-right{display:flex;align-items:center;gap:10px;flex:1;justify-content:center;}
-
-/* TICKER in topbar */
 .ticker-wrap{flex:1;max-width:480px;overflow:hidden;position:relative;}
 .ticker-inner{display:flex;gap:64px;animation:ticker 22s linear infinite;white-space:nowrap;}
 .ticker-item{font-size:12px;color:var(--amber);font-weight:600;display:inline-flex;align-items:center;gap:6px;flex-shrink:0;}
 .ticker-item .disc-badge{background:rgba(255,45,85,.2);border:1px solid rgba(255,45,85,.4);color:var(--red);font-size:10px;font-weight:700;padding:1px 7px;border-radius:20px;}
 @keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-
-.topbar-time{font-family:'Orbitron',monospace;font-size:13px;color:var(--cyan);letter-spacing:2px;}
-.icon-action{width:36px;height:36px;background:var(--panelS);border:1px solid var(--border);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:17px;cursor:pointer;transition:all .2s;}
-.icon-action:hover{border-color:var(--cyan);}
-
-/* FULLSCREEN BTN */
-.fs-btn{background:transparent;border:1px solid var(--border2);color:var(--muted);padding:7px 14px;border-radius:6px;cursor:pointer;font-size:13px;font-weight:700;transition:all .2s;display:flex;align-items:center;gap:5px;font-family:'Orbitron',monospace;letter-spacing:1px;}
-.fs-btn:hover{border-color:var(--cyan);color:var(--cyan);box-shadow:0 0 8px rgba(0,255,231,.2);}
+.topbar-time{font-family:var(--font-mono);font-size:13px;color:var(--cyan);letter-spacing:2px;}
+.fs-btn{background:transparent;border:1px solid var(--border2);color:var(--muted);padding:7px 14px;border-radius:6px;cursor:pointer;font-size:13px;font-weight:700;transition:all .2s;display:flex;align-items:center;gap:5px;font-family:var(--font-mono);letter-spacing:1px;}
+.fs-btn:hover{border-color:var(--cyan);color:var(--cyan);}
 
 .content{padding:20px 24px;flex:1;position:relative;z-index:1;}
 
-/* STAT CARDS */
+/* STATS */
 .stats-row{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:20px;}
 .stat-card{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:14px;position:relative;overflow:hidden;transition:all .25s;}
 .stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
@@ -79,22 +58,16 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
 .stat-card.c5::before{background:linear-gradient(90deg,var(--red),#cc0033);}
 .stat-card:hover{border-color:var(--border2);transform:translateY(-2px);}
 .stat-label{font-size:10px;color:var(--muted);font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;}
-.stat-value{font-family:'Orbitron',monospace;font-size:18px;font-weight:700;color:white;margin-bottom:2px;}
+.stat-value{font-family:var(--font-mono);font-size:18px;font-weight:700;color:var(--text);margin-bottom:2px;}
 .stat-sub{font-size:11px;color:var(--muted);}
-.stat-sub-dual{font-size:10px;color:var(--muted);margin-top:2px;}
 
-/* SECTIONS */
-.section{display:none;}
-.section.active{display:block;animation:fadeSlide .3s ease;}
-@keyframes fadeSlide{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-
-/* PANEL CARD */
+/* PANEL */
 .panel-card{background:var(--bg2);border:1px solid var(--border);border-radius:6px;overflow:hidden;}
 .panel-head{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
-.panel-head-title{font-family:'Orbitron',monospace;font-size:12px;color:var(--cyan);letter-spacing:2px;}
+.panel-head-title{font-family:var(--font-mono);font-size:12px;color:var(--cyan);letter-spacing:2px;}
 
 /* BUTTONS */
-.btn{padding:8px 16px;border-radius:4px;font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;border:none;display:inline-flex;align-items:center;gap:6px;}
+.btn{padding:8px 16px;border-radius:4px;font-family:var(--font-body);font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;border:none;display:inline-flex;align-items:center;gap:6px;}
 .btn-cyan{background:linear-gradient(135deg,var(--cyan),var(--cyan2));color:var(--bg);}
 .btn-cyan:hover{box-shadow:var(--glow);}
 .btn-ghost{background:transparent;border:1px solid var(--border);color:var(--text);}
@@ -107,177 +80,20 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
 /* TABLE */
 .data-table{width:100%;border-collapse:collapse;}
 .data-table th{padding:11px 13px;background:rgba(0,0,0,.2);color:var(--muted);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;text-align:left;border-bottom:1px solid var(--border);}
-.data-table td{padding:11px 13px;border-bottom:1px solid rgba(42,74,106,.4);font-size:13px;}
-.data-table tr:hover td{background:rgba(0,255,231,.025);}
-.stock-edit{width:70px;padding:5px 8px;background:var(--bg);border:1px solid var(--border);border-radius:4px;color:white;font-family:'Rajdhani',sans-serif;font-size:13px;text-align:center;}
-.stock-edit:focus{border-color:var(--cyan);outline:none;}
-
-/* ORDERS */
-.orders-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px;padding:18px;}
-.order-card{background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:14px;transition:all .25s;position:relative;overflow:hidden;}
-.order-card::before{content:'';position:absolute;top:0;left:0;bottom:0;width:3px;}
-.order-card.status-new::before{background:var(--cyan2);}
-.order-card.status-accepted::before{background:var(--amber);}
-.order-card.status-delivering::before{background:var(--green);}
-.order-card.status-done::before{background:var(--muted);}
-.order-card.status-cancelled::before{background:var(--red);}
-.order-card:hover{border-color:var(--border2);transform:translateY(-2px);}
-.order-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
-.order-id{font-family:'Orbitron',monospace;font-size:13px;color:white;}
-.status-badge{padding:3px 10px;border-radius:20px;font-size:10px;font-weight:700;letter-spacing:1px;}
-.sb-new{background:rgba(0,180,216,.15);color:var(--cyan2);}
-.sb-accepted{background:rgba(255,183,3,.15);color:var(--amber);}
-.sb-delivering{background:rgba(57,255,20,.1);color:var(--green);}
-.sb-done{background:rgba(74,122,153,.15);color:var(--muted);}
-.sb-cancelled{background:rgba(255,45,85,.1);color:var(--red);}
-.type-badge{display:inline-block;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700;margin-bottom:8px;letter-spacing:1px;}
-.tb-online{background:rgba(0,180,216,.1);color:var(--cyan2);}
-.tb-offline{background:rgba(255,183,3,.1);color:var(--amber);}
-.order-customer{background:rgba(0,0,0,.3);border:1px solid var(--border);border-radius:4px;padding:9px 12px;margin:8px 0;}
-.oc-name{font-size:13px;font-weight:700;color:white;margin-bottom:2px;}
-.oc-detail{font-size:11px;color:var(--muted);}
-.order-items-list{margin:6px 0;max-height:90px;overflow-y:auto;}
-.order-item-row{display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid var(--border);font-size:12px;}
-.order-item-row:last-child{border-bottom:none;}
-.order-item-name{color:var(--text);}
-.order-item-price{color:var(--cyan);font-weight:600;}
-.order-footer{display:flex;justify-content:space-between;align-items:center;margin-top:10px;padding-top:10px;border-top:1px solid var(--border);flex-wrap:wrap;gap:8px;}
-.order-total-label{font-size:15px;font-weight:700;color:white;}
-.order-profit{font-size:11px;color:var(--green);}
-.order-actions{display:flex;gap:6px;flex-wrap:wrap;}
-
-/* CALENDAR */
-.cal-header{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-bottom:5px;}
-.cal-header-day{text-align:center;font-size:10px;font-weight:700;color:var(--muted);letter-spacing:2px;padding:5px 0;}
-.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;}
-.cal-day{background:var(--bg);border:1px solid var(--border);border-radius:4px;padding:8px 6px;text-align:center;cursor:pointer;transition:all .2s;min-height:64px;display:flex;flex-direction:column;align-items:center;}
-.cal-day:hover{border-color:var(--cyan2);}
-.cal-day.today{border-color:var(--cyan);background:rgba(0,255,231,.06);}
-.cal-day.empty{background:transparent;border-color:transparent;cursor:default;}
-.cal-num{font-size:16px;font-weight:700;color:white;margin-bottom:3px;}
-.cal-day.today .cal-num{color:var(--cyan);}
-.cal-day-stat{font-size:10px;color:var(--muted);line-height:1.4;}
-.cal-day.has-data .cal-day-stat{color:var(--amber);}
-
-/* OFFLINE SALE */
-.off-search{width:100%;padding:10px 14px;background:var(--bg);border:1px solid var(--border);border-radius:4px;color:white;font-family:'Rajdhani',sans-serif;font-size:14px;outline:none;margin-bottom:12px;}
-.off-search:focus{border-color:var(--cyan);}
-.offline-product{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border);gap:8px;}
-.off-prod-info{flex:1;}
-.off-prod-name{font-size:13px;font-weight:600;color:white;}
-.off-prod-price{font-size:12px;color:var(--cyan);}
-.off-prod-stock{font-size:10px;color:var(--muted);}
-.qty-controls{display:flex;align-items:center;gap:8px;flex-shrink:0;}
-.qbtn{width:44px;height:44px;border-radius:8px;border:none;font-size:22px;font-weight:700;cursor:pointer;transition:all .2s;}
-.qbtn.minus{background:rgba(255,45,85,.15);color:var(--red);}
-.qbtn.plus{background:rgba(0,255,231,.1);color:var(--cyan);}
-.qbtn:hover{transform:scale(1.1);}
-.qty-num{font-size:15px;font-weight:700;color:white;min-width:18px;text-align:center;}
-
-/* BARCODE */
-.barcode-row{display:flex;gap:8px;}
-.barcode-row input{flex:1;}
-.gen-barcode-btn{padding:10px 14px;background:rgba(0,255,231,.08);border:1px solid var(--border);border-radius:4px;color:var(--cyan);font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;white-space:nowrap;}
-.gen-barcode-btn:hover{border-color:var(--cyan);}
-
-/* IMAGE UPLOAD */
-.img-upload-area{border:2px dashed var(--border);border-radius:6px;padding:20px;text-align:center;cursor:pointer;transition:all .2s;margin-bottom:4px;}
-.img-upload-area:hover{border-color:var(--cyan2);}
-.img-upload-area img{max-height:100px;border-radius:4px;margin-bottom:8px;}
-.img-upload-area .img-hint{font-size:12px;color:var(--muted);}
-
-/* WAREHOUSE */
-.warehouse-bar{display:flex;align-items:center;gap:8px;}
-.wb-label{font-size:11px;color:var(--muted);white-space:nowrap;}
-.wb-track{flex:1;height:8px;background:rgba(0,0,0,.3);border-radius:4px;overflow:hidden;border:1px solid var(--border);}
-.wb-fill{height:100%;border-radius:4px;transition:width .5s ease;}
-.wb-val{font-size:12px;font-weight:700;color:white;white-space:nowrap;min-width:36px;text-align:right;}
-.wh-card{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:14px;margin-bottom:10px;transition:all .2s;}
-.wh-card:hover{border-color:var(--border2);background:rgba(26,45,66,.8);}
-.wh-card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;}
-.wh-card-name{font-size:14px;font-weight:700;color:white;}
-.wh-card-cat{font-size:10px;color:var(--muted);margin-top:2px;}
-.wh-card-stock{text-align:right;}
-.wh-card-qty{font-family:'Orbitron',monospace;font-size:16px;font-weight:700;}
-.wh-card-unit{font-size:11px;color:var(--muted);}
-.wh-card-stats{display:flex;gap:16px;margin-bottom:8px;}
-.wh-stat{font-size:11px;color:var(--muted);}
-.wh-stat span{font-weight:700;}
-
-/* 52MM RECEIPT */
-.receipt-52{font-family:'Courier New',monospace;font-size:12px;background:white;color:#000;padding:12px;width:200px;margin:0 auto;border-radius:4px;}
-.receipt-52 .r-title{text-align:center;font-weight:700;font-size:14px;margin-bottom:6px;}
-.receipt-52 .r-line{display:flex;justify-content:space-between;padding:2px 0;font-size:11px;}
-.receipt-52 .r-line.bold{font-weight:700;border-top:1px dashed #999;padding-top:5px;margin-top:3px;}
-.receipt-52 hr{border:none;border-top:1px dashed #999;margin:5px 0;}
-.receipt-52 .r-footer{text-align:center;color:#666;font-size:10px;margin-top:6px;}
-
-/* MODAL */
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(6px);z-index:500;display:none;align-items:center;justify-content:center;padding:20px;}
-.modal.open{display:flex;animation:fadeIn .2s ease;}
-.modal-box{background:var(--bg2);border:1px solid var(--border);border-radius:6px;width:100%;max-width:520px;max-height:92vh;overflow-y:auto;box-shadow:0 0 50px rgba(0,255,231,.1);animation:modalIn .25s ease;}
-@keyframes modalIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
-.modal-box.wide{max-width:800px;}
-.modal-head{padding:16px 18px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:var(--bg2);z-index:1;}
-.modal-title{font-family:'Orbitron',monospace;font-size:11px;color:var(--cyan);letter-spacing:2px;}
-.modal-close{background:none;border:none;color:var(--muted);font-size:22px;cursor:pointer;transition:color .2s;}
-.modal-close:hover{color:var(--red);}
-.modal-body{padding:18px;}
-
-/* FULLSCREEN OFFLINE */
-.offline-fullscreen{position:fixed;inset:0;background:var(--bg);z-index:400;display:none;flex-direction:column;}
-.offline-fullscreen.open{display:flex;}
-.ofs-head{background:#152030;border-bottom:1px solid var(--border);padding:0 20px;height:56px;display:flex;align-items:center;justify-content:space-between;}
-.ofs-title{font-family:'Orbitron',monospace;font-size:14px;color:var(--cyan);letter-spacing:2px;}
-.ofs-body{display:grid;grid-template-columns:1fr 340px;flex:1;overflow:hidden;}
-.ofs-left{overflow-y:auto;padding:16px;}
-.ofs-right{background:#152030;border-left:1px solid var(--border);display:flex;flex-direction:column;padding:0;overflow:hidden;}
-.ofs-cart-title{font-family:'Orbitron',monospace;font-size:11px;color:var(--cyan);letter-spacing:2px;padding:12px 16px 8px;border-bottom:1px solid var(--border);flex-shrink:0;}
-.ofs-cart-list{flex:1;overflow-y:auto;padding:12px 16px;}
-.ofs-cart-item{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;}
-.ofs-cart-name{color:white;flex:1;}
-.ofs-cart-qty{color:var(--cyan);margin:0 10px;font-weight:700;}
-.ofs-cart-price{color:var(--amber);font-weight:700;font-size:12px;}
-.ofs-cart-rm{background:none;border:none;color:var(--red);font-size:16px;cursor:pointer;padding:0 4px;}
-.ofs-total{border-top:2px solid var(--border);padding:14px 16px;background:#0f1e2e;flex-shrink:0;}
-.ofs-total-row{display:flex;justify-content:space-between;font-size:16px;font-weight:700;color:white;margin-bottom:10px;}
-.ofs-total-amount{font-family:'Orbitron',monospace;color:var(--cyan);}
-.ofs-prod-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;}
-.ofs-prod-card{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:12px;cursor:pointer;transition:all .2s;position:relative;}
-.ofs-prod-card:hover{border-color:var(--cyan2);transform:translateY(-2px);}
-.ofs-prod-card.in-cart{border-color:var(--cyan3);}
-.ofs-prod-emoji{font-size:28px;display:block;text-align:center;margin-bottom:8px;}
-.ofs-prod-name{font-size:12px;font-weight:700;color:white;margin-bottom:4px;line-height:1.3;}
-.ofs-prod-price{font-size:13px;color:var(--cyan);font-weight:700;}
-.ofs-prod-stock{font-size:10px;color:var(--muted);margin-top:2px;}
-.ofs-cart-badge{position:absolute;top:6px;right:6px;background:var(--cyan);color:var(--bg);width:20px;height:20px;border-radius:50%;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;}
-.scan-input{width:100%;padding:10px 14px;background:rgba(0,255,231,.06);border:1px solid var(--cyan2);border-radius:4px;color:white;font-family:'Rajdhani',sans-serif;font-size:14px;outline:none;margin-bottom:12px;}
-.scan-input:focus{border-color:var(--cyan);box-shadow:var(--glow-sm);}
-.scan-input::placeholder{color:var(--muted);}
+.data-table td{padding:11px 13px;border-bottom:1px solid rgba(42,74,106,.4);font-size:13px;vertical-align:middle;}
+.data-table tr:hover td{background:rgba(0,229,255,.025);}
+.data-table .tbl-wrap{overflow-x:auto;}
 
 /* FORM */
 .form-group{margin-bottom:16px;}
 .form-label{display:block;font-size:11px;font-weight:700;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:7px;}
-.form-input,.form-select,.form-textarea{width:100%;padding:11px 13px;background:var(--bg);border:1px solid var(--border);border-radius:4px;color:white;font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:500;transition:all .2s;outline:none;}
+.form-input,.form-select,.form-textarea{width:100%;padding:11px 13px;background:var(--bg);border:1px solid var(--border);border-radius:4px;color:var(--text);font-family:var(--font-body);font-size:14px;font-weight:500;transition:all .2s;outline:none;}
 .form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--cyan);box-shadow:var(--glow-sm);}
 .form-input::placeholder{color:var(--muted);}
 .form-select option{background:var(--bg2);}
 .form-textarea{resize:vertical;min-height:70px;}
-.submit-btn{width:100%;padding:13px;background:linear-gradient(135deg,var(--cyan),var(--cyan2));color:var(--bg);border:none;border-radius:4px;font-family:'Orbitron',monospace;font-size:11px;font-weight:700;letter-spacing:3px;cursor:pointer;transition:all .25s;margin-top:4px;}
+.submit-btn{width:100%;padding:13px;background:linear-gradient(135deg,var(--cyan),var(--cyan2));color:var(--bg);border:none;border-radius:4px;font-family:var(--font-mono);font-size:11px;font-weight:700;letter-spacing:3px;cursor:pointer;transition:all .25s;margin-top:4px;}
 .submit-btn:hover{box-shadow:var(--glow);transform:translateY(-1px);}
-.total-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-top:1px solid var(--border);margin-top:12px;font-size:16px;font-weight:700;color:white;}
-.total-amount{font-family:'Orbitron',monospace;color:var(--cyan);font-size:15px;}
-
-/* FILTER TABS */
-.filter-tabs{display:flex;gap:8px;flex-wrap:wrap;}
-.ftab{padding:6px 14px;background:transparent;border:1px solid var(--border);border-radius:4px;color:var(--muted);font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;}
-.ftab:hover{border-color:var(--cyan2);color:var(--text);}
-.ftab.active{background:rgba(0,255,231,.08);border-color:var(--cyan);color:var(--cyan);}
-
-/* USERS */
-.user-stats-box{background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:14px 18px;margin-bottom:18px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px;text-align:center;}
-.us-val{font-family:'Orbitron',monospace;font-size:18px;color:var(--cyan);}
-.us-label{font-size:11px;color:var(--muted);margin-top:3px;}
 
 /* TOAST */
 .toast{position:fixed;bottom:24px;right:24px;background:var(--bg2);border:1px solid var(--border);color:var(--text);padding:11px 18px;border-radius:6px;font-size:13px;font-weight:600;z-index:2000;opacity:0;transform:translateY(10px);transition:all .3s;pointer-events:none;max-width:300px;}
@@ -285,95 +101,435 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
 .toast.success{border-color:var(--green);color:var(--green);}
 .toast.error{border-color:var(--red);color:var(--red);}
 .toast.info{border-color:var(--cyan);color:var(--cyan);}
+.toast.warning{border-color:var(--amber);color:var(--amber);}
+
+/* WAREHOUSE BAR */
+.warehouse-bar{display:flex;align-items:center;gap:8px;}
+.wb-track{flex:1;height:8px;background:rgba(0,0,0,.3);border-radius:4px;overflow:hidden;border:1px solid var(--border);}
+.wb-fill{height:100%;border-radius:4px;transition:width .5s ease;}
+.wh-card{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:14px;transition:all .2s;}
+.wh-card:hover{border-color:var(--border2);}
+.wh-card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;}
+.wh-card-name{font-size:14px;font-weight:700;color:var(--text);}
+.wh-card-cat{font-size:10px;color:var(--muted);margin-top:2px;}
+.wh-card-stock{text-align:right;}
+.wh-card-qty{font-family:var(--font-mono);font-size:16px;font-weight:700;}
+.wh-card-unit{font-size:11px;color:var(--muted);}
+.wh-card-stats{display:flex;gap:16px;margin-bottom:8px;flex-wrap:wrap;}
+.wh-stat{font-size:11px;color:var(--muted);}
+.wh-stat span{font-weight:700;}
+
+/* MAIN TABS */
+.main-tabs{display:flex;gap:4px;margin-bottom:20px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:4px;flex-wrap:wrap;}
+.mtab{flex:1;min-width:100px;padding:10px 8px;text-align:center;cursor:pointer;border-radius:6px;font-size:12px;font-weight:700;color:var(--muted);transition:all .2s;border:none;background:none;font-family:var(--font-body);letter-spacing:.5px;display:flex;align-items:center;justify-content:center;gap:6px;white-space:nowrap;}
+.mtab:hover{color:var(--text);}
+.mtab.active{background:rgba(0,229,255,.1);color:var(--cyan);border:1px solid rgba(0,229,255,.2);}
+.mtab .mtab-ico{font-size:16px;}
+
+/* TAB PANELS */
+.tab-panel{display:none;}
+.tab-panel.active{display:block;animation:fadeIn .25s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* TYPE CARDS (chiqim) */
+.type-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px;}
+.type-card{padding:14px;border:2px solid var(--border);border-radius:8px;cursor:pointer;transition:all .2s;text-align:center;}
+.type-card:hover{border-color:var(--border2);}
+.type-card.selected{border-color:var(--cyan);background:rgba(0,229,255,.06);}
+.type-card-ico{font-size:26px;margin-bottom:6px;}
+.type-card-name{font-size:12px;font-weight:700;color:var(--text);}
+.type-card-desc{font-size:10px;color:var(--muted);margin-top:3px;}
+.type-card.t-vozvrat_xaridor .type-card-ico{filter:none;}
+.type-card.t-ogirlik{border-color:rgba(255,45,85,.2);}
+.type-card.t-ogirlik.selected{border-color:var(--red);background:rgba(255,45,85,.06);}
+.type-card.t-yoqolgan{border-color:rgba(255,183,3,.2);}
+.type-card.t-yoqolgan.selected{border-color:var(--amber);background:rgba(255,183,3,.06);}
+
+/* LOG TYPE BADGES */
+.lbadge{display:inline-block;padding:2px 9px;border-radius:20px;font-size:10px;font-weight:700;letter-spacing:.5px;}
+.lb-kirim{background:rgba(0,229,255,.12);color:var(--cyan);border:1px solid rgba(0,229,255,.2);}
+.lb-sotildi{background:rgba(57,255,20,.1);color:var(--green);border:1px solid rgba(57,255,20,.2);}
+.lb-vozvrat_xaridor{background:rgba(255,183,3,.12);color:var(--amber);border:1px solid rgba(255,183,3,.25);}
+.lb-vozvrat_yetkazuvchi{background:rgba(163,102,255,.12);color:#a366ff;border:1px solid rgba(163,102,255,.25);}
+.lb-yoqolgan{background:rgba(255,183,3,.12);color:var(--amber);border:1px solid rgba(255,183,3,.25);}
+.lb-ogirlik{background:rgba(255,45,85,.12);color:var(--red);border:1px solid rgba(255,45,85,.25);}
+.lb-muddati_otgan{background:rgba(255,100,0,.12);color:#ff6400;border:1px solid rgba(255,100,0,.25);}
+.lb-singan{background:rgba(120,120,140,.12);color:#aaa;border:1px solid rgba(120,120,140,.25);}
+.lb-inventar{background:rgba(0,180,216,.12);color:var(--cyan2);border:1px solid rgba(0,180,216,.25);}
+
+/* INVENTAR TABLE */
+.inv-table-wrap{overflow-x:auto;}
+.inv-diff-plus{color:var(--green);font-weight:700;}
+.inv-diff-minus{color:var(--red);font-weight:700;}
+.inv-diff-zero{color:var(--muted);}
+.inv-input{width:80px;padding:6px 8px;background:var(--bg);border:1px solid var(--border);border-radius:4px;color:var(--text);font-size:14px;font-weight:700;text-align:center;outline:none;}
+.inv-input:focus{border-color:var(--cyan);}
+
+/* HISOBOT FILTER */
+.hiso-filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;align-items:center;}
+.hiso-filter-select{padding:8px 12px;background:var(--bg);border:1px solid var(--border);border-radius:4px;color:var(--text);font-family:var(--font-body);font-size:13px;outline:none;cursor:pointer;}
+.hiso-filter-select:focus{border-color:var(--cyan);}
+.hiso-filter-date{padding:8px 12px;background:var(--bg);border:1px solid var(--border);border-radius:4px;color:var(--text);font-family:var(--font-body);font-size:13px;outline:none;}
+.hiso-filter-date:focus{border-color:var(--cyan);}
+.hiso-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px;}
+.hs-card{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:12px;text-align:center;}
+.hs-val{font-family:var(--font-mono);font-size:16px;font-weight:700;margin-bottom:3px;}
+.hs-lbl{font-size:10px;color:var(--muted);letter-spacing:1px;}
+
+/* EMPTY STATE */
+.empty-state{text-align:center;padding:48px 20px;color:var(--muted);}
+.empty-state-ico{font-size:48px;margin-bottom:12px;}
+.empty-state-text{font-size:14px;}
 
 /* SCROLLBAR */
 ::-webkit-scrollbar{width:4px;height:4px;}
 ::-webkit-scrollbar-track{background:var(--bg);}
 ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px;}
-::-webkit-scrollbar-thumb:hover{background:var(--cyan3);}
 
 /* MOBILE */
-@media(max-width:900px){.stats-row{grid-template-columns:repeat(3,1fr);}}
+@media(max-width:900px){.stats-row{grid-template-columns:repeat(3,1fr);}.hiso-summary{grid-template-columns:repeat(2,1fr);}}
 @media(max-width:700px){
   .sidebar{transform:translateX(-100%);}
   .sidebar.open{transform:translateX(0);}
   .main{margin-left:0;}
   .hamburger{display:flex;}
-  .stats-row{grid-template-columns:1fr 1fr;}
   .content{padding:14px;}
-  .orders-grid{grid-template-columns:1fr;padding:14px;}
   .topbar{padding:0 14px;}
   .ticker-wrap{display:none;}
-  .cal-day{min-height:48px;padding:5px 3px;}
-  .cal-num{font-size:13px;}
-  .ofs-body{grid-template-columns:1fr;}
-  .ofs-right{display:none;}
-  .fs-btn{display:flex;}
+  .type-cards{grid-template-columns:repeat(2,1fr);}
+  .stats-row{grid-template-columns:1fr 1fr;}
+  .hiso-summary{grid-template-columns:1fr 1fr;}
 }
-@media(max-width:480px){.stats-row{grid-template-columns:1fr 1fr;}.stat-value{font-size:15px;}}
+@media(max-width:480px){.stats-row{grid-template-columns:1fr 1fr;}.main-tabs .mtab{font-size:11px;padding:8px 4px;}}
 .sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:99;}
 .sidebar-overlay.open{display:block;}
-
-/* PROFIT CALC */
-.profit-box{background:rgba(57,255,20,.06);border:1px solid rgba(57,255,20,.2);border-radius:4px;padding:8px 12px;margin-top:8px;font-size:13px;color:var(--green);}
 </style>
 </head>
 <body>
+<div class="sfu-bg"></div>
+<div class="sfu-grid"></div>
 <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
 <div class="toast" id="toast"></div>
+
 <aside class="sidebar" id="sidebar">
   <div class="sidebar-logo"><div class="logo-icon">🏪</div><div class="logo-text">SellFlowUZ</div></div>
   <nav class="sidebar-nav">
-    <div class="nav-item " onclick="window.location.href='dashboard.html'"><span class="nav-icon">📅</span>Kalendar</div>
-    <div class="nav-item " onclick="window.location.href='orders.html'"><span class="nav-icon">📋</span>Buyurtmalar<span class="badge" id="newOrdersBadge" style="display:none">0</span></div>
-    <div class="nav-item " onclick="window.location.href='products.html'"><span class="nav-icon">📦</span>Mahsulotlar</div>
-    <div class="nav-item active" onclick="window.location.href='warehouse.html'"><span class="nav-icon">🏭</span>Ombor</div>
-    <div class="nav-item " onclick="window.location.href='income.html'"><span class="nav-icon">📥</span>Kirim</div>
-    <div class="nav-item " onclick="window.location.href='pos.html'"><span class="nav-icon">🏪</span>Do'konda savdo</div>
-    <div class="nav-item " onclick="window.location.href='users.html'"><span class="nav-icon">👥</span>Mijozlar</div>
+    <div class="nav-item" onclick="go('/dashboard')"><span class="nav-icon">📅</span>Asosiy</div>
+    <div class="nav-item" onclick="go('/buyurtmalar')"><span class="nav-icon">📋</span>Buyurtmalar</div>
+    <div class="nav-item" onclick="go('/mahsulotlar')"><span class="nav-icon">📦</span>Mahsulotlar</div>
+    <div class="nav-item active" onclick="go('/ombor')"><span class="nav-icon">🏭</span>Ombor</div>
+    <div class="nav-item" onclick="go('/daromad')"><span class="nav-icon">📈</span>Daromad</div>
+    <div class="nav-item" onclick="go('/pos')"><span class="nav-icon">🏪</span>POS</div>
+    <div class="nav-item" onclick="go('/mijozlar')"><span class="nav-icon">👥</span>Mijozlar</div>
+    <div class="nav-item" onclick="go('/xodimlar')"><span class="nav-icon">👔</span>Xodimlar</div>
+    <div class="nav-item" onclick="go('/bannerlar')"><span class="nav-icon">🖼️</span>Bannerlar</div>
+    <div class="nav-item" onclick="go('/shop')"><span class="nav-icon">🛒</span>Do'kon</div>
+    <div class="nav-item" onclick="go('/integratsiya')"><span class="nav-icon">🔗</span>Integratsiyalar</div>
   </nav>
   <div class="sidebar-bottom">
-    <div class="sidebar-user"><div class="user-avatar">⚙️</div>
-      <div><div class="user-info-name" id="sidebarUserName">Admin</div><div class="user-info-role" id="sidebarUserRole">SUPERUSER</div></div>
+    <div class="sidebar-user">
+      <div class="user-avatar">⚙️</div>
+      <div><div class="user-info-name" id="sidebarUserName">Admin</div><div class="user-info-role" id="sidebarUserRole">ADMIN</div></div>
     </div>
     <button class="logout-btn" onclick="logout()">CHIQISH</button>
   </div>
 </aside>
+
 <div class="main">
   <header class="topbar">
     <div class="topbar-left">
       <button class="hamburger" onclick="toggleSidebar()">☰</button>
-      <div><div class="page-title">OMBOR</div><div class="page-breadcrumb">SellFlowUZ</div></div>
+      <div><div class="page-title">OMBOR BOSHQARUVI</div><div class="page-breadcrumb">SellFlowUZ</div></div>
     </div>
-    <div class="topbar-right"><div class="ticker-wrap"><div class="ticker-inner" id="tickerInner">⏳ Yuklanmoqda...</div></div></div>
+    <div class="topbar-right">
+      <div class="ticker-wrap"><div class="ticker-inner" id="tickerInner">⏳ Yuklanmoqda...</div></div>
+    </div>
     <div style="display:flex;align-items:center;gap:8px;">
       <div class="topbar-time" id="clock">--:--:--</div>
-      <button class="fs-btn" onclick="tbFS()" id="fsBtn"><span>⛶</span> F11</button>
+      <button class="fs-btn" onclick="tbFS()" id="fsBtn">⛶ F11</button>
     </div>
   </header>
-  <div class="content"><div id="secMain"></div></div>
-</div>
+
+  <div class="content">
+
+    <!-- MAIN TABS -->
+    <div class="main-tabs">
+      <button class="mtab active" id="mtab-ombor" onclick="switchTab('ombor')"><span class="mtab-ico">📊</span>Ombor holati</button>
+      <button class="mtab" id="mtab-kirim" onclick="switchTab('kirim')"><span class="mtab-ico">📥</span>Kirim</button>
+      <button class="mtab" id="mtab-chiqim" onclick="switchTab('chiqim')"><span class="mtab-ico">📤</span>Chiqim</button>
+      <button class="mtab" id="mtab-inventar" onclick="switchTab('inventar')"><span class="mtab-ico">📋</span>Inventarizatsiya</button>
+      <button class="mtab" id="mtab-hisobot" onclick="switchTab('hisobot')"><span class="mtab-ico">📈</span>Hisobot</button>
+    </div>
+
+    <!-- TAB: OMBOR HOLATI -->
+    <div class="tab-panel active" id="panel-ombor">
+      <div id="omborContent"></div>
+    </div>
+
+    <!-- TAB: KIRIM -->
+    <div class="tab-panel" id="panel-kirim">
+      <div style="display:grid;grid-template-columns:380px 1fr;gap:20px;">
+
+        <div class="panel-card">
+          <div class="panel-head"><div class="panel-head-title">📥 YANGI KIRIM</div></div>
+          <div style="padding:18px;">
+            <div class="form-group">
+              <label class="form-label">Mahsulot</label>
+              <select class="form-select" id="kirMahsulot" onchange="kirFillPrice()">
+                <option value="">— Tanlang —</option>
+              </select>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+              <div class="form-group">
+                <label class="form-label">Miqdor</label>
+                <input class="form-input" type="number" id="kirQty" min="1" placeholder="0" oninput="kirCalcTotal()">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Narxi (so'm)</label>
+                <input class="form-input" type="number" id="kirPrice" min="0" placeholder="0" oninput="kirCalcTotal()">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Yetkazuvchi</label>
+              <input class="form-input" type="text" id="kirSupplier" placeholder="Yetkazuvchi nomi (ixtiyoriy)">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Izoh</label>
+              <textarea class="form-textarea" id="kirNote" placeholder="Qo'shimcha ma'lumot..."></textarea>
+            </div>
+            <div id="kirTotal" style="display:none;background:rgba(0,229,255,.06);border:1px solid rgba(0,229,255,.15);border-radius:6px;padding:10px 14px;margin-bottom:14px;font-size:14px;font-weight:700;color:var(--cyan);"></div>
+            <button class="submit-btn" onclick="submitKirim()">📥 KIRIM QILISH</button>
+          </div>
+        </div>
+
+        <div class="panel-card">
+          <div class="panel-head">
+            <div class="panel-head-title">OXIRGI KIRIMLAR</div>
+            <span id="kirimCount" style="font-size:12px;color:var(--muted);"></span>
+          </div>
+          <div style="overflow-x:auto;">
+            <table class="data-table">
+              <thead><tr>
+                <th>Sana</th><th>Mahsulot</th><th>Miqdor</th><th>Narx</th><th>Yetkazuvchi</th><th>Izoh</th>
+              </tr></thead>
+              <tbody id="kirimList"></tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- TAB: CHIQIM -->
+    <div class="tab-panel" id="panel-chiqim">
+      <div style="display:grid;grid-template-columns:420px 1fr;gap:20px;">
+
+        <div class="panel-card">
+          <div class="panel-head"><div class="panel-head-title">📤 CHIQIM TURI</div></div>
+          <div style="padding:18px;">
+
+            <div class="type-cards" id="typeCards">
+              <div class="type-card t-vozvrat_xaridor selected" onclick="selectType('vozvrat_xaridor',this)">
+                <div class="type-card-ico">↩️</div>
+                <div class="type-card-name">Vozvrat (xaridor)</div>
+                <div class="type-card-desc">Xaridor qaytargan mal</div>
+              </div>
+              <div class="type-card t-vozvrat_yetkazuvchi" onclick="selectType('vozvrat_yetkazuvchi',this)">
+                <div class="type-card-ico">🔄</div>
+                <div class="type-card-name">Vozvrat (yetkazuvchi)</div>
+                <div class="type-card-desc">Sifatsiz mal qaytarildi</div>
+              </div>
+              <div class="type-card t-yoqolgan" onclick="selectType('yoqolgan',this)">
+                <div class="type-card-ico">❓</div>
+                <div class="type-card-name">Yo'qolgan</div>
+                <div class="type-card-desc">Sababsiz kamayish</div>
+              </div>
+              <div class="type-card t-ogirlik" onclick="selectType('ogirlik',this)">
+                <div class="type-card-ico">🚨</div>
+                <div class="type-card-name">O'g'irlik</div>
+                <div class="type-card-desc">O'g'irlik holati</div>
+              </div>
+              <div class="type-card t-muddati_otgan" onclick="selectType('muddati_otgan',this)">
+                <div class="type-card-ico">⏰</div>
+                <div class="type-card-name">Muddati o'tgan</div>
+                <div class="type-card-desc">Yaroqsiz tovar</div>
+              </div>
+              <div class="type-card t-singan" onclick="selectType('singan',this)">
+                <div class="type-card-ico">💔</div>
+                <div class="type-card-name">Singan/shikast</div>
+                <div class="type-card-desc">Omborxona zarari</div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Mahsulot</label>
+              <select class="form-select" id="chiqMahsulot" onchange="chiqShowStock()">
+                <option value="">— Tanlang —</option>
+              </select>
+              <div id="chiqStockInfo" style="margin-top:6px;font-size:12px;color:var(--muted);"></div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Miqdor</label>
+              <input class="form-input" type="number" id="chiqQty" min="1" placeholder="0">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Izoh <span style="color:var(--red);">*</span></label>
+              <textarea class="form-textarea" id="chiqNote" placeholder="Sabab/tushuntirish yozing..."></textarea>
+            </div>
+            <button class="submit-btn" style="background:linear-gradient(135deg,#ff4466,#cc0033);" onclick="submitChiqim()">📤 CHIQIM QILISH</button>
+          </div>
+        </div>
+
+        <div class="panel-card">
+          <div class="panel-head">
+            <div class="panel-head-title">OXIRGI CHIQIMLAR</div>
+            <span id="chiqimCount" style="font-size:12px;color:var(--muted);"></span>
+          </div>
+          <div style="overflow-x:auto;">
+            <table class="data-table">
+              <thead><tr>
+                <th>Sana</th><th>Mahsulot</th><th>Tur</th><th>Miqdor</th><th>Izoh</th>
+              </tr></thead>
+              <tbody id="chiqimList"></tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- TAB: INVENTARIZATSIYA -->
+    <div class="tab-panel" id="panel-inventar">
+      <div class="panel-card" style="margin-bottom:16px;">
+        <div style="padding:16px 18px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:space-between;">
+          <div>
+            <div style="font-family:var(--font-mono);font-size:12px;color:var(--cyan);letter-spacing:2px;margin-bottom:4px;">📋 INVENTARIZATSIYA</div>
+            <div style="font-size:13px;color:var(--muted);">Har bir mahsulotning haqiqiy sonini kiriting. Farq avtomatik qayd etiladi.</div>
+          </div>
+          <div style="display:flex;gap:10px;">
+            <input class="form-input" style="width:200px;" type="text" id="invSearch" placeholder="🔍 Mahsulot qidirish..." oninput="renderInventar()">
+            <button class="btn btn-cyan" onclick="submitInventar()">✅ SAQLASH</button>
+          </div>
+        </div>
+      </div>
+      <div class="panel-card">
+        <div class="inv-table-wrap">
+          <table class="data-table">
+            <thead><tr>
+              <th>Mahsulot</th>
+              <th>Kategoriya</th>
+              <th style="text-align:center;">Tizim hisobi</th>
+              <th style="text-align:center;">Haqiqiy son</th>
+              <th style="text-align:center;">Farq</th>
+            </tr></thead>
+            <tbody id="inventarList"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: HISOBOT -->
+    <div class="tab-panel" id="panel-hisobot">
+      <div class="hiso-summary" id="hisoSummary"></div>
+      <div class="panel-card">
+        <div class="panel-head" style="flex-wrap:wrap;gap:10px;">
+          <div class="panel-head-title">HARAKATLAR TARIXI</div>
+          <div class="hiso-filters">
+            <select class="hiso-filter-select" id="hisoType" onchange="renderHisobot()">
+              <option value="">Barcha turlar</option>
+              <option value="kirim">📥 Kirim</option>
+              <option value="sotildi">✅ Sotildi</option>
+              <option value="vozvrat_xaridor">↩️ Vozvrat (xaridor)</option>
+              <option value="vozvrat_yetkazuvchi">🔄 Vozvrat (yetkazuvchi)</option>
+              <option value="yoqolgan">❓ Yo'qolgan</option>
+              <option value="ogirlik">🚨 O'g'irlik</option>
+              <option value="muddati_otgan">⏰ Muddati o'tgan</option>
+              <option value="singan">💔 Singan</option>
+              <option value="inventar">📋 Inventar</option>
+            </select>
+            <input class="hiso-filter-date" type="date" id="hisoDateFrom" onchange="renderHisobot()" title="Dan">
+            <input class="hiso-filter-date" type="date" id="hisoDateTo" onchange="renderHisobot()" title="Gacha">
+            <select class="hiso-filter-select" id="hisoProd" onchange="renderHisobot()">
+              <option value="">Barcha mahsulotlar</option>
+            </select>
+            <button class="btn btn-ghost btn-sm" onclick="clearHisoFilters()">✕ Tozalash</button>
+          </div>
+        </div>
+        <div style="overflow-x:auto;">
+          <table class="data-table">
+            <thead><tr>
+              <th>Sana/Vaqt</th><th>Tur</th><th>Mahsulot</th><th style="text-align:center;">Miqdor</th><th style="text-align:right;">Narx</th><th>Izoh / Yetkazuvchi</th><th style="text-align:center;">Oldin</th><th style="text-align:center;">Keyin</th>
+            </tr></thead>
+            <tbody id="hisobotList"></tbody>
+          </table>
+        </div>
+        <div id="hisoEmpty" class="empty-state" style="display:none;">
+          <div class="empty-state-ico">📭</div>
+          <div class="empty-state-text">Hech qanday harakat topilmadi</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+</div><!-- /main -->
 
 <script src="data.js"></script>
 <script>
+// ══════════════════════════════════════════════════
+// GLOBALS
+// ══════════════════════════════════════════════════
+var products, stockLogs;
+var selectedChiqType = 'vozvrat_xaridor';
+const EMOJIS = {'Non':'🍞','Sut':'🥛','Oziq':'🛒','Meva':'🍎','Sabzavot':'🥦','Ichimlik':'🥤','Bolalar':'👶','Gosht':'🥩','Boshqa':'📦'};
+const TYPE_LABELS = {
+  kirim:'📥 Kirim',
+  sotildi:'✅ Sotildi',
+  vozvrat_xaridor:'↩️ Vozvrat (xaridor)',
+  vozvrat_yetkazuvchi:'🔄 Vozvrat (yetkazuvchi)',
+  yoqolgan:'❓ Yo\'qolgan',
+  ogirlik:'🚨 O\'g\'irlik',
+  muddati_otgan:'⏰ Muddati o\'tgan',
+  singan:'💔 Singan',
+  inventar:'📋 Inventar'
+};
 
-let products,orders,offlineSales,users,incomes,lastReceiptData=null;
-const EMOJIS={'Non':'🍞','Sut':'🥛','Oziq':'🛒','Meva':'🍎','Sabzavot':'🥦','Ichimlik':'🥤','Bolalar':'👶','Boshqa':'📦'};
-function fmt(n){return Number(n).toLocaleString('uz-UZ');}
-function fmtShort(n){if(n>=1000000)return(n/1000000).toFixed(1)+'M';if(n>=1000)return(n/1000).toFixed(0)+'K';return n.toString();}
-function showToast(msg,type=''){const t=document.getElementById('toast');t.textContent=msg;t.className='toast show '+type;setTimeout(()=>t.className='toast',3000);}
-function logout(){
-  window._logoutInProgress = true;
-  DB.clearSession();
-  localStorage.removeItem('sfu_fs_locked');
-  var go = function(){ window._logoutInProgress=false; window.location.href='login.html'; };
-  if(document.fullscreenElement){ document.exitFullscreen().then(go).catch(go); } else { go(); }
+// ══════════════════════════════════════════════════
+// UTILS
+// ══════════════════════════════════════════════════
+function fmt(n){return Number(n||0).toLocaleString('uz-UZ');}
+function fmtShort(n){n=Number(n||0);if(n>=1000000)return(n/1000000).toFixed(1)+'M';if(n>=1000)return(n/1000).toFixed(0)+'K';return n.toString();}
+function fmtDate(iso){
+  try{const d=new Date(iso);return d.toLocaleDateString('uz-UZ',{day:'2-digit',month:'2-digit',year:'2-digit'})+' '+d.toLocaleTimeString('uz-UZ',{hour:'2-digit',minute:'2-digit'});}
+  catch(e){return iso||'—';}
 }
-function openModal(id){document.getElementById(id).classList.add('open');}
-function closeModal(id){document.getElementById(id).classList.remove('open');}
+function fmtDateOnly(iso){try{return new Date(iso).toLocaleDateString('uz-UZ',{day:'2-digit',month:'2-digit',year:'numeric'});}catch(e){return iso||'—';}}
+function showToast(msg,type=''){var t=document.getElementById('toast');t.textContent=msg;t.className='toast show '+type;setTimeout(()=>t.className='toast',3200);}
+function go(url){window.location.href=url;}
+function logout(){DB.clearSession();localStorage.removeItem('sfu_fs_locked');var f=function(){(window.top||window).location.href='/login';};if(document.fullscreenElement){document.exitFullscreen().then(f).catch(f);}else{f();}}
 function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('sidebarOverlay').classList.toggle('open');}
 function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('sidebarOverlay').classList.remove('open');}
-function startClock(){const u=()=>document.getElementById('clock').textContent=new Date().toLocaleTimeString('uz-UZ');u();setInterval(u,1000);}
+function startClock(){var u=function(){document.getElementById('clock').textContent=new Date().toLocaleTimeString('uz-UZ');};u();setInterval(u,1000);}
+function _enterFS(){
+  localStorage.setItem('sfu_fs_locked','1');
+  document.documentElement.requestFullscreen().then(function(){
+    if(navigator.keyboard&&navigator.keyboard.lock)navigator.keyboard.lock(['F11']).catch(function(){});
+  }).catch(function(){});
+}
+(function(){
+  if(localStorage.getItem('sfu_fs_locked')==='1'){
+    document.documentElement.requestFullscreen().then(function(){
+      if(navigator.keyboard&&navigator.keyboard.lock)navigator.keyboard.lock(['F11']).catch(function(){});
+    }).catch(function(){
+      function _r(){_enterFS();document.removeEventListener('keydown',_r,true);document.removeEventListener('click',_r,true);}
+      document.addEventListener('keydown',_r,{capture:true,once:true});
+      document.addEventListener('click',_r,{capture:true,once:true});
+    });
+  }
+})();
+function tbFS(){if(!document.fullscreenElement){_enterFS();}else{localStorage.removeItem('sfu_fs_locked');if(navigator.keyboard&&navigator.keyboard.unlock)navigator.keyboard.unlock();document.exitFullscreen();}}
+document.addEventListener('fullscreenchange',function(){var b=document.getElementById('fsBtn');if(b)b.innerHTML=document.fullscreenElement?'✕ ESC':'⛶ F11';if(!document.fullscreenElement&&navigator.keyboard&&navigator.keyboard.unlock)navigator.keyboard.unlock();});
+document.addEventListener('keydown',function(e){if(e.key==='F11'){e.preventDefault();if(!document.fullscreenElement)_enterFS();}if(e.key==='Escape'){localStorage.removeItem('sfu_fs_locked');if(navigator.keyboard&&navigator.keyboard.unlock)navigator.keyboard.unlock();}});
+
 function buildTicker(){
   const disc=products.filter(p=>{const d=calcDiscount(p);return d.discount>0&&p.stock>0;});
   if(!disc.length){document.getElementById('tickerInner').textContent='';return;}
@@ -381,139 +537,400 @@ function buildTicker(){
   document.getElementById('tickerInner').innerHTML=h+h;
 }
 
-function initBase(){
-  const s=DB.getSession();
-  if(!s||(s.role!=='admin'&&s.role!=='seller')){window.location.href='login.html';return false;}
-  if(s.role==='seller'){setTimeout(()=>{document.querySelectorAll('.nav-item').forEach(el=>{const t=el.textContent.trim();if(['Mahsulotlar','Ombor','Mijozlar'].some(x=>t.includes(x)))el.style.display='none';});},50);}
-  products=DB.getProducts();orders=DB.getOrders();offlineSales=DB.getOffline();users=DB.getUsers();incomes=DB.getIncomes();
-  const sn=document.getElementById('sidebarUserName');const sr=document.getElementById('sidebarUserRole');
-  if(sn)sn.textContent=s.name||'Admin';
-  if(sr)sr.textContent=s.role==='seller'?'SOTUVCHI':'ADMIN';
-  startClock();buildTicker();
-  return true;
-}
-document.querySelectorAll && document.addEventListener('DOMContentLoaded',()=>{document.querySelectorAll('.modal').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)closeModal(m.id);}));});
+function lbadge(type){return`<span class="lbadge lb-${type}">${TYPE_LABELS[type]||type}</span>`;}
 
-
-function renderWarehouse(){
-  const sorted=[...products].sort((a,b)=>b.stock-a.stock);
-  const totalVal=products.reduce((a,p)=>a+p.costPrice*p.stock,0);
-  const totalItems=products.reduce((a,p)=>a+p.stock,0);
-  document.getElementById('secMain').innerHTML=`
-    <div class="stats-row" style="grid-template-columns:repeat(3,1fr);margin-bottom:16px;">
-      <div class="stat-card c1"><div class="stat-label">Jami mahsulot</div><div class="stat-value">${products.length}</div><div class="stat-sub">turli tovar</div></div>
-      <div class="stat-card c4"><div class="stat-label">Jami birlik</div><div class="stat-value">${fmt(totalItems)}</div><div class="stat-sub">omborida</div></div>
-      <div class="stat-card c3"><div class="stat-label">Ombor qiymati</div><div class="stat-value">${fmtShort(totalVal)}</div><div class="stat-sub">so'm (kirim narxda)</div></div>
-    </div>
-    <div class="panel-card">
-      <div class="panel-head">
-        <div class="panel-head-title">OMBOR HOLATI</div>
-        <div style="font-size:12px;color:var(--muted);">${products.length} ta tovar</div>
-      </div>
-      <div style="padding:16px;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px;">
-        ${sorted.map(p=>{
-          const sold=offlineSales.concat(orders).reduce((a,o)=>{const it=o.items?.find(i=>i.name===p.name);return a+(it?it.qty:0);},0);
-          const total2=p.stock+sold;
-          const remaining=total2>0?Math.round(p.stock/total2*100):100;
-          const isLow=p.stock<=5;const isOut=p.stock===0;
-          const stockColor=isOut?'var(--red)':isLow?'var(--amber)':'var(--cyan)';
-          const barColor=isOut?'linear-gradient(90deg,var(--red),#cc0020)':isLow?'linear-gradient(90deg,var(--amber),#ff8c00)':'linear-gradient(90deg,var(--cyan),var(--cyan2))';
-          const disc=calcDiscount(p);
-          return`<div class="wh-card">
-            <div class="wh-card-top">
-              <div style="display:flex;align-items:center;gap:10px;">
-                ${p.img?`<img src="${p.img}" style="width:44px;height:44px;object-fit:cover;border-radius:8px;flex-shrink:0;">`:`<div style="width:44px;height:44px;background:rgba(0,255,231,.06);border:1px solid var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;">${EMOJIS[p.category]||'📦'}</div>`}
-                <div>
-                  <div class="wh-card-name">${p.name}</div>
-                  <div class="wh-card-cat">${p.category} · ${p.barcode||'—'}</div>
-                </div>
-              </div>
-              <div class="wh-card-stock">
-                <div class="wh-card-qty" style="color:${stockColor};">${p.stock}</div>
-                <div class="wh-card-unit">${p.unit}</div>
-              </div>
-            </div>
-            <div class="wh-card-stats">
-              <div class="wh-stat">Sotildi: <span style="color:var(--green);">${sold}</span></div>
-              <div class="wh-stat">Kirim: <span style="color:white;">${fmt(p.costPrice)}</span></div>
-              <div class="wh-stat">Sotuv: <span style="color:var(--cyan);">${fmt(disc.finalPrice)}</span></div>
-              ${disc.discount>0?`<div class="wh-stat" style="color:var(--red);">-${disc.discount}%</div>`:''}
-            </div>
-            <div class="warehouse-bar">
-              <div class="wb-label">${remaining}%</div>
-              <div class="wb-track"><div class="wb-fill" style="width:${remaining}%;background:${barColor};"></div></div>
-              <div class="wb-val" style="color:${stockColor};">${p.stock}/${total2}</div>
-            </div>
-            <div style="display:flex;align-items:center;gap:6px;margin-top:10px;">
-              <button onclick="whAdjustStock(${p.id},-1)" style="width:32px;height:32px;border-radius:6px;border:1px solid var(--border2);background:rgba(255,45,85,.1);color:var(--red);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;">−</button>
-              <input type="number" id="ws_${p.id}" value="${p.stock}" min="0" style="flex:1;text-align:center;padding:5px;border:1px solid var(--border2);border-radius:6px;background:var(--bg2);color:var(--text);font-size:14px;font-weight:700;" onchange="whSetStock(${p.id},this.value)">
-              <button onclick="whAdjustStock(${p.id},1)" style="width:32px;height:32px;border-radius:6px;border:1px solid var(--border2);background:rgba(0,255,231,.1);color:var(--cyan);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;">+</button>
-            </div>
-          </div>`;
-        }).join('')}
-      </div>
-    </div>`;
-}
-
-function whAdjustStock(id, delta){
-  const p=products.find(x=>x.id===id);if(!p)return;
-  p.stock=Math.max(0,p.stock+delta);
-  const inp=document.getElementById('ws_'+id);if(inp)inp.value=p.stock;
-  DB.saveProducts(products);
-  showToast(`✅ ${p.name}: ${p.stock} ${p.unit}`,'success');
-}
-function whSetStock(id, val){
-  const p=products.find(x=>x.id===id);if(!p)return;
-  p.stock=Math.max(0,parseInt(val)||0);
-  DB.saveProducts(products);
-  showToast(`✅ ${p.name}: ${p.stock} ${p.unit}`,'success');
-}
-
+// ══════════════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════════════
 function init(){
-  if(!initBase())return;
-  renderWarehouse();
+  var s=DB.getSession();
+  if(!s||(s.role!=='admin'&&s.role!=='seller')){(window.top||window).location.href='/login';return;}
+  document.getElementById('sidebarUserName').textContent=s.name||'Admin';
+  document.getElementById('sidebarUserRole').textContent=s.role==='seller'?'SOTUVCHI':'ADMIN';
+  products=DB.getProducts();
+  stockLogs=DB.getStockLogs();
+  startClock();
+  buildTicker();
+  fillProductSelects();
+  renderOmbor();
+  renderKirimList();
+  renderChiqimList();
+  renderInventar();
+  renderHisobot();
 }
+
+function fillProductSelects(){
+  var opts=products.map(p=>`<option value="${p.id}">${p.name} (${p.unit})</option>`).join('');
+  ['kirMahsulot','chiqMahsulot'].forEach(id=>{
+    var el=document.getElementById(id);
+    if(el)el.innerHTML='<option value="">— Tanlang —</option>'+opts;
+  });
+  // hisobot product filter
+  var hp=document.getElementById('hisoProd');
+  if(hp)hp.innerHTML='<option value="">Barcha mahsulotlar</option>'+products.map(p=>`<option value="${p.id}">${p.name}</option>`).join('');
+}
+
+// ══════════════════════════════════════════════════
+// TAB SWITCHER
+// ══════════════════════════════════════════════════
+function switchTab(tab){
+  ['ombor','kirim','chiqim','inventar','hisobot'].forEach(t=>{
+    document.getElementById('mtab-'+t).classList.toggle('active',t===tab);
+    document.getElementById('panel-'+t).classList.toggle('active',t===tab);
+  });
+  if(tab==='inventar')renderInventar();
+  if(tab==='hisobot')renderHisobot();
+}
+
+// ══════════════════════════════════════════════════
+// TAB 1 — OMBOR HOLATI
+// ══════════════════════════════════════════════════
+function renderOmbor(){
+  var totalVal=products.reduce((a,p)=>a+p.costPrice*p.stock,0);
+  var totalItems=products.reduce((a,p)=>a+p.stock,0);
+  var lowStock=products.filter(p=>p.stock>0&&p.stock<=5).length;
+  var outStock=products.filter(p=>p.stock===0).length;
+  var sorted=[...products].sort((a,b)=>b.stock-a.stock);
+
+  var html=`
+  <div class="stats-row" style="grid-template-columns:repeat(4,1fr);margin-bottom:16px;">
+    <div class="stat-card c1"><div class="stat-label">Jami mahsulot</div><div class="stat-value">${products.length}</div><div class="stat-sub">turli tovar</div></div>
+    <div class="stat-card c3"><div class="stat-label">Jami birlik</div><div class="stat-value">${fmt(totalItems)}</div><div class="stat-sub">omborida</div></div>
+    <div class="stat-card c4"><div class="stat-label">Ombor qiymati</div><div class="stat-value">${fmtShort(totalVal)}</div><div class="stat-sub">so'm (kirim narxda)</div></div>
+    <div class="stat-card c5"><div class="stat-label">Kam stok / Tugagan</div><div class="stat-value">${lowStock} / <span style="color:var(--red)">${outStock}</span></div><div class="stat-sub">diqqat talab</div></div>
+  </div>
+  <div class="panel-card">
+    <div class="panel-head">
+      <div class="panel-head-title">OMBOR HOLATI</div>
+      <div style="font-size:12px;color:var(--muted);">${products.length} ta tovar</div>
+    </div>
+    <div style="padding:16px;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px;">
+      ${sorted.map(p=>{
+        const disc=calcDiscount(p);
+        const isLow=p.stock>0&&p.stock<=5,isOut=p.stock===0;
+        const sc=isOut?'var(--red)':isLow?'var(--amber)':'var(--cyan)';
+        const bc=isOut?'linear-gradient(90deg,var(--red),#cc0020)':isLow?'linear-gradient(90deg,var(--amber),#ff8c00)':'linear-gradient(90deg,var(--cyan),var(--cyan2))';
+        const logs=stockLogs.filter(l=>l.productId===p.id);
+        const lastKirim=logs.filter(l=>l.type==='kirim').slice(-1)[0];
+        return`<div class="wh-card">
+          <div class="wh-card-top">
+            <div style="display:flex;align-items:center;gap:10px;">
+              ${p.img?`<img src="${p.img}" style="width:44px;height:44px;object-fit:cover;border-radius:8px;flex-shrink:0;">`:`<div style="width:44px;height:44px;background:rgba(0,229,255,.06);border:1px solid var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;">${EMOJIS[p.category]||'📦'}</div>`}
+              <div>
+                <div class="wh-card-name">${p.name}</div>
+                <div class="wh-card-cat">${p.category} · ${p.barcode||'—'}</div>
+              </div>
+            </div>
+            <div class="wh-card-stock">
+              <div class="wh-card-qty" style="color:${sc};">${p.stock}</div>
+              <div class="wh-card-unit">${p.unit}</div>
+            </div>
+          </div>
+          <div class="wh-card-stats">
+            <div class="wh-stat">Kirim: <span>${fmt(p.costPrice)}</span></div>
+            <div class="wh-stat">Sotuv: <span style="color:var(--cyan);">${fmt(disc.finalPrice)}</span></div>
+            ${disc.discount>0?`<div class="wh-stat" style="color:var(--red);">-${disc.discount}%</div>`:''}
+            ${lastKirim?`<div class="wh-stat">Oxirgi kirim: <span>${fmtDateOnly(lastKirim.date)}</span></div>`:''}
+          </div>
+          <div class="warehouse-bar" style="margin-bottom:10px;">
+            <div class="wb-track" style="flex:1;"><div class="wb-fill" style="width:${Math.min(100,p.stock)}%;background:${bc};"></div></div>
+            <div style="font-size:11px;font-weight:700;color:${sc};min-width:36px;text-align:right;">${p.stock} ${p.unit}</div>
+          </div>
+          ${isOut?`<div style="background:rgba(255,45,85,.1);border:1px solid rgba(255,45,85,.3);border-radius:4px;padding:6px 10px;font-size:11px;color:var(--red);font-weight:700;text-align:center;">⚠️ Tugagan — kirim kerak</div>`:''}
+          ${isLow&&!isOut?`<div style="background:rgba(255,183,3,.1);border:1px solid rgba(255,183,3,.3);border-radius:4px;padding:6px 10px;font-size:11px;color:var(--amber);font-weight:700;text-align:center;">⚠️ Kam qoldi: ${p.stock} ${p.unit}</div>`:''}
+        </div>`;
+      }).join('')}
+    </div>
+  </div>`;
+  document.getElementById('omborContent').innerHTML=html;
+}
+
+// ══════════════════════════════════════════════════
+// TAB 2 — KIRIM
+// ══════════════════════════════════════════════════
+function kirFillPrice(){
+  var id=parseInt(document.getElementById('kirMahsulot').value);
+  var p=products.find(x=>x.id===id);
+  if(p)document.getElementById('kirPrice').value=p.costPrice;
+  kirCalcTotal();
+}
+function kirCalcTotal(){
+  var qty=parseInt(document.getElementById('kirQty').value)||0;
+  var price=parseInt(document.getElementById('kirPrice').value)||0;
+  var total=qty*price;
+  var el=document.getElementById('kirTotal');
+  if(qty>0&&price>0){el.style.display='block';el.textContent='Jami summa: '+fmt(total)+' so\'m';}
+  else el.style.display='none';
+}
+
+function submitKirim(){
+  var productId=parseInt(document.getElementById('kirMahsulot').value);
+  var qty=parseInt(document.getElementById('kirQty').value)||0;
+  var price=parseInt(document.getElementById('kirPrice').value)||0;
+  var supplier=document.getElementById('kirSupplier').value.trim();
+  var note=document.getElementById('kirNote').value.trim();
+
+  if(!productId){showToast('Mahsulot tanlang!','error');return;}
+  if(qty<=0){showToast('Miqdor kiriting!','error');return;}
+  if(price<=0){showToast('Narx kiriting!','error');return;}
+
+  var p=products.find(x=>x.id===productId);
+  if(!p)return;
+
+  var before=p.stock;
+  p.stock+=qty;
+  p.costPrice=price;
+  DB.saveProducts(products);
+
+  addLog({
+    productId:p.id,productName:p.name,
+    type:'kirim',direction:1,qty,price,
+    supplier,note,
+    stockBefore:before,stockAfter:p.stock
+  });
+
+  showToast('✅ '+p.name+': +'+qty+' '+p.unit,'success');
+  document.getElementById('kirMahsulot').value='';
+  document.getElementById('kirQty').value='';
+  document.getElementById('kirPrice').value='';
+  document.getElementById('kirSupplier').value='';
+  document.getElementById('kirNote').value='';
+  document.getElementById('kirTotal').style.display='none';
+  renderKirimList();
+  renderOmbor();
+}
+
+function renderKirimList(){
+  var kirLogs=stockLogs.filter(l=>l.type==='kirim').slice().reverse().slice(0,50);
+  var count=document.getElementById('kirimCount');
+  if(count)count.textContent=stockLogs.filter(l=>l.type==='kirim').length+' ta kirim';
+  var tb=document.getElementById('kirimList');
+  if(!tb)return;
+  if(!kirLogs.length){tb.innerHTML='<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:28px;">Hali kirim yo\'q</td></tr>';return;}
+  tb.innerHTML=kirLogs.map(l=>`
+    <tr>
+      <td style="white-space:nowrap;">${fmtDate(l.date)}</td>
+      <td style="font-weight:600;">${l.productName}</td>
+      <td style="color:var(--cyan);font-weight:700;text-align:center;">+${l.qty}</td>
+      <td style="color:var(--green);">${fmt(l.price)} so'm</td>
+      <td>${l.supplier||'—'}</td>
+      <td style="color:var(--muted);font-size:12px;">${l.note||'—'}</td>
+    </tr>`).join('');
+}
+
+// ══════════════════════════════════════════════════
+// TAB 3 — CHIQIM
+// ══════════════════════════════════════════════════
+function selectType(type,el){
+  selectedChiqType=type;
+  document.querySelectorAll('#typeCards .type-card').forEach(c=>c.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function chiqShowStock(){
+  var id=parseInt(document.getElementById('chiqMahsulot').value);
+  var p=products.find(x=>x.id===id);
+  var info=document.getElementById('chiqStockInfo');
+  if(p)info.textContent='Hozirgi stok: '+p.stock+' '+p.unit;
+  else info.textContent='';
+}
+
+function submitChiqim(){
+  var productId=parseInt(document.getElementById('chiqMahsulot').value);
+  var qty=parseInt(document.getElementById('chiqQty').value)||0;
+  var note=document.getElementById('chiqNote').value.trim();
+
+  if(!productId){showToast('Mahsulot tanlang!','error');return;}
+  if(qty<=0){showToast('Miqdor kiriting!','error');return;}
+  if(!note){showToast('Izoh yozing (sabab ko\'rsatish majburiy)!','error');return;}
+
+  var p=products.find(x=>x.id===productId);
+  if(!p)return;
+  if(p.stock<qty){showToast('Stokda faqat '+p.stock+' '+p.unit+' bor!','error');return;}
+
+  var before=p.stock;
+  p.stock-=qty;
+  DB.saveProducts(products);
+
+  addLog({
+    productId:p.id,productName:p.name,
+    type:selectedChiqType,direction:-1,qty,price:p.costPrice,
+    supplier:'',note,
+    stockBefore:before,stockAfter:p.stock
+  });
+
+  showToast('📤 '+p.name+': -'+qty+' '+p.unit+' ('+TYPE_LABELS[selectedChiqType]+')',selectedChiqType==='ogirlik'?'error':'warning');
+  document.getElementById('chiqMahsulot').value='';
+  document.getElementById('chiqQty').value='';
+  document.getElementById('chiqNote').value='';
+  document.getElementById('chiqStockInfo').textContent='';
+  renderChiqimList();
+  renderOmbor();
+}
+
+function renderChiqimList(){
+  var chiqTypes=['vozvrat_xaridor','vozvrat_yetkazuvchi','yoqolgan','ogirlik','muddati_otgan','singan'];
+  var chiqLogs=stockLogs.filter(l=>chiqTypes.includes(l.type)).slice().reverse().slice(0,50);
+  var count=document.getElementById('chiqimCount');
+  if(count)count.textContent=stockLogs.filter(l=>chiqTypes.includes(l.type)).length+' ta chiqim';
+  var tb=document.getElementById('chiqimList');
+  if(!tb)return;
+  if(!chiqLogs.length){tb.innerHTML='<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:28px;">Hali chiqim yo\'q</td></tr>';return;}
+  tb.innerHTML=chiqLogs.map(l=>`
+    <tr>
+      <td style="white-space:nowrap;">${fmtDate(l.date)}</td>
+      <td style="font-weight:600;">${l.productName}</td>
+      <td>${lbadge(l.type)}</td>
+      <td style="color:var(--red);font-weight:700;text-align:center;">−${l.qty}</td>
+      <td style="color:var(--muted);font-size:12px;">${l.note||'—'}</td>
+    </tr>`).join('');
+}
+
+// ══════════════════════════════════════════════════
+// TAB 4 — INVENTARIZATSIYA
+// ══════════════════════════════════════════════════
+function renderInventar(){
+  var q=(document.getElementById('invSearch')||{}).value||'';
+  var filtered=products.filter(p=>!q||p.name.toLowerCase().includes(q.toLowerCase()));
+  var tb=document.getElementById('inventarList');
+  if(!tb)return;
+  tb.innerHTML=filtered.map(p=>`
+    <tr>
+      <td><div style="font-weight:700;">${p.name}</div><div style="font-size:10px;color:var(--muted);">${p.barcode||'—'}</div></td>
+      <td style="color:var(--muted);">${p.category}</td>
+      <td style="text-align:center;font-family:var(--font-mono);font-size:16px;font-weight:700;color:var(--cyan);">${p.stock}</td>
+      <td style="text-align:center;">
+        <input class="inv-input" type="number" id="inv_${p.id}" min="0" placeholder="${p.stock}" value="" oninput="invCalcDiff(${p.id})">
+      </td>
+      <td style="text-align:center;font-weight:700;" id="invdiff_${p.id}"><span class="inv-diff-zero">—</span></td>
+    </tr>`).join('');
+}
+
+function invCalcDiff(id){
+  var p=products.find(x=>x.id===id);if(!p)return;
+  var inp=document.getElementById('inv_'+id);
+  var diffEl=document.getElementById('invdiff_'+id);
+  var val=inp.value.trim();
+  if(val===''){diffEl.innerHTML='<span class="inv-diff-zero">—</span>';return;}
+  var actual=parseInt(val)||0;
+  var diff=actual-p.stock;
+  if(diff>0)diffEl.innerHTML=`<span class="inv-diff-plus">+${diff}</span>`;
+  else if(diff<0)diffEl.innerHTML=`<span class="inv-diff-minus">${diff}</span>`;
+  else diffEl.innerHTML='<span class="inv-diff-zero">✓</span>';
+}
+
+function submitInventar(){
+  var changed=0;
+  products.forEach(p=>{
+    var inp=document.getElementById('inv_'+p.id);
+    if(!inp||inp.value.trim()==='')return;
+    var actual=parseInt(inp.value)||0;
+    var diff=actual-p.stock;
+    if(diff===0)return;
+    var before=p.stock;
+    p.stock=actual;
+    addLog({
+      productId:p.id,productName:p.name,
+      type:'inventar',direction:diff>0?1:-1,qty:Math.abs(diff),price:p.costPrice,
+      supplier:'',note:'Inventarizatsiya: '+(diff>0?'+'+diff:diff)+' '+p.unit,
+      stockBefore:before,stockAfter:actual
+    });
+    changed++;
+  });
+  if(!changed){showToast('Hech qanday o\'zgarish kiritilmadi','info');return;}
+  DB.saveProducts(products);
+  showToast('✅ '+changed+' ta mahsulot inventarizatsiyasi saqlandi','success');
+  renderOmbor();
+  renderInventar();
+  renderHisobot();
+}
+
+// ══════════════════════════════════════════════════
+// TAB 5 — HISOBOT
+// ══════════════════════════════════════════════════
+function renderHisobot(){
+  var typeF=document.getElementById('hisoType').value;
+  var dateFrom=document.getElementById('hisoDateFrom').value;
+  var dateTo=document.getElementById('hisoDateTo').value;
+  var prodF=document.getElementById('hisoProd').value;
+
+  var logs=[...stockLogs].reverse();
+  if(typeF)logs=logs.filter(l=>l.type===typeF);
+  if(dateFrom)logs=logs.filter(l=>l.date>=dateFrom);
+  if(dateTo)logs=logs.filter(l=>l.date<=(dateTo+'T23:59:59'));
+  if(prodF)logs=logs.filter(l=>l.productId===parseInt(prodF));
+
+  // Summary
+  var allLogs=stockLogs;
+  var totalKirimQty=allLogs.filter(l=>l.type==='kirim').reduce((a,l)=>a+l.qty,0);
+  var totalKirimSum=allLogs.filter(l=>l.type==='kirim').reduce((a,l)=>a+(l.qty*l.price),0);
+  var totalChiqimQty=allLogs.filter(l=>l.direction===-1).reduce((a,l)=>a+l.qty,0);
+  var totalOgirlik=allLogs.filter(l=>l.type==='ogirlik').reduce((a,l)=>a+l.qty,0);
+  document.getElementById('hisoSummary').innerHTML=`
+    <div class="hs-card c1 stat-card"><div class="hs-val" style="color:var(--cyan);">${fmt(totalKirimQty)}</div><div class="hs-lbl">JAMI KIRIM (birlik)</div></div>
+    <div class="hs-card c3 stat-card"><div class="hs-val" style="color:var(--green);">${fmtShort(totalKirimSum)}</div><div class="hs-lbl">KIRIM SUMMASI (so'm)</div></div>
+    <div class="hs-card c2 stat-card"><div class="hs-val" style="color:var(--amber);">${fmt(totalChiqimQty)}</div><div class="hs-lbl">JAMI CHIQIM (birlik)</div></div>
+    <div class="hs-card c5 stat-card"><div class="hs-val" style="color:var(--red);">${fmt(totalOgirlik)}</div><div class="hs-lbl">O'G'IRLIK (birlik)</div></div>`;
+
+  var tb=document.getElementById('hisobotList');
+  var empty=document.getElementById('hisoEmpty');
+  if(!logs.length){
+    tb.innerHTML='';empty.style.display='block';return;
+  }
+  empty.style.display='none';
+  tb.innerHTML=logs.slice(0,200).map(l=>{
+    var sign=l.direction===1?'+':'-';
+    var qtyColor=l.direction===1?'var(--cyan)':'var(--red)';
+    return`<tr>
+      <td style="white-space:nowrap;font-size:12px;">${fmtDate(l.date)}</td>
+      <td>${lbadge(l.type)}</td>
+      <td style="font-weight:600;">${l.productName}</td>
+      <td style="text-align:center;font-weight:700;color:${qtyColor};">${sign}${l.qty}</td>
+      <td style="text-align:right;font-size:12px;color:var(--muted);">${l.price?fmt(l.price):'—'}</td>
+      <td style="font-size:12px;color:var(--muted);">${l.supplier?'🏭 '+l.supplier:''}${l.supplier&&l.note?' · ':''}${l.note||(!l.supplier?'—':'')}</td>
+      <td style="text-align:center;font-size:12px;color:var(--muted);">${l.stockBefore??'—'}</td>
+      <td style="text-align:center;font-size:12px;font-weight:700;color:${l.stockAfter<5?'var(--amber)':'var(--text)'};">${l.stockAfter??'—'}</td>
+    </tr>`;
+  }).join('');
+}
+
+function clearHisoFilters(){
+  document.getElementById('hisoType').value='';
+  document.getElementById('hisoDateFrom').value='';
+  document.getElementById('hisoDateTo').value='';
+  document.getElementById('hisoProd').value='';
+  renderHisobot();
+}
+
+// ══════════════════════════════════════════════════
+// LOG HELPER
+// ══════════════════════════════════════════════════
+function addLog(entry){
+  var log=Object.assign({id:Date.now(),date:new Date().toISOString()},entry);
+  stockLogs.push(log);
+  DB.saveStockLogs(stockLogs);
+}
+
+// ══════════════════════════════════════════════════
+// START
+// ══════════════════════════════════════════════════
 init();
 
-
-// ═══ UNIVERSAL FULLSCREEN ═══
-
-
-window.addEventListener('DOMContentLoaded', function(){
-  _fsUpdate();
-});
-
-
-// ═══ UNIVERSAL FULLSCREEN ═══
-
-
-
-
-
-// ═══ UNIVERSAL FULLSCREEN ═══
-function tbFS(){
-  if(!document.fullscreenElement){
-    document.documentElement.requestFullscreen().catch(function(){});
-  } else {
-    document.exitFullscreen();
-  }
-}
-function posFS(){ tbFS(); }
-function _fsUpdate(){
-  var isFs=!!document.fullscreenElement;
-  ['fsBtn','navF11','tbF11','navF11Btn'].forEach(function(id){
-    var b=document.getElementById(id);
-    if(!b)return;
-    b.innerHTML=isFs?'&#x2715; ESC':'&#x26F6; F11';
-    b.style.color=isFs?'#00ffe7':'';
-    b.style.borderColor=isFs?'#00ffe7':'';
-  });
-}
-document.addEventListener('fullscreenchange',_fsUpdate);
-document.addEventListener('keydown',function(e){
-  if(e.key==='F11'){e.preventDefault();tbFS();}
-});
-
+// ═══ IFRAME NAV ═══
+(function(){
+  if(window.parent===window) return;
+  document.addEventListener('click',function(e){
+    var a=e.target.closest('a[href]');
+    if(!a||a.target) return;
+    var h=a.getAttribute('href');
+    if(!h||h==='#'||h.startsWith('javascript')) return;
+    if(h.startsWith('/')){e.preventDefault();window.parent.postMessage({sfuNav:h},'*');}
+  },true);
+  document.addEventListener('keydown',function(e){
+    if(e.key==='F11'){e.preventDefault();window.parent.postMessage({sfuF11:true},'*');}
+    if(e.key==='Escape'){window.parent.postMessage({sfuEsc:true},'*');}
+  },true);
+})();
 </script>
 </body>
 </html>

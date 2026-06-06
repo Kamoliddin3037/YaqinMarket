@@ -1,0 +1,2303 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Do'konda Savdo — SellFlowUZ</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap');
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+/* ══ TEMA 1: DARK CYBER (default) ══ */
+:root{
+  --bg:      #031829;
+  --bg2:     #041e33;
+  --bg3:     #052240;
+  --card:    #0a2540;
+  --border:  #0e4a7a;
+  --border2: #0a3a5e;
+  --green:   #00e676;
+  --green2:  #00c853;
+  --teal:    #00bcd4;
+  --cyan:    #00e5ff;
+  --blue:    #1e88e5;
+  --orange:  #ff9800;
+  --red:     #f44336;
+  --amber:   #ffc107;
+  --text:    #e0f4ff;
+  --text2:   #b0d4ee;
+  --text3:   #7aabcc;
+  --muted:   #3a6a8a;
+  --white:   #0e3050;
+  --topbar-h:52px;
+  --cyber:   #00e5ff;
+  --cyber2:  #00b8d4;
+  --glow:    0 0 16px rgba(0,229,255,.5);
+  --topbar-bg:#041e33;
+  --topbar-border:#00e5ff;
+  --topbar-text:#e0f4ff;
+  --prod-bg: #0a2540;
+  --cart-bg: #041e33;
+  --footer-bg:#041e33;
+}
+
+/* ══ TEMA 2: LIGHT CLEAN ══ */
+[data-theme="light"]{
+  --bg:      #ffffff;
+  --bg2:     #ffffff;
+  --bg3:     #f8f9fa;
+  --card:    #ffffff;
+  --border:  #e8eef2;
+  --border2: #d4dee6;
+  --green:   #1a8a63;
+  --green2:  #22b07d;
+  --teal:    #00897b;
+  --cyan:    #0097a7;
+  --blue:    #1565c0;
+  --orange:  #e65100;
+  --red:     #c62828;
+  --amber:   #f57f17;
+  --text:    #1a2332;
+  --text2:   #2d3e50;
+  --text3:   #546e7a;
+  --muted:   #90a4ae;
+  --white:   #ffffff;
+  --cyber:   #1a8a63;
+  --cyber2:  #22b07d;
+  --glow:    0 2px 8px rgba(26,138,99,.15);
+  --topbar-bg:#1a8a63;
+  --topbar-border:#22b07d;
+  --topbar-text:#ffffff;
+  --prod-bg: #ffffff;
+  --cart-bg: #ffffff;
+  --footer-bg:#f8f9fa;
+}
+
+/* ══ TEMA 3: PURPLE NIGHT ══ */
+[data-theme="dark-green"]{
+  --bg:      #020e1f;
+  --bg2:     #041828;
+  --bg3:     #062035;
+  --card:    #0a2744;
+  --border:  #0e4a7a;
+  --border2: #0a3a5e;
+  --green:   #00e5ff;
+  --green2:  #00b8d4;
+  --teal:    #00e5ff;
+  --cyan:    #00e5ff;
+  --blue:    #4fc3f7;
+  --orange:  #ffb74d;
+  --red:     #ff5252;
+  --amber:   #ffd740;
+  --text:    #e0f4ff;
+  --text2:   #b3e5fc;
+  --text3:   #81d4fa;
+  --muted:   #4a8aaa;
+  --white:   #041828;
+  --cyber:   #00e5ff;
+  --cyber2:  #00b8d4;
+  --glow:    0 0 16px rgba(0,229,255,.45);
+  --topbar-bg:#020e1f;
+  --topbar-border:#00e5ff;
+  --topbar-text:#e0f4ff;
+  --prod-bg: #020e1f;
+  --cart-bg: #041828;
+  --footer-bg:#020e1f;
+}
+
+/* ══ TEMA 4: SUNSET ORANGE (Yorqin) ══ */
+[data-theme="sunset"]{
+  --bg:      #fff8f0;
+  --bg2:     #ffffff;
+  --bg3:     #fff3e0;
+  --card:    #ffffff;
+  --border:  #ffe0b2;
+  --border2: #ffcc80;
+  --green:   #f57c00;
+  --green2:  #ef6c00;
+  --teal:    #ff7043;
+  --cyan:    #ff9800;
+  --blue:    #5c6bc0;
+  --orange:  #ff6d00;
+  --red:     #d32f2f;
+  --amber:   #f9a825;
+  --text:    #3e1a00;
+  --text2:   #5d2e00;
+  --text3:   #8d4e00;
+  --muted:   #bc7a30;
+  --white:   #ffffff;
+  --cyber:   #f57c00;
+  --cyber2:  #ef6c00;
+  --glow:    0 2px 12px rgba(245,124,0,.25);
+  --topbar-bg:#e65100;
+  --topbar-border:#ff9800;
+  --topbar-text:#fff8f0;
+  --prod-bg: #fff8f0;
+  --cart-bg: #ffffff;
+  --footer-bg:#ffffff;
+}
+[data-theme="sunset"] .cart-items{background:#fff;}
+[data-theme="sunset"] .ci-name{color:#1a1a1a;font-weight:800;}
+[data-theme="sunset"] .ci-price{color:#e65100;font-weight:700;}
+[data-theme="sunset"] .ci-total{color:#e65100;font-weight:900;}
+[data-theme="sunset"] .qty-val{color:#1a1a1a;font-weight:900;}
+[data-theme="sunset"] .cust-input{background:#fff;color:#1a1a1a;border-color:#ffcc80;}
+[data-theme="sunset"] .cart-footer{background:#fff;}
+
+/* ══ TEMA 5: OCEAN BLUE ══ */
+[data-theme="ocean"]{
+  --bg:      #020e1f;
+  --bg2:     #051628;
+  --bg3:     #071e36;
+  --card:    #0a2644;
+  --border:  #0e4a82;
+  --border2: #0a3662;
+  --green:   #00c8ff;
+  --green2:  #0090d4;
+  --teal:    #00e5b8;
+  --cyan:    #00c8ff;
+  --blue:    #4fc3f7;
+  --orange:  #ff9800;
+  --red:     #ff5252;
+  --amber:   #ffd54f;
+  --text:    #e0f4ff;
+  --text2:   #b0d8f0;
+  --text3:   #6aaad4;
+  --muted:   #2a5a8a;
+  --white:   #051628;
+  --cyber:   #00c8ff;
+  --cyber2:  #0090d4;
+  --glow:    0 0 16px rgba(0,200,255,.45);
+  --topbar-bg:#020b18;
+  --topbar-border:#00c8ff;
+  --topbar-text:#e0f4ff;
+  --prod-bg: #020e1f;
+  --cart-bg: #051628;
+  --footer-bg:#020e1f;
+}
+
+html,body{
+  height:100%;overflow:hidden;
+  font-family:'Inter',sans-serif;
+  background:var(--bg);color:var(--text);
+  display:flex;flex-direction:column;
+}
+
+/* ══ TOPBAR ══════════════════════════════════ */
+.topbar{
+  height:var(--topbar-h);min-height:var(--topbar-h);
+  background:var(--topbar-bg,#041e33);
+  border-bottom:2px solid var(--topbar-border,var(--cyber));
+  box-shadow:0 2px 16px rgba(0,184,169,.6);
+  display:flex;align-items:center;
+  padding:0 16px;gap:12px;flex-shrink:0;
+}
+.tb-logo{
+  display:flex;align-items:center;gap:9px;
+  text-decoration:none;flex-shrink:0;
+  padding-right:14px;border-right:1px solid #e0e0e0;
+}
+.tb-logo-ico{
+  width:32px;height:32px;border-radius:8px;
+  background:linear-gradient(135deg,#1a8a63,#22b07d);
+  display:flex;align-items:center;justify-content:center;font-size:16px;
+}
+.tb-logo-txt{
+  font-size:13px;font-weight:800;color:var(--cyber);letter-spacing:.5px;
+}
+.tb-kassir{
+  display:flex;align-items:center;gap:7px;
+  padding:0 12px;border-right:1px solid var(--border2);flex-shrink:0;
+}
+.tb-kassir-ico{
+  width:26px;height:26px;border-radius:50%;
+  background:linear-gradient(135deg,#1a8a63,#22b07d);
+  display:flex;align-items:center;justify-content:center;font-size:13px;
+}
+.tb-kassir-name{font-size:13px;font-weight:700;color:var(--topbar-text,var(--text));}
+.tb-kassir-role{font-size:10px;color:rgba(255,255,255,.65);}
+.tb-smena{
+  background:rgba(0,229,255,.1);border:1px solid var(--cyber2);
+  color:var(--cyan);padding:4px 12px;border-radius:20px;
+  font-size:11px;font-weight:700;flex-shrink:0;
+  display:flex;align-items:center;gap:6px;
+}
+.tb-smena-dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:blink 1.5s infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.tb-ticker{
+  flex:1;overflow:hidden;min-width:0;
+  padding:0 10px;height:100%;display:flex;align-items:center;
+}
+.tb-ticker-inner{
+  white-space:nowrap;display:flex;gap:32px;
+  animation:ticker 30s linear infinite;
+}
+@keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.ti{font-size:11px;color:var(--amber);font-weight:600;display:inline-flex;align-items:center;gap:6px;}
+.ti-badge{background:#fff3cd;color:#d68910;font-size:9px;font-weight:800;padding:1px 6px;border-radius:10px;border:1px solid #f0cc6a;}
+.tb-right{
+  display:flex;align-items:center;gap:8px;
+  padding-left:12px;border-left:1px solid #e8e8e8;flex-shrink:0;
+}
+.tb-clock{
+  font-family:'JetBrains Mono',monospace;font-size:13px;
+  color:var(--cyan);letter-spacing:1px;font-weight:700;
+}
+.tb-btn-icon{
+  width:30px;height:30px;border-radius:6px;
+  background:rgba(0,229,255,.08);border:1px solid var(--cyber2);
+  color:var(--text2);cursor:pointer;transition:all .2s;
+  display:flex;align-items:center;justify-content:center;font-size:14px;
+}
+.tb-btn-icon:hover{border-color:var(--cyan);color:var(--cyan);}
+.tb-logout{
+  padding:6px 14px;background:rgba(244,67,54,.12);
+  border:1px solid rgba(244,67,54,.4);border-radius:6px;
+  color:#ff5252;font-size:11px;font-weight:700;cursor:pointer;
+  transition:all .2s;
+}
+.tb-logout:hover{background:rgba(244,67,54,.22);}
+
+/* ══ LAYOUT: chap=chek, o'ng=mahsulotlar (rasmdagidek) ══ */
+.pos-body{
+  flex:1;display:grid;
+  grid-template-columns:420px 1fr;
+  overflow:hidden;min-height:0;
+}
+
+/* ══ CHAP: CHEK PANELI ════════════════════════ */
+.cart-panel{
+  background:#041e33;
+  border-right:2px solid var(--cyber);
+  display:flex;flex-direction:column;
+  overflow:hidden;
+  box-shadow:2px 0 12px rgba(0,184,169,.5);
+}
+
+/* Chek header */
+.cart-header{
+  padding:11px 16px;
+  border-bottom:2px solid var(--cyber);
+  display:flex;align-items:center;justify-content:space-between;
+  flex-shrink:0;background:#e0fffd;
+}
+.cart-title{font-size:13px;font-weight:800;color:var(--text);}
+.cart-order-no{
+  font-size:11px;color:var(--text3);background:rgba(0,229,255,.1);
+  padding:2px 10px;border-radius:10px;
+}
+
+/* Cart items */
+.cart-items{
+  flex:1;overflow-y:auto;
+  scrollbar-width:thin;scrollbar-color:var(--cyber) transparent;
+}
+.cart-items::-webkit-scrollbar{width:4px;}
+.cart-items::-webkit-scrollbar-thumb{background:var(--cyber);border-radius:4px;}
+
+.cart-empty{
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  height:100%;color:#bbb;gap:8px;
+}
+.cart-empty-icon{font-size:40px;}
+
+/* Cart item row */
+.cart-item{
+  display:flex;align-items:center;
+  padding:8px 14px;gap:8px;
+  border-bottom:1px solid rgba(0,229,255,.2);
+  transition:background .12s;
+}
+.cart-item:hover{background:rgba(0,229,255,.06);}
+.ci-num{font-size:11px;color:#ccc;width:16px;text-align:center;flex-shrink:0;}
+.ci-name{flex:1;font-size:12.5px;font-weight:600;color:var(--text);line-height:1.2;}
+.ci-unit{font-size:10px;color:#aaa;font-weight:400;}
+.ci-qty{display:flex;align-items:center;gap:4px;}
+.qty-btn{
+  width:22px;height:22px;border-radius:5px;border:none;
+  cursor:pointer;font-size:13px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;transition:all .12s;
+}
+.qty-btn.minus{background:#fee2e2;color:#e53935;}
+.qty-btn.minus:hover{background:#e53935;color:#fff;}
+.qty-btn.plus{background:#e8f5e9;color:#1a8a63;}
+.qty-btn.plus:hover{background:#1a8a63;color:#fff;}
+.qty-val{width:26px;text-align:center;font-size:13px;font-weight:700;color:var(--text);}
+.ci-price{font-size:11px;color:#aaa;width:50px;text-align:right;}
+.ci-total{font-size:13px;font-weight:700;color:var(--cyan);width:64px;text-align:right;}
+.ci-del{
+  width:20px;height:20px;border-radius:4px;
+  background:rgba(244,67,54,.12);border:1px solid rgba(244,67,54,.3);cursor:pointer;
+  color:var(--text3);font-size:11px;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .12s;flex-shrink:0;
+}
+.ci-del:hover{background:#e53935;color:#fff;}
+
+/* Cart footer */
+.cart-footer{
+  border-top:2px solid var(--cyber);
+  padding:12px 14px;flex-shrink:0;background:var(--footer-bg,var(--bg2));
+}
+.totals{margin-bottom:8px;}
+.total-row{
+  display:flex;justify-content:space-between;
+  font-size:11.5px;color:var(--text2);margin-bottom:4px;
+}
+.total-row span:last-child{font-weight:600;}
+.total-row.tax{color:#c62828;}
+.total-divider{border:none;border-top:2px dashed var(--cyber);margin:7px 0;}
+
+/* Kalkulyator */
+  .calc-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(6px);z-index:300;align-items:center;justify-content:center;}
+  .calc-overlay.open{display:flex;}
+  .calc-box{background:#041e33;border:2px solid #00e5ff;border-radius:16px;padding:20px;width:300px;box-shadow:0 0 40px rgba(0,229,255,.3);}
+  .calc-screen{background:#031829;border:1.5px solid #0e4a7a;border-radius:10px;padding:12px 14px;margin-bottom:14px;text-align:right;min-height:64px;}
+  .calc-expr{font-size:12px;color:#7aabcc;min-height:18px;font-family:'JetBrains Mono',monospace;}
+  .calc-result{font-family:'JetBrains Mono',monospace;font-size:28px;font-weight:700;color:#00e5ff;text-shadow:0 0 12px rgba(0,229,255,.4);}
+  .calc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;}
+  .ck{padding:13px 6px;border:1px solid #0e4a7a;border-radius:8px;background:#052240;color:#e0f4ff;font-size:16px;font-weight:700;cursor:pointer;transition:all .15s;text-align:center;font-family:'Inter',sans-serif;}
+  .ck:hover{background:#073050;border-color:#00e5ff;}
+  .ck:active{transform:scale(.94);}
+  .ck.op{color:#00e5ff;border-color:rgba(0,229,255,.3);background:rgba(0,229,255,.08);}
+  .ck.op:hover{background:rgba(0,229,255,.18);}
+  .ck.eq{background:linear-gradient(135deg,#0e4a7a,#0a6a9a);color:#fff;border-color:#00e5ff;box-shadow:0 0 12px rgba(0,229,255,.3);}
+  .ck.clr{color:#ff9800;}.ck.del-k{color:#f44336;}
+  .ck.use{grid-column:span 4;margin-top:4px;background:linear-gradient(135deg,#1a8a63,#22b07d);color:#fff;border-color:#22b07d;font-size:13px;box-shadow:0 0 12px rgba(0,200,100,.3);padding:11px;}
+  .calc-title{font-size:13px;font-weight:800;color:#00e5ff;letter-spacing:1px;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;}
+  .calc-close{background:none;border:none;color:#3a6a8a;font-size:18px;cursor:pointer;}
+  .calc-close:hover{color:#f44336;}
+
+/* Grand total */
+.grand-total{
+  background:linear-gradient(135deg,#00c8be,#00b8a9);
+  box-shadow:0 4px 16px rgba(0,184,169,.7);
+  border-radius:12px;padding:14px 16px;
+  display:flex;justify-content:space-between;align-items:center;
+  color:#fff;margin-bottom:10px;cursor:pointer;
+  transition:filter .2s;min-height:54px;
+}
+.grand-total:hover{filter:brightness(1.07);}
+.gt-label{font-size:13px;font-weight:700;opacity:.9;}
+.gt-amount{font-size:24px;font-weight:900;}
+
+/* Mijoz */
+.cust-row{
+  display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px;
+}
+.cust-input{
+  width:100%;padding:11px 12px;
+  background:#052240;border:1px solid var(--border2);
+  border-radius:10px;color:var(--text);
+  font-family:'Inter',sans-serif;font-size:14px;
+  outline:none;transition:border .15s;
+}
+.cust-input:focus{border-color:var(--cyan);background:#073050;box-shadow:0 0 8px rgba(0,184,169,.5);}
+.cust-input::placeholder{color:#bbb;}
+
+/* Cart action buttons */
+.cart-actions{display:flex;gap:8px;}
+.ca-btn{
+  flex:1;padding:16px 6px;border-radius:12px;border:none;
+  cursor:pointer;font-size:14px;font-weight:900;
+  font-family:'Inter',sans-serif;transition:all .15s;
+  min-height:56px;
+}
+.ca-btn:hover{filter:brightness(1.08);transform:translateY(-1px);}
+.ca-btn:active{transform:scale(.96);}
+.ca-btn.clear{background:#fee2e2;color:#c62828;}
+.ca-btn.disc{background:rgba(0,229,255,.15);color:var(--cyan);border:1px solid rgba(0,229,255,.3);}
+.ca-btn.pay{
+  background:linear-gradient(135deg,#1a8a63,#22b07d);
+  color:#fff;flex:2.5;font-size:15px;
+  box-shadow:0 4px 16px rgba(26,138,99,.4);
+}
+
+/* ══ O'NG: MAHSULOTLAR PANELI ════════════════ */
+.products-panel{
+  display:flex;flex-direction:column;
+  overflow:hidden;background:var(--prod-bg,var(--bg));
+  padding:8px 10px;
+}
+
+.search-wrap{position:relative;margin-bottom:10px;flex-shrink:0;}
+.search-icon{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:#009990;font-size:14px;}
+.search-input{
+  width:100%;padding:9px 12px 9px 34px;
+  border:2px solid var(--cyber);border-radius:10px;box-shadow:0 0 8px rgba(0,184,169,.5);
+  font-size:13px;font-family:'Inter',sans-serif;
+  outline:none;background:#052240;
+  color:var(--text);transition:border .2s;
+}
+.search-input:focus{border-color:var(--cyan);background:#073050;box-shadow:0 0 14px rgba(0,184,169,.6);}
+.search-input::placeholder{color:var(--muted);}
+
+/* Category tabs */
+.cat-tabs{
+  display:flex;gap:6px;margin-bottom:10px;
+  flex-wrap:wrap;flex-shrink:0;
+}
+.cat-tab{
+  padding:5px 13px;border-radius:20px;
+  font-size:11px;font-weight:700;cursor:pointer;
+  background:#052240;color:var(--text2);
+  border:1.5px solid var(--cyber2);
+  transition:all .15s;white-space:nowrap;
+}
+.cat-tab:hover{background:#073050;border-color:var(--cyan);color:var(--cyber);}
+.cat-tab.active{background:var(--cyber);color:#031829;border-color:var(--cyan);box-shadow:0 2px 8px rgba(26,138,99,.3);}
+
+/* Product grid */
+.product-grid{
+  flex:1;overflow-y:auto;
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(155px,1fr));
+  gap:8px;align-content:start;
+  padding:4px;
+  scrollbar-width:thin;scrollbar-color:var(--cyber) transparent;
+}
+.product-grid::-webkit-scrollbar{width:4px;}
+.product-grid::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
+
+/* Product card */
+.prod-card{
+  background:var(--card);border-radius:10px;
+  cursor:pointer;border:1.5px solid var(--border);
+  transition:all .15s;position:relative;
+  overflow:hidden;
+  display:flex;flex-direction:column;
+  min-height:170px;
+}
+.prod-card:hover{
+  border-color:var(--cyan);
+  transform:translateY(-3px);
+  box-shadow:0 6px 20px rgba(0,229,255,.25);
+}
+.prod-card:active{transform:scale(.97);}
+.prod-card.out-of-stock{opacity:.45;filter:grayscale(.8);}
+.prod-card.out-of-stock:hover{transform:none;box-shadow:none;}
+.prod-card.in-cart{
+  border-color:var(--green);border-width:2px;
+  background:rgba(0,230,118,.1);
+}
+.prod-emoji-wrap{
+  height:88px;display:flex;align-items:center;justify-content:center;
+  font-size:50px;background:rgba(0,0,0,.15);flex-shrink:0;
+}
+.prod-card.in-cart .prod-emoji-wrap{background:rgba(0,230,118,.15);}
+.prod-img-wrap{
+  height:88px;display:flex;align-items:center;justify-content:center;
+  background:rgba(0,0,0,.15);overflow:hidden;flex-shrink:0;
+}
+.prod-img-wrap img{width:80px;height:80px;object-fit:contain;}
+.prod-disc-badge{
+  position:absolute;top:6px;left:6px;
+  background:#e53935;color:#fff;
+  font-size:11px;font-weight:800;
+  padding:3px 8px;border-radius:6px;
+}
+.prod-in-cart-badge{
+  position:absolute;top:6px;right:6px;
+  background:var(--green);color:#000;
+  font-size:12px;font-weight:900;
+  width:22px;height:22px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+}
+.prod-info{padding:8px 10px 10px;flex:1;display:flex;flex-direction:column;gap:3px;}
+.prod-name{
+  font-size:12.5px;font-weight:700;color:var(--text);
+  line-height:1.35;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+}
+.prod-price-main{font-size:16px;font-weight:900;color:var(--green);margin-top:2px;}
+.prod-price-old{font-size:10px;color:var(--muted);text-decoration:line-through;}
+.prod-stock-text{font-size:10.5px;color:var(--text3);font-weight:600;}
+
+/* ══ TO'LOV MODALI ════════════════════════════ */
+.modal-overlay{
+  display:none;position:fixed;inset:0;
+  background:rgba(0,0,0,.55);z-index:200;
+  align-items:center;justify-content:center;
+}
+.modal-overlay.open{display:flex;}
+.modal{
+  background:#fff;border-radius:16px;width:520px;
+  overflow:hidden;
+  box-shadow:0 20px 60px rgba(0,0,0,.25);
+  animation:modalIn .2s ease;
+  max-height:95vh;overflow-y:auto;
+}
+@keyframes modalIn{from{transform:scale(.92);opacity:0}to{transform:scale(1);opacity:1}}
+.modal-header{
+  background:linear-gradient(135deg,#1a8a63,#22b07d);
+  padding:16px 20px;color:#fff;
+  display:flex;align-items:flex-start;justify-content:space-between;
+}
+.modal-title{font-size:15px;font-weight:800;}
+.modal-amount{font-size:22px;font-weight:800;}
+.modal-close-btn{
+  background:rgba(255,255,255,.2);border:none;color:#fff;
+  width:28px;height:28px;border-radius:50%;cursor:pointer;
+  font-size:14px;display:flex;align-items:center;justify-content:center;
+}
+.modal-body{padding:18px 20px;}
+
+/* To'lov usullari */
+.pay-methods{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:8px;margin-bottom:12px;
+}
+.pay-method{
+  border:2px solid #e8e8e8;border-radius:10px;
+  padding:10px 6px;text-align:center;
+  cursor:pointer;transition:all .15s;
+}
+.pay-method:hover{border-color:#1a8a63;}
+.pay-method.active{border-color:#1a8a63;background:#f0fdf8;}
+.pm-icon{font-size:22px;margin-bottom:4px;}
+.pm-name{font-size:11px;font-weight:700;color:#444;}
+
+/* Numpad */
+.numpad{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:6px;margin-bottom:12px;
+}
+.np-btn{
+  padding:11px;border:1px solid #e8e8e8;border-radius:8px;
+  background:#fff;font-size:16px;font-weight:600;
+  cursor:pointer;font-family:'Inter',sans-serif;
+  transition:all .1s;color:#222;
+}
+.np-btn:hover{background:#f0fdf8;border-color:#1a8a63;color:#1a8a63;}
+.np-btn:active{transform:scale(.95);}
+.np-btn.np-del{color:#e53935;}
+
+.pay-input-row{margin-bottom:10px;}
+.pay-input-lbl{font-size:11px;font-weight:600;color:#888;margin-bottom:5px;}
+.pay-input{
+  width:100%;border:2px solid #e0e0e0;border-radius:8px;
+  padding:10px 14px;font-size:18px;font-weight:700;
+  font-family:'Inter',sans-serif;outline:none;
+  text-align:right;color:#222;transition:border .2s;
+}
+.pay-input:focus{border-color:#1a8a63;}
+
+.change-row{
+  background:#f0fdf8;border-radius:8px;
+  padding:10px 14px;display:flex;
+  justify-content:space-between;margin-bottom:14px;
+}
+.change-lbl{font-size:12px;color:#666;}
+.change-amount{font-size:16px;font-weight:800;color:#1a8a63;}
+
+.confirm-btn{
+  width:100%;padding:13px;
+  background:linear-gradient(135deg,#1a8a63,#22b07d);
+  color:#fff;border:none;border-radius:10px;
+  font-size:15px;font-weight:800;cursor:pointer;
+  font-family:'Inter',sans-serif;transition:all .15s;
+}
+.confirm-btn:hover{filter:brightness(1.05);transform:translateY(-1px);}
+
+/* To'lov satrlari */
+.pay-rows-section{margin-bottom:10px;}
+.pay-row-item{
+  display:flex;align-items:center;gap:8px;
+  margin-bottom:7px;background:#f8fffe;
+  border:1.5px solid #e0f5f0;border-radius:9px;padding:6px 10px;
+}
+.pay-row-item.active-row{border-color:#1a8a63;background:#f0fdf8;}
+.pri-method{
+  display:flex;align-items:center;gap:6px;
+  min-width:110px;cursor:pointer;
+}
+.pri-method-dot{
+  width:10px;height:10px;border-radius:50%;border:2px solid #ccc;flex-shrink:0;
+}
+.pri-method-dot.sel{background:#1a8a63;border-color:#1a8a63;}
+.pri-icon{font-size:16px;}
+.pri-name{font-size:12px;font-weight:700;color:#333;}
+.pri-amount{
+  flex:1;border:1.5px solid #e0e0e0;border-radius:7px;
+  padding:7px 10px;font-size:14px;font-weight:700;
+  font-family:'JetBrains Mono',monospace;text-align:right;
+  outline:none;color:#222;transition:border .15s;
+}
+.pri-amount:focus{border-color:#1a8a63;}
+.pri-amount.has-val{border-color:#1a8a63;color:#1a8a63;}
+.pri-del{
+  background:none;border:1px solid #ffcdd2;border-radius:6px;
+  color:#e53935;width:26px;height:28px;cursor:pointer;
+  font-size:14px;display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;transition:all .15s;
+}
+.pri-del:hover{background:#e53935;color:#fff;}
+.add-pay-row-btn{
+  width:100%;padding:7px;border:1.5px dashed #b0d8cc;border-radius:8px;
+  background:transparent;color:#1a8a63;font-size:12px;font-weight:700;
+  cursor:pointer;transition:all .15s;font-family:'Inter',sans-serif;
+  margin-bottom:10px;
+}
+.add-pay-row-btn:hover{border-color:#1a8a63;background:#f0fdf8;}
+
+/* QR modal */
+.qr-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:600;align-items:center;justify-content:center;}
+.qr-overlay.open{display:flex;}
+.qr-box-modal{background:#fff;border-radius:16px;padding:24px;width:300px;text-align:center;box-shadow:0 10px 40px rgba(0,0,0,.4);}
+.qr-box-inner{width:200px;height:200px;margin:0 auto 14px;background:#fff;border:2px solid #e0e0e0;border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.qr-phone-num{font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:800;color:#222;margin-bottom:4px;}
+.qr-hint{font-size:12px;color:#888;margin-bottom:14px;}
+.qr-close{width:100%;padding:10px;background:#f0fdf8;border:2px solid #1a8a63;border-radius:8px;color:#1a8a63;font-size:13px;font-weight:800;cursor:pointer;font-family:'Inter',sans-serif;}
+
+/* Jami va qarz ko'rsatgich */
+.pay-summary-bar{
+  background:#f8fffe;border:1.5px solid #c8efe8;border-radius:9px;
+  padding:10px 14px;margin-bottom:10px;
+}
+.psb-row{display:flex;justify-content:space-between;align-items:center;font-size:12px;margin-bottom:4px;color:#555;}
+.psb-row:last-child{margin-bottom:0;}
+.psb-bold{font-weight:800;color:#222;}
+.psb-green{color:#1a8a63;font-weight:800;}
+.psb-red{color:#e53935;font-weight:800;}
+.psb-total{font-size:15px;font-weight:900;}
+.psb-row[onclick] .psb-bold,
+.psb-row[onclick] .psb-red{
+  display:inline-flex;align-items:center;gap:4px;
+}
+.psb-row[onclick] .psb-bold::after{content:'↙';font-size:10px;opacity:.5;}
+.psb-row[onclick] .psb-red::after{content:'↙';font-size:10px;opacity:.5;}
+
+/* Scan modal */
+.scan-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.8);
+  backdrop-filter:blur(8px);z-index:300;
+  display:none;align-items:center;justify-content:center;
+}
+.scan-overlay.open{display:flex;}
+
+/* Toast */
+.toast{
+  position:fixed;bottom:24px;left:50%;
+  transform:translateX(-50%) translateY(80px);
+  background:#1a8a63;color:#fff;
+  padding:12px 26px;border-radius:50px;
+  font-size:13px;font-weight:700;
+  box-shadow:0 6px 20px rgba(26,138,99,.35);
+  z-index:500;transition:transform .3s;
+  white-space:nowrap;
+}
+.toast.show{transform:translateX(-50%) translateY(0);}
+.toast.error{background:#c62828;}
+.toast.warning{background:#e65100;}
+
+/* Light tema overrides */
+[data-theme="light"] .cart-title{color:#1a2332 !important;}
+[data-theme="light"] .cart-order-no{background:#eef1f5;color:#546e7a;}
+[data-theme="light"] .ci-name{color:#1a2332;}
+[data-theme="light"] .ci-price{color:#888;}
+[data-theme="light"] .ci-total{color:#1a8a63;}
+[data-theme="light"] .qty-val{color:#1a2332;}
+[data-theme="light"] .total-row{color:#546e7a;}
+[data-theme="light"] .grand-total{background:linear-gradient(135deg,#1a8a63,#22b07d);}
+[data-theme="light"] .prod-name{color:#1a2332;}
+[data-theme="light"] .prod-unit-text{color:#888;}
+[data-theme="light"] .prod-stock-text{color:#546e7a;}
+[data-theme="light"] .prod-price-main{color:#1a8a63;}
+[data-theme="light"] .prod-emoji-wrap{background:#f0f4f8;}
+[data-theme="light"] .prod-card{background:#fff;border:1.5px solid #e8eef2;box-shadow:0 1px 4px rgba(0,0,0,.05);}
+[data-theme="light"] .prod-card:hover{border-color:#1a8a63;box-shadow:0 4px 12px rgba(26,138,99,.15);}
+[data-theme="light"] .prod-card.in-cart{border-color:#1565c0;background:#e3f2fd;box-shadow:0 4px 12px rgba(21,101,192,.2);}
+[data-theme="light"] .prod-in-cart-badge{background:#1565c0;}
+[data-theme="light"] .cat-tab{background:#fff;color:#546e7a;border-color:#e0e6ed;}
+[data-theme="light"] .cat-tab.active{background:#1a8a63;color:#fff;border-color:#1a8a63;}
+[data-theme="light"] .search-input{background:#fff;color:#1a2332;border-color:#d4dee6;}
+[data-theme="light"] .products-panel{background:#fff !important;}
+[data-theme="light"] .product-grid{background:#f8f9fa;}
+[data-theme="light"] .search-icon{color:#90a4ae;}
+[data-theme="light"] .cust-input{background:#f5f7fa;color:#1a2332;border-color:#c8d4de;}
+[data-theme="light"] .cart-items{background:#fff;}
+[data-theme="light"] .cart-item{border-bottom-color:#f0f0f0;}
+[data-theme="light"] .cart-item:hover{background:#f0f8ff;}
+[data-theme="light"] .cart-items{background:#fff;}
+[data-theme="light"] .pay-summary-bar{background:#f8f9fa;border-color:#d4dee6;}
+[data-theme="light"] .psb-row{color:#2d3e50;}
+[data-theme="light"] .total-divider{border-top-color:#e0e6ed;}
+[data-theme="light"] .add-pay-row-btn{border-color:#c8e6cc;color:#1a8a63;}
+[data-theme="light"] .tb-smena{background:#e8f5e9;border-color:#a5d6a7;color:#1a6b52;}
+[data-theme="light"] .tb-clock{color:#fff;}
+[data-theme="light"] .tb-logo-txt{color:#fff;}
+[data-theme="light"] .tb-btn-icon{background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.3);color:#fff;}
+[data-theme="light"] .tb-logout{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.3);color:#fff;}
+[data-theme="light"] .tb-kassir-name{color:#fff;}
+
+/* Dark green tema overrides */
+/* Purple Night overrides */
+[data-theme="dark-green"] .grand-total{background:linear-gradient(135deg,#0055aa,#0088cc);}
+[data-theme="dark-green"] .prod-emoji-wrap{background:#150f24;}
+[data-theme="dark-green"] .cat-tab.active{background:var(--green);color:#fff;}
+[data-theme="dark-green"] .topbar{box-shadow:0 0 20px rgba(179,136,255,.3);}
+[data-theme="dark-green"] .prod-card{background:#0a2744;border-color:#0e4a7a;}
+[data-theme="dark-green"] .prod-card:hover{border-color:#00e5ff;box-shadow:0 4px 16px rgba(0,229,255,.3);}
+[data-theme="dark-green"] .prod-name{color:#e0f4ff;}
+[data-theme="dark-green"] .ci-name{color:#e0f4ff;font-weight:800;}
+[data-theme="dark-green"] .ci-price{color:#81d4fa;}
+[data-theme="dark-green"] .ci-total{color:#00e5ff;font-weight:900;}
+[data-theme="dark-green"] .qty-val{color:#e0f4ff;font-weight:900;}
+[data-theme="dark-green"] .cust-input{background:#062035;color:#e0f4ff;border-color:#0e4a7a;}
+[data-theme="dark-green"] .cart-items{background:#041828;}
+[data-theme="dark-green"] .cart-item{border-bottom-color:#0e4a7a;}
+[data-theme="dark-green"] .cart-item:hover{background:#062035;}
+[data-theme="dark-green"] .cat-tab{background:#062035;color:#81d4fa;border-color:#0e4a7a;}
+[data-theme="dark-green"] .search-input{border-color:#0e4a7a;background:#062035;color:#e0f4ff;}
+
+/* Sunset Orange overrides (ochiq) */
+[data-theme="sunset"] .grand-total{background:linear-gradient(135deg,#e65100,#f57c00);}
+[data-theme="sunset"] .prod-emoji-wrap{background:#fff8f0;}
+[data-theme="sunset"] .cat-tab.active{background:#f57c00;color:#fff;border-color:#f57c00;}
+[data-theme="sunset"] .topbar{box-shadow:0 2px 12px rgba(230,81,0,.3);}
+[data-theme="sunset"] .prod-card{background:#fff;border:1.5px solid #ffe0b2;box-shadow:0 1px 4px rgba(0,0,0,.06);}
+[data-theme="sunset"] .prod-card:hover{border-color:#f57c00;box-shadow:0 4px 14px rgba(245,124,0,.2);}
+[data-theme="sunset"] .prod-card.in-cart{border-color:#f57c00;background:#fff3e0;}
+[data-theme="sunset"] .prod-name{color:#3e1a00;}
+[data-theme="sunset"] .prod-price{color:#e65100;}
+[data-theme="sunset"] .prod-unit-text{color:#8d4e00;}
+[data-theme="sunset"] .prod-stock-text{color:#bc7a30;}
+[data-theme="sunset"] .prod-price-main{color:#e65100;}
+[data-theme="sunset"] .cat-tab{background:#fff;color:#8d4e00;border-color:#ffe0b2;}
+[data-theme="sunset"] .cat-tab:hover{border-color:#f57c00;color:#e65100;}
+[data-theme="sunset"] .search-input{border-color:#ffcc80;background:#fff;color:#3e1a00;}
+[data-theme="sunset"] .qty-btn.plus{background:#fff3e0;color:#f57c00;border-color:#ffcc80;}
+[data-theme="sunset"] .qty-btn.minus{background:#fff0f0;color:#d32f2f;border-color:#ffcdd2;}
+[data-theme="sunset"] .ci-name{color:#3e1a00;}
+[data-theme="sunset"] .ci-total{color:#e65100;}
+[data-theme="sunset"] .ci-price{color:#8d4e00;}
+[data-theme="sunset"] .cart-title{color:#3e1a00;}
+[data-theme="sunset"] .cart-order-no{background:#fff3e0;color:#8d4e00;}
+[data-theme="sunset"] .total-row{color:#5d2e00;}
+[data-theme="sunset"] .qty-val{color:#3e1a00;}
+[data-theme="sunset"] .cart-item{border-bottom-color:#ffe0b2;background:#fff;}
+[data-theme="sunset"] .cart-item:hover{background:#fff3e0;}
+[data-theme="sunset"] .total-divider{border-top-color:#ffe0b2;}
+[data-theme="sunset"] .pay-summary-bar{background:#fff3e0;border-color:#ffcc80;}
+[data-theme="sunset"] .psb-row{color:#5d2e00;}
+[data-theme="sunset"] .add-pay-row-btn{border-color:#ffcc80;color:#f57c00;}
+[data-theme="sunset"] .pay-sel{background:#fff;color:#3e1a00;border-color:#ffcc80;}
+[data-theme="sunset"] .cust-input{background:#fff;color:#3e1a00;border-color:#ffcc80;}
+[data-theme="sunset"] .product-grid{background:#fff8f0;}
+
+/* Ocean Blue overrides */
+[data-theme="ocean"] .grand-total{background:linear-gradient(135deg,#00607a,#0090b4);}
+[data-theme="ocean"] .prod-emoji-wrap{background:#051628;}
+[data-theme="ocean"] .cat-tab.active{background:var(--cyan);color:#000;}
+[data-theme="ocean"] .topbar{box-shadow:0 0 20px rgba(0,200,255,.3);}
+[data-theme="ocean"] .prod-card{background:#0a2644;border-color:#0e4a82;}
+[data-theme="ocean"] .prod-card:hover{border-color:#00c8ff;box-shadow:0 4px 16px rgba(0,200,255,.25);}
+[data-theme="ocean"] .prod-name{color:#e0f4ff;}
+[data-theme="ocean"] .cat-tab{background:#071e36;color:#6aaad4;border-color:#0e4a82;}
+[data-theme="ocean"] .search-input{border-color:#0e4a82;background:#071e36;color:#e0f4ff;}
+[data-theme="ocean"] .ci-total{color:#00c8ff;}
+</style>
+</head>
+<body>
+
+<div class="toast" id="toast"></div>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <a class="tb-logo" href="/dashboard">
+    <div class="tb-logo-ico">🏪</div>
+    <div class="tb-logo-txt">SELLFLOWUZ</div>
+  </a>
+  <div class="tb-kassir" onclick="toggleUserMenu()" style="cursor:pointer;position:relative;" id="kassirBtn">
+    <div class="tb-kassir-ico">👤</div>
+    <div>
+      <div class="tb-kassir-name" id="tbName">Kassir</div>
+      <div class="tb-kassir-role" id="tbRole">Sotuvchi</div>
+    </div>
+    <span style="font-size:10px;opacity:.6;margin-left:4px;">▼</span>
+  </div>
+  <!-- User dropdown -->
+  <div id="userMenu" style="display:none;position:absolute;top:calc(var(--topbar-h) + 4px);left:14px;
+    background:var(--bg2);border:1.5px solid var(--cyber);border-radius:10px;
+    min-width:200px;box-shadow:0 8px 24px rgba(0,0,0,.4);z-index:999;overflow:hidden;">
+    <!-- User info -->
+    <div style="padding:12px 14px;border-bottom:1px solid var(--border);background:var(--bg3);">
+      <div style="font-size:14px;font-weight:800;color:var(--text);" id="menuName">Admin</div>
+      <div style="font-size:11px;color:var(--text3);" id="menuRole">Admin</div>
+    </div>
+    <!-- Menu items -->
+    <div onclick="setTheme('dark');closeUserMenu()" style="padding:10px 14px;display:flex;align-items:center;gap:10px;cursor:pointer;color:var(--text2);font-size:13px;font-weight:600;transition:background .15s;"
+      onmouseenter="this.style.background='rgba(0,229,255,.08)'" onmouseleave="this.style.background=''">
+      <span>⚫</span> Dark Cyber
+    </div>
+    <div onclick="setTheme('light');closeUserMenu()" style="padding:10px 14px;display:flex;align-items:center;gap:10px;cursor:pointer;color:var(--text2);font-size:13px;font-weight:600;transition:background .15s;"
+      onmouseenter="this.style.background='rgba(0,229,255,.08)'" onmouseleave="this.style.background=''">
+      <span>⚪</span> Light Clean
+    </div>
+    <div onclick="setTheme('dark-green');closeUserMenu()" style="padding:10px 14px;display:flex;align-items:center;gap:10px;cursor:pointer;color:var(--text2);font-size:13px;font-weight:600;transition:background .15s;"
+      onmouseenter="this.style.background='rgba(0,229,255,.08)'" onmouseleave="this.style.background=''">
+      <span>🟣</span> Purple Night
+    </div>
+    <div onclick="setTheme('sunset');closeUserMenu()" style="padding:10px 14px;display:flex;align-items:center;gap:10px;cursor:pointer;color:var(--text2);font-size:13px;font-weight:600;transition:background .15s;"
+      onmouseenter="this.style.background='rgba(0,229,255,.08)'" onmouseleave="this.style.background=''">
+      <span>🟠</span> Sunset Orange
+    </div>
+    <div onclick="setTheme('ocean');closeUserMenu()" style="padding:10px 14px;display:flex;align-items:center;gap:10px;cursor:pointer;color:var(--text2);font-size:13px;font-weight:600;transition:background .15s;"
+      onmouseenter="this.style.background='rgba(0,229,255,.08)'" onmouseleave="this.style.background=''">
+      <span>🔵</span> Ocean Blue
+    </div>
+    <div style="height:1px;background:var(--border);margin:2px 0;"></div>
+    <div onclick="posLogout();closeUserMenu()" style="padding:10px 14px;display:flex;align-items:center;gap:10px;cursor:pointer;color:#ff5252;font-size:13px;font-weight:700;transition:background .15s;"
+      onmouseenter="this.style.background='rgba(255,82,82,.1)'" onmouseleave="this.style.background=''">
+      <span>⏻</span> Chiqish
+    </div>
+  </div>
+  <div class="tb-smena"><span class="tb-smena-dot"></span><span id="tbSmena">Smena #001</span></div>
+  <div class="tb-ticker"><div class="tb-ticker-inner" id="tickerInner"></div></div>
+  <div class="tb-right">
+    <div class="tb-clock" id="clock">--:--:--</div>
+    <button class="tb-btn-icon" onclick="tbFS()" id="tbF11" title="F11">⛶</button>
+    <button class="tb-logout" onclick="posLogout()">⏻ Chiqish</button>
+  </div>
+</div>
+
+<!-- BODY -->
+<div class="pos-body">
+
+  <!-- CHAP: CHEK -->
+  <div class="cart-panel">
+    <div class="cart-header">
+      <div class="cart-title">🧾 Chek</div>
+      <div class="cart-order-no" id="orderNo">Order #1001</div>
+    </div>
+
+    <div class="cart-items" id="cartItems" onscroll="updateScrollBtns()">
+      <div class="cart-empty">
+        <div class="cart-empty-icon">🛒</div>
+        <span style="font-size:13px;font-weight:600;">Savatcha bo'sh</span>
+        <span style="font-size:11px;color:#ddd;">Mahsulot tanlang</span>
+      </div>
+    </div>
+
+    <!-- Scroll tugmalar: chek va mijoz orasida -->
+    <div id="cartScrollBtns" style="display:none;flex-direction:row;gap:8px;padding:6px 14px;background:var(--footer-bg,var(--bg2));border-top:1px solid var(--border);">
+      <button id="scrollUpBtn" onclick="document.getElementById('cartItems').scrollBy({top:-200,behavior:'smooth'})"
+        style="flex:1;padding:14px;background:rgba(0,200,200,.15);border:2px solid var(--cyan);
+        border-radius:12px;color:var(--cyan);font-size:22px;font-weight:900;cursor:pointer;
+        transition:all .15s;min-height:52px;">▲</button>
+      <button id="scrollDnBtn" onclick="document.getElementById('cartItems').scrollBy({top:200,behavior:'smooth'})"
+        style="flex:1;padding:14px;background:rgba(0,200,200,.15);border:2px solid var(--cyan);
+        border-radius:12px;color:var(--cyan);font-size:22px;font-weight:900;cursor:pointer;
+        transition:all .15s;min-height:52px;">▼</button>
+    </div>
+
+    <div class="cart-footer">
+      <!-- Totals -->
+      <div class="totals" id="totalsBlock" style="display:none;">
+        <div class="total-row">
+          <span>Oraliq jami:</span>
+          <span id="subtotalAmt">0 so'm</span>
+        </div>
+        <div class="total-row" id="discRow" style="display:none;">
+          <span>Chegirma:</span>
+          <span id="discAmount" style="color:#e53935;">−0 so'm</span>
+        </div>
+        <div class="total-row tax">
+          <span>Soliq QQS (12%):</span>
+          <span id="taxAmount">0 so'm</span>
+        </div>
+        <hr class="total-divider">
+      </div>
+
+      <!-- Kalkulyator (disc o'rniga) -->
+
+      <!-- Mijoz -->
+      <div style="position:relative;margin-bottom:6px;">
+        <div class="cust-row" style="margin-bottom:0;">
+          <div style="position:relative;">
+            <input class="cust-input" id="custName" placeholder="👤 Mijoz ismi"
+              oninput="capName(this);searchCustomers(this.value)"
+              onkeydown="custKeyNav(event)"
+              autocomplete="off">
+            <div id="custSuggest" style="display:none;position:absolute;top:100%;left:0;right:0;background:#041e33;border:1px solid #00e5ff;border-radius:0 0 8px 8px;z-index:300;max-height:180px;overflow-y:auto;box-shadow:0 8px 24px rgba(0,0,0,.5);"></div>
+          </div>
+          <input class="cust-input" id="custPhone" placeholder="+998 XX XXX XX XX"
+            value="+998 " oninput="fmtPhone(this)" onblur="lookupUserDebt()"
+            onkeydown="if(event.key==='Backspace'&&this.value==='+998 ')event.preventDefault()" maxlength="17">
+        </div>
+      </div>
+
+      <!-- Mavjud qarz ogohlantirish -->
+      <div id="existDebtBar" style="display:none;background:rgba(255,45,85,.1);border:1px solid rgba(255,45,85,.4);border-radius:8px;padding:8px 12px;margin-bottom:6px;display:none;">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <span style="font-size:12px;color:#ff5252;font-weight:700;">⚠️ Mavjud qarz:</span>
+          <span id="existDebtAmt" style="font-family:'Orbitron',monospace;font-size:14px;color:#ff2d55;font-weight:900;">0 so'm</span>
+        </div>
+        <div id="existDebtName" style="font-size:11px;color:#ff7070;margin-top:2px;"></div>
+        <button onclick="openDebtPayModal()" style="margin-top:6px;width:100%;padding:7px;background:rgba(255,45,85,.15);border:1px solid rgba(255,45,85,.5);border-radius:6px;color:#ff2d55;font-size:12px;font-weight:800;cursor:pointer;font-family:'Inter',sans-serif;">💳 Qarzni to'lash</button>
+      </div>
+
+      <!-- Grand total -->
+      <div class="grand-total" onclick="copyAndFill('grand')" title="Bosing → to'lovga tushadi" style="margin-bottom:8px;">
+        <div class="gt-label">JAMI TO'LOV</div>
+        <div class="gt-amount" id="grandTotal">0 so'm</div>
+        <div style="font-size:9px;opacity:.6;margin-top:2px;">👆 bosing → to'lovga</div>
+      </div>
+      <!-- Debt card — hidden, faqat JS uchun -->
+      <div id="debtCard" style="display:none;"><span id="debtCardAmt">0 so'm</span></div>
+
+      <!-- Actions -->
+      <div class="cart-actions">
+        <button class="ca-btn clear" onclick="clearCart()">🗑 Tozalash</button>
+        <button class="ca-btn disc" onclick="openCalc()">🖩 Kalk</button>
+        <button class="ca-btn pay" onclick="openPayModal()">✓ To'lovni qabul qilish</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- O'NG: MAHSULOTLAR -->
+  <div class="products-panel">
+    <div class="search-wrap" style="display:flex;gap:8px;">
+      <div style="position:relative;flex:1;">
+        <span class="search-icon">🔍</span>
+        <input class="search-input" id="searchInput"
+          placeholder="Mahsulot qidirish yoki shtrix-kodni skanerlang..."
+          oninput="filterProds()" autocomplete="off" autofocus>
+      </div>
+      <button onclick="openBarcodeScanner()" title="Kamera bilan skanerlash"
+        style="padding:9px 14px;background:rgba(0,229,255,.15);border:2px solid #00e5ff;border-radius:10px;color:#00e5ff;font-size:20px;cursor:pointer;flex-shrink:0;transition:all .2s;"
+        onmouseover="this.style.background='rgba(0,229,255,.3)'" onmouseout="this.style.background='rgba(0,229,255,.15)'">📷</button>
+    </div>
+    <div class="cat-tabs" id="catTabs"></div>
+    <div class="product-grid" id="productGrid"></div>
+  </div>
+
+</div>
+
+<!-- KALKULYATOR -->
+<div class="calc-overlay" id="calcOverlay" onclick="if(event.target===this)closeCalc()">
+  <div class="calc-box">
+    <div class="calc-title">
+      <span>🖩 KALKULYATOR</span>
+      <button class="calc-close" onclick="closeCalc()">✕</button>
+    </div>
+    <div class="calc-screen">
+      <div class="calc-expr" id="calcExpr"></div>
+      <div class="calc-result" id="calcResult">0</div>
+    </div>
+    <div class="calc-grid">
+      <button class="ck clr" onclick="calcPress('C')">C</button>
+      <button class="ck op" onclick="calcPress('±')">±</button>
+      <button class="ck op" onclick="calcPress('%')">%</button>
+      <button class="ck op del" onclick="calcPress('⌫')">⌫</button>
+
+      <button class="ck" onclick="calcPress('7')">7</button>
+      <button class="ck" onclick="calcPress('8')">8</button>
+      <button class="ck" onclick="calcPress('9')">9</button>
+      <button class="ck op" onclick="calcPress('÷')">÷</button>
+
+      <button class="ck" onclick="calcPress('4')">4</button>
+      <button class="ck" onclick="calcPress('5')">5</button>
+      <button class="ck" onclick="calcPress('6')">6</button>
+      <button class="ck op" onclick="calcPress('×')">×</button>
+
+      <button class="ck" onclick="calcPress('1')">1</button>
+      <button class="ck" onclick="calcPress('2')">2</button>
+      <button class="ck" onclick="calcPress('3')">3</button>
+      <button class="ck op" onclick="calcPress('−')">−</button>
+
+      <button class="ck" onclick="calcPress('000')">000</button>
+      <button class="ck" onclick="calcPress('0')">0</button>
+      <button class="ck" onclick="calcPress('.')">.</button>
+      <button class="ck op eq" onclick="calcPress('=')">=</button>
+
+      <button class="ck use" onclick="calcUse()">✓ Natijani to'lovga qo'llash</button>
+    </div>
+  </div>
+</div>
+
+<!-- TO'LOV MODALI -->
+<div class="modal-overlay" id="payModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title">💳 To'lovni qabul qilish</div>
+        <div style="font-size:11px;opacity:.8;margin-top:2px;" id="modalOrderNo"></div>
+      </div>
+      <div style="text-align:right;">
+        <div style="font-size:11px;opacity:.8;">Jami summa</div>
+        <div class="modal-amount" id="modalTotal"></div>
+      </div>
+      <button class="modal-close-btn" onclick="closePayModal()">✕</button>
+    </div>
+    <div class="modal-body">
+
+      <!-- Jami / to'landi / qarz bar -->
+      <div class="pay-summary-bar">
+        <div class="psb-row" onclick="fillToActive('grand')" style="cursor:pointer;border-radius:6px;padding:2px 4px;transition:background .15s;" onmouseenter="this.style.background='rgba(26,138,99,.1)'" onmouseleave="this.style.background=''">
+          <span>Jami to'lov:</span>
+          <span class="psb-bold psb-total" id="psbTotal" style="text-decoration:underline dotted;text-underline-offset:3px;">0 so'm</span>
+        </div>
+        <div class="psb-row">
+          <span>To'landi:</span>
+          <span class="psb-green" id="psbPaid">0 so'm</span>
+        </div>
+        <div class="psb-row" id="psbDebtRow" onclick="fillToActive('debt')" style="display:none;cursor:pointer;border-radius:6px;padding:2px 4px;transition:background .15s;" onmouseenter="this.style.background='rgba(229,57,53,.1)'" onmouseleave="this.style.background=''">
+          <span id="psbDebtLbl">Qoldi (qarz):</span>
+          <span class="psb-red" id="psbDebt" style="text-decoration:underline dotted;text-underline-offset:3px;">0 so'm</span>
+        </div>
+      </div>
+
+      <!-- To'lov usullari qo'shish -->
+      <div class="pay-rows-section" id="payRowsSection"></div>
+      <button class="add-pay-row-btn" onclick="addPayRowModal()">+ To'lov usuli qo'shish</button>
+
+      <!-- Numpad — aktiv input uchun -->
+      <div class="numpad" id="numpad">
+        <button class="np-btn" onclick="numPress('1')">1</button>
+        <button class="np-btn" onclick="numPress('2')">2</button>
+        <button class="np-btn" onclick="numPress('3')">3</button>
+        <button class="np-btn" onclick="numPress('4')">4</button>
+        <button class="np-btn" onclick="numPress('5')">5</button>
+        <button class="np-btn" onclick="numPress('6')">6</button>
+        <button class="np-btn" onclick="numPress('7')">7</button>
+        <button class="np-btn" onclick="numPress('8')">8</button>
+        <button class="np-btn" onclick="numPress('9')">9</button>
+        <button class="np-btn" onclick="numPress('000')">000</button>
+        <button class="np-btn" onclick="numPress('0')">0</button>
+        <button class="np-btn np-del" onclick="numPress('del')">⌫</button>
+      </div>
+
+      <!-- Qaytim -->
+      <div class="change-row" id="changeRow" style="display:none;">
+        <span class="change-lbl">✅ Qaytim (zdachi):</span>
+        <span class="change-amount" id="changeAmount">0 so'm</span>
+      </div>
+
+      <button class="confirm-btn" onclick="confirmPayment()">✓ TO'LOVNI TASDIQLASH</button>
+    </div>
+  </div>
+</div>
+
+<!-- QARZ TO'LASH MODALI -->
+<div class="modal-overlay" id="debtPayModal" style="display:none;">
+  <div class="modal" style="max-width:380px;">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title">💳 Qarz to'lash</div>
+        <div id="debtPayUserName" style="font-size:11px;opacity:.8;margin-top:2px;"></div>
+      </div>
+      <div style="text-align:right;">
+        <div style="font-size:11px;opacity:.8;">Jami qarz</div>
+        <div class="modal-amount" id="debtPayTotal" style="color:#ff2d55;"></div>
+      </div>
+      <button class="modal-close-btn" onclick="closeDebtPayModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div style="margin-bottom:12px;">
+        <label style="font-size:11px;color:#7aabcc;font-weight:700;letter-spacing:1px;display:block;margin-bottom:6px;">TO'LOV SUMMASI</label>
+        <input id="debtPayAmount" type="number" inputmode="numeric"
+          placeholder="0"
+          style="width:100%;padding:14px;background:#052240;border:1.5px solid #0e4a7a;border-radius:10px;color:#e0f4ff;font-family:'Orbitron',monospace;font-size:22px;font-weight:700;outline:none;text-align:center;"
+          onfocus="this.style.borderColor='#00e5ff'" onblur="this.style.borderColor='#0e4a7a'"
+          oninput="updateDebtPayPreview()">
+        <div style="display:flex;gap:6px;margin-top:8px;">
+          <button onclick="debtPaySet(25)" style="flex:1;padding:7px;background:rgba(0,229,255,.08);border:1px solid rgba(0,229,255,.2);border-radius:6px;color:#00e5ff;font-size:12px;font-weight:700;cursor:pointer;">25%</button>
+          <button onclick="debtPaySet(50)" style="flex:1;padding:7px;background:rgba(0,229,255,.08);border:1px solid rgba(0,229,255,.2);border-radius:6px;color:#00e5ff;font-size:12px;font-weight:700;cursor:pointer;">50%</button>
+          <button onclick="debtPaySet(75)" style="flex:1;padding:7px;background:rgba(0,229,255,.08);border:1px solid rgba(0,229,255,.2);border-radius:6px;color:#00e5ff;font-size:12px;font-weight:700;cursor:pointer;">75%</button>
+          <button onclick="debtPaySet(100)" style="flex:1;padding:7px;background:rgba(57,255,20,.1);border:1px solid rgba(57,255,20,.3);border-radius:6px;color:#39ff14;font-size:12px;font-weight:700;cursor:pointer;">To'liq</button>
+        </div>
+      </div>
+
+      <div id="debtPayPreview" style="display:none;background:rgba(0,229,255,.05);border:1px solid rgba(0,229,255,.15);border-radius:8px;padding:10px 14px;margin-bottom:12px;">
+        <div style="display:flex;justify-content:space-between;font-size:12px;color:#7aabcc;margin-bottom:4px;">
+          <span>Jami qarz:</span><span id="dpTotalOld" style="color:#ff5252;font-weight:700;"></span>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:12px;color:#7aabcc;margin-bottom:4px;">
+          <span>To'lanadi:</span><span id="dpPayNow" style="color:#39ff14;font-weight:700;"></span>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:13px;border-top:1px solid rgba(0,229,255,.15);padding-top:6px;margin-top:4px;">
+          <span style="color:#e0f4ff;font-weight:700;">Qoladi:</span>
+          <span id="dpRemain" style="font-family:'Orbitron',monospace;font-weight:900;"></span>
+        </div>
+      </div>
+
+      <button onclick="confirmDebtPay()" style="width:100%;padding:15px;background:linear-gradient(135deg,#1a8a63,#22b07d);color:#fff;border:none;border-radius:10px;font-family:'Orbitron',monospace;font-size:12px;font-weight:700;letter-spacing:2px;cursor:pointer;box-shadow:0 4px 16px rgba(26,138,99,.3);">
+        ✓ QARZNI TO'LASH
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- QR Modal -->
+<div class="qr-overlay" id="qrOverlay" onclick="if(event.target===this)closeQR()">
+  <div class="qr-box-modal">
+    <div style="font-size:15px;font-weight:800;color:#222;margin-bottom:14px;" id="qrTitle">Click orqali to'lov</div>
+    <div class="qr-box-inner" id="qrContainer"></div>
+    <div class="qr-phone-num" id="qrPhone">+998 99 003 30 37</div>
+    <div class="qr-hint">Telefon raqamiga o'tkazma qiling</div>
+    <button class="qr-close" onclick="closeQR()">✓ Yopish</button>
+  </div>
+</div>
+
+<!-- BARCODE SCANNER MODAL -->
+<div class="scan-overlay" id="scanModal">
+  <div style="background:#041e33;border:2px solid #00e5ff;border-radius:16px;padding:20px;width:360px;box-shadow:0 0 40px rgba(0,229,255,.3);">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+      <div>
+        <div style="font-size:14px;font-weight:800;color:#00e5ff;">📷 SHTRIX-KOD SKANERI</div>
+        <div style="font-size:11px;color:#7aabcc;margin-top:2px;">Kamerani shtrix-kod ustiga tuting</div>
+      </div>
+      <button onclick="closeBarcodeScanner()" style="background:rgba(255,82,82,.2);border:1px solid rgba(255,82,82,.4);border-radius:6px;color:#ff5252;font-size:18px;cursor:pointer;padding:4px 10px;">✕</button>
+    </div>
+    <!-- Kamera ko'rinishi -->
+    <div style="position:relative;border-radius:10px;overflow:hidden;background:#000;">
+      <div id="scanCamera" style="width:100%;height:240px;"></div>
+      <!-- Scan line animatsiya -->
+      <div style="position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none;">
+        <div style="position:absolute;left:15%;right:15%;top:15%;bottom:15%;border:2px solid rgba(0,229,255,.7);border-radius:8px;"></div>
+        <div id="scanLine" style="position:absolute;left:15%;right:15%;height:2px;background:rgba(0,229,255,.8);box-shadow:0 0 8px rgba(0,229,255,.8);animation:scanAnim 2s linear infinite;top:15%;"></div>
+      </div>
+    </div>
+    <!-- Natija -->
+    <div id="scanResultText" style="text-align:center;font-size:12px;color:#7aabcc;margin-top:10px;min-height:20px;padding:6px;background:rgba(0,229,255,.05);border-radius:6px;"></div>
+    <!-- Qo'lda kiritish -->
+    <div style="margin-top:10px;display:flex;gap:7px;">
+      <input id="manualBarcodeInput" type="text" inputmode="numeric"
+        placeholder="Shtrix-kodni qo'lda kiriting..."
+        style="flex:1;padding:9px 12px;background:#052240;border:1.5px solid #0e4a7a;border-radius:8px;color:#e0f4ff;font-size:13px;outline:none;font-family:Inter,sans-serif;"
+        onkeydown="if(event.key==='Enter')manualBarcode()"
+        onfocus="this.style.borderColor='#00e5ff'" onblur="this.style.borderColor='#0e4a7a'">
+      <button onclick="manualBarcode()" style="padding:9px 14px;background:rgba(0,229,255,.15);border:1.5px solid #00e5ff;border-radius:8px;color:#00e5ff;font-size:13px;font-weight:700;cursor:pointer;">✓</button>
+    </div>
+    <div style="display:flex;gap:7px;margin-top:8px;">
+      <button onclick="switchCamera()" style="flex:1;padding:8px;background:rgba(0,229,255,.08);border:1px solid rgba(0,229,255,.3);border-radius:7px;color:#00e5ff;font-size:12px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif;">🔄 Kamera</button>
+      <button onclick="closeBarcodeScanner()" style="flex:1;padding:8px;background:rgba(255,82,82,.12);border:1px solid rgba(255,82,82,.3);border-radius:7px;color:#ff5252;font-size:12px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif;">✕ Yopish</button>
+    </div>
+  </div>
+</div>
+<style>
+@keyframes scanAnim{0%{top:15%}50%{top:75%}100%{top:15%}}
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
+<script src="data.js"></script>
+<script>
+// ═══ STATE ═══════════════════════════════════
+let dbProducts=[],dbOrders=[],dbOffline=[],dbUsers=[];
+let cart=[];
+let activeCat='Barchasi';
+let discountPct=0;
+let payMethod='cash';
+let cashInputStr='';
+let orderCounter=1001;
+let mijozCounter=1001; // Mijoz #1001, 1002...
+
+
+const EMOJIS={
+  'Non':'🍞','Sut':'🥛','Gosht':'🥩','Meva':'🍎','Sabzavot':'🥦',
+  'Ichimlik':'🥤','Oziq':'🛒','Kimyo':'🧴','Bolalar':'👶',
+  'Gigiena':'🪥','Aksiya':'🔥','Boshqa':'📦'
+};
+
+// ═══ INIT ════════════════════════════════════
+function updateScrollBtns(){
+  const el=document.getElementById('cartItems');
+  const container=document.getElementById('cartScrollBtns');
+  const up=document.getElementById('scrollUpBtn');
+  const dn=document.getElementById('scrollDnBtn');
+  if(!el||!container||!up||!dn) return;
+  // Tovar bor bo'lsa DOIM ko'rsatamiz
+  const hasItems=el.querySelectorAll('.cart-item').length>0;
+  container.style.display=hasItems?'flex':'none';
+  up.style.opacity=el.scrollTop>5?'1':'0.3';
+  dn.style.opacity=el.scrollTop<el.scrollHeight-el.clientHeight-5?'1':'0.3';
+}
+
+function init(){
+  const s=DB.getSession();
+  if(!s||(s.role!=='admin'&&s.role!=='seller')){window.location.href='/login';return;}
+
+  dbProducts=DB.getProducts();
+  dbOrders=DB.getOrders();
+  dbOffline=DB.getOffline();
+  dbUsers=DB.getUsers();
+
+  // Mahsulotlar bo'sh bo'lsa server dan yukla
+  if(!dbProducts || !dbProducts.length){
+    try{
+      const req=new XMLHttpRequest();
+      req.open('GET','http://localhost:8080/api/products',false);
+      req.send();
+      if(req.status===200){
+        const res=JSON.parse(req.responseText);
+        if(res.ok && Array.isArray(res.data) && res.data.length){
+          dbProducts=res.data;
+          try{localStorage.setItem('sfu_v1_products',JSON.stringify(dbProducts));}catch(e){}
+        }
+      }
+    }catch(e){}
+  }
+  console.log('dbProducts:', dbProducts.length, 'ta');
+
+  document.getElementById('tbName').textContent=s.name||'Kassir';
+  document.getElementById('tbRole').textContent=s.employeeRole||(s.role==='admin'?'Admin':'Sotuvchi');
+
+  const shifts=DB.getShifts?DB.getShifts():[];
+  const aS=shifts.find(sh=>!sh.end);
+  if(aS) document.getElementById('tbSmena').textContent='Smena #'+String(shifts.indexOf(aS)+1).padStart(3,'0');
+
+  // Order counter
+  orderCounter=1001+(dbOffline.length||0);
+  mijozCounter=orderCounter;
+  document.getElementById('orderNo').textContent='Mijoz #'+mijozCounter;
+
+  buildTicker();
+  startClock();
+  buildCats();
+  renderProds();
+  updateTotals();
+
+  // Har 5 daqiqada savatdagi narxlarni chegirma o'zgarishiga qarab yangilash
+  setInterval(function(){
+    let changed=false;
+    cart.forEach(function(c){
+      const p=dbProducts.find(x=>x.id===c.id);
+      if(!p)return;
+      const d=calcDiscount(p);
+      if(d.finalPrice!==c.price){
+        c.price=d.finalPrice;
+        c.discount=d.discount;
+        changed=true;
+      }
+    });
+    if(changed){renderCart();updateTotals();showToast('⚠️ Muddat o\'zgarishi sababli narxlar yangilandi','warning');}
+  },300000);
+}
+
+// ═══ TICKER ══════════════════════════════════
+function buildTicker(){
+  const disc=dbProducts.filter(p=>calcDiscount(p).discount>0&&p.stock>0);
+  if(!disc.length){document.getElementById('tickerInner').textContent='';return;}
+  const h=disc.map(p=>{
+    const d=calcDiscount(p);
+    return`<span class="ti">🔥 ${p.name} <span class="ti-badge">-${d.discount}%</span> ${fmt(d.finalPrice)} so'm · ${d.daysLeft} kun qoldi</span>`;
+  }).join('');
+  document.getElementById('tickerInner').innerHTML=h+h;
+}
+
+// ═══ CLOCK ═══════════════════════════════════
+function startClock(){
+  function upd(){
+    const now=new Date();
+    const h=String(now.getHours()).padStart(2,'0');
+    const m=String(now.getMinutes()).padStart(2,'0');
+    const s=String(now.getSeconds()).padStart(2,'0');
+    document.getElementById('clock').textContent=h+':'+m+':'+s;
+  }
+  upd();setInterval(upd,1000);
+}
+
+// ═══ CATEGORIES ══════════════════════════════
+function buildCats(){
+  const ORDER=['Gosht','Sut','Non','Meva','Sabzavot','Ichimlik','Oziq','Kimyo','Bolalar','Gigiena','Aksiya','Boshqa'];
+  const avail=new Set(dbProducts.map(p=>p.category));
+  const ordered=ORDER.filter(x=>avail.has(x));
+  avail.forEach(x=>{if(!ORDER.includes(x))ordered.push(x);});
+  const cats=['Barchasi',...ordered];
+  document.getElementById('catTabs').innerHTML=cats.map(c=>
+    `<div class="cat-tab ${c===activeCat?'active':''}" onclick="setCat('${c}')">${c}</div>`
+  ).join('');
+}
+function setCat(c){activeCat=c;buildCats();renderProds();}
+
+// ═══ PRODUCTS ════════════════════════════════
+function renderProds(){
+  const q=(document.getElementById('searchInput').value||'').toLowerCase().trim();
+
+  // Barcode scan
+  if(q.length>=6){
+    const ex=dbProducts.find(p=>(p.barcode||'')===q&&p.stock>0);
+    if(ex){addProd(ex);document.getElementById('searchInput').value='';renderProds();setTimeout(()=>document.getElementById('searchInput').focus(),80);return;}
+  }
+
+  const today=new Date(); today.setHours(0,0,0,0);
+  let list=dbProducts.filter(p=>{
+    if(!p.expiryDate) return true;
+    return new Date(p.expiryDate)>=today;
+  });
+  if(activeCat!=='Barchasi') list=list.filter(p=>p.category===activeCat);
+  if(q) list=list.filter(p=>p.name.toLowerCase().includes(q)||(p.barcode||'').includes(q));
+  // Avval stockda borlar, keyin tugaganlar
+  list.sort((a,b)=>{
+    if((a.stock>0)!==(b.stock>0)) return a.stock>0?-1:1;
+    return calcDiscount(b).discount-calcDiscount(a).discount||a.name.localeCompare(b.name,'uz');
+  });
+
+  const grid=document.getElementById('productGrid');
+  if(!list.length){
+    grid.innerHTML=`<div style="grid-column:1/-1;text-align:center;padding:40px 20px;color:var(--muted);">
+      <div style="font-size:40px;margin-bottom:10px;">📦</div>
+      <div style="font-size:14px;font-weight:700;">Mahsulot topilmadi</div>
+      <div style="font-size:12px;margin-top:6px;opacity:.7;">Jami bazada: ${dbProducts.length} ta mahsulot</div>
+      ${!dbProducts.length?'<div style="margin-top:10px;font-size:12px;color:#f44336;">⚠️ products.html dan mahsulot qo\'shing</div>':''}
+    </div>`;
+    return;
+  }
+
+  grid.innerHTML='';
+  list.forEach(p=>{
+    const d=calcDiscount(p);
+    const inCart=cart.find(c=>c.id===p.id);
+    const card=document.createElement('div');
+    card.className='prod-card'+(inCart?' in-cart':'');
+
+    const emoji=EMOJIS[p.category]||'📦';
+    const imgHtml=p.img
+      ? `<div class="prod-img-wrap"><img src="${p.img}" alt="${p.name}" onerror="this.parentElement.outerHTML='<div class=\"prod-emoji-wrap\">'+${JSON.stringify('')}+'${emoji}'+'</div>'"></div>`
+      : `<div class="prod-emoji-wrap">${emoji}</div>`;
+
+    // Narxni to'g'ri hisoblash - manfiy yoki 0 bo'lsa sellPrice ishlatiladi
+    const realPrice = (d.finalPrice > 0) ? d.finalPrice : (p.sellPrice || 0);
+    const hasDisc = d.discount > 0 && d.finalPrice > 0 && d.finalPrice < p.sellPrice;
+
+    const discBadge = hasDisc
+      ? `<div class="prod-disc-badge">-${d.discount}%</div>`
+      : '';
+
+    card.innerHTML=`
+      ${imgHtml}
+      ${discBadge}
+      ${inCart?`<div class="prod-in-cart-badge">${inCart.qty}</div>`:''}
+      <div class="prod-info">
+        <div class="prod-name">${p.name}</div>
+        <div class="prod-price-main">${fmt(realPrice)} so'm</div>
+        ${hasDisc?`<div class="prod-price-old">${fmt(p.sellPrice)} so'm</div>`:''}
+        <div class="prod-stock-text">${p.stock} ${p.unit}</div>
+      </div>`;
+    card.onclick=()=>addProd(p);
+    grid.appendChild(card);
+  });
+}
+function filterProds(){
+  const q=document.getElementById('searchInput').value.trim();
+  // USB/Bluetooth scanner — 6+ raqam kiritilsa barcode deb qabul qil
+  if(q.length>=6){
+    const ex=dbProducts.find(p=>(p.barcode||'')===q&&p.stock>0);
+    if(ex){
+      addProd(ex);
+      document.getElementById('searchInput').value='';
+      showToast('✅ '+ex.name+' qo\u02bcshildi (scan)','success');
+      return;
+    }
+  }
+  renderProds();
+}
+
+// ═══ CART ════════════════════════════════════
+function addProd(p){
+  const d=calcDiscount(p);
+  const existing=cart.find(c=>c.id===p.id);
+  const dbProd=dbProducts.find(x=>x.id===p.id);
+  if(existing){
+    if(existing.qty>=dbProd.stock){showToast('❌ Ombordan oshib ketdi','error');return;}
+    existing.qty++;
+  } else {
+    cart.push({id:p.id,name:p.name,unit:p.unit,emoji:EMOJIS[p.category]||'📦',
+      price:d.finalPrice,origPrice:p.sellPrice,costPrice:p.costPrice,
+      discount:d.discount,category:p.category,img:p.img,barcode:p.barcode,qty:1});
+  }
+  playBeep(1200,0.08,0.3);
+  renderCart();renderProds();updateTotals();
+}
+function changeQty(id,delta){
+  const item=cart.find(c=>c.id===id);if(!item)return;
+  const dbProd=dbProducts.find(x=>x.id===id);
+  if(delta>0&&item.qty>=dbProd.stock){showToast('❌ Ombordan oshib ketdi','error');return;}
+  item.qty+=delta;
+  if(item.qty<=0) cart=cart.filter(c=>c.id!==id);
+  renderCart();renderProds();updateTotals();
+}
+function removeItem(id){
+  cart=cart.filter(c=>c.id!==id);
+  renderCart();renderProds();updateTotals();
+}
+function clearCart(){
+  cart=[];discountPct=0;
+  const di=document.getElementById('discInput');
+  if(di) di.value=0;
+  const dr=document.getElementById('discRow2');
+  if(dr) dr.classList.remove('visible');
+  orderCounter++;
+  mijozCounter=orderCounter;
+  document.getElementById('orderNo').textContent='Mijoz #'+mijozCounter;
+  // Mijoz maydonlarini tozala
+  document.getElementById('custName').value='';
+  document.getElementById('custPhone').value='+998 ';
+  document.getElementById('existDebtBar').style.display='none';
+  _debtUser=null;
+  renderCart();renderProds();updateTotals();
+}
+
+function renderCart(){
+  const container=document.getElementById('cartItems');
+  const totalsBlock=document.getElementById('totalsBlock');
+
+  if(!cart.length){
+    container.innerHTML=`<div class="cart-empty">
+      <div class="cart-empty-icon">🛒</div>
+      <span style="font-size:13px;font-weight:600;">Savatcha bo'sh</span>
+      <span style="font-size:11px;color:#ddd;">Mahsulot tanlang</span>
+    </div>`;
+    totalsBlock.style.display='none';
+    return;
+  }
+  totalsBlock.style.display='block';
+  container.innerHTML='';
+  cart.forEach((item,idx)=>{
+    const row=document.createElement('div');
+    row.className='cart-item';
+    row.innerHTML=`
+      <span class="ci-num">${idx+1}</span>
+      <div class="ci-name">
+        ${item.emoji} ${item.name}
+        <div class="ci-unit">${item.unit}${item.discount>0?' · <span style="color:#e53935;font-size:9px;">-'+item.discount+'%</span>':''}</div>
+      </div>
+      <div class="ci-qty">
+        <button class="qty-btn minus" onclick="changeQty(${item.id},-1)">−</button>
+        <span class="qty-val">${item.qty}</span>
+        <button class="qty-btn plus" onclick="changeQty(${item.id},1)">+</button>
+      </div>
+      <div class="ci-price">${fmt(item.price)}</div>
+      <div class="ci-total">${fmt(item.price*item.qty)}</div>
+      <button class="ci-del" onclick="removeItem(${item.id})">✕</button>`;
+    container.appendChild(row);
+  });
+  // Strelkalarni yangilash
+  setTimeout(updateScrollBtns, 30);
+}
+
+function updateTotals(){
+  const subtotal=cart.reduce((s,c)=>s+c.price*c.qty,0);
+  const disc=Math.round(subtotal*discountPct/100);
+  const afterDisc=subtotal-disc;
+  const tax=Math.round(afterDisc*0.12);
+  const grand=afterDisc+tax;
+
+  document.getElementById('subtotalAmt').textContent=fmt(subtotal)+" so'm";
+  document.getElementById('taxAmount').textContent=fmt(tax)+" so'm";
+  document.getElementById('grandTotal').textContent=fmt(grand)+" so'm";
+
+  const dr=document.getElementById('discRow');
+  if(disc>0){dr.style.display='flex';document.getElementById('discAmount').textContent='−'+fmt(disc)+" so'm";}
+  else dr.style.display='none';
+
+  // Debt card yangilash
+  const dc=document.getElementById('debtCard');
+  const da=document.getElementById('debtCardAmt');
+  if(dc&&da){
+    if(grand>0){dc.classList.remove('no-debt');da.textContent=fmt(grand)+" so'm";}
+    else{dc.classList.add('no-debt');da.textContent="0 so'm";}
+  }
+}
+function getGrand(){
+  const subtotal=cart.reduce((s,c)=>s+c.price*c.qty,0);
+  const disc=Math.round(subtotal*discountPct/100);
+  const afterDisc=subtotal-disc;
+  return afterDisc+Math.round(afterDisc*0.12);
+}
+
+// ═══ KALKULYATOR ══════════════════════════════
+let _calcExpr='', _calcResult='0', _calcLastOp=false;
+
+function openCalc(){ document.getElementById('calcOverlay').classList.add('open'); }
+function closeCalc(){ document.getElementById('calcOverlay').classList.remove('open'); }
+
+function calcPress(v){
+  if(v==='C'){ _calcExpr=''; _calcResult='0'; _calcLastOp=false; }
+  else if(v==='⌫'){
+    if(_calcLastOp){_calcExpr='';_calcResult='0';_calcLastOp=false;}
+    else{ _calcResult=_calcResult.length>1?_calcResult.slice(0,-1):'0'; }
+  }
+  else if(v==='±'){ _calcResult=String(-parseFloat(_calcResult)||0); }
+  else if(v==='%'){ _calcResult=String(parseFloat(_calcResult)/100); _calcLastOp=true; }
+  else if(v==='='){ _calc_eval(); }
+  else if(['÷','×','−','+'].includes(v)){
+    if(_calcExpr&&!_calcLastOp){ _calc_eval(); }
+    _calcExpr=(_calcLastOp?_calcExpr:_calcResult)+(v==='÷'?'/':(v==='×'?'*':(v==='−'?'-':'+')));
+    _calcLastOp=true;
+  }
+  else{
+    if(_calcLastOp||_calcResult==='0'){ _calcResult=v==='.'?'0.':v; _calcLastOp=false; }
+    else{ _calcResult=(_calcResult+v).slice(0,15); }
+  }
+  document.getElementById('calcResult').textContent=fmt_c(_calcResult);
+  document.getElementById('calcExpr').textContent=_calcExpr.replace('*','×').replace('/','÷').replace('-','−');
+}
+function _calc_eval(){
+  if(!_calcExpr) return;
+  try{
+    const expr=_calcExpr+_calcResult;
+    const res=Function('"use strict";return ('+expr+')')();
+    _calcResult=isFinite(res)?String(Math.round(res*100)/100):'0';
+    _calcExpr='';_calcLastOp=true;
+  }catch(e){_calcResult='0';_calcExpr='';}
+}
+function fmt_c(v){
+  const n=parseFloat(v);if(isNaN(n))return v;
+  const parts=v.split('.');
+  return Number(parts[0]).toLocaleString('uz-UZ')+(parts[1]!==undefined?'.'+parts[1]:'');
+}
+function calcUse(){
+  const n=parseFloat(_calcResult.replace(/\s/g,''));
+  if(isNaN(n)||n<=0){closeCalc();return;}
+  // To'lov inputiga qo'lla
+  const inp=document.getElementById('cashInput');
+  if(inp){
+    cashInputStr=String(Math.round(n));
+    inp.value=fmt(Math.round(n));
+    calcChange();
+  }
+  closeCalc();
+  openPayModal();
+}
+
+function toggleDiscount(){ openCalc(); }
+
+// ═══ PAYMENT MODAL ═══════════════════════════
+// ═══ TO'LOV SISTEMASI ════════════════════════
+const SHOP_PHONE = '+998 99 003 30 37'; // Click/Payme raqami
+const SHOP_CARD  = '8600 1234 5678 9012';
+const CLICK_NUM  = '+998 99 003 30 37';  // Click raqami
+const PAYME_NUM  = '+998 99 003 30 37';  // Payme raqami
+
+// payRows: [{method, amount, inputEl}]
+let payRows = [];
+let activePayInput = null;
+
+const METHOD_INFO = {
+  cash:  {icon:'💵', name:'Naqd pul',      qr:false},
+  card:  {icon:'💳', name:'Plastik karta',  qr:false},
+  click: {icon:'📱', name:'Click',          qr:true,  color:'#00b894'},
+  payme: {icon:'📲', name:'Payme',          qr:true,  color:'#6c5ce7'},
+  debt:  {icon:'📋', name:'Qarz (nasiya)',  qr:false, isDebt:true, color:'#ff2d55'},
+};
+
+function openPayModal(prefillDebt=false){
+  if(!cart.length){showToast('⚠️ Savatcha bo\'sh!','warning');return;}
+  // Agar qarz bo'lsa, uni to'lovga qo'shamiz
+  payRows = [];
+  if(prefillDebt && window._lastDebt > 0){
+    payRows.push({method:'cash', amount:0});
+  } else {
+    payRows.push({method:'cash', amount:0});
+  }
+  document.getElementById('modalTotal').textContent=fmt(getGrand())+" so'm";
+  document.getElementById('modalOrderNo').textContent='Mijoz #'+mijozCounter;
+  document.getElementById('payModal').classList.add('open');
+  renderPayRows();
+  updatePaySummary();
+  setTimeout(()=>{ const first=document.querySelector('.pri-amount'); if(first){first.focus();activePayInput=first;} },100);
+}
+
+function closePayModal(){
+  document.getElementById('payModal').classList.remove('open');
+}
+
+function addPayRowModal(){
+  // Keyingi metodni tanlash
+  const used=payRows.map(r=>r.method);
+  const next=Object.keys(METHOD_INFO).find(m=>!used.includes(m))||'cash';
+  payRows.push({method:next, amount:0});
+  renderPayRows();
+  setTimeout(()=>{
+    const inputs=document.querySelectorAll('.pri-amount');
+    const last=inputs[inputs.length-1];
+    if(last){last.focus();activePayInput=last;}
+  },50);
+}
+
+function removePayRow(idx){
+  if(payRows.length<=1)return;
+  payRows.splice(idx,1);
+  renderPayRows();
+  updatePaySummary();
+}
+
+function renderPayRows(){
+  const section=document.getElementById('payRowsSection');
+  const grand=getGrand();
+  section.innerHTML='';
+  payRows.forEach((row,idx)=>{
+    const m=METHOD_INFO[row.method]||METHOD_INFO.cash;
+    const div=document.createElement('div');
+    div.className='pay-row-item'+(activePayInput&&activePayInput.dataset.idx==idx?' active-row':'');
+
+    // Method selector dropdown
+    const methodOpts=Object.entries(METHOD_INFO).map(([k,v])=>
+      `<option value="${k}" ${k===row.method?'selected':''}>${v.icon} ${v.name}</option>`
+    ).join('');
+
+    div.innerHTML=`
+      <select class="pay-method-sel" data-idx="${idx}" onchange="changeRowMethod(${idx},this.value)"
+        style="border:none;background:transparent;font-size:13px;font-weight:700;color:#333;cursor:pointer;outline:none;padding:2px;">
+        ${methodOpts}
+      </select>
+      ${m.qr?`<button onclick="showQR('${row.method}')" style="background:none;border:1px solid #ddd;border-radius:5px;padding:2px 7px;font-size:11px;font-weight:700;color:#666;cursor:pointer;">📷 QR</button>`:''}
+      <input class="pri-amount" type="text" inputmode="numeric"
+        placeholder="0 so'm" data-idx="${idx}"
+        value="${row.amount>0?fmt(row.amount):''}"
+        oninput="onRowAmountInput(${idx},this)"
+        onfocus="activePayInput=this;highlightRow(${idx})"
+        style="flex:1;">
+      ${payRows.length>1?`<button class="pri-del" onclick="removePayRow(${idx})">✕</button>`:''}
+    `;
+    section.appendChild(div);
+  });
+}
+
+function changeRowMethod(idx, method){
+  payRows[idx].method=method;
+  renderPayRows();
+  // QR avtomatik ko'rsat
+  if(METHOD_INFO[method]&&METHOD_INFO[method].qr){
+    // showQR(method);
+  }
+}
+
+function highlightRow(idx){
+  document.querySelectorAll('.pay-row-item').forEach((el,i)=>{
+    el.classList.toggle('active-row', i===idx);
+  });
+}
+
+function onRowAmountInput(idx, el){
+  const raw=el.value.replace(/\s/g,'').replace(/,/g,'');
+  const num=parseInt(raw)||0;
+  payRows[idx].amount=num;
+  el.classList.toggle('has-val', num>0);
+  // Format
+  if(num>0) el.value=fmt(num);
+  updatePaySummary();
+}
+
+function updatePaySummary(){
+  const grand=getGrand();
+  const debtRowAmt=payRows.filter(r=>r.method==='debt').reduce((s,r)=>s+r.amount,0);
+  const cashPaid=payRows.filter(r=>r.method!=='debt').reduce((s,r)=>s+r.amount,0);
+  const totalAll=payRows.reduce((s,r)=>s+r.amount,0);
+  const debt=grand-(cashPaid+debtRowAmt);
+  const change=cashPaid-(grand-debtRowAmt);
+
+  document.getElementById('psbTotal').textContent=fmt(grand)+" so'm";
+  document.getElementById('psbPaid').textContent=fmt(cashPaid)+(debtRowAmt>0?' + 📋 '+fmt(debtRowAmt)+' qarz':' so\'m');
+  // Qoldi kartasini modal ichida ham yangilash
+  const dcAmt=document.getElementById('debtCardAmt');
+  if(dcAmt){
+    const remaining=Math.max(0,grand-totalPaid);
+    dcAmt.textContent=fmt(remaining)+" so'm";
+    const dc=document.getElementById('debtCard');
+    if(dc) dc.classList.toggle('no-debt',remaining<=0);
+  }
+
+  const debtEl=document.getElementById('psbDebt');
+  const debtRow=document.getElementById('psbDebtRow');
+  if(change>0){
+    // Qaytim bor — qarz yo'q
+    if(debtRow) debtRow.style.display='none';
+    document.getElementById('changeRow').style.display='flex';
+    document.getElementById('changeAmount').textContent=fmt(change)+" so'm";
+  } else if(debt>0){
+    // Qarz bor — ko'rsat
+    if(debtRow){ debtRow.style.display='flex'; debtEl.textContent=fmt(debt)+" so'm"; }
+    document.getElementById('changeRow').style.display='none';
+  } else {
+    // Hamma to'landi — ikkisini ham yashir
+    if(debtRow) debtRow.style.display='none';
+    document.getElementById('changeRow').style.display='none';
+  }
+}
+
+// Numpad — aktiv inputga yozadi
+function numPress(val){
+  const inp=activePayInput||document.querySelector('.pri-amount');
+  if(!inp) return;
+  const idx=parseInt(inp.dataset.idx);
+  let raw=inp.value.replace(/\s/g,'').replace(/,/g,'');
+  if(val==='del') raw=raw.slice(0,-1);
+  else if(raw==='0'||raw==='') raw=(val==='000'?'':val);
+  else raw+=val;
+  raw=raw.slice(0,12);
+  const num=parseInt(raw)||0;
+  inp.value=num>0?fmt(num):'';
+  inp.classList.toggle('has-val',num>0);
+  if(!isNaN(idx)) payRows[idx].amount=num;
+  updatePaySummary();
+}
+
+// Jami summaga bosish → qolgan summani aktiv inputga qo'y
+function fillRemaining(){
+  const inp=activePayInput||document.querySelector('.pri-amount');
+  if(!inp) return;
+  const idx=parseInt(inp.dataset.idx);
+  const grand=getGrand();
+  const otherPaid=payRows.reduce((s,r,i)=>i===idx?s:s+r.amount,0);
+  const remaining=Math.max(0,grand-otherPaid);
+  payRows[idx].amount=remaining;
+  inp.value=remaining>0?fmt(remaining):'';
+  inp.classList.toggle('has-val',remaining>0);
+  updatePaySummary();
+}
+
+// Aktiv inputga summa tushirish
+function fillToActive(type){
+  const grand=getGrand();
+  let amount=0;
+  if(type==='grand') amount=grand;
+  else if(type==='debt'){
+    const totalPaid=payRows.reduce((s,r)=>s+r.amount,0);
+    amount=Math.max(0,grand-totalPaid);
+  }
+  if(amount<=0) return;
+  const inp=activePayInput||document.querySelector('.pri-amount');
+  if(!inp) return;
+  const idx=parseInt(inp.dataset.idx)||0;
+  payRows[idx].amount=amount;
+  inp.value=fmt(amount);
+  inp.classList.add('has-val');
+  updatePaySummary();
+  // Flash effekt
+  inp.style.outline='2px solid #1a8a63';
+  inp.style.background='#f0fdf8';
+  setTimeout(()=>{inp.style.outline='';inp.style.background='';},600);
+  inp.focus();
+}
+
+// copyAndFill — eski nom, fillToActive ga yo'naltiradi
+function copyAndFill(type){ fillToActive(type); }
+
+// Grand total bosilganda fillRemaining
+function openPayModal_or_fill(){
+  if(document.getElementById('payModal').classList.contains('open')){
+    fillRemaining();
+  } else {
+    openPayModal();
+  }
+}
+
+// QR ko'rsatish
+function showQR(method){
+  const m=METHOD_INFO[method];
+  if(!m||!m.qr) return;
+  const num=method==='click'?CLICK_NUM:PAYME_NUM;
+  document.getElementById('qrTitle').textContent=m.name+' orqali to\'lov';
+  document.getElementById('qrTitle').style.color=m.color||'#222';
+  document.getElementById('qrPhone').textContent=num;
+  const el=document.getElementById('qrContainer');
+  el.innerHTML='';
+  const qrFn=()=>{
+    el.innerHTML='';
+    new QRCode(el,{text:num,width:180,height:180,colorDark:'#000',colorLight:'#fff'});
+  };
+  if(typeof QRCode!=='undefined'){
+    qrFn();
+  } else {
+    el.innerHTML=`<div style="font-family:monospace;font-size:16px;font-weight:700;padding:20px;color:#222;text-align:center;">${num}</div>`;
+    const s=document.createElement('script');
+    s.src='https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js';
+    s.onload=qrFn;
+    document.head.appendChild(s);
+  }
+  document.getElementById('qrOverlay').classList.add('open');
+}
+function closeQR(){ document.getElementById('qrOverlay').classList.remove('open'); }
+
+// eski funksiyalar (kalk uchun)
+function selectMethod(el,m){ }
+function numPress_old(){}
+function calcChange(){ updatePaySummary(); }
+
+function confirmPayment(){
+  if(!cart.length){showToast('⚠️ Savat bo\'sh!','warning');return;}
+  const grand=getGrand();
+
+  // Qarz metodini alohida ajrat
+  const debtRow=payRows.find(r=>r.method==='debt');
+  const debtAmt=debtRow?debtRow.amount:0;
+  const cashPaid=payRows.filter(r=>r.method!=='debt').reduce((s,r)=>s+r.amount,0);
+  const totalPaid=cashPaid; // faqat haqiqiy to'lovlar
+  const debt=debtAmt>0 ? debtAmt : (grand-totalPaid>0?grand-totalPaid:0);
+  const change=totalPaid-grand+debt>0?totalPaid-grand+debt:0;
+
+  // Kamida bitta summa (naqd yoki qarz) kiritilgan bo'lishi kerak
+  const totalAll=payRows.reduce((s,r)=>s+r.amount,0);
+  if(totalAll<=0){showToast('⚠️ Summa kiriting!','warning');return;}
+
+  const nameVal=document.getElementById('custName').value.trim();
+  const phoneVal=document.getElementById('custPhone').value.trim();
+
+  // Qarz bo'lsa ism kerak
+  if(debt>0&&!nameVal){
+    showToast('⚠️ Qarz uchun mijoz ismini kiriting!','warning');
+    closePayModal();
+    document.getElementById('custName').focus();
+    return;
+  }
+
+  const paid=totalPaid;
+
+  // Save to DB
+  const items=cart.map(c=>({name:c.name,qty:c.qty,price:c.price,costPrice:c.costPrice,originalPrice:c.origPrice,discount:c.discount}));
+  const subtotal=cart.reduce((s,c)=>s+c.price*c.qty,0);
+  const disc=Math.round(subtotal*discountPct/100);
+  const afterDisc=subtotal-disc;
+  const tax=Math.round(afterDisc*0.12);
+  const profit=cart.reduce((s,c)=>s+(c.price-c.costPrice)*c.qty,0)-disc;
+  const payLabels={cash:'💵 Naqd',card:'💳 Karta',click:'📱 Click',payme:'📲 Payme',debt:'📋 Qarz'};
+  const payMethodsArr=payRows.filter(r=>r.amount>0).map(r=>({method:r.method,amount:r.amount}));
+  const payStr=payMethodsArr.map(r=>(payLabels[r.method]||r.method)+' '+fmt(r.amount)).join(' + ')||'💵 Naqd';
+
+  const s2=DB.getSession();
+  const sale={
+    id:'M#'+String(mijozCounter).padStart(4,'0'),
+    userName:nameVal||'Mijoz',userPhone:phoneVal||'',
+    items,productsTotal:subtotal,
+    discount:disc,tax,total:grand,
+    payment:payStr,
+    payMethods:payMethodsArr,
+    paidSum:paid,change:change,debt:debt,
+    status:'done',time:new Date().toISOString(),
+    profit,type:'offline',
+    employeeId:s2?s2.employeeId:null,
+    employeeName:s2?s2.name:'Admin'
+  };
+
+  // Ombor kamaytir (stok manfiy bo'lmasligi tekshiriladi)
+  cart.forEach(c=>{const p=dbProducts.find(x=>x.id===c.id);if(p)p.stock=Math.max(0,p.stock-c.qty);});
+  const newOffline=DB.getOffline();newOffline.unshift(sale);
+  DB.saveOffline(newOffline);DB.saveProducts(dbProducts);
+
+  // Saqlash — users + debt yangilash
+  if(nameVal||debt>0){
+    const pc=phoneVal.replace(/\s/g,'');const isReal=/^\+998\d{9}$/.test(pc);
+    const allUsers=DB.getUsers();
+    let u=isReal?allUsers.find(x=>x.phone.replace(/\s/g,'')===pc):null;
+    if(!u){u={id:Date.now(),userId:'U'+Date.now(),name:nameVal||'Mijoz',phone:isReal?phoneVal:'Mijoz_'+Date.now(),address:"🏪 Do'konda",debt:0,debtHistory:[],registeredAt:new Date().toISOString()};allUsers.push(u);}
+    else if(nameVal)u.name=nameVal;
+    if(debt>0){
+      const prevDebt=u.debt||0;
+      u.debt=(u.debt||0)+debt;
+      if(!u.debtHistory)u.debtHistory=[];
+      u.debtHistory.unshift({type:'new',amount:debt,prevDebt,newDebt:u.debt,orderId:sale.id,date:new Date().toISOString()});
+    }
+    DB.saveUsers(allUsers);
+  }
+
+  closePayModal();
+  showToast('✅ Mijoz #'+mijozCounter+' savdosi yakunlandi! 🎉');
+  playSaleSound();
+  buildTicker();
+  clearCart(); // savatcha avtomatik tozalanadi
+  // Chek chiqarish
+  setTimeout(()=>{ if(confirm('Chek chiqarilsinmi?')) printReceipt(sale); }, 300);
+}
+
+// ═══ PRINT ═══════════════════════════════════
+function printReceipt(o){
+  const time=new Date(o.time).toLocaleString('uz-UZ');
+  const w=window.open('','_blank','width=420,height=820');
+  if(!w){showToast('Popup bloklangan!','warning');return;}
+  let rows='';
+  o.items.forEach(i=>{
+    rows+=`<tr><td class="nm">${i.name}</td><td class="ct">${i.qty}</td>
+    <td class="pr">${Number(i.price).toLocaleString('uz-UZ')}</td>
+    <td class="sm">${Number(i.price*i.qty).toLocaleString('uz-UZ')}</td></tr>`;
+  });
+  const tot=Number(o.total).toLocaleString('uz-UZ');
+  const sub=Number(o.productsTotal||o.total).toLocaleString('uz-UZ');
+  const tax=Number(o.tax||0).toLocaleString('uz-UZ');
+  const disc=Number(o.discount||0).toLocaleString('uz-UZ');
+  const change=Number(o.change||0).toLocaleString('uz-UZ');
+  const css=`@media print{@page{size:80mm auto;margin:0;}.np,.bk{display:none!important;}body{padding:3mm 4mm;}}
+*{box-sizing:border-box;margin:0;padding:0;}body{font-family:"Courier New",monospace;font-size:12px;background:#fff;color:#111;width:76mm;margin:0 auto;padding:12px;}
+.np{display:flex;gap:8px;margin-bottom:12px;}.bp{flex:1;padding:10px;font-family:inherit;font-size:13px;font-weight:700;border:none;border-radius:8px;cursor:pointer;}
+.bpr{background:#1a1a1a;color:#fff;}.bk{display:block;width:100%;padding:9px;margin-bottom:12px;background:#f0f4ff;color:#1565c0;border:2px solid #1565c0;border-radius:8px;font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;text-align:center;}
+.logo{text-align:center;padding:8px 0 10px;border-bottom:2px solid #111;margin-bottom:8px;}
+.li{font-size:28px;display:block;margin-bottom:3px;}.ln{font-size:15px;font-weight:900;letter-spacing:3px;}.ls{font-size:10px;color:#888;}
+.ib{margin:8px 0;padding:6px 0;border-top:1px dashed #ccc;border-bottom:1px dashed #ccc;}
+.ir{font-size:11px;margin:3px 0;display:flex;justify-content:space-between;}.lb{color:#888;}.vl{font-weight:700;}
+table{width:100%;border-collapse:collapse;margin:8px 0;}thead{border-bottom:2px solid #111;}
+th{font-size:9px;color:#888;padding:4px 2px;text-align:left;font-weight:700;}tbody tr{border-bottom:1px dashed #ddd;}
+.nm{padding:5px 2px;font-size:11px;font-weight:600;}.ct{text-align:center;padding:5px 2px;font-size:11px;color:#555;}.pr{text-align:right;padding:5px 2px;font-size:10px;color:#888;}.sm{text-align:right;padding:5px 2px;font-weight:700;font-size:11px;}
+.tb{background:#f5f5f5;border-radius:6px;padding:8px 10px;margin:8px 0;}
+.tr{display:flex;justify-content:space-between;font-size:11px;color:#555;margin-bottom:3px;}
+.tB{display:flex;justify-content:space-between;font-size:15px;font-weight:900;padding-top:6px;margin-top:6px;border-top:2px solid #111;}
+.ps{margin:8px 0;}.prow{display:flex;justify-content:space-between;font-size:11px;padding:3px 0;}
+.ft{text-align:center;margin-top:10px;padding-top:8px;border-top:2px dashed #111;}.fm{font-size:13px;font-weight:700;}.fs{font-size:9px;color:#888;line-height:1.7;}`;
+  const body=`<div class="np"><button class="bp bpr" onclick="window.print()">🖨 PRINT</button></div>
+<button class="bk" onclick="window.close()">← Savdoga qaytish</button>
+<div class="logo"><span class="li">🏪</span><div class="ln">SELLFLOWUZ</div><div class="ls">Sifatli xizmat — qulay narx</div></div>
+<div class="ib">
+  <div class="ir"><span class="lb">Sana:</span><span class="vl">${time}</span></div>
+  <div class="ir"><span class="lb">Chek #:</span><span class="vl">${o.id}</span></div>
+  <div class="ir"><span class="lb">Mijoz:</span><span class="vl">${o.userName||'—'}</span></div>
+</div>
+<table><thead><tr><th>MAHSULOT</th><th style="text-align:center">SON</th><th style="text-align:right">NARX</th><th style="text-align:right">JAMI</th></tr></thead><tbody>${rows}</tbody></table>
+<div class="tb">
+  <div class="tr"><span>Oraliq jami:</span><span>${sub} so'm</span></div>
+  ${o.discount>0?`<div class="tr"><span>Chegirma:</span><span style="color:#e53935;">−${disc} so'm</span></div>`:''}
+  <div class="tr"><span>QQS (12%):</span><span>${tax} so'm</span></div>
+  <div class="tB"><span>JAMI:</span><span>${tot} so'm</span></div>
+</div>
+<div class="ps"><div class="tr"><span>To'lov:</span><span>${o.payment}</span></div>
+${o.change>0?`<div class="tr"><span>Qaytim:</span><span style="color:#1a8a63;">${change} so'm</span></div>`:''}</div>
+<div class="ft"><div class="fm">Rahmat! Yana keling 🙏</div><div class="fs">SELLFLOWUZ</div></div>`;
+  w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Chek ${o.id}</title><style>${css}</style></head><body>${body}<scr`+`ipt>window.onload=()=>{}<\/scr`+`ipt></body></html>`);
+  w.document.close();
+}
+
+// ═══ FULLSCREEN ═══════════════════════════════
+function tbFS(){if(!document.fullscreenElement)document.documentElement.requestFullscreen().catch(()=>{});else document.exitFullscreen();}
+document.addEventListener('fullscreenchange',()=>{const b=document.getElementById('tbF11');if(b)b.textContent=document.fullscreenElement?'✕':'⛶';});
+document.addEventListener('keydown',e=>{if(e.key==='F11'){e.preventDefault();tbFS();}});
+
+// ═══ LOGOUT ════════════════════════════════════
+function posLogout(){
+  window._logoutInProgress=true;
+  DB.clearSession();localStorage.removeItem('sfu_fs_locked');
+  const go=()=>{window._logoutInProgress=false;window.location.href='/login';};
+  if(document.fullscreenElement)document.exitFullscreen().then(go).catch(go);else go();
+}
+
+// ═══ HELPERS ═══════════════════════════════════
+function fmt(n){return Number(n).toLocaleString('uz-UZ');}
+function capName(el){const p=el.selectionStart;el.value=el.value.replace(/\b\w/g,c=>c.toUpperCase());el.setSelectionRange(p,p);}
+function fmtPhone(inp){
+  let d=inp.value.replace(/\D/g,'');if(!d.startsWith('998'))d='998'+d.replace(/^998/,'');d=d.slice(0,12);
+  let r='+998';if(d.length>3)r+=' '+d.slice(3,5);if(d.length>5)r+=' '+d.slice(5,8);
+  if(d.length>8)r+=' '+d.slice(8,10);if(d.length>10)r+=' '+d.slice(10,12);inp.value=r;
+}
+
+// ═══ MIJOZ QIDIRISH (AUTOCOMPLETE) ═════════════
+var _custSuggestIdx = -1;
+
+function searchCustomers(val){
+  const box = document.getElementById('custSuggest');
+  const q = val.trim().toLowerCase();
+  if(q.length < 1){ box.style.display='none'; return; }
+  const users = DB.getUsers();
+  const matches = users.filter(u =>
+    (u.name && u.name.toLowerCase().includes(q)) ||
+    (u.phone && u.phone.replace(/\s/g,'').includes(q.replace(/\s/g,'')))
+  ).slice(0,8);
+  if(!matches.length){ box.style.display='none'; return; }
+  _custSuggestIdx = -1;
+  box.innerHTML = matches.map((u,i) => {
+    const debt = u.debt>0 ? `<span style="color:#ff2d55;font-size:10px;font-weight:700;margin-left:6px;">⚠️ ${fmt(u.debt)} so'm qarz</span>` : '';
+    const purchases = u.purchases ? `<span style="color:#7aabcc;font-size:10px;">${u.purchases} ta xarid</span>` : '';
+    return `<div class="cust-sug-item" data-idx="${i}"
+      onmousedown="selectCustomer(${JSON.stringify(u).replace(/"/g,'&quot;')})"
+      onmouseover="this.classList.add('hover')" onmouseout="this.classList.remove('hover')"
+      style="padding:9px 12px;cursor:pointer;border-bottom:1px solid rgba(0,229,255,.1);display:flex;justify-content:space-between;align-items:center;">
+      <div>
+        <div style="font-size:13px;font-weight:700;color:#e0f4ff;">${u.name||'—'}</div>
+        <div style="font-size:11px;color:#7aabcc;">${u.phone||''} ${purchases}</div>
+      </div>
+      <div style="text-align:right;">${debt}</div>
+    </div>`;
+  }).join('');
+  box.style.display = 'block';
+}
+
+function selectCustomer(u){
+  document.getElementById('custName').value = u.name||'';
+  document.getElementById('custPhone').value = u.phone||'+998 ';
+  document.getElementById('custSuggest').style.display = 'none';
+  _debtUser = null;
+  if(u.debt > 0){
+    _debtUser = u;
+    document.getElementById('existDebtAmt').textContent = fmt(u.debt)+' so\'m';
+    document.getElementById('existDebtName').textContent = u.name+' — oldingi qarz';
+    document.getElementById('existDebtBar').style.display = 'block';
+  } else {
+    document.getElementById('existDebtBar').style.display = 'none';
+  }
+}
+
+function custKeyNav(e){
+  const box = document.getElementById('custSuggest');
+  const items = box.querySelectorAll('.cust-sug-item');
+  if(!items.length) return;
+  if(e.key==='ArrowDown'){ e.preventDefault(); _custSuggestIdx=Math.min(_custSuggestIdx+1,items.length-1); }
+  else if(e.key==='ArrowUp'){ e.preventDefault(); _custSuggestIdx=Math.max(_custSuggestIdx-1,0); }
+  else if(e.key==='Escape'){ box.style.display='none'; return; }
+  else if(e.key==='Enter' && _custSuggestIdx>=0){ e.preventDefault(); items[_custSuggestIdx].dispatchEvent(new Event('mousedown')); return; }
+  else return;
+  items.forEach((el,i)=>el.style.background=i===_custSuggestIdx?'rgba(0,229,255,.12)':'');
+}
+
+document.addEventListener('click', function(e){
+  const box=document.getElementById('custSuggest');
+  if(box && !box.contains(e.target) && e.target.id!=='custName') box.style.display='none';
+});
+
+// ═══ QARZ TIZIMI ════════════════════════════════
+var _debtUser=null; // hozir tanlangan qarzdor user
+
+function lookupUserDebt(){
+  const phone=document.getElementById('custPhone').value.replace(/\s/g,'');
+  const bar=document.getElementById('existDebtBar');
+  _debtUser=null;
+  if(!/^\+998\d{9}$/.test(phone)){bar.style.display='none';return;}
+  const users=DB.getUsers();
+  const u=users.find(x=>x.phone&&x.phone.replace(/\s/g,'')===phone);
+  if(u&&u.debt>0){
+    _debtUser=u;
+    document.getElementById('existDebtAmt').textContent=fmt(u.debt)+' so\'m';
+    document.getElementById('existDebtName').textContent=u.name+' — oldingi qarz';
+    if(document.getElementById('custName').value.trim()==='') document.getElementById('custName').value=u.name;
+    bar.style.display='block';
+  } else {
+    bar.style.display='none';
+  }
+}
+
+function openDebtPayModal(){
+  if(!_debtUser){showToast('Mijoz topilmadi!','warning');return;}
+  document.getElementById('debtPayModal').style.display='flex';
+  document.getElementById('debtPayUserName').textContent=_debtUser.name+' | '+_debtUser.phone;
+  document.getElementById('debtPayTotal').textContent=fmt(_debtUser.debt)+' so\'m';
+  document.getElementById('debtPayAmount').value='';
+  document.getElementById('debtPayPreview').style.display='none';
+  setTimeout(()=>document.getElementById('debtPayAmount').focus(),100);
+}
+
+function closeDebtPayModal(){
+  document.getElementById('debtPayModal').style.display='none';
+}
+
+function debtPaySet(pct){
+  if(!_debtUser)return;
+  const amt=Math.round(_debtUser.debt*pct/100);
+  document.getElementById('debtPayAmount').value=amt;
+  updateDebtPayPreview();
+}
+
+function updateDebtPayPreview(){
+  if(!_debtUser)return;
+  const inp=document.getElementById('debtPayAmount');
+  const amt=parseFloat(inp.value)||0;
+  const preview=document.getElementById('debtPayPreview');
+  if(amt<=0){preview.style.display='none';return;}
+  const remain=Math.max(0,_debtUser.debt-amt);
+  document.getElementById('dpTotalOld').textContent=fmt(_debtUser.debt)+' so\'m';
+  document.getElementById('dpPayNow').textContent=fmt(amt)+' so\'m';
+  const remEl=document.getElementById('dpRemain');
+  remEl.textContent=fmt(remain)+' so\'m';
+  remEl.style.color=remain===0?'#39ff14':'#ff5252';
+  preview.style.display='block';
+}
+
+function confirmDebtPay(){
+  if(!_debtUser){showToast('Mijoz topilmadi!','warning');return;}
+  const amt=parseFloat(document.getElementById('debtPayAmount').value)||0;
+  if(amt<=0){showToast('Summa kiriting!','warning');return;}
+  if(amt>_debtUser.debt){showToast('Summa qarzdan ko\'p!','warning');return;}
+
+  const users=DB.getUsers();
+  const u=users.find(x=>x.id===_debtUser.id);
+  if(!u){showToast('Xatolik!','warning');return;}
+
+  const prev=u.debt;
+  u.debt=Math.max(0,u.debt-amt);
+  if(!u.debtHistory)u.debtHistory=[];
+  u.debtHistory.unshift({type:'paid',amount:amt,prevDebt:prev,newDebt:u.debt,date:new Date().toISOString()});
+  DB.saveUsers(users);
+
+  // Offline ga to'lov yozuvi
+  const s2=DB.getSession();
+  const payRec={
+    id:'QT#'+Date.now(),
+    userName:u.name,userPhone:u.phone,
+    items:[],productsTotal:0,discount:0,tax:0,total:0,
+    payment:'💳 Qarz to\'lash',payMethods:[{method:'debt_pay',amount:amt}],
+    paidSum:amt,change:0,debt:-(amt),
+    status:'done',time:new Date().toISOString(),profit:0,type:'debt_pay',
+    employeeName:s2?s2.name:'Sotuvchi'
+  };
+  const offline=DB.getOffline();offline.unshift(payRec);DB.saveOffline(offline);
+
+  closeDebtPayModal();
+  _debtUser=u;
+  if(u.debt>0){
+    document.getElementById('existDebtAmt').textContent=fmt(u.debt)+' so\'m';
+    document.getElementById('existDebtName').textContent=u.name+' — qolgan qarz';
+    showToast('✅ '+fmt(amt)+' so\'m qarz to\'landi. Qoldi: '+fmt(u.debt)+' so\'m','success');
+  } else {
+    document.getElementById('existDebtBar').style.display='none';
+    _debtUser=null;
+    showToast('✅ Qarz to\'liq uzildi!','success');
+  }
+}
+function showToast(msg,type=''){
+  const t=document.getElementById('toast');t.textContent=msg;
+  t.className='toast show'+(type?' '+type:'');
+  setTimeout(()=>t.className='toast',3000);
+}
+
+// ═══ SCANNER ═══════════════════════════════════
+let _scanCb=null,_scanFacing='environment',_scanRunning=false;
+
+// Asosiy barcode scanner — search uchun
+function openBarcodeScanner(){
+  window._scanKeepOpen=true;
+  document.getElementById('scanModal').classList.add('open');
+  document.getElementById('scanResultText').textContent='Kamera yoqilmoqda...';
+  document.getElementById('manualBarcodeInput').value='';
+  _scanCb=function(code){
+    const p=dbProducts.find(p=>(p.barcode||'')===code&&p.stock>0);
+    if(p){ addProd(p); showToast('✅ '+p.name+' savatga qo\u02bcshildi','success'); }
+    else { showToast('❌ Barcode topilmadi: '+code,'error'); }
+  };
+  setTimeout(startScanner,300);
+}
+function closeBarcodeScanner(){window._scanKeepOpen=false;stopScanner();document.getElementById('scanModal').classList.remove('open');_scanCb=null;}
+function manualBarcode(){
+  const code=document.getElementById('manualBarcodeInput').value.trim();
+  if(!code) return;
+  if(_scanCb) _scanCb(code);
+  closeBarcodeScanner();
+}
+function openScanModal(cb){_scanCb=cb;document.getElementById('scanModal').classList.add('open');document.getElementById('scanResultText').textContent='Kamera yoqilmoqda...';setTimeout(startScanner,300);}
+function closeScanModal(){stopScanner();document.getElementById('scanModal').classList.remove('open');_scanCb=null;}
+function switchCamera(){_scanFacing=_scanFacing==='environment'?'user':'environment';stopScanner();setTimeout(startScanner,400);}
+function startScanner(){
+  if(_scanRunning)stopScanner();const el=document.getElementById('scanCamera');el.innerHTML='';
+  if(typeof Quagga==='undefined'){document.getElementById('scanResultText').textContent='Quagga yuklanmadi';return;}
+  Quagga.init({inputStream:{name:'Live',type:'LiveStream',target:el,constraints:{facingMode:_scanFacing,width:{ideal:1280},height:{ideal:720}}},locator:{patchSize:'medium',halfSample:true},numOfWorkers:2,frequency:10,decoder:{readers:['ean_reader','ean_8_reader','code_128_reader','code_39_reader','upc_reader']},locate:true},
+  err=>{if(err){document.getElementById('scanResultText').textContent='Xato: '+(err.message||err);return;}
+    _scanRunning=true;Quagga.start();document.getElementById('scanResultText').textContent='Kameraga tutib turing...';
+  });
+  let _lastCode='', _lastTime=0;
+  Quagga.onDetected(r=>{
+    const code=r&&r.codeResult&&r.codeResult.code;if(!code)return;
+    // Duplicate scan oldini olish (0.5s)
+    const now=Date.now();
+    if(code===_lastCode&&now-_lastTime<800) return;
+    _lastCode=code; _lastTime=now;
+    document.getElementById('scanResultText').textContent='✅ Topildi: '+code;
+    // Beep
+    try{const ctx=new AudioContext(),o=ctx.createOscillator(),g=ctx.createGain();o.connect(g);g.connect(ctx.destination);o.frequency.value=1400;g.gain.setValueAtTime(.4,ctx.currentTime);g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.1);o.start();o.stop(ctx.currentTime+.1);}catch(e){}
+    if(_scanCb){ _scanCb(code); }
+    // Modal ochiq qolsin - davom etsin
+    if(window._scanKeepOpen){
+      setTimeout(()=>{ document.getElementById('scanResultText').textContent='📷 Keyingi mahsulotni skanerlang...'; },1500);
+    } else {
+      setTimeout(()=>{stopScanner();document.getElementById('scanModal').classList.remove('open');_scanCb=null;},500);
+    }
+  });
+}
+function stopScanner(){if(_scanRunning){try{Quagga.stop();}catch(e){}_scanRunning=false;}const el=document.getElementById('scanCamera');if(el)el.innerHTML='';}
+
+// ═══ SOUND ════════════════════════════════════
+let _audioCtx=null;
+function _getAudio(){if(!_audioCtx)_audioCtx=new(window.AudioContext||window.webkitAudioContext)();return _audioCtx;}
+function playBeep(f,d,v){try{const ctx=_getAudio();const dp=()=>{const o=ctx.createOscillator(),g=ctx.createGain();o.connect(g);g.connect(ctx.destination);o.type='sine';o.frequency.value=f||880;g.gain.setValueAtTime(v||.3,ctx.currentTime);g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+(d||.15));o.start(ctx.currentTime);o.stop(ctx.currentTime+(d||.15));};if(ctx.state==='suspended')ctx.resume().then(dp);else dp();}catch(e){}}
+function playSaleSound(){playBeep(523,.12,.3);setTimeout(()=>playBeep(659,.12,.3),120);setTimeout(()=>playBeep(784,.2,.4),240);}
+document.addEventListener('click',()=>{const ctx=_getAudio();if(ctx.state==='suspended')ctx.resume();},{once:false});
+
+// Pay modal close on bg click
+document.getElementById('payModal').addEventListener('click',function(e){if(e.target===this)closePayModal();});
+
+
+// ═══ USER MENU ════════════════════════════════
+function toggleUserMenu(){
+  const m=document.getElementById('userMenu');
+  if(!m) return;
+  const open=m.style.display==='block';
+  m.style.display=open?'none':'block';
+  if(!open){
+    const s=DB.getSession();
+    if(s){
+      const n=document.getElementById('menuName');
+      const r=document.getElementById('menuRole');
+      if(n) n.textContent=s.name||'Admin';
+      if(r) r.textContent=s.employeeRole||(s.role==='admin'?'Admin':'Sotuvchi');
+    }
+    // Tashqariga bosish
+    setTimeout(()=>{
+      document.addEventListener('click', function _cl(e){
+        if(!document.getElementById('kassirBtn')?.contains(e.target))
+          closeUserMenu();
+        document.removeEventListener('click',_cl);
+      });
+    },10);
+  }
+}
+function closeUserMenu(){
+  const m=document.getElementById('userMenu');
+  if(m) m.style.display='none';
+}
+
+// ═══ TEMA BOSHQARISH ══════════════════════════
+function setTheme(t){
+  const html=document.documentElement;
+  if(t==='dark') html.removeAttribute('data-theme');
+  else html.setAttribute('data-theme', t);
+  localStorage.setItem('pos_theme',t);
+  // Aktiv tugmani belgilash
+  // tema tugmalari userMenu ichida
+  // Light temada search, cart bg lar
+  applyThemeOverrides(t);
+}
+
+function applyThemeOverrides(t){
+  const isLight=t==='light';
+  const isDark=t!=='light';
+  // Search input
+  const si=document.getElementById('searchInput');
+  if(si){
+    si.style.background=isLight?'#fff':'';
+    si.style.color=isLight?'#1a2332':'';
+  }
+  // Cart items text
+  document.querySelectorAll('.ci-name').forEach(el=>{
+    el.style.color=isLight?'#222':'';
+  });
+  document.querySelectorAll('.ci-total').forEach(el=>{
+    el.style.color=isLight?'#1a8a63':'';
+  });
+  document.querySelectorAll('.cart-title').forEach(el=>{
+    el.style.color=isLight?'#222':'';
+  });
+  document.querySelectorAll('.ci-price').forEach(el=>{
+    el.style.color=isLight?'#888':'';
+  });
+  document.querySelectorAll('.qty-val').forEach(el=>{
+    el.style.color=isLight?'#222':'';
+  });
+  document.querySelectorAll('.cart-order-no').forEach(el=>{
+    el.style.background=isLight?'#f0f0f0':'';
+    el.style.color=isLight?'#666':'';
+  });
+  // Summary rows
+  document.querySelectorAll('.total-row').forEach(el=>{
+    el.style.color=isLight?'#555':'';
+  });
+  // Prod names
+  document.querySelectorAll('.prod-name').forEach(el=>{
+    el.style.color=isLight?'#222':'';
+  });
+}
+
+function loadTheme(){
+  const saved=localStorage.getItem('pos_theme')||'dark';
+  setTheme(saved);
+}
+
+init();
+loadTheme();
+</script>
+</body>
+</html>ç

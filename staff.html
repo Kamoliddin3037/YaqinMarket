@@ -4,33 +4,28 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Xodimlar — SellFlowUZ</title>
+<link rel="stylesheet" href="style.css">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;900&family=Rajdhani:wght@400;500;600;700&display=swap');
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --bg:#0d1b2a;--bg2:#1a2d42;--panel:#1e3448;
-  --border:#2a4a6a;--border2:#2d5278;
-  --cyan:#00ffe7;--cyan2:#00b4d8;--cyan3:#006d8f;
-  --amber:#ffb703;--red:#ff2d55;--green:#39ff14;--purple:#b44cf5;
-  --text:#e0f2fe;--muted:#7ab3cc;--muted2:#3a6080;
-  --glow:0 0 20px rgba(0,255,231,.3);
-  --sidebar:220px;
+  --panelS:var(--panel);
+  --sidebar:var(--sidebar-w);
 }
 html,body{height:100%;overflow-x:hidden}
-body{background:linear-gradient(135deg,#0d1b2a,#152538);font-family:'Rajdhani',sans-serif;color:var(--text);display:flex;min-height:100vh;}
-body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(circle,rgba(0,255,231,.05) 1px,transparent 1px);background-size:32px 32px;pointer-events:none;z-index:0;}
+body{background:linear-gradient(135deg,#0d1b2a,#152538);font-family:var(--font-body);color:var(--text);display:flex;min-height:100vh;}
+body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(circle,rgba(0,229,255,.05) 1px,transparent 1px);background-size:32px 32px;pointer-events:none;z-index:0;}
 
 /* MAIN */
-.main{margin-left:0;flex:1;min-width:0;display:flex;flex-direction:column;}
-.topbar{background:#152030;border-bottom:1px solid var(--border);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;}
-.page-title{font-family:'Orbitron',monospace;font-size:13px;color:white;letter-spacing:2px;}
-.topbar-time{font-family:'Orbitron',monospace;font-size:13px;color:var(--cyan);letter-spacing:2px;}
+.main{margin-left:var(--sidebar-w);flex:1;min-width:0;display:flex;flex-direction:column;}
+.topbar{background:rgba(10,22,40,.95);border-bottom:1px solid var(--border);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;}
+.page-title{font-family:var(--font-mono);font-size:13px;color:var(--text);letter-spacing:2px;}
+.topbar-time{font-family:var(--font-mono);font-size:13px;color:var(--cyan);letter-spacing:2px;}
 .content{padding:20px 24px;flex:1;position:relative;z-index:1;}
 
 /* PANEL */
 .panel-card{background:var(--bg2);border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-bottom:20px;}
 .panel-head{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
-.panel-head-title{font-family:'Orbitron',monospace;font-size:12px;color:var(--cyan);letter-spacing:2px;}
+.panel-head-title{font-family:var(--font-mono);font-size:12px;color:var(--cyan);letter-spacing:2px;}
 
 /* STATS */
 .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px;}
@@ -41,17 +36,17 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
 .stat-card.c3::before{background:linear-gradient(90deg,var(--green),#00cc00);}
 .stat-card.c4::before{background:linear-gradient(90deg,var(--purple),#7b2fff);}
 .stat-label{font-size:10px;color:var(--muted);font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;}
-.stat-value{font-family:'Orbitron',monospace;font-size:20px;font-weight:700;color:white;margin-bottom:2px;}
+.stat-value{font-family:var(--font-mono);font-size:20px;font-weight:700;color:var(--text);margin-bottom:2px;}
 .stat-sub{font-size:11px;color:var(--muted);}
 
 /* TABLE */
 .data-table{width:100%;border-collapse:collapse;}
 .data-table th{padding:11px 13px;background:rgba(0,0,0,.2);color:var(--muted);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;text-align:left;border-bottom:1px solid var(--border);}
 .data-table td{padding:11px 13px;border-bottom:1px solid rgba(42,74,106,.4);font-size:13px;}
-.data-table tr:hover td{background:rgba(0,255,231,.025);}
+.data-table tr:hover td{background:rgba(0,229,255,.025);}
 
 /* BUTTONS */
-.btn{padding:8px 16px;border-radius:4px;font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;border:none;display:inline-flex;align-items:center;gap:6px;}
+.btn{padding:8px 16px;border-radius:4px;font-family:var(--font-body);font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;border:none;display:inline-flex;align-items:center;gap:6px;}
 .btn-cyan{background:linear-gradient(135deg,var(--cyan),var(--cyan2));color:var(--bg);}
 .btn-cyan:hover{box-shadow:var(--glow);}
 .btn-ghost{background:transparent;border:1px solid var(--border);color:var(--text);}
@@ -67,16 +62,16 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
 .staff-card.active-shift{border-color:var(--green);box-shadow:0 0 12px rgba(57,255,20,.1);}
 .staff-card.inactive{opacity:.7;}
 .staff-avatar{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--cyan3),var(--purple));display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:12px;}
-.staff-name{font-size:16px;font-weight:700;color:white;margin-bottom:2px;}
-.staff-role{font-size:11px;color:var(--cyan);font-family:'Orbitron',monospace;letter-spacing:1px;margin-bottom:8px;}
+.staff-name{font-size:16px;font-weight:700;color:var(--text);margin-bottom:2px;}
+.staff-role{font-size:11px;color:var(--cyan);font-family:var(--font-mono);letter-spacing:1px;margin-bottom:8px;}
 .staff-meta{font-size:12px;color:var(--muted);margin-bottom:4px;}
 .staff-badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:10px;font-weight:700;margin-bottom:10px;}
 .badge-active{background:rgba(57,255,20,.12);color:var(--green);border:1px solid rgba(57,255,20,.3);}
-.badge-shift{background:rgba(0,255,231,.1);color:var(--cyan);border:1px solid rgba(0,255,231,.2);}
+.badge-shift{background:rgba(0,229,255,.1);color:var(--cyan);border:1px solid rgba(0,229,255,.2);}
 .badge-inactive{background:rgba(255,45,85,.1);color:var(--red);border:1px solid rgba(255,45,85,.2);}
 .staff-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0;background:rgba(0,0,0,.2);border-radius:6px;padding:10px;}
 .staff-stat-item{text-align:center;}
-.staff-stat-val{font-family:'Orbitron',monospace;font-size:13px;color:var(--amber);font-weight:700;}
+.staff-stat-val{font-family:var(--font-mono);font-size:13px;color:var(--amber);font-weight:700;}
 .staff-stat-lbl{font-size:9px;color:var(--muted);letter-spacing:1px;}
 .staff-actions{display:flex;gap:6px;flex-wrap:wrap;}
 
@@ -87,16 +82,16 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
 @keyframes staffTickerMove{0%{transform:translateX(100vw)}100%{transform:translateX(-100%)}}
 .modal-box{background:var(--bg2);border:1px solid var(--border);border-radius:8px;width:100%;max-width:460px;max-height:92vh;overflow-y:auto;}
 .modal-head{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:var(--bg2);}
-.modal-title{font-family:'Orbitron',monospace;font-size:11px;color:var(--cyan);letter-spacing:2px;}
+.modal-title{font-family:var(--font-mono);font-size:11px;color:var(--cyan);letter-spacing:2px;}
 .modal-close{background:none;border:none;color:var(--muted);font-size:22px;cursor:pointer;}
 .modal-close:hover{color:var(--red);}
 .modal-body{padding:18px;}
 .form-group{margin-bottom:14px;}
 .form-label{display:block;font-size:11px;font-weight:700;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;}
-.form-input,.form-select{width:100%;padding:10px 13px;background:var(--bg);border:1px solid var(--border);border-radius:4px;color:white;font-family:'Rajdhani',sans-serif;font-size:14px;outline:none;transition:all .2s;}
+.form-input,.form-select{width:100%;padding:10px 13px;background:var(--bg);border:1px solid var(--border);border-radius:4px;color:var(--text);font-family:var(--font-body);font-size:14px;outline:none;transition:all .2s;}
 .form-input:focus,.form-select:focus{border-color:var(--cyan);}
 .form-select option{background:var(--bg2);}
-.submit-btn{width:100%;padding:13px;background:linear-gradient(135deg,var(--cyan),var(--cyan2));color:var(--bg);border:none;border-radius:4px;font-family:'Orbitron',monospace;font-size:11px;font-weight:700;letter-spacing:3px;cursor:pointer;margin-top:4px;}
+.submit-btn{width:100%;padding:13px;background:linear-gradient(135deg,var(--cyan),var(--cyan2));color:var(--bg);border:none;border-radius:4px;font-family:var(--font-mono);font-size:11px;font-weight:700;letter-spacing:3px;cursor:pointer;margin-top:4px;}
 .submit-btn:hover{box-shadow:var(--glow);}
 
 /* SHIFT TABLE */
@@ -107,16 +102,16 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
 
 /* TABS */
 .tab-row{display:flex;gap:6px;padding:14px 18px;border-bottom:1px solid var(--border);}
-.tab-btn{padding:7px 16px;border-radius:4px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;}
-.tab-btn.active{background:rgba(0,255,231,.08);border-color:var(--cyan);color:var(--cyan);}
+.tab-btn{padding:7px 16px;border-radius:4px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:var(--font-body);font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;}
+.tab-btn.active{background:rgba(0,229,255,.08);border-color:var(--cyan);color:var(--cyan);}
 
 /* TOAST */
-.ptime-btn{padding:6px 12px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:'Rajdhani',sans-serif;font-size:12px;font-weight:700;cursor:pointer;transition:all .15s;}
+.ptime-btn{padding:6px 12px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:var(--font-body);font-size:12px;font-weight:700;cursor:pointer;transition:all .15s;}
 .ptime-btn:hover{border-color:var(--amber);color:var(--amber);}
 .ptime-btn.active{background:rgba(255,183,3,.12);border-color:var(--amber);color:var(--amber);}
 .perm-row{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:6px;background:var(--bg);border:1px solid var(--border);cursor:pointer;transition:all .15s;}
 .perm-row:hover{border-color:var(--cyan2);}
-.perm-row.checked{border-color:var(--cyan);background:rgba(0,255,231,.04);}
+.perm-row.checked{border-color:var(--cyan);background:rgba(0,229,255,.04);}
 .perm-row input{accent-color:var(--cyan);width:16px;height:16px;cursor:pointer;}
 .toast{position:fixed;bottom:24px;right:24px;background:var(--bg2);border:1px solid var(--border);color:var(--text);padding:11px 18px;border-radius:6px;font-size:13px;font-weight:600;z-index:2000;opacity:0;transform:translateY(10px);transition:all .3s;pointer-events:none;max-width:300px;}
 .toast.show{opacity:1;transform:translateY(0);}
@@ -126,7 +121,32 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
 </style>
 </head>
 <body>
+<div class="sfu-bg"></div>
+<div class="sfu-grid"></div>
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="document.getElementById('sidebar').classList.remove('open');this.classList.remove('open');"></div>
 <div class="toast" id="toast"></div>
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-logo"><div class="logo-icon">🏪</div><div class="logo-text">SellFlowUZ</div></div>
+  <nav class="sidebar-nav">
+    <div class="nav-item" onclick="window.location.href='/dashboard'"><span class="nav-icon">📅</span>Asosiy</div>
+    <div class="nav-item" onclick="window.location.href='/buyurtmalar'"><span class="nav-icon">📋</span>Buyurtmalar</div>
+    <div class="nav-item" onclick="window.location.href='/mahsulotlar'"><span class="nav-icon">📦</span>Mahsulotlar</div>
+    <div class="nav-item" onclick="window.location.href='/ombor'"><span class="nav-icon">🏭</span>Ombor</div>
+    <div class="nav-item" onclick="window.location.href='/daromad'"><span class="nav-icon">📈</span>Daromad</div>
+    <div class="nav-item" onclick="window.location.href='/pos'"><span class="nav-icon">🏪</span>POS</div>
+    <div class="nav-item" onclick="window.location.href='/mijozlar'"><span class="nav-icon">👥</span>Mijozlar</div>
+    <div class="nav-item active" onclick="window.location.href='/xodimlar'"><span class="nav-icon">👔</span>Xodimlar</div>
+    <div class="nav-item" onclick="window.location.href='/bannerlar'"><span class="nav-icon">🖼️</span>Bannerlar</div>
+    <div class="nav-item" onclick="window.location.href='/shop'"><span class="nav-icon">🛒</span>Do'kon</div>
+    <div class="nav-item" onclick="window.location.href='/integratsiya'"><span class="nav-icon">🔗</span>Integratsiyalar</div>
+  </nav>
+  <div class="sidebar-bottom">
+    <div class="sidebar-user"><div class="user-avatar">⚙️</div>
+      <div><div class="user-info-name" id="sidebarUserName">Admin</div><div class="user-info-role" id="sidebarUserRole">ADMIN</div></div>
+    </div>
+    <button class="logout-btn" onclick="logout()">CHIQISH</button>
+  </div>
+</aside>
 
 <!-- MAIN -->
 <div class="main">
@@ -159,7 +179,10 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
       </div>
       <div class="form-group">
         <label class="form-label">Telefon</label>
-        <input class="form-input" id="sf_phone" placeholder="+998 90 123 45 67" maxlength="17" oninput="phoneMask(this)">
+        <div class="phone-wrap">
+          <div class="phone-prefix">🇺🇿 <span>+998</span></div>
+          <input class="form-input" id="sf_phone" type="tel" inputmode="numeric" maxlength="12" placeholder="90 123 45 67" oninput="phoneMask(this)">
+        </div>
       </div>
       <div class="form-group">
         <label class="form-label">Login (username)</label>
@@ -203,6 +226,14 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
 
 <!-- SMENA DETAIL MODAL -->
 <div class="modal" id="shiftModal">
+  <div class="modal-box" style="max-width:600px;">
+    <div class="modal-head">
+      <div class="modal-title" id="shiftModalTitle">SMENA TAFSILOTI</div>
+      <button class="modal-close" onclick="document.getElementById('shiftModal').classList.remove('open')">✕</button>
+    </div>
+    <div class="modal-body" id="shiftModalBody"></div>
+  </div>
+</div>
 
 <!-- RUXSATLAR MODAL -->
 <div class="modal" id="permModal" style="display:none;">
@@ -231,14 +262,6 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
     </div>
   </div>
 </div>
-  <div class="modal-box" style="max-width:600px;">
-    <div class="modal-head">
-      <div class="modal-title" id="shiftModalTitle">SMENA TAFSILOTI</div>
-      <button class="modal-close" onclick="document.getElementById('shiftModal').classList.remove('open')">✕</button>
-    </div>
-    <div class="modal-body" id="shiftModalBody"></div>
-  </div>
-</div>
 
 <script src="data.js"></script>
 <script>
@@ -254,11 +277,13 @@ function init(){
     if(window !== window.parent) {
       document.getElementById('mainContent').innerHTML = '<div style="text-align:center;padding:60px;color:var(--muted);">Ruxsat yo\'q. Admin sifatida kiring.</div>';
     } else {
-      window.location.href = 'login.html';
+      window.location.href = '/login';
     }
     return;
   }
 
+  // localStorage keshdan emas, serverdan yangi o'qi
+  try { localStorage.removeItem('sfu_v1_staff'); delete DB._cache['staff']; } catch(e) {}
   staff       = DB.getStaff();
   shifts      = DB.getShifts();
   offlineSales= DB.getOffline();
@@ -277,7 +302,7 @@ function logout(){
   window._logoutInProgress = true;
   DB.clearSession();
   localStorage.removeItem('sfu_fs_locked');
-  var go = function(){ window._logoutInProgress=false; window.location.href='login.html'; };
+  var go = function(){ window._logoutInProgress=false; (window.top||window).location.href='/login'; };
   if(document.fullscreenElement){ document.exitFullscreen().then(go).catch(go); } else { go(); }
 }
 
@@ -350,7 +375,7 @@ function render(){
     var bonus = sal - base;
     html += '<div style="margin-bottom:14px;">';
     html += '<div style="display:flex;justify-content:space-between;margin-bottom:5px;">';
-    html += '<div><span style="font-size:13px;font-weight:700;color:white;">'+emp.name+'</span> <span style="font-size:10px;color:var(--muted);">'+({seller:'Sotuvchi',cashier:'Kassir',manager:'Menejer'}[emp.role]||emp.role)+'</span></div>';
+    html += '<div><span style="font-size:13px;font-weight:700;color:var(--text);">'+emp.name+'</span> <span style="font-size:10px;color:var(--muted);">'+({seller:'Sotuvchi',cashier:'Kassir',manager:'Menejer'}[emp.role]||emp.role)+'</span></div>';
     html += '<span style="font-size:13px;color:var(--amber);font-weight:700;">'+fmtShort(sal)+" so'm</span></div>";
     html += '<div style="height:8px;background:rgba(255,255,255,.06);border-radius:4px;overflow:hidden;margin-bottom:3px;">';
     html += '<div style="height:100%;width:'+pct+'%;background:linear-gradient(90deg,var(--cyan),var(--amber));border-radius:4px;transition:width .5s;"></div></div>';
@@ -474,7 +499,7 @@ function renderShiftsTab(){
 
     html += '<tr class="'+(sh.end?'':'shift-row-active')+'">';
     html += '<td style="color:var(--muted);">'+(i+1)+'</td>';
-    html += '<td style="font-weight:700;color:white;">'+name+'</td>';
+    html += '<td style="font-weight:700;color:var(--text);">'+name+'</td>';
     html += '<td style="font-size:12px;color:var(--muted);">'+start+'</td>';
     html += '<td style="font-size:12px;color:var(--muted);">'+end+'</td>';
     html += '<td style="color:var(--cyan);">'+dur+'</td>';
@@ -512,7 +537,7 @@ function renderSalaryTab(){
     var roleLabel = {seller:'Sotuvchi', cashier:'Kassir', manager:'Menejer'}[emp.role] || emp.role;
 
     html += '<tr>';
-    html += '<td><div style="font-weight:700;color:white;">'+emp.name+'</div><div style="font-size:11px;color:var(--muted);">'+emp.login+'</div></td>';
+    html += '<td><div style="font-weight:700;color:var(--text);">'+emp.name+'</div><div style="font-size:11px;color:var(--muted);">'+emp.login+'</div></td>';
     html += '<td style="color:var(--muted);">'+roleLabel+'</td>';
     html += '<td style="color:var(--amber);font-weight:700;">'+emp.pct+'%</td>';
     html += '<td style="color:var(--cyan);">'+empSales.length+' ta</td>';
@@ -523,7 +548,7 @@ function renderSalaryTab(){
   });
 
   html += '<tr style="border-top:2px solid var(--border);background:rgba(0,0,0,.2);">';
-  html += '<td colspan="5" style="text-align:right;font-weight:700;color:white;font-size:14px;">JAMI MAOSH:</td>';
+  html += '<td colspan="5" style="text-align:right;font-weight:700;color:var(--text);font-size:14px;">JAMI MAOSH:</td>';
   html += '<td style="font-family:Orbitron,monospace;font-size:16px;color:var(--green);font-weight:900;">'+fmt(grandTotal)+" so'm</td>";
   html += '<td></td></tr>';
 
@@ -541,7 +566,7 @@ function openStaffModal(id){
     document.getElementById('staffModalTitle').textContent = 'XODIMNI TAHRIRLASH';
     document.getElementById('sf_id').value    = id;
     document.getElementById('sf_name').value  = emp.name;
-    document.getElementById('sf_phone').value = emp.phone;
+    var _ph=(emp.phone||'').replace(/^\+998\s?/,'');document.getElementById('sf_phone').value=_ph;
     document.getElementById('sf_login').value = emp.login;
     document.getElementById('sf_role').value  = emp.role;
     document.getElementById('sf_pct').value   = emp.pct;
@@ -568,7 +593,8 @@ function closeStaffModal(){
 function saveStaff(){
   var id    = document.getElementById('sf_id').value;
   var name  = document.getElementById('sf_name').value.trim();
-  var phone = document.getElementById('sf_phone').value.trim();
+  var phoneDigits = document.getElementById('sf_phone').value.replace(/\D/g,'');
+  var phone = phoneDigits ? '+998 '+document.getElementById('sf_phone').value.trim() : '';
   var login = document.getElementById('sf_login').value.trim().toLowerCase();
   var pass  = document.getElementById('sf_pass').value;
   var role  = document.getElementById('sf_role').value;
@@ -728,14 +754,12 @@ function capName(el){
 }
 
 function phoneMask(inp){
-  var d = inp.value.replace(/\D/g,'');
-  if(!d.startsWith('998')) d='998';
-  d=d.slice(0,12);
-  var r='+998';
-  if(d.length>3) r+=' '+d.slice(3,5);
-  if(d.length>5) r+=' '+d.slice(5,8);
-  if(d.length>8) r+=' '+d.slice(8,10);
-  if(d.length>10) r+=' '+d.slice(10,12);
+  var d=inp.value.replace(/\D/g,'').slice(0,9);
+  var r='';
+  if(d.length>0)r+=d.slice(0,2);
+  if(d.length>2)r+=' '+d.slice(2,5);
+  if(d.length>5)r+=' '+d.slice(5,7);
+  if(d.length>7)r+=' '+d.slice(7,9);
   inp.value=r;
 }
 
@@ -824,6 +848,22 @@ function revokeAllPerms(){
 }
 
 window.addEventListener('DOMContentLoaded', init);
+
+// ═══ IFRAME NAV ═══
+(function(){
+  if(window.parent===window) return;
+  document.addEventListener('click',function(e){
+    var a=e.target.closest('a[href]');
+    if(!a||a.target) return;
+    var h=a.getAttribute('href');
+    if(!h||h==='#'||h.startsWith('javascript')) return;
+    if(h.startsWith('/')){e.preventDefault();window.parent.postMessage({sfuNav:h},'*');}
+  },true);
+  document.addEventListener('keydown',function(e){
+    if(e.key==='F11'){e.preventDefault();window.parent.postMessage({sfuF11:true},'*');}
+    if(e.key==='Escape'){window.parent.postMessage({sfuEsc:true},'*');}
+  },true);
+})();
 </script>
 </body>
 </html>

@@ -126,19 +126,37 @@ function _defaultProducts() {
 // ══════════════════════════════════════════════════════════════
 // DB — server + localStorage fallback (offline uchun)
 // ══════════════════════════════════════════════════════════════
+// Eski demo data ni localStorage dan bir marta tozalash
+(function(){
+  try {
+    var ordersRaw = localStorage.getItem('sfu_v1_orders');
+    if(ordersRaw){
+      var arr = JSON.parse(ordersRaw);
+      if(Array.isArray(arr) && arr.some(function(o){ return o.id==='#001'||o.id==='OFF#001'; })){
+        localStorage.removeItem('sfu_v1_orders');
+        localStorage.removeItem('sfu_v1_offline');
+        localStorage.removeItem('sfu_v1_users');
+      }
+    }
+  } catch(e){}
+})();
+
 const DB = {
   VERSION: 'sfu_v1',
-  _BASE: 'http://localhost:8080',
+  _BASE: '',
 
   // ── Sync GET: serverdan o'qish ──────────────────────────────
   _cache: {},
 
+  // Server dan doim yangi o'qiladigan kalitlar (localStorage keshi o'tkazib yuboriladi)
+  _SERVER_FIRST: ['products', 'staff', 'users', 'offline'],
+
   _get(key, fallback) {
-    // 1. Keshda bormi
-    if (this._cache.hasOwnProperty(key)) {
+    // 1. Keshda bormi (server-first kalitlarda kesh ishlatilmaydi)
+    if (this._cache.hasOwnProperty(key) && !this._SERVER_FIRST.includes(key)) {
       return this._cache[key];
     }
-    // 2. Session uchun localStorage BIRINCHI (tez, server kutmasdan)
+    // 2. Session uchun localStorage BIRINCHI
     if (key === 'session') {
       try {
         const v = localStorage.getItem(this.VERSION + '_' + key);
@@ -152,18 +170,41 @@ const DB = {
       } catch(e) {}
       return fallback;
     }
-    // 3. Boshqa kalitlar: localStorage birinchi (tezroq)
+    // 3. Server-first kalitlar: serverdan o'qi, keyin localStorage fallback
+    if (this._SERVER_FIRST.includes(key)) {
+      try {
+        const req = new XMLHttpRequest();
+        req.open('GET', this._BASE + '/api/' + key, false);
+        req.setRequestHeader('Authorization', 'Bearer ' + (localStorage.getItem(this.VERSION + '_token') || ''));
+        req.send();
+        if (req.status === 200) {
+          const res = JSON.parse(req.responseText);
+          if (res.ok && res.data !== null && res.data !== undefined) {
+            this._cache[key] = res.data;
+            try { localStorage.setItem(this.VERSION + '_' + key, JSON.stringify(res.data)); } catch(e) {}
+            return res.data;
+          }
+        }
+      } catch(e) {}
+      // Server ishlamasa localStorage fallback
+      try {
+        const v = localStorage.getItem(this.VERSION + '_' + key);
+        if (v !== null && v !== 'null') {
+          const parsed = JSON.parse(v);
+          if (parsed !== null) { this._cache[key] = parsed; return parsed; }
+        }
+      } catch(e) {}
+      return fallback;
+    }
+    // 4. Boshqa kalitlar: localStorage birinchi
     try {
       const v = localStorage.getItem(this.VERSION + '_' + key);
       if (v !== null && v !== 'null') {
         const parsed = JSON.parse(v);
-        if (parsed !== null) {
-          this._cache[key] = parsed;
-          return parsed;
-        }
+        if (parsed !== null) { this._cache[key] = parsed; return parsed; }
       }
     } catch(e) {}
-    // 4. Server fallback (token bilan)
+    // 5. Server fallback
     try {
       const req = new XMLHttpRequest();
       req.open('GET', this._BASE + '/api/' + key, false);
@@ -216,27 +257,15 @@ const DB = {
   saveProducts(p)    { this._set('products', p); },
 
   // ── Orders ──────────────────────────────────────────────────
-  getOrders()        { return this._get('orders', [
-    { id:'#001', userId:1, userName:'Kamola', userPhone:'998901234567',
-      items:[{name:'Non (oq)',qty:2,price:2500,costPrice:1500},{name:'Tuxum (10 ta)',qty:1,price:12000,costPrice:9000}],
-      productsTotal:17000, deliveryPrice:0, total:17000, payment:'cash',
-      note:'', status:'done', time: new Date(Date.now()-3600000).toISOString(), profit:5000, type:'online' }
-  ]); },
+  getOrders()        { return this._get('orders',  []); },
   saveOrders(o)      { this._set('orders', o); },
 
   // ── Offline Sales ────────────────────────────────────────────
-  getOffline()       { return this._get('offline', [
-    { id:'OFF#001', userName:'Sarvar', userPhone:'998907654321',
-      items:[{name:'Sut (1L)',qty:2,price:7500,costPrice:5500},{name:'Non (oq)',qty:3,price:2500,costPrice:1500}],
-      productsTotal:22500, total:22500, payment:'cash',
-      status:'done', time: new Date(Date.now()-7200000).toISOString(), profit:7000, type:'offline' }
-  ]); },
+  getOffline()       { return this._get('offline', []); },
   saveOffline(o)     { this._set('offline', o); },
 
   // ── Users ────────────────────────────────────────────────────
-  getUsers()         { return this._get('users', [
-    { id:1, name:'Kamola', phone:'998901234567', registeredAt: new Date(Date.now()-86400000).toISOString() }
-  ]); },
+  getUsers()         { return this._get('users', []); },
   saveUsers(u)       { this._set('users', u); },
 
   // ── Incomes ──────────────────────────────────────────────────
@@ -264,6 +293,9 @@ DB.saveStaff = function(s){ DB._set('staff', s); };
 DB.getShifts  = function(){ return DB._get('shifts', []); };
 DB.saveShifts = function(s){ DB._set('shifts', s); };
 
+DB.getStockLogs  = function(){ return DB._get('stock_logs', []); };
+DB.saveStockLogs = function(l){ DB._set('stock_logs', l); };
+
 // ── Refresh signals ───────────────────────────────────────────
 DB.getRefreshSignals  = function(){ return DB._get('refresh_signals', {}); };
 DB.saveRefreshSignals = function(s){ DB._set('refresh_signals', s); };
@@ -274,14 +306,14 @@ DB.saveRefreshSignals = function(s){ DB._set('refresh_signals', s); };
 // ════════════════════════════════════════════════════════════════
 
 var PAGE_PERMS = {
-  'dashboard.html': 'calendar',
-  'pos.html':       'pos',
-  'orders.html':    'orders',
-  'products.html':  'products',
-  'warehouse.html': 'products',
-  'income.html':    'income',
-  'users.html':     'users',
-  'staff.html':     'staff',
+  'dashboard':    'calendar',
+  'pos':          'pos',
+  'buyurtmalar':  'orders',
+  'mahsulotlar':  'products',
+  'ombor':        'products',
+  'daromad':      'income',
+  'mijozlar':     'users',
+  'xodimlar':     'staff',
 };
 
 // Sidebar nav linklarini ruxsatga qarab ko'rsatish/yashirish
@@ -305,27 +337,27 @@ function applyPermissionsToSidebar() {
     perms = s.permissions || ['pos'];
   }
 
-  var currentPage = window.location.pathname.split('/').pop() || 'pos.html';
-  if (!currentPage) currentPage = 'pos.html';
+  var currentPage = window.location.pathname.split('/').pop() || 'pos';
+  if (!currentPage) currentPage = 'pos';
 
   var requiredPerm = PAGE_PERMS[currentPage];
 
-  // Ruxsat tekshirish — pos.html dan HECH QACHON chiqarma
-  if (currentPage === 'pos.html') return; // pos.html har doim ochiq seller uchun
+  // Ruxsat tekshirish — pos dan HECH QACHON chiqarma
+  if (currentPage === 'pos') return; // pos har doim ochiq seller uchun
   if (requiredPerm && perms.indexOf(requiredPerm) < 0) {
     var pageMap = {
-      'calendar':'dashboard.html','pos':'pos.html','orders':'orders.html',
-      'products':'products.html','income':'income.html',
-      'users':'users.html','staff':'staff.html'
+      'calendar':'/dashboard','pos':'/pos','orders':'/buyurtmalar',
+      'products':'/mahsulotlar','income':'/daromad',
+      'users':'/mijozlar','staff':'/xodimlar'
     };
     // Birinchi ruxsatli sahifa — joriy sahifadan farqli
-    var firstAllowed = 'pos.html'; // default — pos.html har doim seller uchun
+    var firstAllowed = '/pos'; // default — pos har doim seller uchun
     for (var i = 0; i < perms.length; i++) {
-      if (pageMap[perms[i]] && pageMap[perms[i]] !== currentPage) {
+      if (pageMap[perms[i]] && pageMap[perms[i]] !== '/'+currentPage) {
         firstAllowed = pageMap[perms[i]]; break;
       }
     }
-    if (firstAllowed !== currentPage) {
+    if (firstAllowed !== '/'+currentPage) {
       window.location.href = firstAllowed;
     }
     return;
@@ -424,9 +456,9 @@ document.addEventListener('keydown', function(e) {
 // PIN LOCK — Sotuvchi ekrani uchun
 // ════════════════════════════════════════════════════════════════
 (function(){
-  var page = window.location.pathname.split('/').pop();
-  // Faqat pos.html va dashboard.html da ishlaydi
-  if (!['pos.html','dashboard.html','warehouse.html','orders.html','income.html','users.html'].includes(page)) return;
+  var page = window.location.pathname.split('/').pop() || 'pos';
+  // Faqat pos va dashboard da ishlaydi
+  if (!['pos','dashboard','ombor','buyurtmalar','daromad','mijozlar'].includes(page)) return;
 
   var PIN_KEY     = 'sfu_v1_pin';
   var PIN_TIMEOUT = 5 * 60 * 1000; // 5 daqiqa
@@ -584,7 +616,7 @@ document.addEventListener('keydown', function(e) {
 (function() {
   // login va shop sahifalarida chiqmasin
   var page = window.location.pathname.split('/').pop();
-  if (page === 'login.html' || page === 'shop.html' || page === '') return;
+  if (page === 'login' || page === 'shop' || page === '') return;
 
   // CSS inject
   var style = document.createElement('style');

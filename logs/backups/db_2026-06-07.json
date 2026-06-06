@@ -6021,7 +6021,17 @@
       "savedPermissions": null
     }
   ],
-  "session": null,
+  "session": {
+    "role": "customer",
+    "userId": 1780766539118,
+    "name": "turayevaguli",
+    "phone": "+998989988888",
+    "device": {
+      "deviceId": "DEV_1780600566665_3GT5PG",
+      "device": "Mac",
+      "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:151.0) Gecko/20100101 Firefox/1"
+    }
+  },
   "shifts": [
     {
       "id": 1779919416876,

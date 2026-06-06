@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SellFlowUZ</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;background:#0a1628}
+iframe{display:block;width:100%;height:100%;border:none}
+</style>
+</head>
+<body>
+<iframe id="sf" src="/dashboard" allowfullscreen></iframe>
+<script>
+var iframe=document.getElementById('sf');
+
+function _enterFS(){
+  localStorage.setItem('sfu_fs_locked','1');
+  document.documentElement.requestFullscreen().then(function(){
+    if(navigator.keyboard&&navigator.keyboard.lock)navigator.keyboard.lock(['F11']).catch(function(){});
+  }).catch(function(){});
+}
+
+(function(){
+  if(localStorage.getItem('sfu_fs_locked')==='1'){
+    document.documentElement.requestFullscreen().then(function(){
+      if(navigator.keyboard&&navigator.keyboard.lock)navigator.keyboard.lock(['F11']).catch(function(){});
+    }).catch(function(){
+      function _r(){_enterFS();document.removeEventListener('keydown',_r,true);document.removeEventListener('click',_r,true);}
+      document.addEventListener('keydown',_r,{capture:true,once:true});
+      document.addEventListener('click',_r,{capture:true,once:true});
+    });
+  }
+})();
+
+document.addEventListener('fullscreenchange',function(){
+  if(!document.fullscreenElement&&navigator.keyboard&&navigator.keyboard.unlock)navigator.keyboard.unlock();
+});
+document.addEventListener('keydown',function(e){
+  if(e.key==='F11'){e.preventDefault();if(!document.fullscreenElement)_enterFS();}
+  if(e.key==='Escape'){localStorage.removeItem('sfu_fs_locked');if(navigator.keyboard&&navigator.keyboard.unlock)navigator.keyboard.unlock();}
+});
+
+window.addEventListener('message',function(e){
+  if(!e.data) return;
+  if(e.data.sfuNav) iframe.src=e.data.sfuNav;
+  if(e.data.sfuF11){if(!document.fullscreenElement)_enterFS();}
+  if(e.data.sfuEsc){localStorage.removeItem('sfu_fs_locked');if(navigator.keyboard&&navigator.keyboard.unlock)navigator.keyboard.unlock();}
+  if(e.data.sfuLogout){localStorage.removeItem('sfu_fs_locked');window.location.href='/login';}
+});
+</script>
+</body>
+</html>

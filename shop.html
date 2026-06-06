@@ -8,7 +8,7 @@
 <title>SellFlowUZ</title>
 <link rel="manifest" href="manifest.json">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Orbitron:wght@700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Orbitron:wght@700;900&family=Rajdhani:wght@400;500;600;700&display=swap');
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 :root{
   --bg:#ffffff;
@@ -268,6 +268,11 @@ html,body{height:100%;font-family:'Nunito',sans-serif;color:var(--text);backgrou
   height:3px;background:#022e2d;border-radius:0 0 4px 4px;
 }
 .nav-ico{font-size:26px;}
+.nav-qr-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:4px 6px;}
+.nav-qr-box{width:36px;height:36px;background:#fff;border:1.5px solid #22c55e;border-radius:6px;overflow:hidden;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.nav-qr-box img,.nav-qr-box canvas{width:32px!important;height:32px!important;}
+.nav-qr-label{font-size:9px;font-weight:700;color:#16a34a;white-space:nowrap;}
+.nav-qr-cb{font-size:8px;font-weight:800;color:#d97706;white-space:nowrap;}
 .nav-cart{position:relative;}
 .nav-cart-badge{
   position:absolute;top:-4px;right:-8px;
@@ -278,6 +283,9 @@ html,body{height:100%;font-family:'Nunito',sans-serif;color:var(--text);backgrou
   padding:0 4px;
 }
 .nav-cart-badge.on{display:flex;}
+
+/* ── AI DOT ANIMATION ── */
+@keyframes aiDot{0%,100%{transform:translateY(0);opacity:.4;}50%{transform:translateY(-4px);opacity:1;}}
 
 /* ── TOAST ── */
 .toast{
@@ -772,9 +780,85 @@ html,body{height:100%;font-family:'Nunito',sans-serif;color:var(--text);backgrou
 .pg-person{position:absolute;top:-6px;font-size:22px;transition:left .8s cubic-bezier(.34,1.56,.64,1);z-index:3;}
 @keyframes pg-pulse{0%,100%{box-shadow:0 0 0 4px rgba(34,197,94,.2)}50%{box-shadow:0 0 0 8px rgba(34,197,94,.1)}}
 
+/* ══════════════════════════════
+   ADMIN SIDEBAR — dark panel
+══════════════════════════════ */
+:root{--sidebar-w:220px;}
+#adminSidebar{
+  width:var(--sidebar-w);min-height:100vh;
+  background:linear-gradient(180deg,#0c1a2e 0%,#0a1628 100%);
+  border-right:1px solid #1e3d5c;
+  display:none;flex-direction:column;
+  position:fixed;left:0;top:0;bottom:0;
+  z-index:300;
+  transition:transform .3s cubic-bezier(.4,0,.2,1);
+}
+body.admin-mode #adminSidebar{display:flex;}
+#adminSidebar .sb-logo{padding:20px;border-bottom:1px solid #1e3d5c;display:flex;align-items:center;gap:12px;}
+#adminSidebar .sb-logo-icon{width:36px;height:36px;background:linear-gradient(135deg,#00e5ff,#00b8d4);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+#adminSidebar .sb-logo-text{font-size:10px;color:#00e5ff;letter-spacing:1.5px;line-height:1.4;font-family:'Orbitron',monospace;font-weight:700;}
+#adminSidebar .sb-nav{flex:1;padding:12px 0;overflow-y:auto;}
+#adminSidebar .sb-item{display:flex;align-items:center;gap:12px;padding:11px 20px;color:#6a9ab8;cursor:pointer;transition:all .2s;border-left:2px solid transparent;font-size:14px;font-weight:600;font-family:'Rajdhani',sans-serif;}
+#adminSidebar .sb-item:hover{color:#e0f4ff;background:rgba(0,229,255,.04);}
+#adminSidebar .sb-item.active{color:#00e5ff;background:rgba(0,229,255,.07);border-left-color:#00e5ff;}
+#adminSidebar .sb-ico{font-size:16px;width:20px;text-align:center;flex-shrink:0;}
+#adminSidebar .sb-bottom{padding:14px;border-top:1px solid #1e3d5c;}
+#adminSidebar .sb-user{display:flex;align-items:center;gap:10px;padding:8px;margin-bottom:10px;}
+#adminSidebar .sb-avatar{width:32px;height:32px;background:linear-gradient(135deg,#007a9e,#00b8d4);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;}
+#adminSidebar .sb-uname{font-size:13px;font-weight:700;color:#e0f4ff;font-family:'Rajdhani',sans-serif;}
+#adminSidebar .sb-urole{font-size:10px;color:#00e5ff;letter-spacing:1px;font-family:'Orbitron',monospace;}
+#adminSidebar .sb-out{width:100%;padding:9px;background:rgba(255,45,85,.1);border:1px solid rgba(255,45,85,.3);border-radius:4px;color:#ff2d55;font-size:13px;font-weight:700;cursor:pointer;font-family:'Rajdhani',sans-serif;}
+#adminSidebar .sb-out:hover{background:rgba(255,45,85,.2);}
+#adminSidebarOverlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:299;}
+#adminSidebarOverlay.open{display:block;}
+.admin-hamburger{display:none;width:36px;height:36px;align-items:center;justify-content:center;background:rgba(255,255,255,.2);border:none;border-radius:8px;color:#fff;font-size:20px;cursor:pointer;flex-shrink:0;margin-right:4px;}
+@media(min-width:701px){
+  body.admin-mode .header{left:var(--sidebar-w) !important;}
+  body.admin-mode #orderProgressBanner{margin-left:var(--sidebar-w) !important;}
+  body.admin-mode .page-wrap{margin-left:var(--sidebar-w) !important;}
+  body.admin-mode .bottom-nav{left:var(--sidebar-w) !important;}
+}
+@media(max-width:700px){
+  body.admin-mode #adminSidebar{transform:translateX(-100%);}
+  body.admin-mode #adminSidebar.open{transform:translateX(0);}
+  body.admin-mode .admin-hamburger{display:flex;}
+}
+
 </style>
 </head>
 <body>
+
+<!-- ADMIN SIDEBAR (only shown for admin/seller role) -->
+<div id="adminSidebarOverlay" onclick="closeAdminSidebar()"></div>
+<aside id="adminSidebar">
+  <div class="sb-logo">
+    <div class="sb-logo-icon">🏪</div>
+    <div class="sb-logo-text">SellFlowUZ</div>
+  </div>
+  <nav class="sb-nav">
+    <div class="sb-item" onclick="window.location.href='/dashboard'"><span class="sb-ico">📅</span>Asosiy</div>
+    <div class="sb-item" onclick="window.location.href='/buyurtmalar'"><span class="sb-ico">📋</span>Buyurtmalar</div>
+    <div class="sb-item" onclick="window.location.href='/mahsulotlar'"><span class="sb-ico">📦</span>Mahsulotlar</div>
+    <div class="sb-item" onclick="window.location.href='/ombor'"><span class="sb-ico">🏭</span>Ombor</div>
+    <div class="sb-item" onclick="window.location.href='/daromad'"><span class="sb-ico">📈</span>Daromad</div>
+    <div class="sb-item" onclick="window.location.href='/pos'"><span class="sb-ico">🏪</span>POS</div>
+    <div class="sb-item" onclick="window.location.href='/mijozlar'"><span class="sb-ico">👥</span>Mijozlar</div>
+    <div class="sb-item" onclick="window.location.href='/xodimlar'"><span class="sb-ico">👔</span>Xodimlar</div>
+    <div class="sb-item" onclick="window.location.href='/bannerlar'"><span class="sb-ico">🖼️</span>Bannerlar</div>
+    <div class="sb-item active" onclick="window.location.href='/shop'"><span class="sb-ico">🛒</span>Do'kon</div>
+    <div class="sb-item" onclick="window.location.href='/integratsiya'"><span class="sb-ico">🔗</span>Integratsiyalar</div>
+  </nav>
+  <div class="sb-bottom">
+    <div class="sb-user">
+      <div class="sb-avatar">⚙️</div>
+      <div>
+        <div class="sb-uname" id="adminSidebarName">Admin</div>
+        <div class="sb-urole" id="adminSidebarRole">SUPERUSER</div>
+      </div>
+    </div>
+    <button class="sb-out" onclick="logoutAdmin()">CHIQISH</button>
+  </div>
+</aside>
 
 <div class="toast" id="toast"></div>
 
@@ -828,6 +912,7 @@ html,body{height:100%;font-family:'Nunito',sans-serif;color:var(--text);backgrou
 
 <!-- HEADER -->
 <header class="header">
+  <button class="admin-hamburger" onclick="toggleAdminSidebar()">☰</button>
   <div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0;">
     <div class="header-logo">🏪</div>
     <div class="header-info">
@@ -944,10 +1029,45 @@ html,body{height:100%;font-family:'Nunito',sans-serif;color:var(--text);backgrou
   <div class="nav-item" id="navCart" onclick="openCart()">
     <span class="nav-ico nav-cart">🛒<span class="nav-cart-badge" id="cartBadge"></span></span>Savat
   </div>
+  <div id="navQrItem" class="nav-item" onclick="navQrClick()">
+    <div id="navQrBox" class="nav-qr-box" style="display:none;"></div>
+    <span id="navQrIco" class="nav-ico" style="font-size:22px;">🪪</span>
+    <div class="nav-qr-label">QR Karta</div>
+    <div class="nav-qr-cb" id="navQrCbLabel" style="display:none;"></div>
+  </div>
   <div class="nav-item" id="navProfile" onclick="openProfile()">
-    <span class="nav-ico">👤</span><span>Profil</span>
+    <div style="position:relative;display:inline-block;">
+      <span class="nav-ico">👤</span>
+      <span id="navCbBadge" style="display:none;position:absolute;top:-4px;right:-8px;background:#f59e0b;color:#fff;font-size:8px;font-weight:800;border-radius:8px;padding:1px 4px;white-space:nowrap;"></span>
+    </div>
+    <span>Profil</span>
   </div>
 </nav>
+
+<!-- ═══ QR KATTA MODAL ═══ -->
+<div class="modal" id="profileQrFullModal" style="align-items:center;justify-content:center;">
+  <div style="background:#fff;border-radius:20px;padding:24px;width:min(320px,94vw);text-align:center;box-shadow:0 24px 60px rgba(0,0,0,.3);font-family:Nunito,sans-serif;">
+    <div style="font-size:11px;font-weight:800;color:#16a34a;letter-spacing:1.5px;margin-bottom:10px;">BONUS KARTA</div>
+    <div id="pqfQrBox" style="display:inline-block;background:#fff;border:2px solid #dcfce7;padding:8px;border-radius:12px;margin-bottom:10px;"></div>
+    <div style="font-size:17px;font-weight:900;color:#111;margin-bottom:2px;" id="pqfName"></div>
+    <div style="font-size:13px;color:#666;margin-bottom:12px;" id="pqfPhone"></div>
+    <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:14px;">
+      <div id="pqfCb" style="display:none;background:#fef3c7;border:1.5px solid #f59e0b;border-radius:12px;padding:8px 14px;">
+        <div style="font-size:10px;font-weight:800;color:#92400e;letter-spacing:1px;">KESHBEK</div>
+        <div style="font-size:18px;font-weight:900;color:#d97706;" id="pqfCbAmt">0</div>
+        <div style="font-size:10px;color:#92400e;">so'm</div>
+      </div>
+      <div id="pqfBal" style="display:none;background:#dbeafe;border:1.5px solid #3b82f6;border-radius:12px;padding:8px 14px;">
+        <div style="font-size:10px;font-weight:800;color:#1d4ed8;letter-spacing:1px;">BALANS</div>
+        <div style="font-size:18px;font-weight:900;color:#2563eb;" id="pqfBalAmt">0</div>
+        <div style="font-size:10px;color:#1d4ed8;">so'm</div>
+      </div>
+    </div>
+    <div style="font-size:11px;color:#9ca3af;margin-bottom:14px;line-height:1.5;">Kassada ushbu QR ni ko'rsating<br>keshbek to'planadi va ishlatiladi</div>
+    <button onclick="downloadProfileQR()" style="width:100%;padding:11px;background:#22c55e;border:none;border-radius:10px;color:#fff;font-size:13px;font-weight:800;cursor:pointer;margin-bottom:8px;font-family:Nunito,sans-serif;">⬇️ Saqlash</button>
+    <button onclick="closeModal('profileQrFullModal')" style="width:100%;padding:10px;background:#f1f5f9;border:1.5px solid #e0e7ef;border-radius:10px;color:#374151;font-size:13px;font-weight:700;cursor:pointer;font-family:Nunito,sans-serif;">Yopish</button>
+  </div>
+</div>
 
 <!-- ═══ CART MODAL ═══ -->
 <div class="modal" id="cartModal" style="align-items:flex-end;">
@@ -966,7 +1086,7 @@ html,body{height:100%;font-family:'Nunito',sans-serif;color:var(--text);backgrou
         <div class="del-info">3 km gacha tekin &nbsp;·&nbsp; 3 km dan keyin: 5 000 so'm/km</div>
         <div class="del-row">
           <span style="font-size:13px;color:var(--text);">Masofa:</span>
-          <input class="km-inp" id="kmInput" type="number" value="0" min="0" max="99" oninput="updateCartTotal()">
+          <input class="km-inp" id="kmInput" type="number" value="0" min="0" max="99" oninput="setKm(parseInt(this.value)||0)">
           <span style="font-size:13px;color:var(--text);">km</span>
           <span class="del-price" id="delPriceTag">0 so'm</span>
         </div>
@@ -981,6 +1101,10 @@ html,body{height:100%;font-family:'Nunito',sans-serif;color:var(--text);backgrou
           <button class="km-btn" onclick="setKm(10)">10</button>
           <button class="km-btn" onclick="setKm(15)">15</button>
         </div>
+        <button onclick="attachLocation()" id="locBtn2" style="margin-top:8px;width:100%;padding:10px;background:rgba(0,229,200,.07);border:1.5px solid rgba(0,229,200,.35);border-radius:10px;color:var(--cyan);font-size:12px;font-weight:800;cursor:pointer;font-family:Nunito,sans-serif;display:flex;align-items:center;justify-content:center;gap:8px;">
+          📍 GPS — masofa avtomatik hisoblanadi
+        </button>
+        <div id="gpsDistInfo" style="display:none;font-size:11px;margin-top:6px;text-align:center;"></div>
       </div>
 
       <div class="warn-box warn" id="warnMin">⚠️ Minimal buyurtma: 60 000 so'm</div>
@@ -1054,6 +1178,30 @@ html,body{height:100%;font-family:'Nunito',sans-serif;color:var(--text);backgrou
   </div>
 </div>
 
+<!-- ═══ AI CHAT MODAL ═══ -->
+<div class="modal" id="aiChatModal" style="align-items:flex-end;">
+  <div class="modal-sheet full" style="display:flex;flex-direction:column;height:92vh;max-height:92vh;">
+    <div class="modal-handle"></div>
+    <div class="modal-head" style="background:#16a34a;border-radius:20px 20px 0 0;">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="width:36px;height:36px;background:rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;">🤖</div>
+        <div>
+          <div style="font-size:14px;font-weight:900;color:#fff;">AI Maslahatchi</div>
+          <div style="font-size:10px;color:rgba(255,255,255,.8);" id="aiStatusText">Tayyor</div>
+        </div>
+      </div>
+      <button class="modal-close" style="color:#fff;" onclick="closeModal('aiChatModal')">✕</button>
+    </div>
+    <div id="aiMessages" style="flex:1;overflow-y:auto;padding:12px 14px;display:flex;flex-direction:column;gap:10px;background:#f5f5f5;"></div>
+    <div style="padding:10px 14px;background:#fff;border-top:1px solid #e0e0e0;display:flex;gap:8px;align-items:flex-end;">
+      <textarea id="aiInput" rows="1" placeholder="Savol yozing..." onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendAIMessage();}" oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,96)+'px';"
+        style="flex:1;padding:10px 14px;border:2px solid #e0e0e0;border-radius:20px;font-family:Nunito,sans-serif;font-size:14px;resize:none;outline:none;line-height:1.4;max-height:96px;overflow-y:auto;"></textarea>
+      <button onclick="sendAIMessage()" id="aiSendBtn"
+        style="width:44px;height:44px;background:#16a34a;border:none;border-radius:50%;color:#fff;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;">➤</button>
+    </div>
+  </div>
+</div>
+
 <!-- ═══ MY ORDERS MODAL ═══ -->
 <div class="modal" id="ordersModal" style="align-items:flex-end;">
   <div class="modal-sheet full">
@@ -1080,11 +1228,42 @@ html,body{height:100%;font-family:'Nunito',sans-serif;color:var(--text);backgrou
           👤
         </div>
         <div style="font-size:20px;font-weight:800;color:#111;" id="profileFullName">—</div>
-        <div style="font-size:14px;color:#666;margin-bottom:10px;" id="profileFullPhone">—</div>
+        <div style="font-size:14px;color:#666;margin-bottom:12px;" id="profileFullPhone">—</div>
+
+        <!-- BONUS KARTA: QR + keshbek -->
+        <div id="profileBonusCard" style="display:none;background:linear-gradient(135deg,#f0fdf4,#dcfce7);border:2px solid #22c55e;border-radius:16px;padding:14px 16px;margin-bottom:14px;cursor:pointer;" onclick="openProfileQrFull()">
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div id="profileQrMini" style="flex-shrink:0;background:#fff;border-radius:8px;padding:4px;box-shadow:0 2px 8px rgba(0,0,0,.1);"></div>
+            <div style="flex:1;text-align:left;">
+              <div style="font-size:10px;font-weight:800;color:#16a34a;letter-spacing:1px;margin-bottom:3px;">BONUS KARTA</div>
+              <div style="font-size:13px;font-weight:800;color:#111;" id="profileBonusName">—</div>
+              <div style="font-size:11px;color:#666;margin-bottom:6px;" id="profileBonusPhone">—</div>
+              <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                <span id="profileCbBadge" style="display:none;background:#fef3c7;border:1.5px solid #f59e0b;color:#92400e;font-size:11px;font-weight:800;padding:3px 10px;border-radius:20px;">🎁 Keshbek: <span id="profileCbAmt">0</span> so'm</span>
+                <span id="profileBalBadge" style="display:none;background:#dbeafe;border:1.5px solid #3b82f6;color:#1d4ed8;font-size:11px;font-weight:800;padding:3px 10px;border-radius:20px;">💳 Balans: <span id="profileBalAmt">0</span> so'm</span>
+              </div>
+              <div style="font-size:10px;color:#16a34a;margin-top:5px;font-weight:600;">👆 QR ni kattalashtirish uchun bosing</div>
+            </div>
+          </div>
+        </div>
+        <!-- Tizimga kirish yo'q bo'lsa -->
+        <div id="profileNoBonusCard" style="background:#f9fafb;border:1.5px dashed #d1d5db;border-radius:12px;padding:12px;margin-bottom:14px;text-align:center;font-size:12px;color:#9ca3af;">
+          Bonus karta olish uchun ro'yxatdan o'ting
+        </div>
+
         <button onclick="openEditProfile()" style="padding:8px 20px;background:#f0fdf4;border:2px solid #22c55e;border-radius:20px;color:#16a34a;font-weight:800;font-size:13px;cursor:pointer;font-family:Nunito,sans-serif;">✏️ Tahrirlash</button>
       </div>
 
       <div style="display:flex;flex-direction:column;gap:8px;">
+        <div class="profile-menu-item" onclick="closeModal('profileFullModal');openAIChat()" style="background:linear-gradient(135deg,#f0f9ff,#e0f2fe);border:1.5px solid #7dd3fc;">
+          <span class="profile-menu-icon">🤖</span>
+          <div class="profile-menu-content">
+            <div class="profile-menu-title" style="color:#0369a1;">AI Maslahatchi</div>
+            <div class="profile-menu-sub">Savol bering, maslahat oling</div>
+          </div>
+          <span class="profile-menu-arrow" style="color:#0369a1;">›</span>
+        </div>
+
         <div class="profile-menu-item" onclick="openMyOrders()">
           <span class="profile-menu-icon">📋</span>
           <div class="profile-menu-content">
@@ -1230,16 +1409,13 @@ html,body{height:100%;font-family:'Nunito',sans-serif;color:var(--text);backgrou
       <button class="modal-close" onclick="closeModal('contactModal')">✕</button>
     </div>
     <div class="modal-body">
-      <!-- SMS CHAT -->
-      <div style="background:rgba(0,229,200,.06);border:1.5px solid rgba(0,229,200,.3);border-radius:12px;padding:14px;margin-bottom:10px;">
-        <div style="font-size:13px;font-weight:800;color:var(--cyan);margin-bottom:8px;">💬 SMS Chat — Admin bilan yozishuv</div>
-        <div id="shopChatMessages" style="max-height:200px;overflow-y:auto;display:flex;flex-direction:column;gap:8px;margin-bottom:10px;min-height:60px;">
-          <div style="text-align:center;color:var(--muted);font-size:12px;padding:16px;">Xabar yozing...</div>
+      <div style="background:#f0fdf4;border:1.5px solid #22c55e;border-radius:12px;padding:14px;margin-bottom:14px;display:flex;align-items:center;gap:12px;cursor:pointer;" onclick="closeModal('contactModal');openAIChat();">
+        <span style="font-size:28px;">🤖</span>
+        <div>
+          <div style="font-size:14px;font-weight:800;color:#16a34a;">AI Maslahatchi</div>
+          <div style="font-size:12px;color:#555;">Har qanday savolingizga javob beradi</div>
         </div>
-        <div style="display:flex;gap:8px;">
-          <input id="shopChatInput" style="flex:1;padding:10px 12px;background:var(--card);border:1.5px solid var(--border);border-radius:8px;color:white;font-family:Nunito,sans-serif;font-size:13px;outline:none;" placeholder="Xabar..." onkeydown="if(event.key==='Enter')sendShopChat()">
-          <button onclick="sendShopChat()" style="width:42px;height:42px;background:linear-gradient(135deg,var(--cyan),var(--cyan2));border:none;border-radius:8px;color:#000;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;">➤</button>
-        </div>
+        <span style="margin-left:auto;font-size:20px;color:#22c55e;">›</span>
       </div>
       <div class="contact-item">
         <span class="ci-icon">📱</span>
@@ -1294,6 +1470,7 @@ html,body{height:100%;font-family:'Nunito',sans-serif;color:var(--text);backgrou
 // ═══ STATE ═══
 var products=[], orders=[], offlineSales=[], users=[], incomes=[];
 var cart={}, session=null, lastOrder=null;
+var _isAdmin=false, _adminOrigSession=null;
 var activeCategory='Hammasi';
 var _starVal=0;
 var userAddresses = [];
@@ -1323,6 +1500,10 @@ var CATEGORIES = [
 
 // ═══ INIT ═══
 function init(){
+  // Admin/seller detection BEFORE any session override
+  try{ _adminOrigSession = DB.getSession(); }catch(e){}
+  _isAdmin = _adminOrigSession && (_adminOrigSession.role==='admin' || _adminOrigSession.role==='seller');
+
   // Session tekshirish
   var remembered = null;
   try{ remembered = JSON.parse(localStorage.getItem('sfu_remembered_customer')); }catch(e){}
@@ -1331,7 +1512,10 @@ function init(){
   var s = DB.getSession();
   // Login KERAK EMAS — faqat buyurtma qilganda so'raladi
   if(!s || s.role !== 'customer'){
-    if(remembered && remembered.name && remembered.phone){
+    if(_isAdmin){
+      // Admin views shop — keep DB session intact, use local shopping session
+      s = {role:'customer', userId:_adminOrigSession.userId, name:_adminOrigSession.name||'Admin', phone:_adminOrigSession.phone||'', device:_adminOrigSession.userId};
+    } else if(remembered && remembered.name && remembered.phone){
       var allU = DB.getUsers();
       var rd = remembered.phone.replace(/\D/g,'').slice(-9);
       var existU = allU.find(function(u){
@@ -1349,6 +1533,22 @@ function init(){
     }
   }
   session = s;
+
+  // Activate admin sidebar
+  if(_isAdmin){
+    document.body.classList.add('admin-mode');
+    var sn=document.getElementById('adminSidebarName');
+    var sr=document.getElementById('adminSidebarRole');
+    if(sn) sn.textContent=_adminOrigSession.name||'Admin';
+    if(sr) sr.textContent=_adminOrigSession.role==='seller'?'SOTUVCHI':'ADMIN';
+
+    // Ko'rish rejimi banneri (✕ bilan yopiladi, keyingi kirishda yana chiqadi)
+    var banner=document.createElement('div');
+    banner.style.cssText='position:fixed;top:0;left:0;right:0;z-index:9999;background:#1d4ed8;color:#fff;display:flex;align-items:center;justify-content:center;padding:6px 36px 6px 12px;font-size:12px;font-weight:700;font-family:Inter,sans-serif;letter-spacing:.5px;';
+    banner.innerHTML='👁 KO\'RISH REJIMI — buyurtma berish o\'chirilgan (admin monitoring)<button onclick="this.parentNode.remove();document.body.style.paddingTop=\'0\'" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.2);border:none;border-radius:50%;width:22px;height:22px;color:#fff;font-size:14px;cursor:pointer;font-weight:900;display:flex;align-items:center;justify-content:center;">✕</button>';
+    document.body.appendChild(banner);
+    document.body.style.paddingTop='32px';
+  }
 
   // AVVAL server dan yukla (eng ishonchli)
   try{
@@ -1376,18 +1576,25 @@ function init(){
   // user bar yashirin
   var sname = session.name||'';
   var sphone = session.phone||'';
-  document.getElementById('uName').textContent = sname;
+  // Ismni hamma joyda formatlash
+  var snameF = (typeof _formatStoredName === 'function') ? _formatStoredName(sname) : sname;
+  document.getElementById('uName').textContent = snameF;
   document.getElementById('uPhone').textContent = sphone;
-  document.getElementById('profileFullName').textContent = sname||'Mehmon';
+  document.getElementById('profileFullName').textContent = snameF||'Mehmon';
   document.getElementById('profileFullPhone').textContent = sphone;
   // Header profil tugmasi
   if(sname && sname !== 'Mehmon'){
     var hui = document.getElementById('headerUserInfo');
     if(hui){
       hui.style.display='block';
-      document.getElementById('headerUserName').textContent = sname;
+      document.getElementById('headerUserName').textContent = snameF;
       document.getElementById('headerUserPhone').textContent = sphone;
     }
+  }
+
+  // Nav QR — kirgan mijoz uchun avtomatik yuklash
+  if(session && session.role === 'customer'){
+    setTimeout(_loadProfileBonus, 500);
   }
 
   // Load user data
@@ -1470,7 +1677,7 @@ function showLoginModal(){
 
   var prefix=document.createElement('div');
   prefix.style.cssText='padding:13px 14px;background:#f5f5f5;font-weight:800;color:#111;border-right:1px solid #e0e0e0;white-space:nowrap;font-size:15px;';
-  prefix.textContent='+998';
+  prefix.textContent='🇺🇿 +998';
 
   var phoneInp=document.createElement('input');
   phoneInp.id='loginPhone';
@@ -1508,7 +1715,13 @@ function showLoginModal(){
   nameInp.style.cssText='width:100%;padding:13px;border:2px solid #e0e0e0;border-radius:12px;font-size:15px;font-family:Nunito,sans-serif;color:#111;outline:none;box-sizing:border-box;margin-bottom:14px;';
   nameInp.onfocus=function(){this.style.borderColor='#22c55e';};
   nameInp.onblur=function(){this.style.borderColor='#e0e0e0';};
-  nameInp.oninput=function(){msg.style.display='none';};
+  nameInp.oninput=function(){
+    msg.style.display='none';
+    // Preview: har so'zning bosh harfini katta qil
+    var v=this.value, pos=this.selectionStart;
+    var fmt=v.replace(/(^|\s)(\S)/g,function(m,sp,ch){return sp+ch.toUpperCase();});
+    if(fmt!==v){this.value=fmt; try{this.setSelectionRange(pos,pos);}catch(e){}}
+  };
   body.appendChild(nameInp);
 
   // Familiya
@@ -1524,12 +1737,34 @@ function showLoginModal(){
   lastNameInp.style.cssText='width:100%;padding:13px;border:2px solid #e0e0e0;border-radius:12px;font-size:15px;font-family:Nunito,sans-serif;color:#111;outline:none;box-sizing:border-box;margin-bottom:20px;';
   lastNameInp.onfocus=function(){this.style.borderColor='#22c55e';};
   lastNameInp.onblur=function(){this.style.borderColor='#e0e0e0';};
-  lastNameInp.oninput=function(){msg.style.display='none';};
+  lastNameInp.oninput=function(){
+    msg.style.display='none';
+    var v=this.value, pos=this.selectionStart;
+    var fmt=v.replace(/(^|\s)(\S)/g,function(m,sp,ch){return sp+ch.toUpperCase();});
+    if(fmt!==v){this.value=fmt; try{this.setSelectionRange(pos,pos);}catch(e){}}
+  };
   // Enter tugmasi
-  lastNameInp.onkeydown=function(e){if(e.key==='Enter')doLogin();};
   nameInp.onkeydown=function(e){if(e.key==='Enter') lastNameInp.focus();};
   phoneInp.onkeydown=function(e){if(e.key==='Enter') nameInp.focus();};
   body.appendChild(lastNameInp);
+
+  // Otasining ismi (ixtiyoriy)
+  var lbl4=document.createElement('div');
+  lbl4.style.cssText='font-size:11px;font-weight:800;color:#555;margin-bottom:6px;letter-spacing:.5px;';
+  lbl4.innerHTML='OTASINING ISMI <span style="font-size:10px;color:#999;font-weight:600;">(ixtiyoriy)</span>';
+  body.appendChild(lbl4);
+
+  var patronymicInp=document.createElement('input');
+  patronymicInp.id='loginPatronymic';
+  patronymicInp.type='text';
+  patronymicInp.placeholder='Otasining ismi (ixtiyoriy)';
+  patronymicInp.style.cssText='width:100%;padding:13px;border:2px solid #e0e0e0;border-radius:12px;font-size:15px;font-family:Nunito,sans-serif;color:#111;outline:none;box-sizing:border-box;margin-bottom:20px;';
+  patronymicInp.onfocus=function(){this.style.borderColor='#22c55e';};
+  patronymicInp.onblur=function(){this.style.borderColor='#e0e0e0';};
+  patronymicInp.oninput=function(){msg.style.display='none';};
+  patronymicInp.onkeydown=function(e){if(e.key==='Enter')doLogin();};
+  lastNameInp.onkeydown=function(e){if(e.key==='Enter')patronymicInp.focus();};
+  body.appendChild(patronymicInp);
 
   // Kirish tugmasi
   var loginBtn=document.createElement('button');
@@ -1572,26 +1807,125 @@ function showLoginMsg(text,type){
   msg.style.border='1.5px solid '+(type==='error'?'#fca5a5':type==='warn'?'#fcd34d':'#86efac');
 }
 
+// Ism/familiyani capitalize qilish: "doniyor turayev" → "Doniyor Turayev"
+function _capitalizeName(str){
+  if(!str) return '';
+  return str.replace(/\s+/g,' ').trim()
+    .split(' ')
+    .map(function(w){ return w.charAt(0).toUpperCase() + w.slice(1).toLowerCase(); })
+    .join(' ');
+}
+
+// Uzbek familiya suffikslari
+var _UZ_FEM_SUF = ['yeva','nova','zova','lova','kova','gova','dova','tova','bova','xova','qova','cheva','sheva','neva','eva','ova'];
+var _UZ_MAN_SUF = ['yev','nov','zov','lov','kov','gov','dov','tov','bov','xov','qov','chev','shev','nev','ev','ov'];
+
+function _uzSplitNoSpace(s){
+  var cap = function(w){ return w ? w.charAt(0).toUpperCase()+w.slice(1) : ''; };
+  var i, suf, idx, surname, firstname, surRoot;
+
+  // 1. Ayol: familiya O'RTADA  (turayevaguli → Guli Turayeva)
+  //    Suffiks o'rtada bo'lsa, undan keyin ism boshlanadi
+  for(i=0; i<_UZ_FEM_SUF.length; i++){
+    suf = _UZ_FEM_SUF[i];
+    idx = s.indexOf(suf);
+    if(idx >= 3 && idx + suf.length < s.length - 1){
+      surname   = s.slice(0, idx + suf.length);
+      firstname = s.slice(idx + suf.length);
+      if(firstname.length >= 2 && surname.length >= 4)
+        return [cap(firstname), cap(surname)]; // [Ism, Familiya]
+    }
+  }
+
+  // 2. Familiya OXIRDA — BARCHA suffikslardan eng muvozanatli bo'linishni ol
+  var allSuf = _UZ_FEM_SUF.concat(_UZ_MAN_SUF);
+  var globalBest = null, globalScore = 999;
+  for(i=0; i<allSuf.length; i++){
+    suf = allSuf[i];
+    if(!s.endsWith(suf)) continue;
+    var sufLen = suf.length;
+    for(var fnLen=4; fnLen <= s.length - sufLen - 3; fnLen++){
+      var fn2   = s.slice(0, fnLen);
+      var sur2  = s.slice(fnLen);
+      var root2 = sur2.slice(0, sur2.length - sufLen);
+      if(root2.length < 3 || root2.length > 7) continue;
+      var score = Math.abs(fn2.length - sur2.length);
+      if(score < globalScore){
+        globalScore = score;
+        globalBest = [cap(fn2), cap(sur2)];
+      }
+    }
+  }
+  if(globalBest) return globalBest;
+
+  return null; // ajratib bo'lmadi
+}
+
+// "doniyorturayev" → ["Doniyor","Turayev"] — katta harflar bo'yicha ajratish
+function _smartSplitName(raw){
+  raw = raw.trim();
+  var cap = function(w){ return w.charAt(0).toUpperCase()+w.slice(1).toLowerCase(); };
+
+  // Bo'sh joy bo'lsa — shunchaki split
+  if(/\s/.test(raw)){
+    return raw.split(/\s+/).filter(Boolean).map(cap);
+  }
+  // CamelCase: "DoniyorTurayev" → ["Doniyor","Turayev"]
+  if(/[A-Z]/.test(raw.slice(1))){
+    return raw.replace(/([A-Z])/g,' $1').trim().split(' ').map(cap);
+  }
+  // Kichik harflar, bo'sh joysiz → Uzbek pattern bilan ajratish
+  var split = _uzSplitNoSpace(raw.toLowerCase());
+  if(split) return split;
+
+  // Ajratib bo'lmadi → katta harf qilib qaytarish (foydalanuvchi qo'lda to'g'rilaydi)
+  return [cap(raw)];
+}
+
 function doLogin(){
   var phoneDigits=(document.getElementById('loginPhone')||{value:''}).value.replace(/\D/g,'');
-  var firstNameInput=(document.getElementById('loginName')||{value:''}).value.trim();
-  var lastNameInput=(document.getElementById('loginLastName')||{value:''}).value.trim();
+  var firstRaw=(document.getElementById('loginName')||{value:''}).value.trim();
+  var lastRaw=(document.getElementById('loginLastName')||{value:''}).value.trim();
+  var patronymicInput=(document.getElementById('loginPatronymic')||{value:''}).value.trim();
+
+  // Auto-format: agar ism maydonida bo'sh joy bo'lsa → familiyani ham avtomatik to'ldirish
+  var firstParsed = _smartSplitName(firstRaw);
+  var lastParsed  = _smartSplitName(lastRaw);
+
+  // Agar foydalanuvchi ismga ham familiyani yozib qo'ygan bo'lsa
+  // masalan: "Doniyor Turayev" → ism=Doniyor, familiya=Turayev
+  var firstNameInput, lastNameInput;
+  if(firstParsed.length >= 2 && !lastRaw){
+    firstNameInput = firstParsed[0];
+    lastNameInput  = firstParsed.slice(1).join(' ');
+    // UI ni ham yangilaymiz
+    var ni=document.getElementById('loginName'); if(ni) ni.value=firstNameInput;
+    var li=document.getElementById('loginLastName'); if(li) li.value=lastNameInput;
+  } else {
+    firstNameInput = firstParsed[0];
+    lastNameInput  = lastParsed[0]||lastRaw;
+  }
+
+  // Capitalize
+  firstNameInput = _capitalizeName(firstNameInput);
+  lastNameInput  = _capitalizeName(lastNameInput);
+  patronymicInput= _capitalizeName(patronymicInput);
 
   // Validatsiya — telefon
   if(phoneDigits.length!==9){
-    showLoginMsg('9 ta raqam kiriting! Masalan: 90 123 45 67','error');
+    showLoginMsg('📱 9 ta raqam kiriting! Masalan: 90 123 45 67','error');
     document.getElementById('loginPhone').focus();
     return;
   }
   // Validatsiya — ism
-  if(!firstNameInput){
-    showLoginMsg('Ismingizni kiriting!','error');
+  if(!firstNameInput || firstNameInput.length < 2){
+    showLoginMsg('👤 Ismingizni to\'liq kiriting!','error');
     document.getElementById('loginName').focus();
     return;
   }
   // Validatsiya — familiya
-  if(!lastNameInput){
-    showLoginMsg('Familiyangizni kiriting!','error');
+  if(!lastNameInput || lastNameInput.length < 2){
+    showLoginMsg('👤 Familiyangizni kiriting!','error');
     document.getElementById('loginLastName').focus();
     return;
   }
@@ -1613,31 +1947,55 @@ function doLogin(){
   var uid, s, finalName;
 
   if(existing){
-    // Mavjud foydalanuvchi — xush kelibsiz (ism yangilash yo'q, faqat kirish)
+    // Ism/familiya tekshiruvi — normalize qilib solishtirish
+    var inputNorm = (firstNameInput+' '+lastNameInput).toLowerCase().replace(/\s+/g,' ').trim();
+    var existNorm = (existing.name||'').toLowerCase().replace(/\s+/g,' ').trim();
+    // Telefon bor, ism ham mos → kirish
+    if(inputNorm === existNorm){
+      // to'g'ri — pastda davom etadi
+    } else {
+      // Telefon bor lekin ism mos emas
+      if(btn){btn.disabled=false;btn.textContent='Ro\'yxatdan o\'tish / Kirish';}
+      showLoginMsg('❌ Bu telefon '+existing.name+' nomida ro\'yxatdan o\'tgan. Ism/familiyani to\'g\'ri kiriting!','error');
+      return;
+    }
+    // Ism + nomer mos — avtorizatsiya
     finalName = existing.name || fullName;
     uid = existing.userId || ('u_'+existing.id);
     s={role:'customer',userId:uid,name:finalName,phone:phoneNorm,device:uid};
-    showLoginMsg('Xush kelibsiz, '+finalName+'!','ok');
+    showLoginMsg('✅ Xush kelibsiz, '+finalName+'!','ok');
+    // Mavjud mijozga ham QR ko'rsatish imkoni
+    setTimeout(function(){ showBonusQrModal(existing); }, 900);
 
   } else {
     // Yangi foydalanuvchi — ro'yxatdan o'tkazish
     finalName = fullName;
     uid='u_'+Date.now();
-    allUsers.push({
+    var newUser = {
       id:Date.now(), userId:uid,
       name:finalName, firstName:firstNameInput, lastName:lastNameInput,
+      patronymic:patronymicInput||'',
       phone:phoneNorm,
       role:'customer', debt:0, debtHistory:[],
-      registeredAt:new Date().toISOString()
-    });
+      balance:0, cashback:0,
+      registeredAt:new Date().toISOString(),
+      _isNew:true
+    };
+    allUsers.push(newUser);
     DB.saveUsers(allUsers);
     s={role:'customer',userId:uid,name:finalName,phone:phoneNorm,device:uid};
     showLoginMsg('Tabriklaymiz! Ro\'yxatdan o\'tdingiz.','ok');
+    // Bonus karta QR modalini ko'rsat
+    setTimeout(function(){ showBonusQrModal(newUser); }, 900);
   }
 
   if(window===window.parent) DB.setSession(s);
+  // 30 kun muddatli saqlash + brauzer fingerprint
+  var fp = navigator.userAgent.slice(0,40) + screen.width + screen.height;
   localStorage.setItem('sfu_remembered_customer',JSON.stringify({
-    userId:uid, name:finalName, phone:phoneNorm, device:uid
+    userId:uid, name:finalName, phone:phoneNorm, device:uid,
+    savedAt: Date.now(), fp: btoa(fp).slice(0,20),
+    expires: Date.now() + 30*24*60*60*1000
   }));
 
   // Modal yopish va davom etish
@@ -1868,6 +2226,7 @@ document.addEventListener('click',function(){
 },{once:true});
 
 function addToCart(id){
+  if(_isAdmin){ showToast('👁 Ko\'rish rejimi — buyurtma berish mumkin emas','info'); return; }
   var p=products.find(function(x){return x.id==id;});
   if(!p||p.stock<=0){showToast('Mahsulot tugagan','error');return;}
   var cur=cart[id]||0;
@@ -1984,11 +2343,11 @@ function calcDelivery(km){
 
 function setKm(val){
   var inp=document.getElementById('kmInput');
-  if(inp){inp.value=val;updateCartTotal();}
-  // Active button highlight
+  if(inp) inp.value=val;
   document.querySelectorAll('.km-btn').forEach(function(b){
     b.classList.toggle('active', parseInt(b.textContent)===val);
   });
+  updateCartTotal();
 }
 
 
@@ -2084,6 +2443,7 @@ function cancelOrder(){
 }
 
 function placeOrder(){
+  if(_isAdmin){ showToast('👁 Ko\'rish rejimi — buyurtma berish mumkin emas','info'); return; }
   // Guest bo'lsa login so'ra
   if(!session || session.isGuest || !session.name || session.name==='Mehmon'){
     showLoginModal();
@@ -2284,11 +2644,15 @@ function downloadTXT(){
 }
 
 // ═══ MY ORDERS ═══
+function _normPhone(p){return (p||'').replace(/\D/g,'').slice(-9);}
+function _myOrder(o){
+  var sph=_normPhone(session.phone);
+  var oph=_normPhone(o.userPhone);
+  return (sph&&oph&&sph===oph)||String(o.userId)===String(session.userId);
+}
 function openMyOrders(){
   orders=DB.getOrders();
-  var myOrders=orders.filter(function(o){
-    return o.userId===session.userId||o.userPhone===session.phone;
-  }).sort(function(a,b){return new Date(b.time)-new Date(a.time);});
+  var myOrders=orders.filter(_myOrder).sort(function(a,b){return new Date(b.time)-new Date(a.time);});
 
   var sl={new:'YANGI',accepted:'QABUL QILINDI',delivering:'YO\'LDA',done:'YETKAZILDI',cancelled:'BEKOR'};
   var html='';
@@ -2379,7 +2743,191 @@ function downloadOrderPDF(orderId){
 function openProfile(){
   closeModal('cartModal');
   closeModal('ordersModal');
+  _loadProfileBonus();
   openModal('profileFullModal');
+}
+
+var _profileQrInstance = null;
+var _profileQrUser = null;
+
+// DB dagi xom ismni formatlash: "turayevaguli" → "Guli Turayeva"
+function _formatStoredName(raw){
+  if(!raw) return '';
+  raw = raw.trim();
+  // Allaqachon to'g'ri: bo'shliq bor va bosh harf to'g'ri
+  if(/\s/.test(raw)){
+    return raw.split(/\s+/).map(function(w){
+      return w ? w.charAt(0).toUpperCase()+w.slice(1).toLowerCase() : '';
+    }).join(' ').trim();
+  }
+  // _smartSplitName ishlatib ajratish (shop.html da mavjud)
+  if(typeof _smartSplitName === 'function'){
+    // Barcha katta harf bo'lsa lowercase qilib uzatamiz (CamelCase detector ishlamasin)
+    var input = /^[A-ZЀ-ӿ]+$/.test(raw) ? raw.toLowerCase() : raw;
+    var parts = _smartSplitName(input);
+    if(parts && parts.length >= 2) return parts.join(' ');
+    if(parts && parts.length === 1) return parts[0];
+  }
+  // Fallback: birinchi harf katta
+  return raw.charAt(0).toUpperCase() + raw.slice(1).toLowerCase();
+}
+
+// Formatlangan ismni DB ga ham saqlab qo'yish (bir martalik to'g'irlash)
+function _fixAndSaveName(u, allUsers){
+  var formatted = _formatStoredName(u.name||'');
+  if(formatted && formatted !== u.name){
+    u.name = formatted;
+    var idx = allUsers.findIndex(function(x){ return x.id === u.id; });
+    if(idx >= 0){ allUsers[idx].name = formatted; DB.saveUsers(allUsers); }
+  }
+  return formatted;
+}
+
+function navQrClick(){
+  if(session && session.role==='customer' && !session.isGuest){
+    openProfileQrFull();
+  } else {
+    showLoginModal();
+  }
+}
+
+function _loadProfileBonus(){
+  if(!session || session.role !== 'customer'){
+    _showEl('profileNoBonusCard', true);
+    _showEl('profileBonusCard', false);
+    document.getElementById('navCbBadge').style.display = 'none';
+    return;
+  }
+  // DB dan foydalanuvchini topish
+  var allUsers = DB.getUsers();
+  var u = allUsers.find(function(x){
+    return x.phone && x.phone.replace(/\D/g,'').slice(-9) === (session.phone||'').replace(/\D/g,'').slice(-9);
+  });
+  if(!u){ _showEl('profileNoBonusCard', true); _showEl('profileBonusCard', false); return; }
+  // Ismni avtomatik to'g'irlash va DB ga saqlash
+  _fixAndSaveName(u, allUsers);
+  _profileQrUser = u;
+
+  var cb  = Number(u.cashback||0);
+  var bal = Number(u.balance||0);
+
+  // Nav badge
+  var badge = document.getElementById('navCbBadge');
+  if(badge){
+    if(cb > 0){ badge.textContent = '🎁'; badge.style.display = 'inline-block'; }
+    else badge.style.display = 'none';
+  }
+
+  // Profil karta — formatlangan ism
+  var displayName = _formatStoredName(u.name || session.name || '');
+  document.getElementById('profileBonusName').textContent  = displayName;
+  document.getElementById('profileBonusPhone').textContent = u.phone || '';
+  // profileFullName va profileFullPhone ham yangilansin
+  var pfn = document.getElementById('profileFullName');
+  if(pfn && pfn.textContent !== displayName) pfn.textContent = displayName;
+
+  var cbBadge = document.getElementById('profileCbBadge');
+  var balBadge = document.getElementById('profileBalBadge');
+  if(cb > 0){ cbBadge.style.display = 'inline-block'; document.getElementById('profileCbAmt').textContent = cb.toLocaleString('uz-UZ'); }
+  else cbBadge.style.display = 'none';
+  if(bal > 0){ balBadge.style.display = 'inline-block'; document.getElementById('profileBalAmt').textContent = bal.toLocaleString('uz-UZ'); }
+  else balBadge.style.display = 'none';
+
+  // Profil modal ichidagi kichkina QR
+  var miniBox = document.getElementById('profileQrMini');
+  miniBox.innerHTML = '';
+  _makeQrInto(miniBox, 'SFU:'+(u.phone||''), 60);
+
+  // Nav barda QR
+  var navQrItem = document.getElementById('navQrItem');
+  var navQrBox  = document.getElementById('navQrBox');
+  var navQrCb   = document.getElementById('navQrCbLabel');
+  if(navQrBox){
+    // QR rasmini ko'rsat, emoji yashir
+    navQrBox.innerHTML = '';
+    navQrBox.style.display = '';
+    _makeQrInto(navQrBox, 'SFU:'+(u.phone||''), 32);
+    var navQrIco = document.getElementById('navQrIco');
+    if(navQrIco) navQrIco.style.display = 'none';
+    if(cb > 0){
+      navQrCb.textContent = '🎁 ' + (cb >= 1000 ? Math.round(cb/1000)+'K' : cb) + " so'm";
+      navQrCb.style.display = '';
+    } else {
+      navQrCb.style.display = 'none';
+    }
+  }
+
+  _showEl('profileBonusCard', true);
+  _showEl('profileNoBonusCard', false);
+}
+
+function _showEl(id, show){
+  var el = document.getElementById(id);
+  if(el) el.style.display = show ? '' : 'none';
+}
+
+function _makeQrInto(container, text, size){
+  function doIt(){
+    try{ new QRCode(container, {text:text,width:size,height:size,colorDark:'#14532d',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.M}); }
+    catch(e){ container.textContent = text; }
+  }
+  if(typeof QRCode !== 'undefined'){ doIt(); }
+  else {
+    var s=document.createElement('script');
+    s.src='https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js';
+    s.onload=doIt; document.head.appendChild(s);
+  }
+}
+
+function openProfileQrFull(){
+  if(!_profileQrUser) return;
+  var u = _profileQrUser;
+  var fmtName = _formatStoredName(u.name || '');
+  document.getElementById('pqfName').textContent  = fmtName;
+  document.getElementById('pqfPhone').textContent = u.phone || '';
+
+  var cb  = Number(u.cashback||0);
+  var bal = Number(u.balance||0);
+  var pqfCb  = document.getElementById('pqfCb');
+  var pqfBal = document.getElementById('pqfBal');
+  if(cb > 0){ pqfCb.style.display=''; document.getElementById('pqfCbAmt').textContent=cb.toLocaleString('uz-UZ'); }
+  else pqfCb.style.display='none';
+  if(bal > 0){ pqfBal.style.display=''; document.getElementById('pqfBalAmt').textContent=bal.toLocaleString('uz-UZ'); }
+  else pqfBal.style.display='none';
+
+  var box = document.getElementById('pqfQrBox');
+  box.innerHTML = '';
+  _makeQrInto(box, 'SFU:'+(u.phone||''), 180);
+  openModal('profileQrFullModal');
+}
+
+function downloadProfileQR(){
+  if(!_profileQrUser) return;
+  var box = document.getElementById('pqfQrBox');
+  var img = box.querySelector('img') || box.querySelector('canvas');
+  if(!img){ alert('QR tayyor emas'); return; }
+  var canvas=document.createElement('canvas');
+  canvas.width=280; canvas.height=320;
+  var ctx=canvas.getContext('2d');
+  ctx.fillStyle='#f0fdf4'; ctx.fillRect(0,0,280,320);
+  var src=img.tagName==='IMG'?img.src:img.toDataURL();
+  var qi=new Image();
+  qi.onload=function(){
+    ctx.drawImage(qi,50,20,180,180);
+    ctx.fillStyle='#14532d'; ctx.font='bold 15px Arial'; ctx.textAlign='center';
+    ctx.fillText(_formatStoredName(_profileQrUser.name||''), 140, 222);
+    ctx.font='12px Arial'; ctx.fillStyle='#6b7280';
+    ctx.fillText(_profileQrUser.phone||'', 140, 240);
+    var cb=Number(_profileQrUser.cashback||0);
+    if(cb>0){ ctx.font='bold 12px Arial'; ctx.fillStyle='#d97706'; ctx.fillText('Keshbek: '+cb.toLocaleString()+' so\'m', 140, 258); }
+    ctx.font='9px Arial'; ctx.fillStyle='#9ca3af';
+    ctx.fillText('SellFlowUZ Bonus Karta', 140, 278);
+    var a=document.createElement('a');
+    a.href=canvas.toDataURL('image/png');
+    a.download='bonus_'+(_profileQrUser.phone||'mijoz').replace(/\D/g,'')+'.png';
+    a.click();
+  };
+  qi.src=src;
 }
 
 function openAddresses(){
@@ -2572,7 +3120,7 @@ function pollOrderStatuses(){
   }).catch(function(){
     // Offline fallback
     var fresh = DB.getOrders();
-    var myOrders = fresh.filter(function(o){return o.userId===session.userId||o.userPhone===session.phone;});
+    var myOrders = fresh.filter(_myOrder);
     myOrders.forEach(function(o){
       var prev = _lastKnownStatuses[o.id];
       if(prev !== undefined && prev !== o.status) _handleStatusChange(o, o.status);
@@ -2663,7 +3211,7 @@ function playStatusSound(type){
 function updateOrderDot(){
   orders=DB.getOrders();
   var active=orders.filter(function(o){
-    return (o.userId===session.userId||o.userPhone===session.phone)&&['new','accepted','delivering'].includes(o.status);
+    return _myOrder(o)&&['new','accepted','delivering'].includes(o.status);
   });
   var badge=document.getElementById('orderBadge');
   var nb=document.getElementById('navOrderBadge');
@@ -2716,13 +3264,27 @@ function saveProfile(){
 function openContact(){
   closeModal('profileFullModal');
   openModal('contactModal');
-  renderShopChatMessages();
 }
 
 function logout(){
   DB.clearSession();
   localStorage.removeItem('sfu_remembered_customer');
-  window.location.href='login.html';
+  window.location.href='/login';
+}
+
+function logoutAdmin(){
+  DB.clearSession();
+  localStorage.removeItem('sfu_fs_locked');
+  window.location.href='/login';
+}
+
+function toggleAdminSidebar(){
+  document.getElementById('adminSidebar').classList.toggle('open');
+  document.getElementById('adminSidebarOverlay').classList.toggle('open');
+}
+function closeAdminSidebar(){
+  document.getElementById('adminSidebar').classList.remove('open');
+  document.getElementById('adminSidebarOverlay').classList.remove('open');
 }
 
 function switchTab(tab){}
@@ -2742,11 +3304,34 @@ function showToast(msg,type){
 }
 
 // ═══ F11 ═══
-function tbFS(){
-  if(!document.fullscreenElement){document.documentElement.requestFullscreen().catch(function(){});}
-  else{document.exitFullscreen();}
+function _enterFS(){
+  localStorage.setItem('sfu_fs_locked','1');
+  document.documentElement.requestFullscreen().then(function(){
+    if(navigator.keyboard&&navigator.keyboard.lock)navigator.keyboard.lock(['F11']).catch(function(){});
+  }).catch(function(){});
 }
-document.addEventListener('keydown',function(e){if(e.key==='F11'){e.preventDefault();tbFS();}});
+function tbFS(){
+  if(!document.fullscreenElement){_enterFS();}
+  else{localStorage.removeItem('sfu_fs_locked');if(navigator.keyboard&&navigator.keyboard.unlock)navigator.keyboard.unlock();document.exitFullscreen();}
+}
+document.addEventListener('fullscreenchange',function(){
+  if(!document.fullscreenElement&&navigator.keyboard&&navigator.keyboard.unlock)navigator.keyboard.unlock();
+});
+document.addEventListener('keydown',function(e){
+  if(e.key==='F11'){e.preventDefault();if(!document.fullscreenElement)_enterFS();}
+  if(e.key==='Escape'){localStorage.removeItem('sfu_fs_locked');if(navigator.keyboard&&navigator.keyboard.unlock)navigator.keyboard.unlock();}
+});
+(function(){
+  if(localStorage.getItem('sfu_fs_locked')==='1'){
+    document.documentElement.requestFullscreen().then(function(){
+      if(navigator.keyboard&&navigator.keyboard.lock)navigator.keyboard.lock(['F11']).catch(function(){});
+    }).catch(function(){
+      function _r(){_enterFS();document.removeEventListener('keydown',_r,true);document.removeEventListener('click',_r,true);}
+      document.addEventListener('keydown',_r,{capture:true,once:true});
+      document.addEventListener('click',_r,{capture:true,once:true});
+    });
+  }
+})();
 
 // ═══ PAYMENT MODAL ═══
 var PAY_INFO = {
@@ -2823,94 +3408,173 @@ function playOrderPlacedSound(){
 }
 
 // ═══ LOCATION ═══
+var SHOP_LAT = 41.2995; // Do'kon koordinatalari — config.json dan SHOP_LAT ga mos
+var SHOP_LNG = 69.2401;
+
+function haversineKm(lat1,lng1,lat2,lng2){
+  var R=6371;
+  var dLat=(lat2-lat1)*Math.PI/180;
+  var dLng=(lng2-lng1)*Math.PI/180;
+  var a=Math.sin(dLat/2)*Math.sin(dLat/2)+
+        Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*
+        Math.sin(dLng/2)*Math.sin(dLng/2);
+  return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
+}
+
 function attachLocation(){
-  var btn=document.getElementById('locBtn');
-  var status=document.getElementById('locStatus');
   if(!navigator.geolocation){showToast('Brauzer lokatsiyani qo\'llab quvvatlamaydi','error');return;}
-  btn.textContent='⏳ Aniqlanmoqda...';
-  btn.disabled=true;
+  // Update both GPS buttons
+  ['locBtn','locBtn2'].forEach(function(id){
+    var b=document.getElementById(id);
+    if(b){b.textContent='⏳ Aniqlanmoqda...';b.disabled=true;}
+  });
   navigator.geolocation.getCurrentPosition(
     function(pos){
-      var lat=pos.coords.latitude.toFixed(6);
-      var lng=pos.coords.longitude.toFixed(6);
-      var mapsLink='https://maps.google.com/?q='+lat+','+lng;
-      var cur=(document.getElementById('noteInput').value||'').trim();
-      var locText='📍 Lokatsiya: '+lat+', '+lng+' ('+mapsLink+')';
-      document.getElementById('noteInput').value=cur?(cur+'\n'+locText):locText;
-      btn.textContent='✅ Lokatsiya ulandi';
-      btn.style.color='var(--green)';
-      btn.style.borderColor='rgba(34,197,94,.4)';
-      status.style.display='block';
-      status.innerHTML='<a href="'+mapsLink+'" target="_blank" style="color:var(--cyan);">🗺 Xaritada ko\'rish</a>';
-      showToast('Lokatsiya ulandi!','success');
+      var lat=pos.coords.latitude;
+      var lng=pos.coords.longitude;
+      var mapsLink='https://maps.google.com/?q='+lat.toFixed(6)+','+lng.toFixed(6);
+
+      // Haversine — do'kongacha masofani hisobla
+      var km=haversineKm(SHOP_LAT,SHOP_LNG,lat,lng);
+      var kmRounded=Math.round(km*10)/10;
+      setKm(kmRounded);
+
+      // Delivery info
+      var delFee=calcDelivery(kmRounded);
+      var infoEl=document.getElementById('gpsDistInfo');
+      if(infoEl){
+        infoEl.style.display='block';
+        infoEl.innerHTML='<span style="color:var(--cyan);">📍 Do\'konga masofa: <strong>'+kmRounded+' km</strong></span>'+(delFee?'<br><span style="color:var(--yellow);">Yetkazish: '+fmt(delFee)+' so\'m</span>':'<br><span style="color:var(--green);">Yetkazish: BEPUL ✅</span>');
+      }
+
+      // Append GPS to note field
+      var cur=(document.getElementById('noteInput')||{value:''}).value.trim();
+      var locText='📍 GPS: '+lat.toFixed(6)+', '+lng.toFixed(6);
+      var noteEl=document.getElementById('noteInput');
+      if(noteEl) noteEl.value=cur?(cur+'\n'+locText):locText;
+
+      var locStatus=document.getElementById('locStatus');
+      if(locStatus){
+        locStatus.style.display='block';
+        locStatus.innerHTML='<a href="'+mapsLink+'" target="_blank" style="color:var(--cyan);">🗺 Xaritada ko\'rish</a>';
+      }
+
+      ['locBtn','locBtn2'].forEach(function(id){
+        var b=document.getElementById(id);
+        if(b){
+          b.innerHTML='✅ Ulandi — '+kmRounded+' km ('+fmt(delFee||0)+' so\'m)';
+          b.style.color='var(--green)';
+          b.style.borderColor='rgba(34,197,94,.4)';
+          b.disabled=false;
+        }
+      });
+      showToast('Masofa: '+kmRounded+' km — Yetkazish: '+(delFee?fmt(delFee)+' so\'m':'BEPUL'),'success');
     },
     function(err){
-      btn.textContent='📍 Lokatsiyamni ulash';
-      btn.disabled=false;
       var msgs={1:'Ruxsat berilmadi',2:'Aniqlab bo\'lmadi',3:'Vaqt tugadi'};
+      ['locBtn','locBtn2'].forEach(function(id){
+        var b=document.getElementById(id);
+        if(b){b.innerHTML='📍 Lokatsiyamni ulash — masofa avtomatik hisoblanadi';b.disabled=false;}
+      });
       showToast('Lokatsiya xatosi: '+(msgs[err.code]||err.message),'error');
     },
     {enableHighAccuracy:true,timeout:10000}
   );
 }
 
-// ═══ SHOP SMS CHAT ═══
-function _shopChatKey(){
-  return 'chat_'+(session&&session.userId?session.userId:'guest');
-}
-function _shopGetChats(){
-  try{return JSON.parse(localStorage.getItem(_shopChatKey())||'[]');}catch(e){return[];}
-}
-function _shopSaveChats(msgs){
-  localStorage.setItem(_shopChatKey(),JSON.stringify(msgs));
+// ═══ AI MASLAHATCHI ═══
+var _aiMessages = [];
+var _aiTyping = false;
+
+var AI_SYSTEM = 'Siz SellFlowUZ mahalliy do\'konining AI maslahatchi yordamchisisiz. '+
+  'Mijozlarga har qanday savolda yordam bering: oziq-ovqat, mahsulotlar, retseptlar, sog\'liq, '+
+  'narxlar, yetkazib berish, buyurtma berish va boshqa hayotiy maslahatlar. '+
+  'Qisqa, aniq va foydali javoblar bering. Har doim O\'zbek tilida muloqot qiling. '+
+  'Agar savol do\'kon mahsulotlari haqida bo\'lsa - mahsulot tanlashda ham yordam bering.';
+
+function openAIChat(){
+  var modal=document.getElementById('aiChatModal');
+  if(!modal)return;
+  modal.classList.add('open');
+  if(!_aiMessages.length){
+    _aiMessages=[{role:'assistant',text:'Salom '+((session&&session.name&&session.name!=='Mehmon')?session.name:'!')+' 👋\nMen AI maslahatchi. Har qanday savolingizga javob beraman — oziq-ovqat, retsept, sog\'liq, mahsulot tanlash va boshqalar. Nimada yordam kerak?'}];
+    renderAIMessages();
+  }
+  setTimeout(function(){
+    var inp=document.getElementById('aiInput');
+    if(inp)inp.focus();
+  },300);
 }
 
-function renderShopChatMessages(){
-  var msgs=_shopGetChats();
-  var el=document.getElementById('shopChatMessages');
+function renderAIMessages(){
+  var el=document.getElementById('aiMessages');
   if(!el)return;
-  if(!msgs.length){
-    el.innerHTML='<div style="text-align:center;color:var(--muted);font-size:12px;padding:16px;">Xabar yozing...</div>';
+  if(!_aiMessages.length){
+    el.innerHTML='<div style="text-align:center;color:#aaa;font-size:13px;padding:40px 20px;">Savol yozing...</div>';
     return;
   }
-  el.innerHTML=msgs.map(function(m){
-    var isAdmin=m.from==='admin';
-    var d=new Date(m.time);
-    var ts=d.toLocaleTimeString('uz-UZ',{hour:'2-digit',minute:'2-digit'});
-    return '<div style="display:flex;flex-direction:column;align-items:'+(isAdmin?'flex-start':'flex-end')+';">'+
-      '<div style="max-width:80%;padding:8px 12px;border-radius:10px;font-size:12px;line-height:1.4;'+
-        (isAdmin?'background:rgba(42,52,64,.8);border:1px solid var(--border);border-bottom-left-radius:2px;':'background:rgba(0,229,200,.12);border:1px solid rgba(0,229,200,.25);border-bottom-right-radius:2px;')+
-        '">'+m.text+'</div>'+
-      '<div style="font-size:9px;color:var(--muted);margin-top:2px;">'+ts+(isAdmin?' · Admin':' · Men')+'</div>'+
+  el.innerHTML=_aiMessages.map(function(m){
+    var isAI=m.role==='assistant';
+    var ts=m.time?new Date(m.time).toLocaleTimeString('uz-UZ',{hour:'2-digit',minute:'2-digit'}):'';
+    return '<div style="display:flex;flex-direction:column;align-items:'+(isAI?'flex-start':'flex-end')+';max-width:100%;">'+
+      (isAI?'<div style="font-size:10px;color:#888;margin-bottom:4px;margin-left:4px;">🤖 AI Maslahatchi</div>':'')+
+      '<div style="max-width:82%;padding:10px 14px;border-radius:'+(isAI?'4px 16px 16px 16px':'16px 16px 4px 16px')+';font-size:14px;line-height:1.6;word-break:break-word;white-space:pre-wrap;'+
+        (isAI?'background:#fff;border:1px solid #e0e0e0;color:#111;box-shadow:0 1px 4px rgba(0,0,0,.08);':'background:#16a34a;color:#fff;')+
+        '">'+escHtml(m.text)+'</div>'+
+      (ts?'<div style="font-size:10px;color:#aaa;margin-top:3px;'+(isAI?'':'margin-right:4px')+';">'+ts+'</div>':'')+
     '</div>';
   }).join('');
+  if(_aiTyping){
+    el.innerHTML+='<div style="display:flex;align-items:flex-start;gap:8px;">'+
+      '<div style="background:#fff;border:1px solid #e0e0e0;border-radius:4px 16px 16px 16px;padding:10px 16px;">'+
+      '<span style="display:inline-flex;gap:4px;">'+
+        '<span style="width:7px;height:7px;background:#aaa;border-radius:50%;animation:aiDot .9s ease-in-out infinite;"></span>'+
+        '<span style="width:7px;height:7px;background:#aaa;border-radius:50%;animation:aiDot .9s ease-in-out .3s infinite;"></span>'+
+        '<span style="width:7px;height:7px;background:#aaa;border-radius:50%;animation:aiDot .9s ease-in-out .6s infinite;"></span>'+
+      '</span></div></div>';
+  }
   el.scrollTop=el.scrollHeight;
 }
 
-function sendShopChat(){
-  var inp=document.getElementById('shopChatInput');
-  if(!inp)return;
+function escHtml(t){return (t||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+function sendAIMessage(){
+  var inp=document.getElementById('aiInput');
+  if(!inp||_aiTyping)return;
   var text=(inp.value||'').trim();
   if(!text)return;
-  var msgs=_shopGetChats();
-  msgs.push({from:'user',text:text,time:new Date().toISOString(),read:false,userName:session?session.name:'Mijoz',userPhone:session?session.phone:''});
-  _shopSaveChats(msgs);
   inp.value='';
-  renderShopChatMessages();
-  // Simulate admin auto-reply after 2-4s
-  var replies=[
-    'Salom! Xabaringizni oldik, tez orada javob beramiz.',
-    'Rahmat murojaat uchun! Bir oz kuting...',
-    'OK, ko\'rib chiqamiz!',
-    'Ha, albatta yordamlashamiz 👍',
-    'Qaysi mahsulot haqida so\'ramoqdasiz?'
-  ];
-  setTimeout(function(){
-    var fr=_shopGetChats();
-    fr.push({from:'admin',text:replies[Math.floor(Math.random()*replies.length)],time:new Date().toISOString(),read:true});
-    _shopSaveChats(fr);
-    renderShopChatMessages();
-  },2000+Math.random()*2000);
+  inp.style.height='auto';
+
+  _aiMessages.push({role:'user',text:text,time:new Date().toISOString()});
+  _aiTyping=true;
+  renderAIMessages();
+  document.getElementById('aiStatusText').textContent='Yozmoqda...';
+
+  var msgs=[{role:'system',content:AI_SYSTEM}].concat(
+    _aiMessages.filter(function(m){return m.role!=='system';}).map(function(m){
+      return {role:m.role==='assistant'?'assistant':'user',content:m.text};
+    })
+  );
+
+  fetch('/ai',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({messages:msgs})
+  }).then(function(r){return r.json();}).then(function(res){
+    _aiTyping=false;
+    var reply=res.choices&&res.choices[0]&&res.choices[0].message&&res.choices[0].message.content;
+    if(!reply&&res.error) reply='⚠️ Xatolik: '+res.error;
+    if(!reply) reply='Uzr, javob ololmadim. Qaytadan urinib ko\'ring.';
+    _aiMessages.push({role:'assistant',text:reply,time:new Date().toISOString()});
+    renderAIMessages();
+    document.getElementById('aiStatusText').textContent='Tayyor';
+  }).catch(function(e){
+    _aiTyping=false;
+    _aiMessages.push({role:'assistant',text:'⚠️ Server bilan bog\'lanishda xatolik. Server ishlaayotganini tekshiring (python3 server.py).',time:new Date().toISOString()});
+    renderAIMessages();
+    document.getElementById('aiStatusText').textContent='Tayyor';
+  });
 }
 
 // ═══ DISCOUNT CALCULATION ═══
@@ -2944,7 +3608,7 @@ function calcDiscount(product){
 
 // ═══ START POLLING ═══
 function seedStatuses(){
-  var my=DB.getOrders().filter(function(o){return o.userId===session.userId||o.userPhone===session.phone;});
+  var my=DB.getOrders().filter(_myOrder);
   my.forEach(function(o){_lastKnownStatuses[o.id]=o.status;});
 }
 // Poll every 5 seconds
@@ -3098,6 +3762,137 @@ document.head.appendChild(_bannerCss);
 // START
 init();
 
+</script>
+
+<!-- ══ BONUS KARTA QR MODAL ══ -->
+<div id="bonusQrModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:9999;align-items:center;justify-content:center;font-family:'Inter',sans-serif;">
+  <div style="background:#fff;border-radius:20px;padding:28px 24px;width:min(340px,94vw);text-align:center;box-shadow:0 24px 60px rgba(0,0,0,.3);">
+    <div style="font-size:32px;margin-bottom:6px;">🎉</div>
+    <div style="font-size:18px;font-weight:900;color:#111827;margin-bottom:4px;" id="bqmTitle">Xush kelibsiz!</div>
+    <div style="font-size:13px;color:#6b7280;margin-bottom:16px;" id="bqmSub">Sizning bonus kartangiz tayyor</div>
+
+    <div style="background:#f0fdf4;border:2px solid #22c55e;border-radius:14px;padding:16px;margin-bottom:16px;">
+      <div style="font-size:11px;font-weight:700;color:#15803d;letter-spacing:1px;margin-bottom:10px;">BONUS KARTA — QR KOD</div>
+      <div id="bqmQrBox" style="display:inline-block;background:#fff;padding:8px;border-radius:8px;"></div>
+      <div style="margin-top:10px;font-size:14px;font-weight:800;color:#111827;" id="bqmName"></div>
+      <div style="font-size:12px;color:#6b7280;margin-top:2px;margin-bottom:10px;" id="bqmPhone"></div>
+      <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:10px;">
+        <div id="bqmCbBlock" style="display:none;background:#fef3c7;border:1.5px solid #f59e0b;border-radius:10px;padding:8px 14px;min-width:90px;">
+          <div style="font-size:9px;font-weight:800;color:#92400e;letter-spacing:1px;">KESHBEK</div>
+          <div style="font-size:20px;font-weight:900;color:#d97706;" id="bqmCbAmt">0</div>
+          <div style="font-size:10px;color:#92400e;">so'm</div>
+        </div>
+        <div id="bqmBalBlock" style="display:none;background:#dbeafe;border:1.5px solid #3b82f6;border-radius:10px;padding:8px 14px;min-width:90px;">
+          <div style="font-size:9px;font-weight:800;color:#1d4ed8;letter-spacing:1px;">BALANS</div>
+          <div style="font-size:20px;font-weight:900;color:#2563eb;" id="bqmBalAmt">0</div>
+          <div style="font-size:10px;color:#1d4ed8;">so'm</div>
+        </div>
+      </div>
+      <div style="background:#dcfce7;border-radius:8px;padding:6px 12px;font-size:11px;color:#166534;font-weight:700;">
+        Kassada ushbu QR ni ko'rsating → keshbek to'planadi
+      </div>
+    </div>
+
+    <div style="background:#fef3c7;border-radius:10px;padding:10px 14px;margin-bottom:16px;font-size:12px;color:#92400e;text-align:left;line-height:1.6;">
+      <strong>QR kod nima uchun?</strong><br>
+      • Har xariddan <strong>keshbek</strong> yig'iladi<br>
+      • Kassada ko'rsatib <strong>chegirma</strong> olasiz<br>
+      • Telefon raqam bilan ham topish mumkin
+    </div>
+
+    <button onclick="downloadBonusQR()" style="width:100%;padding:12px;background:#22c55e;border:none;border-radius:10px;color:#fff;font-size:14px;font-weight:800;cursor:pointer;margin-bottom:8px;">
+      ⬇️ QR ni telefonga saqlash
+    </button>
+    <button onclick="closeBonusQrModal()" style="width:100%;padding:12px;background:#f1f5f9;border:1.5px solid #e0e7ef;border-radius:10px;color:#374151;font-size:14px;font-weight:700;cursor:pointer;">
+      Keyinroq saqlaman →
+    </button>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+var _bqmUser = null;
+
+function showBonusQrModal(user){
+  _bqmUser = user;
+  var fName = _formatStoredName(user.name||'Mijoz');
+  document.getElementById('bqmTitle').textContent = 'Xush kelibsiz, ' + fName + '!';
+  document.getElementById('bqmSub').textContent = user._isNew
+    ? 'Siz muvaffaqiyatli ro\'yxatdan o\'tdingiz'
+    : 'Sizning bonus kartangiz';
+  document.getElementById('bqmName').textContent = fName;
+  document.getElementById('bqmPhone').textContent = user.phone||'';
+
+  // Keshbek va balans
+  var cb  = Number(user.cashback||0);
+  var bal = Number(user.balance||0);
+  var cbB  = document.getElementById('bqmCbBlock');
+  var balB = document.getElementById('bqmBalBlock');
+  if(cb > 0){
+    cbB.style.display = '';
+    document.getElementById('bqmCbAmt').textContent = cb.toLocaleString('uz-UZ');
+  } else cbB.style.display = 'none';
+  if(bal > 0){
+    balB.style.display = '';
+    document.getElementById('bqmBalAmt').textContent = bal.toLocaleString('uz-UZ');
+  } else balB.style.display = 'none';
+
+  var box = document.getElementById('bqmQrBox');
+  box.innerHTML = '';
+  var qrData = 'SFU:' + (user.phone||'');
+  function makeQr(){
+    try {
+      new QRCode(box, {
+        text: qrData, width:160, height:160,
+        colorDark:'#14532d', colorLight:'#ffffff',
+        correctLevel: QRCode.CorrectLevel.M
+      });
+    } catch(e){ box.textContent = qrData; }
+  }
+  if(typeof QRCode !== 'undefined'){
+    makeQr();
+  } else {
+    var s = document.createElement('script');
+    s.src = 'https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js';
+    s.onload = makeQr;
+    document.head.appendChild(s);
+  }
+  document.getElementById('bonusQrModal').style.display = 'flex';
+}
+
+function closeBonusQrModal(){
+  document.getElementById('bonusQrModal').style.display = 'none';
+}
+
+function downloadBonusQR(){
+  var box = document.getElementById('bqmQrBox');
+  var img = box.querySelector('img') || box.querySelector('canvas');
+  if(!img){ alert('QR tayyor emas, bir oz kuting'); return; }
+  var canvas = document.createElement('canvas');
+  canvas.width = 280; canvas.height = 320;
+  var ctx = canvas.getContext('2d');
+  ctx.fillStyle = '#f0fdf4'; ctx.fillRect(0,0,280,320);
+  ctx.fillStyle = '#fff'; ctx.roundRect && ctx.roundRect(20,20,240,240,12);
+  ctx.fill && ctx.fill();
+  var src = img.tagName==='IMG' ? img.src : img.toDataURL();
+  var qi = new Image();
+  qi.onload = function(){
+    ctx.drawImage(qi, 60, 30, 160, 160);
+    ctx.fillStyle = '#14532d'; ctx.font = 'bold 16px Arial'; ctx.textAlign = 'center';
+    ctx.fillText(_bqmUser.name||'', 140, 220);
+    ctx.font = '13px Arial'; ctx.fillStyle = '#6b7280';
+    ctx.fillText(_bqmUser.phone||'', 140, 240);
+    ctx.font = 'bold 11px Arial'; ctx.fillStyle = '#15803d';
+    ctx.fillText('SellFlowUZ Bonus Karta', 140, 262);
+    ctx.font = '10px Arial'; ctx.fillStyle = '#9ca3af';
+    ctx.fillText('Kassada ko\'rsating — keshbek to\'planadi', 140, 280);
+    var a = document.createElement('a');
+    a.href = canvas.toDataURL('image/png');
+    a.download = 'bonus_karta_' + (_bqmUser.phone||'mijoz').replace(/\D/g,'') + '.png';
+    a.click();
+  };
+  qi.src = src;
+}
 </script>
 </body>
 </html>

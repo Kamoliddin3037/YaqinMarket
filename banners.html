@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Bannerlar — SellFlowUZ</title>
+<link rel="stylesheet" href="style.css">
 <script src="data.js"></script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;900&family=Rajdhani:wght@400;500;600;700&display=swap');
@@ -22,7 +23,7 @@ body{background:linear-gradient(135deg,#0d1b2a,#152538);font-family:'Rajdhani',s
 body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(circle,rgba(0,255,231,.05) 1px,transparent 1px);background-size:32px 32px;pointer-events:none;z-index:0;}
 
 /* MAIN */
-.main{margin-left:0;flex:1;display:flex;flex-direction:column;min-height:100vh;position:relative;z-index:1;}
+.main{margin-left:var(--sidebar-w);flex:1;display:flex;flex-direction:column;min-height:100vh;position:relative;z-index:1;}
 .topbar{padding:16px 24px;background:rgba(21,32,48,.9);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;backdrop-filter:blur(10px);position:sticky;top:0;z-index:50;}
 .page-title{font-family:'Orbitron',monospace;font-size:16px;color:var(--cyan);letter-spacing:2px;}
 .content{padding:24px;flex:1;}
@@ -67,11 +68,32 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
 
 <div class="toast" id="toast"></div>
 
-<div id="sidebarUserName" style="display:none"></div>
-<div id="sidebarUserRole" style="display:none"></div>
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="document.getElementById('sidebar').classList.remove('open');this.classList.remove('open');"></div>
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-logo"><div class="logo-icon">🏪</div><div class="logo-text">SellFlowUZ</div></div>
+  <nav class="sidebar-nav">
+    <div class="nav-item" onclick="window.location.href='/dashboard'"><span class="nav-icon">📅</span>Asosiy</div>
+    <div class="nav-item" onclick="window.location.href='/buyurtmalar'"><span class="nav-icon">📋</span>Buyurtmalar</div>
+    <div class="nav-item" onclick="window.location.href='/mahsulotlar'"><span class="nav-icon">📦</span>Mahsulotlar</div>
+    <div class="nav-item" onclick="window.location.href='/ombor'"><span class="nav-icon">🏭</span>Ombor</div>
+    <div class="nav-item" onclick="window.location.href='/daromad'"><span class="nav-icon">📈</span>Daromad</div>
+    <div class="nav-item" onclick="window.location.href='/pos'"><span class="nav-icon">🏪</span>POS</div>
+    <div class="nav-item" onclick="window.location.href='/mijozlar'"><span class="nav-icon">👥</span>Mijozlar</div>
+    <div class="nav-item" onclick="window.location.href='/xodimlar'"><span class="nav-icon">👔</span>Xodimlar</div>
+    <div class="nav-item active" onclick="window.location.href='/bannerlar'"><span class="nav-icon">🖼️</span>Bannerlar</div>
+    <div class="nav-item" onclick="window.location.href='/shop'"><span class="nav-icon">🛒</span>Do'kon</div>
+    <div class="nav-item" onclick="window.location.href='/integratsiya'"><span class="nav-icon">🔗</span>Integratsiyalar</div>
+  </nav>
+  <div class="sidebar-bottom">
+    <div class="sidebar-user"><div class="user-avatar">⚙️</div>
+      <div><div class="user-info-name" id="sidebarUserName">Admin</div><div class="user-info-role">ADMIN</div></div>
+    </div>
+    <button class="logout-btn" onclick="logout()">CHIQISH</button>
+  </div>
+</aside>
 
 <!-- MAIN -->
-<div class="main" style="margin-left:0;">
+<div class="main">
   <div class="topbar" style="position:sticky;top:0;z-index:10;">
     <div class="page-title">&#128444; BANNERLAR</div>
     <button class="btn btn-cyan" onclick="addBanner()">+ Yangi banner</button>
@@ -106,14 +128,20 @@ var _fileIds = {};
 
 // ── INIT ──
 function init(){
-  // banners.html to'g'ridan-to'g'ri ochilmasin — dashboard orqali ishlaydi
-  window.location.replace('dashboard.html');
+  var s = DB.getSession();
+  if(!s || s.role !== 'admin'){
+    window.location.href = '/login';
+    return;
+  }
+  var sn = document.getElementById('sidebarUserName');
+  if(sn) sn.textContent = s.name || 'Admin';
+  loadBanners();
 }
 
 function logout(){
-  if(window !== window.parent) return;
   DB.clearSession();
-  window.location.href = 'login.html';
+  localStorage.removeItem('sfu_v1_token');
+  window.location.href = '/login';
 }
 
 // ── LOAD ──
@@ -456,6 +484,22 @@ function toast(msg, type){
 }
 
 window.onload = init;
+
+// ═══ IFRAME NAV ═══
+(function(){
+  if(window.parent===window) return;
+  document.addEventListener('click',function(e){
+    var a=e.target.closest('a[href]');
+    if(!a||a.target) return;
+    var h=a.getAttribute('href');
+    if(!h||h==='#'||h.startsWith('javascript')) return;
+    if(h.startsWith('/')){e.preventDefault();window.parent.postMessage({sfuNav:h},'*');}
+  },true);
+  document.addEventListener('keydown',function(e){
+    if(e.key==='F11'){e.preventDefault();window.parent.postMessage({sfuF11:true},'*');}
+    if(e.key==='Escape'){window.parent.postMessage({sfuEsc:true},'*');}
+  },true);
+})();
 </script>
 </body>
 </html>

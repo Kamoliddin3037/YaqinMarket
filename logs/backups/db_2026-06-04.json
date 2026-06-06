@@ -1,0 +1,2405 @@
+{
+  "products": [
+    {
+      "id": 101,
+      "name": "Mol go'shti (1 kg)",
+      "barcode": "200101",
+      "costPrice": 100000,
+      "sellPrice": 145000,
+      "unit": "kg",
+      "stock": 1286,
+      "category": "Gosht",
+      "expiryDate": "2026-04-02",
+      "img": null
+    },
+    {
+      "id": 102,
+      "name": "Qo'y go'shti (1 kg)",
+      "barcode": "200102",
+      "costPrice": 100000,
+      "sellPrice": 127000,
+      "unit": "kg",
+      "stock": 198,
+      "category": "Gosht",
+      "expiryDate": "2026-04-02"
+    },
+    {
+      "id": 103,
+      "name": "Tovuq go'shti (1 kg)",
+      "barcode": "200103",
+      "costPrice": 30000,
+      "sellPrice": 37000,
+      "unit": "kg",
+      "stock": 0,
+      "category": "Gosht",
+      "expiryDate": "2026-04-02"
+    },
+    {
+      "id": 104,
+      "name": "Kurka go'shti (1 kg)",
+      "barcode": "200104",
+      "costPrice": 37000,
+      "sellPrice": 47000,
+      "unit": "kg",
+      "stock": 0,
+      "category": "Gosht",
+      "expiryDate": "2026-04-02"
+    },
+    {
+      "id": 105,
+      "name": "Doktor kolbasa (1 kg)",
+      "barcode": "200105",
+      "costPrice": 42000,
+      "sellPrice": 57000,
+      "unit": "kg",
+      "stock": 173,
+      "category": "Gosht",
+      "expiryDate": "2026-04-20",
+      "img": null
+    },
+    {
+      "id": 106,
+      "name": "Servelat (1 kg)",
+      "barcode": "200106",
+      "costPrice": 80000,
+      "sellPrice": 120000,
+      "unit": "kg",
+      "stock": 192,
+      "category": "Gosht",
+      "expiryDate": "2026-04-29",
+      "img": null
+    },
+    {
+      "id": 107,
+      "name": "Sosiskalar (1 kg)",
+      "barcode": "200107",
+      "costPrice": 37000,
+      "sellPrice": 51000,
+      "unit": "kg",
+      "stock": 0,
+      "category": "Gosht",
+      "expiryDate": "2026-04-02"
+    },
+    {
+      "id": 108,
+      "name": "Sut (1L, paket)",
+      "barcode": "200108",
+      "costPrice": 7000,
+      "sellPrice": 9000,
+      "unit": "litr",
+      "stock": 17,
+      "category": "Sut",
+      "expiryDate": "2026-04-05"
+    },
+    {
+      "id": 109,
+      "name": "Qatiq (1L)",
+      "barcode": "200109",
+      "costPrice": 6000,
+      "sellPrice": 8000,
+      "unit": "litr",
+      "stock": 0,
+      "category": "Sut",
+      "expiryDate": "2026-04-05"
+    },
+    {
+      "id": 110,
+      "name": "Smetana (400g)",
+      "barcode": "200110",
+      "costPrice": 11000,
+      "sellPrice": 14000,
+      "unit": "dona",
+      "stock": 0,
+      "category": "Sut",
+      "expiryDate": "2026-04-05"
+    },
+    {
+      "id": 111,
+      "name": "Tvorog (250g)",
+      "barcode": "200111",
+      "costPrice": 9000,
+      "sellPrice": 12000,
+      "unit": "dona",
+      "stock": 0,
+      "category": "Sut",
+      "expiryDate": "2026-04-05"
+    },
+    {
+      "id": 112,
+      "name": "Pishloq (200g)",
+      "barcode": "200112",
+      "costPrice": 20000,
+      "sellPrice": 26000,
+      "unit": "dona",
+      "stock": 0,
+      "category": "Sut",
+      "expiryDate": "2026-04-01"
+    },
+    {
+      "id": 113,
+      "name": "Sariyog' (200g)",
+      "barcode": "200113",
+      "costPrice": 16500,
+      "sellPrice": 20000,
+      "unit": "dona",
+      "stock": 0,
+      "category": "Sut",
+      "expiryDate": "2026-04-01"
+    },
+    {
+      "id": 114,
+      "name": "Non (oq)",
+      "barcode": "200114",
+      "costPrice": 2200,
+      "sellPrice": 3200,
+      "unit": "dona",
+      "stock": 100,
+      "category": "Non",
+      "expiryDate": "2026-05-05",
+      "img": "http://localhost:8080/images/img_1777833646784.jpg"
+    },
+    {
+      "id": 115,
+      "name": "Aralash non",
+      "barcode": "200115",
+      "costPrice": 6000,
+      "sellPrice": 9000,
+      "unit": "dona",
+      "stock": 37,
+      "category": "Non",
+      "expiryDate": "2026-05-30",
+      "img": "http://localhost:8080/images/img_1777833979046.jpg"
+    },
+    {
+      "id": 116,
+      "name": "Baton non",
+      "barcode": "200116",
+      "costPrice": 6000,
+      "sellPrice": 9000,
+      "unit": "dona",
+      "stock": 16,
+      "category": "Non",
+      "expiryDate": "2026-03-30",
+      "img": "http://localhost:8080/images/img_1777835975316.jpg"
+    },
+    {
+      "id": 117,
+      "name": "Bulochka",
+      "barcode": "200117",
+      "costPrice": 1700,
+      "sellPrice": 2700,
+      "unit": "dona",
+      "stock": 0,
+      "category": "Non",
+      "expiryDate": "2026-03-30"
+    },
+    {
+      "id": 118,
+      "name": "Shokolad (100g)",
+      "barcode": "200118",
+      "costPrice": 13000,
+      "sellPrice": 18000,
+      "unit": "dona",
+      "stock": 23,
+      "category": "Boshqa",
+      "expiryDate": "2026-09-14"
+    },
+    {
+      "id": 119,
+      "name": "Konfetlar (1 kg)",
+      "barcode": "200119",
+      "costPrice": 30000,
+      "sellPrice": 42000,
+      "unit": "kg",
+      "stock": 4,
+      "category": "Boshqa",
+      "expiryDate": "2026-09-14"
+    },
+    {
+      "id": 120,
+      "name": "Pechene (1 kg)",
+      "barcode": "200120",
+      "costPrice": 17000,
+      "sellPrice": 23000,
+      "unit": "kg",
+      "stock": 18,
+      "category": "Boshqa",
+      "expiryDate": "2026-06-16"
+    },
+    {
+      "id": 121,
+      "name": "Muzqaymoq",
+      "barcode": "200121",
+      "costPrice": 6500,
+      "sellPrice": 10000,
+      "unit": "dona",
+      "stock": 15,
+      "category": "Boshqa",
+      "expiryDate": "2026-04-17"
+    },
+    {
+      "id": 122,
+      "name": "Olma (1 kg)",
+      "barcode": "200122",
+      "costPrice": 10000,
+      "sellPrice": 13000,
+      "unit": "kg",
+      "stock": 10,
+      "category": "Meva",
+      "expiryDate": "2026-04-01"
+    },
+    {
+      "id": 123,
+      "name": "Banan (1 kg)",
+      "barcode": "200123",
+      "costPrice": 16000,
+      "sellPrice": 30000,
+      "unit": "kg",
+      "stock": 188,
+      "category": "Meva",
+      "expiryDate": "2026-05-16",
+      "img": "http://localhost:8080/images/img_1777836112107.jpg"
+    },
+    {
+      "id": 124,
+      "name": "Apelsin (1 kg)",
+      "barcode": "200124",
+      "costPrice": 13000,
+      "sellPrice": 18000,
+      "unit": "kg",
+      "stock": 0,
+      "category": "Meva",
+      "expiryDate": "2026-04-01"
+    },
+    {
+      "id": 125,
+      "name": "Mandarin (1 kg)",
+      "barcode": "200125",
+      "costPrice": 16000,
+      "sellPrice": 22000,
+      "unit": "kg",
+      "stock": 0,
+      "category": "Meva",
+      "expiryDate": "2026-04-09"
+    },
+    {
+      "id": 126,
+      "name": "Limon (1 kg)",
+      "barcode": "200126",
+      "costPrice": 17000,
+      "sellPrice": 25000,
+      "unit": "kg",
+      "stock": 0,
+      "category": "Meva",
+      "expiryDate": "2026-04-01"
+    },
+    {
+      "id": 127,
+      "name": "Kartoshka (1 kg)",
+      "barcode": "200127",
+      "costPrice": 4500,
+      "sellPrice": 6700,
+      "unit": "kg",
+      "stock": 33,
+      "category": "Sabzavot",
+      "expiryDate": "2026-04-17"
+    },
+    {
+      "id": 128,
+      "name": "Piyoz (1 kg)",
+      "barcode": "200128",
+      "costPrice": 3500,
+      "sellPrice": 5000,
+      "unit": "kg",
+      "stock": 31,
+      "category": "Sabzavot",
+      "expiryDate": "2026-04-17"
+    },
+    {
+      "id": 129,
+      "name": "Sabzi (1 kg)",
+      "barcode": "200129",
+      "costPrice": 3500,
+      "sellPrice": 5000,
+      "unit": "kg",
+      "stock": 27,
+      "category": "Sabzavot",
+      "expiryDate": "2026-04-01"
+    },
+    {
+      "id": 130,
+      "name": "Pomidor (1 kg)",
+      "barcode": "200130",
+      "costPrice": 12000,
+      "sellPrice": 17000,
+      "unit": "kg",
+      "stock": 0,
+      "category": "Sabzavot",
+      "expiryDate": "2026-04-05"
+    },
+    {
+      "id": 131,
+      "name": "Bodring (1 kg)",
+      "barcode": "200131",
+      "costPrice": 10000,
+      "sellPrice": 13000,
+      "unit": "kg",
+      "stock": 0,
+      "category": "Sabzavot",
+      "expiryDate": "2026-04-05"
+    },
+    {
+      "id": 132,
+      "name": "Karam (1 kg)",
+      "barcode": "200132",
+      "costPrice": 4000,
+      "sellPrice": 5700,
+      "unit": "kg",
+      "stock": 15,
+      "category": "Sabzavot",
+      "expiryDate": "2026-04-01"
+    },
+    {
+      "id": 133,
+      "name": "Coca-Cola (1L)",
+      "barcode": "200133",
+      "costPrice": 8000,
+      "sellPrice": 9200,
+      "unit": "dona",
+      "stock": 1025,
+      "category": "Ichimlik",
+      "expiryDate": "2026-03-29",
+      "img": "http://localhost:8080/images/img_1779305243591.jpg"
+    },
+    {
+      "id": 134,
+      "name": "Fanta (1L)",
+      "barcode": "200134",
+      "costPrice": 7000,
+      "sellPrice": 9200,
+      "unit": "dona",
+      "stock": 0,
+      "category": "Ichimlik",
+      "expiryDate": "2026-09-14"
+    },
+    {
+      "id": 135,
+      "name": "Mineral suv (1.5L)",
+      "barcode": "200135",
+      "costPrice": 3200,
+      "sellPrice": 4700,
+      "unit": "dona",
+      "stock": 68,
+      "category": "Ichimlik",
+      "expiryDate": "2027-03-18"
+    },
+    {
+      "id": 136,
+      "name": "Sharbat (1L)",
+      "barcode": "200136",
+      "costPrice": 9000,
+      "sellPrice": 12000,
+      "unit": "dona",
+      "stock": 15,
+      "category": "Ichimlik",
+      "expiryDate": "2026-09-14"
+    },
+    {
+      "id": 137,
+      "name": "Qora choy (100g)",
+      "barcode": "200137",
+      "costPrice": 10000,
+      "sellPrice": 14000,
+      "unit": "dona",
+      "stock": 15,
+      "category": "Oziq",
+      "expiryDate": "2027-03-18"
+    },
+    {
+      "id": 138,
+      "name": "Ko'k choy (100g)",
+      "barcode": "200138",
+      "costPrice": 12000,
+      "sellPrice": 17000,
+      "unit": "dona",
+      "stock": 1,
+      "category": "Oziq",
+      "expiryDate": "2027-03-18"
+    },
+    {
+      "id": 139,
+      "name": "Eritma kofe (100g)",
+      "barcode": "200139",
+      "costPrice": 30000,
+      "sellPrice": 41000,
+      "unit": "dona",
+      "stock": 0,
+      "category": "Oziq",
+      "expiryDate": "2027-03-18"
+    },
+    {
+      "id": 140,
+      "name": "Paket choy (25 paket)",
+      "barcode": "200140",
+      "costPrice": 6000,
+      "sellPrice": 9000,
+      "unit": "quti",
+      "stock": 16,
+      "category": "Oziq",
+      "expiryDate": "2027-03-18"
+    },
+    {
+      "id": 141,
+      "name": "Baliq konservasi",
+      "barcode": "200141",
+      "costPrice": 13000,
+      "sellPrice": 18000,
+      "unit": "dona",
+      "stock": 0,
+      "category": "Oziq",
+      "expiryDate": "2028-03-17"
+    },
+    {
+      "id": 142,
+      "name": "Go'sht konservasi",
+      "barcode": "200142",
+      "costPrice": 20000,
+      "sellPrice": 26000,
+      "unit": "dona",
+      "stock": 0,
+      "category": "Oziq",
+      "expiryDate": "2028-03-17"
+    },
+    {
+      "id": 143,
+      "name": "Tuzlama bodring (1L)",
+      "barcode": "200143",
+      "costPrice": 11000,
+      "sellPrice": 15000,
+      "unit": "banka",
+      "stock": 7,
+      "category": "Oziq",
+      "expiryDate": "2027-03-18"
+    },
+    {
+      "id": 144,
+      "name": "Murabbo (0.5L)",
+      "barcode": "200144",
+      "costPrice": 16000,
+      "sellPrice": 23000,
+      "unit": "banka",
+      "stock": 0,
+      "category": "Oziq",
+      "expiryDate": "2027-03-18"
+    },
+    {
+      "id": 145,
+      "name": "Kungaboqar yog'i (1L)",
+      "barcode": "200145",
+      "costPrice": 15000,
+      "sellPrice": 19000,
+      "unit": "litr",
+      "stock": 11,
+      "category": "Oziq",
+      "expiryDate": "2027-03-18"
+    },
+    {
+      "id": 146,
+      "name": "Paxta yog'i (1L)",
+      "barcode": "200146",
+      "costPrice": 14000,
+      "sellPrice": 17000,
+      "unit": "litr",
+      "stock": 18,
+      "category": "Oziq",
+      "expiryDate": "2027-03-18"
+    },
+    {
+      "id": 147,
+      "name": "Zaytun moyi (0.5L)",
+      "barcode": "200147",
+      "costPrice": 27000,
+      "sellPrice": 36000,
+      "unit": "dona",
+      "stock": 6,
+      "category": "Oziq",
+      "expiryDate": "2027-03-18"
+    },
+    {
+      "id": 148,
+      "name": "Margarin (200g)",
+      "barcode": "200148",
+      "costPrice": 5500,
+      "sellPrice": 7500,
+      "unit": "dona",
+      "stock": 14,
+      "category": "Oziq",
+      "expiryDate": "2026-09-14"
+    },
+    {
+      "id": 149,
+      "name": "Guruch (1 kg)",
+      "barcode": "200149",
+      "costPrice": 11000,
+      "sellPrice": 14000,
+      "unit": "kg",
+      "stock": 21,
+      "category": "Oziq",
+      "expiryDate": "2027-03-18"
+    },
+    {
+      "id": 150,
+      "name": "Grechka (1 kg)",
+      "barcode": "200150",
+      "costPrice": 13000,
+      "sellPrice": 17000,
+      "unit": "kg",
+      "stock": 0,
+      "category": "Oziq",
+      "expiryDate": "2027-03-18"
+    },
+    {
+      "id": 151,
+      "name": "Mosh (1 kg)",
+      "barcode": "200151",
+      "costPrice": 9000,
+      "sellPrice": 12000,
+      "unit": "kg",
+      "stock": 16,
+      "category": "Oziq",
+      "expiryDate": "2027-03-18"
+    },
+    {
+      "id": 152,
+      "name": "No'xat (1 kg)",
+      "barcode": "200152",
+      "costPrice": 7000,
+      "sellPrice": 9700,
+      "unit": "kg",
+      "stock": 17,
+      "category": "Oziq",
+      "expiryDate": "2027-03-18"
+    },
+    {
+      "id": 153,
+      "name": "Un (oliy nav, 1 kg)",
+      "barcode": "200153",
+      "costPrice": 4500,
+      "sellPrice": 6000,
+      "unit": "kg",
+      "stock": 49,
+      "category": "Oziq",
+      "expiryDate": "2026-09-14"
+    },
+    {
+      "id": 154,
+      "name": "Makaron (500g)",
+      "barcode": "200154",
+      "costPrice": 5000,
+      "sellPrice": 6700,
+      "unit": "dona",
+      "stock": 24,
+      "category": "Oziq",
+      "expiryDate": "2027-03-18"
+    },
+    {
+      "id": 155,
+      "name": "Vermishel (400g)",
+      "barcode": "200155",
+      "costPrice": 4500,
+      "sellPrice": 6000,
+      "unit": "dona",
+      "stock": 27,
+      "category": "Oziq",
+      "expiryDate": "2027-03-18"
+    },
+    {
+      "id": 156,
+      "name": "Tuz (1 kg)",
+      "barcode": "200156",
+      "costPrice": 2200,
+      "sellPrice": 3500,
+      "unit": "kg",
+      "stock": 38,
+      "category": "Oziq",
+      "expiryDate": "2099-12-31"
+    },
+    {
+      "id": 157,
+      "name": "Murch (20g)",
+      "barcode": "200157",
+      "costPrice": 3500,
+      "sellPrice": 5500,
+      "unit": "dona",
+      "stock": 21,
+      "category": "Oziq",
+      "expiryDate": "2027-03-18"
+    },
+    {
+      "id": 158,
+      "name": "Zira (50g)",
+      "barcode": "200158",
+      "costPrice": 4500,
+      "sellPrice": 6700,
+      "unit": "dona",
+      "stock": 24,
+      "category": "Oziq",
+      "expiryDate": "2027-03-18"
+    },
+    {
+      "id": 159,
+      "name": "Qizil qalampir (20g)",
+      "barcode": "200159",
+      "costPrice": 3500,
+      "sellPrice": 5500,
+      "unit": "dona",
+      "stock": 24,
+      "category": "Oziq",
+      "expiryDate": "2027-03-18"
+    },
+    {
+      "id": 160,
+      "name": "Shakar (1 kg)",
+      "barcode": "200160",
+      "costPrice": 9500,
+      "sellPrice": 12500,
+      "unit": "kg",
+      "stock": 39,
+      "category": "Oziq",
+      "expiryDate": "2099-12-31"
+    },
+    {
+      "id": 161,
+      "name": "Asal (0.5L)",
+      "barcode": "200161",
+      "costPrice": 30000,
+      "sellPrice": 42000,
+      "unit": "dona",
+      "stock": 0,
+      "category": "Oziq",
+      "expiryDate": "2027-03-18"
+    },
+    {
+      "id": 162,
+      "name": "Tovuq tuxumi (10 dona)",
+      "barcode": "200162",
+      "costPrice": 13000,
+      "sellPrice": 17000,
+      "unit": "paket",
+      "stock": 38,
+      "category": "Sut",
+      "expiryDate": "2026-04-01"
+    },
+    {
+      "id": 163,
+      "name": "Bedana tuxumi (20 dona)",
+      "barcode": "200163",
+      "costPrice": 11000,
+      "sellPrice": 15000,
+      "unit": "paket",
+      "stock": 0,
+      "category": "Sut",
+      "expiryDate": "2026-04-01"
+    },
+    {
+      "id": 164,
+      "name": "Pelmen (400g)",
+      "barcode": "200164",
+      "costPrice": 16000,
+      "sellPrice": 22000,
+      "unit": "dona",
+      "stock": 1,
+      "category": "Gosht",
+      "expiryDate": "2026-04-17"
+    },
+    {
+      "id": 165,
+      "name": "Manti (6 dona)",
+      "barcode": "200165",
+      "costPrice": 20000,
+      "sellPrice": 27000,
+      "unit": "dona",
+      "stock": 0,
+      "category": "Gosht",
+      "expiryDate": "2026-04-17"
+    },
+    {
+      "id": 166,
+      "name": "Somsa (dona)",
+      "barcode": "200166",
+      "costPrice": 5500,
+      "sellPrice": 7700,
+      "unit": "dona",
+      "stock": 0,
+      "category": "Gosht",
+      "expiryDate": "2026-04-02"
+    },
+    {
+      "id": 167,
+      "name": "Sutcha (400g)",
+      "barcode": "200167",
+      "costPrice": 27000,
+      "sellPrice": 36000,
+      "unit": "dona",
+      "stock": 6,
+      "category": "Bolalar",
+      "expiryDate": "2027-03-18"
+    },
+    {
+      "id": 168,
+      "name": "Meva pyuresi (100g)",
+      "barcode": "200168",
+      "costPrice": 5500,
+      "sellPrice": 7500,
+      "unit": "dona",
+      "stock": 12,
+      "category": "Bolalar",
+      "expiryDate": "2026-09-14"
+    },
+    {
+      "id": 169,
+      "name": "Sovun",
+      "barcode": "200169",
+      "costPrice": 7000,
+      "sellPrice": 9500,
+      "unit": "dona",
+      "stock": 28,
+      "category": "Gigiena",
+      "expiryDate": "2028-05-17",
+      "img": null
+    },
+    {
+      "id": 170,
+      "name": "Shampun (200ml)",
+      "barcode": "200170",
+      "costPrice": 17000,
+      "sellPrice": 23000,
+      "unit": "dona",
+      "stock": 16,
+      "category": "Gigiena",
+      "expiryDate": "2028-03-17"
+    },
+    {
+      "id": 171,
+      "name": "Tish pastasi",
+      "barcode": "200171",
+      "costPrice": 12000,
+      "sellPrice": 17000,
+      "unit": "dona",
+      "stock": 22,
+      "category": "Gigiena",
+      "expiryDate": "2027-03-18"
+    },
+    {
+      "id": 172,
+      "name": "Pampers (10 dona)",
+      "barcode": "200172",
+      "costPrice": 35000,
+      "sellPrice": 44000,
+      "unit": "paket",
+      "stock": 10,
+      "category": "Bolalar",
+      "expiryDate": "2028-03-17"
+    },
+    {
+      "id": 173,
+      "name": "Kir yuvish kukuni (1kg)",
+      "barcode": "200173",
+      "costPrice": 16000,
+      "sellPrice": 22000,
+      "unit": "quti",
+      "stock": 3,
+      "category": "Kimyo",
+      "expiryDate": "2028-03-17"
+    },
+    {
+      "id": 174,
+      "name": "Idish yuvish (0.5L)",
+      "barcode": "200174",
+      "costPrice": 9000,
+      "sellPrice": 12000,
+      "unit": "dona",
+      "stock": 0,
+      "category": "Kimyo",
+      "expiryDate": "2028-03-17"
+    },
+    {
+      "id": 175,
+      "name": "Gugurt (10 quti)",
+      "barcode": "200175",
+      "costPrice": 2500,
+      "sellPrice": 4000,
+      "unit": "quti",
+      "stock": 15,
+      "category": "Boshqa",
+      "expiryDate": "2099-12-31"
+    },
+    {
+      "id": 176,
+      "name": "Bir marta idish (10ta)",
+      "barcode": "200176",
+      "costPrice": 6000,
+      "sellPrice": 8500,
+      "unit": "paket",
+      "stock": 0,
+      "category": "Boshqa",
+      "expiryDate": "2027-03-18"
+    },
+    {
+      "id": 177,
+      "name": "Mushuk yemi (400g)",
+      "barcode": "200177",
+      "costPrice": 13000,
+      "sellPrice": 18000,
+      "unit": "dona",
+      "stock": 8,
+      "category": "Boshqa",
+      "expiryDate": "2027-03-18"
+    },
+    {
+      "id": 178,
+      "name": "It yemi (1 kg)",
+      "barcode": "200178",
+      "costPrice": 11000,
+      "sellPrice": 15000,
+      "unit": "kg",
+      "stock": 0,
+      "category": "Boshqa",
+      "expiryDate": "2027-03-18"
+    },
+    {
+      "id": 179,
+      "name": "Tandir non",
+      "barcode": "200179",
+      "costPrice": 3500,
+      "sellPrice": 5500,
+      "unit": "dona",
+      "stock": 13,
+      "category": "Non",
+      "expiryDate": "2026-03-30"
+    },
+    {
+      "id": 180,
+      "name": "Qazi (1 kg)",
+      "barcode": "200180",
+      "costPrice": 80000,
+      "sellPrice": 105000,
+      "unit": "kg",
+      "stock": 0,
+      "category": "Gosht",
+      "expiryDate": "2026-04-02"
+    },
+    {
+      "id": 181,
+      "name": "Qurut (1 kg)",
+      "barcode": "200181",
+      "costPrice": 30000,
+      "sellPrice": 42000,
+      "unit": "kg",
+      "stock": 6,
+      "category": "Boshqa",
+      "expiryDate": "2026-09-14"
+    },
+    {
+      "id": 201,
+      "name": "1+1 Tovuq lavash L",
+      "barcode": "300201",
+      "costPrice": 28000,
+      "sellPrice": 37000,
+      "unit": "dona",
+      "stock": 0,
+      "category": "Aksiya",
+      "expiryDate": "2026-04-25"
+    },
+    {
+      "id": 202,
+      "name": "Combo 3 kishilik -30%",
+      "barcode": "300202",
+      "costPrice": 80000,
+      "sellPrice": 117000,
+      "unit": "dona",
+      "stock": 0,
+      "category": "Aksiya",
+      "expiryDate": "2026-04-25"
+    },
+    {
+      "id": 203,
+      "name": "1+1 Kapuchino",
+      "barcode": "300203",
+      "costPrice": 10000,
+      "sellPrice": 17000,
+      "unit": "dona",
+      "stock": 0,
+      "category": "Aksiya",
+      "expiryDate": "2026-04-25"
+    },
+    {
+      "id": 204,
+      "name": "Iftor Kofte Box",
+      "barcode": "300204",
+      "costPrice": 38000,
+      "sellPrice": 56000,
+      "unit": "dona",
+      "stock": 0,
+      "category": "Aksiya",
+      "expiryDate": "2026-04-17"
+    },
+    {
+      "id": 205,
+      "name": "Iftor Strips Box",
+      "barcode": "300205",
+      "costPrice": 35000,
+      "sellPrice": 51000,
+      "unit": "dona",
+      "stock": 0,
+      "category": "Aksiya",
+      "expiryDate": "2026-04-17"
+    },
+    {
+      "id": 1776190695358,
+      "name": "Tandir non",
+      "barcode": "PRD90695357",
+      "costPrice": 5000,
+      "sellPrice": 8000,
+      "unit": "dona",
+      "stock": 14,
+      "category": "Non",
+      "expiryDate": "2026-04-28",
+      "img": null
+    },
+    {
+      "id": 1777836858559000,
+      "name": "Quloqchin",
+      "barcode": "8648367967257",
+      "costPrice": 100000,
+      "sellPrice": 130000,
+      "unit": "dona",
+      "stock": 6,
+      "category": "Telefon Gadjetlar",
+      "expiryDate": "2026-05-31",
+      "img": "http://localhost:8080/images/img_1777836791810.jpg"
+    }
+  ],
+  "orders": [],
+  "offline": [
+    {
+      "id": "M#1013",
+      "userName": "Mijoz",
+      "userPhone": "",
+      "items": [
+        {
+          "name": "Baton non",
+          "qty": 1,
+          "price": 9000,
+          "costPrice": 6000,
+          "originalPrice": 9000,
+          "discount": 0
+        },
+        {
+          "name": "Banan (1 kg)",
+          "qty": 1,
+          "price": 30000,
+          "costPrice": 16000,
+          "originalPrice": 30000,
+          "discount": 0
+        },
+        {
+          "name": "Quloqchin",
+          "qty": 1,
+          "price": 104000,
+          "costPrice": 100000,
+          "originalPrice": 130000,
+          "discount": 20
+        },
+        {
+          "name": "Guruch (1 kg)",
+          "qty": 12,
+          "price": 14000,
+          "costPrice": 11000,
+          "originalPrice": 14000,
+          "discount": 0
+        },
+        {
+          "name": "Karam (1 kg)",
+          "qty": 1,
+          "price": 5700,
+          "costPrice": 4000,
+          "originalPrice": 5700,
+          "discount": 0
+        },
+        {
+          "name": "Kartoshka (1 kg)",
+          "qty": 3,
+          "price": 6700,
+          "costPrice": 4500,
+          "originalPrice": 6700,
+          "discount": 0
+        }
+      ],
+      "productsTotal": 336800,
+      "discount": 0,
+      "tax": 40416,
+      "total": 377216,
+      "payment": "💵 Naqd 377,216",
+      "payMethods": [
+        {
+          "method": "cash",
+          "amount": 377216
+        }
+      ],
+      "paidSum": 377216,
+      "change": 0,
+      "debt": 0,
+      "status": "done",
+      "time": "2026-05-27T22:34:17.263Z",
+      "profit": 65300,
+      "type": "offline",
+      "employeeName": "Admin",
+      "smenaId": 1779921212196
+    },
+    {
+      "id": "M#1012",
+      "userName": "Mijoz",
+      "userPhone": "",
+      "items": [
+        {
+          "name": "Coca-Cola (1L)",
+          "qty": 1,
+          "price": 9200,
+          "costPrice": 8000,
+          "originalPrice": 9200,
+          "discount": 0
+        },
+        {
+          "name": "Baton non",
+          "qty": 1,
+          "price": 9000,
+          "costPrice": 6000,
+          "originalPrice": 9000,
+          "discount": 0
+        },
+        {
+          "name": "Banan (1 kg)",
+          "qty": 1,
+          "price": 30000,
+          "costPrice": 16000,
+          "originalPrice": 30000,
+          "discount": 0
+        },
+        {
+          "name": "Quloqchin",
+          "qty": 1,
+          "price": 104000,
+          "costPrice": 100000,
+          "originalPrice": 130000,
+          "discount": 20
+        },
+        {
+          "name": "Karam (1 kg)",
+          "qty": 1,
+          "price": 5700,
+          "costPrice": 4000,
+          "originalPrice": 5700,
+          "discount": 0
+        },
+        {
+          "name": "Guruch (1 kg)",
+          "qty": 1,
+          "price": 14000,
+          "costPrice": 11000,
+          "originalPrice": 14000,
+          "discount": 0
+        },
+        {
+          "name": "Makaron (500g)",
+          "qty": 1,
+          "price": 6700,
+          "costPrice": 5000,
+          "originalPrice": 6700,
+          "discount": 0
+        }
+      ],
+      "productsTotal": 178600,
+      "discount": 0,
+      "tax": 21432,
+      "total": 200032,
+      "payment": "💳 Karta 200,032",
+      "payMethods": [
+        {
+          "method": "card",
+          "amount": 200032
+        }
+      ],
+      "paidSum": 200032,
+      "change": 0,
+      "debt": 0,
+      "status": "done",
+      "time": "2026-05-27T22:04:00.927Z",
+      "profit": 28600,
+      "type": "offline",
+      "employeeName": "Admin",
+      "smenaId": 1779919416876
+    },
+    {
+      "id": "M#1011",
+      "userName": "Mijoz",
+      "userPhone": "",
+      "items": [
+        {
+          "name": "Baton non",
+          "qty": 1,
+          "price": 9000,
+          "costPrice": 6000,
+          "originalPrice": 9000,
+          "discount": 0
+        },
+        {
+          "name": "Banan (1 kg)",
+          "qty": 1,
+          "price": 30000,
+          "costPrice": 16000,
+          "originalPrice": 30000,
+          "discount": 0
+        },
+        {
+          "name": "Karam (1 kg)",
+          "qty": 1,
+          "price": 5700,
+          "costPrice": 4000,
+          "originalPrice": 5700,
+          "discount": 0
+        },
+        {
+          "name": "Kartoshka (1 kg)",
+          "qty": 1,
+          "price": 6700,
+          "costPrice": 4500,
+          "originalPrice": 6700,
+          "discount": 0
+        },
+        {
+          "name": "Kir yuvish kukuni (1kg)",
+          "qty": 1,
+          "price": 22000,
+          "costPrice": 16000,
+          "originalPrice": 22000,
+          "discount": 0
+        },
+        {
+          "name": "Meva pyuresi (100g)",
+          "qty": 1,
+          "price": 7500,
+          "costPrice": 5500,
+          "originalPrice": 7500,
+          "discount": 0
+        }
+      ],
+      "productsTotal": 80900,
+      "discount": 0,
+      "tax": 9708,
+      "total": 90608,
+      "payment": "📱 Click 90,608",
+      "payMethods": [
+        {
+          "method": "click",
+          "amount": 90608
+        }
+      ],
+      "paidSum": 90608,
+      "change": 0,
+      "debt": 0,
+      "status": "done",
+      "time": "2026-05-27T20:57:23.387Z",
+      "profit": 28900,
+      "type": "offline",
+      "employeeName": "Admin"
+    },
+    {
+      "id": "M#1010",
+      "userName": "Mijoz",
+      "userPhone": "",
+      "items": [
+        {
+          "name": "Banan (1 kg)",
+          "qty": 1,
+          "price": 30000,
+          "costPrice": 16000,
+          "originalPrice": 30000,
+          "discount": 0
+        },
+        {
+          "name": "Quloqchin",
+          "qty": 1,
+          "price": 104000,
+          "costPrice": 100000,
+          "originalPrice": 130000,
+          "discount": 20
+        },
+        {
+          "name": "Idish yuvish (0.5L)",
+          "qty": 2,
+          "price": 12000,
+          "costPrice": 9000,
+          "originalPrice": 12000,
+          "discount": 0
+        },
+        {
+          "name": "Guruch (1 kg)",
+          "qty": 1,
+          "price": 14000,
+          "costPrice": 11000,
+          "originalPrice": 14000,
+          "discount": 0
+        }
+      ],
+      "productsTotal": 172000,
+      "discount": 0,
+      "tax": 20640,
+      "total": 192640,
+      "payment": "💵 Naqd 200,000",
+      "payMethods": [
+        {
+          "method": "cash",
+          "amount": 200000
+        }
+      ],
+      "paidSum": 200000,
+      "change": 7360,
+      "debt": 0,
+      "status": "done",
+      "time": "2026-05-27T20:49:47.703Z",
+      "profit": 27000,
+      "type": "offline",
+      "employeeName": "Admin"
+    },
+    {
+      "id": "M#1009",
+      "userName": "Mijoz",
+      "userPhone": "",
+      "items": [
+        {
+          "name": "Karam (1 kg)",
+          "qty": 1,
+          "price": 5700,
+          "costPrice": 4000,
+          "originalPrice": 5700,
+          "discount": 0
+        },
+        {
+          "name": "Banan (1 kg)",
+          "qty": 1,
+          "price": 30000,
+          "costPrice": 16000,
+          "originalPrice": 30000,
+          "discount": 0
+        },
+        {
+          "name": "Idish yuvish (0.5L)",
+          "qty": 1,
+          "price": 12000,
+          "costPrice": 9000,
+          "originalPrice": 12000,
+          "discount": 0
+        },
+        {
+          "name": "Guruch (1 kg)",
+          "qty": 1,
+          "price": 14000,
+          "costPrice": 11000,
+          "originalPrice": 14000,
+          "discount": 0
+        },
+        {
+          "name": "Ko'k choy (100g)",
+          "qty": 1,
+          "price": 17000,
+          "costPrice": 12000,
+          "originalPrice": 17000,
+          "discount": 0
+        },
+        {
+          "name": "Konfetlar (1 kg)",
+          "qty": 1,
+          "price": 42000,
+          "costPrice": 30000,
+          "originalPrice": 42000,
+          "discount": 0
+        },
+        {
+          "name": "Kungaboqar yog'i (1L)",
+          "qty": 1,
+          "price": 19000,
+          "costPrice": 15000,
+          "originalPrice": 19000,
+          "discount": 0
+        },
+        {
+          "name": "Makaron (500g)",
+          "qty": 1,
+          "price": 6700,
+          "costPrice": 5000,
+          "originalPrice": 6700,
+          "discount": 0
+        },
+        {
+          "name": "Margarin (200g)",
+          "qty": 1,
+          "price": 7500,
+          "costPrice": 5500,
+          "originalPrice": 7500,
+          "discount": 0
+        },
+        {
+          "name": "Murch (20g)",
+          "qty": 1,
+          "price": 5500,
+          "costPrice": 3500,
+          "originalPrice": 5500,
+          "discount": 0
+        },
+        {
+          "name": "Mosh (1 kg)",
+          "qty": 1,
+          "price": 12000,
+          "costPrice": 9000,
+          "originalPrice": 12000,
+          "discount": 0
+        },
+        {
+          "name": "Doktor kolbasa (1 kg)",
+          "qty": 1,
+          "price": 57000,
+          "costPrice": 42000,
+          "originalPrice": 57000,
+          "discount": 0
+        }
+      ],
+      "productsTotal": 228400,
+      "discount": 0,
+      "tax": 27408,
+      "total": 255808,
+      "payment": "💵 Naqd 127,904 + 📲 Payme 127,904",
+      "payMethods": [
+        {
+          "method": "cash",
+          "amount": 127904
+        },
+        {
+          "method": "payme",
+          "amount": 127904
+        }
+      ],
+      "paidSum": 255808,
+      "change": 0,
+      "debt": 0,
+      "status": "done",
+      "time": "2026-05-27T20:10:51.536Z",
+      "profit": 66400,
+      "type": "mixed",
+      "employeeName": "Admin"
+    },
+    {
+      "id": "M#1008",
+      "userName": "Jamshid",
+      "userPhone": "990099999",
+      "items": [
+        {
+          "name": "Banan (1 kg)",
+          "qty": 1,
+          "price": 30000,
+          "costPrice": 16000,
+          "originalPrice": 30000,
+          "discount": 0
+        },
+        {
+          "name": "Quloqchin",
+          "qty": 1,
+          "price": 104000,
+          "costPrice": 100000,
+          "originalPrice": 130000,
+          "discount": 20
+        },
+        {
+          "name": "Aralash non",
+          "qty": 1,
+          "price": 6750,
+          "costPrice": 6000,
+          "originalPrice": 9000,
+          "discount": 25
+        },
+        {
+          "name": "Doktor kolbasa (1 kg)",
+          "qty": 1,
+          "price": 57000,
+          "costPrice": 42000,
+          "originalPrice": 57000,
+          "discount": 0
+        },
+        {
+          "name": "Mol go'shti (1 kg)",
+          "qty": 1,
+          "price": 145000,
+          "costPrice": 100000,
+          "originalPrice": 145000,
+          "discount": 0
+        },
+        {
+          "name": "Pelmen (400g)",
+          "qty": 1,
+          "price": 22000,
+          "costPrice": 16000,
+          "originalPrice": 22000,
+          "discount": 0
+        },
+        {
+          "name": "Qo'y go'shti (1 kg)",
+          "qty": 1,
+          "price": 127000,
+          "costPrice": 100000,
+          "originalPrice": 127000,
+          "discount": 0
+        },
+        {
+          "name": "Muzqaymoq",
+          "qty": 1,
+          "price": 10000,
+          "costPrice": 6500,
+          "originalPrice": 10000,
+          "discount": 0
+        },
+        {
+          "name": "Pechene (1 kg)",
+          "qty": 1,
+          "price": 23000,
+          "costPrice": 17000,
+          "originalPrice": 23000,
+          "discount": 0
+        },
+        {
+          "name": "Qurut (1 kg)",
+          "qty": 1,
+          "price": 42000,
+          "costPrice": 30000,
+          "originalPrice": 42000,
+          "discount": 0
+        },
+        {
+          "name": "Mushuk yemi (400g)",
+          "qty": 1,
+          "price": 18000,
+          "costPrice": 13000,
+          "originalPrice": 18000,
+          "discount": 0
+        },
+        {
+          "name": "Shokolad (100g)",
+          "qty": 1,
+          "price": 18000,
+          "costPrice": 13000,
+          "originalPrice": 18000,
+          "discount": 0
+        },
+        {
+          "name": "Gugurt (10 quti)",
+          "qty": 1,
+          "price": 4000,
+          "costPrice": 2500,
+          "originalPrice": 4000,
+          "discount": 0
+        },
+        {
+          "name": "Konfetlar (1 kg)",
+          "qty": 1,
+          "price": 42000,
+          "costPrice": 30000,
+          "originalPrice": 42000,
+          "discount": 0
+        }
+      ],
+      "productsTotal": 648750,
+      "discount": 0,
+      "tax": 77850,
+      "total": 726600,
+      "payment": "💵 Naqd 500,000 + 📋 Qarz 226,600",
+      "payMethods": [
+        {
+          "method": "cash",
+          "amount": 500000
+        },
+        {
+          "method": "debt",
+          "amount": 226600
+        }
+      ],
+      "paidSum": 500000,
+      "change": 0,
+      "debt": 226600,
+      "status": "done",
+      "time": "2026-05-27T20:03:48.744Z",
+      "profit": 156750,
+      "type": "partial_debt",
+      "employeeName": "Admin"
+    },
+    {
+      "id": "M#1007",
+      "userName": "Mijoz",
+      "userPhone": "",
+      "items": [
+        {
+          "name": "Baton non",
+          "qty": 1,
+          "price": 9000,
+          "costPrice": 6000,
+          "originalPrice": 9000,
+          "discount": 0
+        },
+        {
+          "name": "Banan (1 kg)",
+          "qty": 1,
+          "price": 30000,
+          "costPrice": 16000,
+          "originalPrice": 30000,
+          "discount": 0
+        },
+        {
+          "name": "Quloqchin",
+          "qty": 1,
+          "price": 104000,
+          "costPrice": 100000,
+          "originalPrice": 130000,
+          "discount": 20
+        },
+        {
+          "name": "Guruch (1 kg)",
+          "qty": 1,
+          "price": 14000,
+          "costPrice": 11000,
+          "originalPrice": 14000,
+          "discount": 0
+        },
+        {
+          "name": "Idish yuvish (0.5L)",
+          "qty": 1,
+          "price": 12000,
+          "costPrice": 9000,
+          "originalPrice": 12000,
+          "discount": 0
+        },
+        {
+          "name": "Konfetlar (1 kg)",
+          "qty": 1,
+          "price": 42000,
+          "costPrice": 30000,
+          "originalPrice": 42000,
+          "discount": 0
+        },
+        {
+          "name": "Kungaboqar yog'i (1L)",
+          "qty": 1,
+          "price": 19000,
+          "costPrice": 15000,
+          "originalPrice": 19000,
+          "discount": 0
+        },
+        {
+          "name": "Mosh (1 kg)",
+          "qty": 1,
+          "price": 12000,
+          "costPrice": 9000,
+          "originalPrice": 12000,
+          "discount": 0
+        },
+        {
+          "name": "Mol go'shti (1 kg)",
+          "qty": 1,
+          "price": 145000,
+          "costPrice": 100000,
+          "originalPrice": 145000,
+          "discount": 0
+        },
+        {
+          "name": "Makaron (500g)",
+          "qty": 1,
+          "price": 6700,
+          "costPrice": 5000,
+          "originalPrice": 6700,
+          "discount": 0
+        },
+        {
+          "name": "Margarin (200g)",
+          "qty": 1,
+          "price": 7500,
+          "costPrice": 5500,
+          "originalPrice": 7500,
+          "discount": 0
+        },
+        {
+          "name": "Meva pyuresi (100g)",
+          "qty": 1,
+          "price": 7500,
+          "costPrice": 5500,
+          "originalPrice": 7500,
+          "discount": 0
+        }
+      ],
+      "productsTotal": 408700,
+      "discount": 0,
+      "tax": 49044,
+      "total": 457744,
+      "payment": "💵 Naqd 300,000 + 📱 Click 157,744",
+      "payMethods": [
+        {
+          "method": "cash",
+          "amount": 300000
+        },
+        {
+          "method": "click",
+          "amount": 157744
+        }
+      ],
+      "paidSum": 457744,
+      "change": 0,
+      "debt": 0,
+      "status": "done",
+      "time": "2026-05-27T19:54:42.244Z",
+      "profit": 96700,
+      "type": "offline",
+      "employeeName": "Admin"
+    },
+    {
+      "id": "M#1006",
+      "userName": "Mijoz",
+      "userPhone": "",
+      "items": [
+        {
+          "name": "1+1 Kapuchino",
+          "qty": 1,
+          "price": 17000,
+          "costPrice": 10000,
+          "originalPrice": 17000,
+          "discount": 0
+        },
+        {
+          "name": "Quloqchin",
+          "qty": 1,
+          "price": 104000,
+          "costPrice": 100000,
+          "originalPrice": 130000,
+          "discount": 20
+        },
+        {
+          "name": "Aralash non",
+          "qty": 1,
+          "price": 6750,
+          "costPrice": 6000,
+          "originalPrice": 9000,
+          "discount": 25
+        },
+        {
+          "name": "Baton non",
+          "qty": 1,
+          "price": 9000,
+          "costPrice": 6000,
+          "originalPrice": 9000,
+          "discount": 0
+        },
+        {
+          "name": "Bir marta idish (10ta)",
+          "qty": 1,
+          "price": 8500,
+          "costPrice": 6000,
+          "originalPrice": 8500,
+          "discount": 0
+        },
+        {
+          "name": "Bulochka",
+          "qty": 1,
+          "price": 2700,
+          "costPrice": 1700,
+          "originalPrice": 2700,
+          "discount": 0
+        },
+        {
+          "name": "Gugurt (10 quti)",
+          "qty": 1,
+          "price": 4000,
+          "costPrice": 2500,
+          "originalPrice": 4000,
+          "discount": 0
+        },
+        {
+          "name": "Doktor kolbasa (1 kg)",
+          "qty": 1,
+          "price": 57000,
+          "costPrice": 42000,
+          "originalPrice": 57000,
+          "discount": 0
+        }
+      ],
+      "productsTotal": 208950,
+      "discount": 0,
+      "tax": 25074,
+      "total": 234024,
+      "payment": "📱 Click 234,024",
+      "payMethods": [
+        {
+          "method": "click",
+          "amount": 234024
+        }
+      ],
+      "paidSum": 234024,
+      "change": 0,
+      "debt": 0,
+      "status": "done",
+      "time": "2026-05-27T19:43:44.533Z",
+      "profit": 34750,
+      "type": "offline",
+      "employeeName": "Admin"
+    },
+    {
+      "id": "M#1005",
+      "userName": "Mijoz",
+      "userPhone": "",
+      "items": [
+        {
+          "name": "Gugurt (10 quti)",
+          "qty": 1,
+          "price": 4000,
+          "costPrice": 2500,
+          "originalPrice": 4000,
+          "discount": 0
+        },
+        {
+          "name": "Doktor kolbasa (1 kg)",
+          "qty": 1,
+          "price": 57000,
+          "costPrice": 42000,
+          "originalPrice": 57000,
+          "discount": 0
+        },
+        {
+          "name": "Coca-Cola (1L)",
+          "qty": 1,
+          "price": 9200,
+          "costPrice": 8000,
+          "originalPrice": 9200,
+          "discount": 0
+        },
+        {
+          "name": "Aralash non",
+          "qty": 1,
+          "price": 6750,
+          "costPrice": 6000,
+          "originalPrice": 9000,
+          "discount": 25
+        },
+        {
+          "name": "Quloqchin",
+          "qty": 1,
+          "price": 104000,
+          "costPrice": 100000,
+          "originalPrice": 130000,
+          "discount": 20
+        },
+        {
+          "name": "Bulochka",
+          "qty": 1,
+          "price": 2700,
+          "costPrice": 1700,
+          "originalPrice": 2700,
+          "discount": 0
+        },
+        {
+          "name": "Kir yuvish kukuni (1kg)",
+          "qty": 1,
+          "price": 22000,
+          "costPrice": 16000,
+          "originalPrice": 22000,
+          "discount": 0
+        },
+        {
+          "name": "Kartoshka (1 kg)",
+          "qty": 1,
+          "price": 6700,
+          "costPrice": 4500,
+          "originalPrice": 6700,
+          "discount": 0
+        },
+        {
+          "name": "Karam (1 kg)",
+          "qty": 1,
+          "price": 5700,
+          "costPrice": 4000,
+          "originalPrice": 5700,
+          "discount": 0
+        }
+      ],
+      "productsTotal": 218050,
+      "discount": 0,
+      "tax": 26166,
+      "total": 244216,
+      "payment": "💵 Naqd 200,000",
+      "payMethods": [
+        {
+          "method": "cash",
+          "amount": 200000
+        }
+      ],
+      "paidSum": 200000,
+      "change": 0,
+      "debt": 0,
+      "status": "done",
+      "time": "2026-05-27T19:40:55.496Z",
+      "profit": 33350,
+      "type": "offline",
+      "employeeName": "Admin"
+    },
+    {
+      "id": "M#1004",
+      "userName": "Mijoz",
+      "userPhone": "",
+      "items": [
+        {
+          "name": "Coca-Cola (1L)",
+          "qty": 2,
+          "price": 9200,
+          "costPrice": 8000,
+          "originalPrice": 9200,
+          "discount": 0
+        },
+        {
+          "name": "Doktor kolbasa (1 kg)",
+          "qty": 14,
+          "price": 57000,
+          "costPrice": 42000,
+          "originalPrice": 57000,
+          "discount": 0
+        },
+        {
+          "name": "Bulochka",
+          "qty": 1,
+          "price": 2700,
+          "costPrice": 1700,
+          "originalPrice": 2700,
+          "discount": 0
+        },
+        {
+          "name": "Fanta (1L)",
+          "qty": 9,
+          "price": 9200,
+          "costPrice": 7000,
+          "originalPrice": 9200,
+          "discount": 0
+        },
+        {
+          "name": "Gugurt (10 quti)",
+          "qty": 6,
+          "price": 4000,
+          "costPrice": 2500,
+          "originalPrice": 4000,
+          "discount": 0
+        }
+      ],
+      "productsTotal": 925900,
+      "discount": 0,
+      "tax": 111108,
+      "total": 1037008,
+      "payment": "💳 Karta 1,037,008",
+      "payMethods": [
+        {
+          "method": "card",
+          "amount": 1037008
+        }
+      ],
+      "paidSum": 1037008,
+      "change": 0,
+      "debt": 0,
+      "status": "done",
+      "time": "2026-05-23T20:31:42.274Z",
+      "profit": 242200,
+      "type": "offline",
+      "employeeName": "Admin"
+    },
+    {
+      "id": "M#1003",
+      "userName": "Mijoz",
+      "userPhone": "",
+      "items": [
+        {
+          "name": "1+1 Kapuchino",
+          "qty": 1,
+          "price": 17000,
+          "costPrice": 10000,
+          "originalPrice": 17000,
+          "discount": 0
+        },
+        {
+          "name": "Quloqchin",
+          "qty": 1,
+          "price": 117000,
+          "costPrice": 100000,
+          "originalPrice": 130000,
+          "discount": 10
+        },
+        {
+          "name": "Idish yuvish (0.5L)",
+          "qty": 1,
+          "price": 12000,
+          "costPrice": 9000,
+          "originalPrice": 12000,
+          "discount": 0
+        },
+        {
+          "name": "Coca-Cola (1L)",
+          "qty": 3,
+          "price": 9200,
+          "costPrice": 8000,
+          "originalPrice": 9200,
+          "discount": 0
+        },
+        {
+          "name": "Bulochka",
+          "qty": 1,
+          "price": 2700,
+          "costPrice": 1700,
+          "originalPrice": 2700,
+          "discount": 0
+        },
+        {
+          "name": "Bir marta idish (10ta)",
+          "qty": 2,
+          "price": 8500,
+          "costPrice": 6000,
+          "originalPrice": 8500,
+          "discount": 0
+        },
+        {
+          "name": "Aralash non",
+          "qty": 2,
+          "price": 7920,
+          "costPrice": 6000,
+          "originalPrice": 9000,
+          "discount": 12
+        },
+        {
+          "name": "Iftor Strips Box",
+          "qty": 1,
+          "price": 51000,
+          "costPrice": 35000,
+          "originalPrice": 51000,
+          "discount": 0
+        },
+        {
+          "name": "Karam (1 kg)",
+          "qty": 1,
+          "price": 5700,
+          "costPrice": 4000,
+          "originalPrice": 5700,
+          "discount": 0
+        },
+        {
+          "name": "Doktor kolbasa (1 kg)",
+          "qty": 3,
+          "price": 57000,
+          "costPrice": 42000,
+          "originalPrice": 57000,
+          "discount": 0
+        },
+        {
+          "name": "Baliq konservasi",
+          "qty": 2,
+          "price": 18000,
+          "costPrice": 13000,
+          "originalPrice": 18000,
+          "discount": 0
+        },
+        {
+          "name": "Banan (1 kg)",
+          "qty": 1,
+          "price": 30000,
+          "costPrice": 16000,
+          "originalPrice": 30000,
+          "discount": 0
+        },
+        {
+          "name": "Fanta (1L)",
+          "qty": 2,
+          "price": 9200,
+          "costPrice": 7000,
+          "originalPrice": 9200,
+          "discount": 0
+        },
+        {
+          "name": "Kartoshka (1 kg)",
+          "qty": 1,
+          "price": 6700,
+          "costPrice": 4500,
+          "originalPrice": 6700,
+          "discount": 0
+        }
+      ],
+      "productsTotal": 527940,
+      "discount": 0,
+      "tax": 63353,
+      "total": 591293,
+      "payment": "💵 Naqd 591,293",
+      "payMethods": [
+        {
+          "method": "cash",
+          "amount": 591293
+        }
+      ],
+      "paidSum": 591293,
+      "change": 0,
+      "debt": 0,
+      "status": "done",
+      "time": "2026-05-23T20:31:08.091Z",
+      "profit": 133740,
+      "type": "offline",
+      "employeeName": "Admin"
+    },
+    {
+      "id": "V#867432",
+      "originalId": "M#1001",
+      "userName": "Mijoz",
+      "userPhone": "",
+      "items": [
+        {
+          "name": "Coca-Cola (1L)",
+          "qty": 1,
+          "price": 9200,
+          "costPrice": 9200
+        },
+        {
+          "name": "1+1 Kapuchino",
+          "qty": 1,
+          "price": 17000,
+          "costPrice": 17000
+        },
+        {
+          "name": "Baliq konservasi",
+          "qty": 1,
+          "price": 18000,
+          "costPrice": 18000
+        },
+        {
+          "name": "Aralash non",
+          "qty": 1,
+          "price": 7920,
+          "costPrice": 7920
+        },
+        {
+          "name": "Quloqchin",
+          "qty": 1,
+          "price": 117000,
+          "costPrice": 117000
+        },
+        {
+          "name": "Bir marta idish (10ta)",
+          "qty": 1,
+          "price": 8500,
+          "costPrice": 8500
+        },
+        {
+          "name": "Bulochka",
+          "qty": 1,
+          "price": 2700,
+          "costPrice": 2700
+        },
+        {
+          "name": "Idish yuvish (0.5L)",
+          "qty": 1,
+          "price": 12000,
+          "costPrice": 12000
+        },
+        {
+          "name": "Guruch (1 kg)",
+          "qty": 1,
+          "price": 14000,
+          "costPrice": 14000
+        },
+        {
+          "name": "Iftor Strips Box",
+          "qty": 1,
+          "price": 51000,
+          "costPrice": 51000
+        },
+        {
+          "name": "Karam (1 kg)",
+          "qty": 1,
+          "price": 5700,
+          "costPrice": 5700
+        },
+        {
+          "name": "Kartoshka (1 kg)",
+          "qty": 1,
+          "price": 6700,
+          "costPrice": 6700
+        },
+        {
+          "name": "Fanta (1L)",
+          "qty": 1,
+          "price": 9200,
+          "costPrice": 9200
+        },
+        {
+          "name": "Gugurt (10 quti)",
+          "qty": 1,
+          "price": 4000,
+          "costPrice": 4000
+        }
+      ],
+      "productsTotal": 282920,
+      "discount": 0,
+      "tax": 0,
+      "total": 282920,
+      "payment": "💵 Naqt",
+      "payMethods": [
+        {
+          "method": "cash",
+          "amount": 282920
+        }
+      ],
+      "paidSum": 0,
+      "change": 0,
+      "debt": 0,
+      "status": "done",
+      "time": "2026-05-23T20:24:27.431Z",
+      "profit": 0,
+      "type": "vozvrat",
+      "employeeName": "Admin"
+    },
+    {
+      "id": "M#1001",
+      "userName": "Mijoz",
+      "userPhone": "",
+      "items": [
+        {
+          "name": "Coca-Cola (1L)",
+          "qty": 1,
+          "price": 9200,
+          "costPrice": 8000,
+          "originalPrice": 9200,
+          "discount": 0
+        },
+        {
+          "name": "1+1 Kapuchino",
+          "qty": 1,
+          "price": 17000,
+          "costPrice": 10000,
+          "originalPrice": 17000,
+          "discount": 0
+        },
+        {
+          "name": "Baliq konservasi",
+          "qty": 1,
+          "price": 18000,
+          "costPrice": 13000,
+          "originalPrice": 18000,
+          "discount": 0
+        },
+        {
+          "name": "Aralash non",
+          "qty": 1,
+          "price": 7920,
+          "costPrice": 6000,
+          "originalPrice": 9000,
+          "discount": 12
+        },
+        {
+          "name": "Quloqchin",
+          "qty": 1,
+          "price": 117000,
+          "costPrice": 100000,
+          "originalPrice": 130000,
+          "discount": 10
+        },
+        {
+          "name": "Bir marta idish (10ta)",
+          "qty": 1,
+          "price": 8500,
+          "costPrice": 6000,
+          "originalPrice": 8500,
+          "discount": 0
+        },
+        {
+          "name": "Bulochka",
+          "qty": 1,
+          "price": 2700,
+          "costPrice": 1700,
+          "originalPrice": 2700,
+          "discount": 0
+        },
+        {
+          "name": "Idish yuvish (0.5L)",
+          "qty": 1,
+          "price": 12000,
+          "costPrice": 9000,
+          "originalPrice": 12000,
+          "discount": 0
+        },
+        {
+          "name": "Guruch (1 kg)",
+          "qty": 1,
+          "price": 14000,
+          "costPrice": 11000,
+          "originalPrice": 14000,
+          "discount": 0
+        },
+        {
+          "name": "Iftor Strips Box",
+          "qty": 1,
+          "price": 51000,
+          "costPrice": 35000,
+          "originalPrice": 51000,
+          "discount": 0
+        },
+        {
+          "name": "Karam (1 kg)",
+          "qty": 1,
+          "price": 5700,
+          "costPrice": 4000,
+          "originalPrice": 5700,
+          "discount": 0
+        },
+        {
+          "name": "Kartoshka (1 kg)",
+          "qty": 1,
+          "price": 6700,
+          "costPrice": 4500,
+          "originalPrice": 6700,
+          "discount": 0
+        },
+        {
+          "name": "Fanta (1L)",
+          "qty": 1,
+          "price": 9200,
+          "costPrice": 7000,
+          "originalPrice": 9200,
+          "discount": 0
+        },
+        {
+          "name": "Banan (1 kg)",
+          "qty": 1,
+          "price": 30000,
+          "costPrice": 16000,
+          "originalPrice": 30000,
+          "discount": 0
+        },
+        {
+          "name": "Doktor kolbasa (1 kg)",
+          "qty": 1,
+          "price": 57000,
+          "costPrice": 42000,
+          "originalPrice": 57000,
+          "discount": 0
+        },
+        {
+          "name": "Gugurt (10 quti)",
+          "qty": 1,
+          "price": 4000,
+          "costPrice": 2500,
+          "originalPrice": 4000,
+          "discount": 0
+        },
+        {
+          "name": "Baton non",
+          "qty": 1,
+          "price": 9000,
+          "costPrice": 6000,
+          "originalPrice": 9000,
+          "discount": 0
+        },
+        {
+          "name": "Ko'k choy (100g)",
+          "qty": 1,
+          "price": 17000,
+          "costPrice": 12000,
+          "originalPrice": 17000,
+          "discount": 0
+        },
+        {
+          "name": "Konfetlar (1 kg)",
+          "qty": 1,
+          "price": 42000,
+          "costPrice": 30000,
+          "originalPrice": 42000,
+          "discount": 0
+        },
+        {
+          "name": "Kungaboqar yog'i (1L)",
+          "qty": 1,
+          "price": 19000,
+          "costPrice": 15000,
+          "originalPrice": 19000,
+          "discount": 0
+        },
+        {
+          "name": "Makaron (500g)",
+          "qty": 1,
+          "price": 6700,
+          "costPrice": 5000,
+          "originalPrice": 6700,
+          "discount": 0
+        }
+      ],
+      "productsTotal": 463620,
+      "discount": 0,
+      "tax": 55634,
+      "total": 519254,
+      "payment": "💵 Naqd 519,254",
+      "payMethods": [
+        {
+          "method": "cash",
+          "amount": 519254
+        }
+      ],
+      "paidSum": 519254,
+      "change": 0,
+      "debt": 0,
+      "status": "done",
+      "time": "2026-05-23T20:23:57.280Z",
+      "profit": 119920,
+      "type": "offline",
+      "employeeName": "Admin"
+    }
+  ],
+  "users": [],
+  "incomes": [],
+  "banners": [],
+  "staff": [],
+  "session": null,
+  "shifts": [
+    {
+      "id": 1779919416876,
+      "start": "2026-05-27T22:03:36.876Z",
+      "end": "2026-05-27T22:04:11.443Z",
+      "employeeName": "Admin"
+    },
+    {
+      "id": 1779919686113,
+      "start": "2026-05-27T22:08:06.113Z",
+      "end": "2026-05-27T22:14:00.618Z",
+      "employeeName": "Admin"
+    },
+    {
+      "id": 1779920052518,
+      "start": "2026-05-27T22:14:12.518Z",
+      "end": "2026-05-27T22:14:27.702Z",
+      "employeeId": 1774006240334,
+      "employeeName": "Javohir",
+      "employeeRole": "Sotuvchi"
+    },
+    {
+      "id": 1779921212196,
+      "start": "2026-05-27T22:33:32.196Z",
+      "end": "2026-05-27T22:34:24.130Z",
+      "employeeId": 1774006240334,
+      "employeeName": "Javohir",
+      "employeeRole": "Sotuvchi",
+      "total": 377216,
+      "profit": 65300,
+      "salesCount": 1
+    }
+  ]
+}

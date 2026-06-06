@@ -2,485 +2,840 @@
 <html lang="uz">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>Rasm Processor — SellFlowUZ</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;900&family=Rajdhani:wght@400;500;600;700&display=swap');
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-:root{
-  --bg:#08111a; --bg2:#0f1e2e; --bg3:#152538;
-  --border:#1e3a55; --border2:#2a4a6a;
-  --cyan:#00ffe7; --cyan2:#00b4d8; --cyan3:#006d8f;
-  --amber:#ffb703; --red:#ff2d55; --green:#39ff14;
-  --text:#d0eeff; --muted:#5a8aaa;
-  --glow:0 0 20px rgba(0,255,231,.3);
-  --glow-sm:0 0 10px rgba(0,255,231,.15);
-}
-html,body{height:100%;font-family:'Rajdhani',sans-serif;color:var(--text);background:var(--bg);}
-body{display:flex;flex-direction:column;align-items:center;min-height:100vh;padding:20px;}
-body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(circle,rgba(0,255,231,.04) 1px,transparent 1px);background-size:28px 28px;pointer-events:none;z-index:0;}
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none; /* faqat rasm sudrash uchun, matn ajratilmasin */
+  }
 
-/* HEADER */
-.header{text-align:center;margin-bottom:32px;position:relative;z-index:1;}
-.header-logo{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:8px;}
-.logo-ico{width:44px;height:44px;background:linear-gradient(135deg,var(--cyan),var(--cyan2));border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:var(--glow-sm);}
-.logo-txt{font-family:'Orbitron',monospace;font-size:13px;color:var(--cyan);letter-spacing:2px;line-height:1.3;}
-.header h1{font-family:'Orbitron',monospace;font-size:18px;color:white;letter-spacing:3px;margin-bottom:6px;}
-.header p{font-size:14px;color:var(--muted);}
+  body {
+    background: #0a0f1c;
+    font-family: 'Segoe UI', 'Rajdhani', system-ui, -apple-system, 'Orbitron', monospace;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    color: #eef5ff;
+  }
 
-/* MAIN LAYOUT */
-.main{display:grid;grid-template-columns:1fr 1fr;gap:20px;width:100%;max-width:900px;position:relative;z-index:1;}
+  /* ---------- yuqori panel (minimal) ---------- */
+  .top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 16px;
+    background: #0f172acc;
+    backdrop-filter: blur(4px);
+    border-bottom: 1px solid #1e2a44;
+    flex-shrink: 0;
+  }
 
-/* PANELS */
-.panel{background:var(--bg2);border:1px solid var(--border);border-radius:10px;overflow:hidden;}
-.panel-head{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
-.panel-title{font-family:'Orbitron',monospace;font-size:11px;color:var(--cyan);letter-spacing:2px;}
-.panel-body{padding:18px;}
+  .logo-area {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
 
-/* UPLOAD ZONE */
-.upload-zone{border:2px dashed var(--border2);border-radius:8px;padding:32px 20px;text-align:center;cursor:pointer;transition:all .2s;position:relative;}
-.upload-zone:hover,.upload-zone.drag{border-color:var(--cyan);background:rgba(0,255,231,.04);}
-.upload-zone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
-.upload-ico{font-size:40px;margin-bottom:12px;display:block;}
-.upload-txt{font-size:14px;font-weight:600;color:var(--text);margin-bottom:4px;}
-.upload-hint{font-size:12px;color:var(--muted);}
+  .logo-icon {
+    background: linear-gradient(135deg, #00e0ff, #0077ff);
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    box-shadow: 0 0 8px #00e0ff66;
+  }
 
-/* PREVIEW */
-.preview-wrap{background:#000;border-radius:8px;overflow:hidden;aspect-ratio:1;display:flex;align-items:center;justify-content:center;position:relative;min-height:200px;}
-.preview-wrap canvas{max-width:100%;max-height:100%;object-fit:contain;}
-.preview-empty{color:var(--muted);font-size:13px;text-align:center;}
-.preview-empty span{display:block;font-size:32px;margin-bottom:8px;opacity:.3;}
+  .logo-text {
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 1.5px;
+    background: linear-gradient(135deg, #b9faff, #6bc6ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
 
-/* SOURCE PREVIEW */
-.source-wrap{border-radius:8px;overflow:hidden;aspect-ratio:1;display:flex;align-items:center;justify-content:center;background:var(--bg3);border:1px solid var(--border);min-height:200px;}
-.source-wrap img{max-width:100%;max-height:100%;object-fit:contain;}
+  .back-btn {
+    color: #8aaee0;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    transition: 0.2s;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
 
-/* CONTROLS */
-.control-group{margin-bottom:16px;}
-.control-label{display:flex;justify-content:space-between;font-size:12px;font-weight:700;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;}
-.control-label span{color:var(--cyan);font-family:'Orbitron',monospace;}
-input[type=range]{width:100%;height:4px;background:var(--border2);border-radius:2px;outline:none;-webkit-appearance:none;cursor:pointer;}
-input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;background:var(--cyan);border-radius:50%;cursor:pointer;box-shadow:0 0 6px rgba(0,255,231,.4);}
-input[type=range]::-webkit-slider-track{background:var(--border2);height:4px;border-radius:2px;}
+  .back-btn:hover {
+    color: #60e5ff;
+    text-shadow: 0 0 4px #00ccff;
+  }
 
-/* BUTTONS */
-.btn{padding:10px 18px;border-radius:6px;font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;border:none;display:inline-flex;align-items:center;gap:8px;}
-.btn-cyan{background:linear-gradient(135deg,var(--cyan),var(--cyan2));color:var(--bg);}
-.btn-cyan:hover{box-shadow:var(--glow);}
-.btn-ghost{background:transparent;border:1px solid var(--border2);color:var(--text);}
-.btn-ghost:hover{border-color:var(--cyan);color:var(--cyan);}
-.btn-green{background:rgba(57,255,20,.1);border:1px solid rgba(57,255,20,.3);color:var(--green);}
-.btn-green:hover{background:rgba(57,255,20,.2);}
-.btn-full{width:100%;justify-content:center;}
-.btn-row{display:flex;gap:10px;margin-top:14px;}
+  .title-status {
+    text-align: right;
+    font-size: 12px;
+    color: #7e95b9;
+  }
 
-/* BG PRESETS */
-.bg-presets{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;}
-.bg-preset{width:36px;height:36px;border-radius:6px;border:2px solid transparent;cursor:pointer;transition:all .2s;}
-.bg-preset:hover,.bg-preset.active{border-color:var(--cyan);box-shadow:0 0 8px rgba(0,255,231,.3);}
+  /* ----- asosiy grid: ikki ustun, hech qachon scroll qilmaydi ----- */
+  .main-grid {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 12px;
+    padding: 12px 16px;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+  }
 
-/* STATUS */
-.status{font-size:12px;color:var(--muted);text-align:center;margin-top:10px;height:18px;}
-.status.ok{color:var(--green);}
-.status.err{color:var(--red);}
+  /* CHAP: sozlamalar paneli */
+  .settings-panel {
+    background: #0f172ae0;
+    backdrop-filter: blur(2px);
+    border-radius: 24px;
+    border: 1px solid #253451;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  }
 
-/* TOAST */
-.toast{position:fixed;bottom:20px;right:20px;background:var(--bg3);border:1px solid var(--border2);color:var(--text);padding:10px 18px;border-radius:8px;font-size:13px;font-weight:700;z-index:999;opacity:0;transform:translateY(8px);transition:all .3s;pointer-events:none;}
-.toast.show{opacity:1;transform:translateY(0);}
-.toast.ok{border-color:var(--green);color:var(--green);}
+  .settings-header {
+    padding: 12px 16px 6px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    border-bottom: 1px solid #1e2f4a;
+    background: #0a1122aa;
+  }
 
-/* STATS */
-.stat-row{display:flex;gap:10px;margin-bottom:16px;}
-.stat-box{flex:1;background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:10px;text-align:center;}
-.stat-val{font-family:'Orbitron',monospace;font-size:16px;color:var(--cyan);font-weight:700;}
-.stat-lbl{font-size:10px;color:var(--muted);margin-top:3px;letter-spacing:1px;}
+  .settings-scroll {
+    flex: 1;
+    overflow-y: auto;
+    padding: 14px 16px 16px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
 
-/* BACK */
-.back-btn{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;margin-bottom:20px;text-decoration:none;position:relative;z-index:1;}
-.back-btn:hover{color:var(--cyan);}
+  /* maxsus scrollni yashirin qilish, lekin ishlaydi (agar juda qisqa bo'lsa ham scroll kerak emas, ammo reserve) */
+  .settings-scroll::-webkit-scrollbar {
+    width: 4px;
+  }
+  .settings-scroll::-webkit-scrollbar-track {
+    background: #141e30;
+    border-radius: 4px;
+  }
+  .settings-scroll::-webkit-scrollbar-thumb {
+    background: #2b476e;
+    border-radius: 4px;
+  }
 
-@media(max-width:640px){.main{grid-template-columns:1fr;}}
+  /* tugmalar va slayderlar */
+  .ctrl-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #b9d0f0;
+  }
+
+  input[type="range"] {
+    width: 100%;
+    height: 4px;
+    background: #1e2f46;
+    border-radius: 10px;
+    -webkit-appearance: none;
+  }
+
+  input[type="range"]:focus {
+    outline: none;
+  }
+
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 14px;
+    height: 14px;
+    background: #2dd4ff;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 0 6px #00ccff;
+    border: none;
+  }
+
+  .bg-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+    margin-top: 6px;
+  }
+
+  .bg-chip {
+    height: 38px;
+    border-radius: 12px;
+    border: 1.5px solid transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: bold;
+    transition: 0.1s linear;
+    background-size: cover;
+  }
+
+  .bg-chip.active {
+    border-color: #6ee7ff;
+    box-shadow: 0 0 8px #2dd4ff;
+    transform: scale(0.97);
+  }
+
+  /* o'lcham */
+  .size-group {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .size-group select, .size-group input {
+    flex: 1;
+    background: #0f1a2c;
+    border: 1px solid #2c3e5e;
+    border-radius: 12px;
+    padding: 8px 6px;
+    font-size: 12px;
+    color: #eef5ff;
+  }
+
+  .btn-sm {
+    background: #14273e;
+    border: none;
+    padding: 6px;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 12px;
+    cursor: pointer;
+    transition: 0.2s;
+    color: #ccdeff;
+  }
+
+  .btn-cyan {
+    background: linear-gradient(95deg, #0eb5e0, #0080c5);
+    color: white;
+    box-shadow: 0 2px 6px #0080c540;
+  }
+
+  /* O'NG: editor + preview */
+  .editor-panel {
+    background: #0b1120dd;
+    border-radius: 28px;
+    border: 1px solid #2a3b60;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    backdrop-filter: blur(3px);
+  }
+
+  .editor-header {
+    padding: 8px 18px;
+    font-size: 12px;
+    font-weight: 600;
+    border-bottom: 1px solid #1f314c;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .canvas-zone {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+    gap: 8px;
+    min-height: 0;
+  }
+
+  .drag-container {
+    background: #03070f;
+    border-radius: 28px;
+    position: relative;
+    aspect-ratio: 1 / 1;
+    width: 100%;
+    cursor: grab;
+    overflow: hidden;
+    border: 1px solid #2b4a72;
+    box-shadow: 0 6px 14px black;
+  }
+
+  .drag-container:active {
+    cursor: grabbing;
+  }
+
+  #editorCanvas {
+    width: 100% !important;
+    height: 100% !important;
+    display: block;
+  }
+
+  .action-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 6px;
+  }
+
+  .action-buttons button {
+    flex: 1;
+    background: #0f1c2f;
+    border: 1px solid #2b4a70;
+    padding: 8px;
+    border-radius: 40px;
+    font-weight: bold;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    cursor: pointer;
+    transition: 0.2s;
+    color: #cae9ff;
+  }
+
+  .action-buttons button:active {
+    transform: scale(0.96);
+  }
+
+  .preview-mini {
+    background: #040a16;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 5px 12px;
+    border: 1px solid #2d466b;
+  }
+
+  .mini-canvas-box {
+    width: 48px;
+    height: 48px;
+    background: #00000044;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .status-badge {
+    font-size: 10px;
+    background: #071124;
+    padding: 3px 12px;
+    border-radius: 30px;
+  }
+
+  /* hech qachon scroll bar bodyda ko'rinmaydi */
+  body, html {
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+  }
 </style>
 </head>
 <body>
 
-<div class="toast" id="toast"></div>
-
-<a class="back-btn" href="products.html">← Mahsulotlarga qaytish</a>
-
-<div class="header">
-  <div class="header-logo">
-    <div class="logo-ico">🖼️</div>
-    <div class="logo-txt">SellFlowUZ</div>
+<div class="top-bar">
+  <div class="logo-area">
+    <div class="logo-icon">🖌️</div>
+    <div class="logo-text">SELLFLOW UZ · RASM STUDIO</div>
+    <a class="back-btn" id="backBtn">← Katalogga qaytish</a>
   </div>
-  <h1>RASM PROCESSOR</h1>
-  <p>Mahsulot rasmini dark fonga moslab tayyorlang</p>
+  <div class="title-status">
+    <span>✨ bir ekran · surish & masshtab</span>
+  </div>
 </div>
 
-<div class="main">
-
-  <!-- CHAP: Yuklash + Sozlamalar -->
-  <div>
-    <div class="panel" style="margin-bottom:16px;">
-      <div class="panel-head">
-        <div class="panel-title">📁 RASM YUKLASH</div>
+<div class="main-grid">
+  <!-- chap panel -->
+  <div class="settings-panel">
+    <div class="settings-header">🎮 BOSHQARUV</div>
+    <div class="settings-scroll">
+      <!-- Yuklash zonasi (maxsus) -->
+      <div style="background: #081322; border-radius: 28px; padding: 10px; text-align: center; border: 1px dashed #1f6090; cursor: pointer;" id="uploadTrigger">
+        <div style="font-size: 24px;">📸</div>
+        <div style="font-size: 12px; font-weight: bold;">Rasm yuklash</div>
+        <div style="font-size: 9px; color:#6b8cae;">PNG / JPG / WEBP</div>
+        <input type="file" id="fileImage" accept="image/*" style="display: none;">
       </div>
-      <div class="panel-body">
-        <div class="upload-zone" id="uploadZone">
-          <input type="file" id="fileInput" accept="image/*" onchange="loadImage(this)">
-          <span class="upload-ico">📷</span>
-          <div class="upload-txt">Rasm yuklash uchun bosing</div>
-          <div class="upload-hint">JPG, PNG, WEBP — istalgan o'lcham</div>
+
+      <!-- orqa fon presetlari (5 xil) -->
+      <div>
+        <div class="ctrl-label">🎨 ORQA FON</div>
+        <div class="bg-row" id="bgList">
+          <div class="bg-chip active" data-bg="#ffffff" style="background: white; color:#111;">OQ</div>
+          <div class="bg-chip" data-bg="#f5f5f5" style="background: #f5f5f5; color:#111;">OCHIQ</div>
+          <div class="bg-chip" data-bg="#e0e0e0" style="background: #e0e0e0; color:#111;">KUL</div>
+          <div class="bg-chip" data-bg="#d4c5a9" style="background: #d4c5a9; color:#111;">BEJ</div>
+          <div class="bg-chip" data-bg="#fff8e7" style="background: #fff8e7; color:#111;">KREM</div>
         </div>
       </div>
-    </div>
 
-    <div class="panel">
-      <div class="panel-head">
-        <div class="panel-title">⚙️ SOZLAMALAR</div>
+      <!-- chiqish o'lchami -->
+      <div>
+        <div class="ctrl-label">📐 CHIQISH O'LCHAMI</div>
+        <div class="size-group">
+          <select id="sizeSelect">
+            <option value="original">Original</option>
+            <option value="400">400x400</option>
+            <option value="500">500x500</option>
+            <option value="800" selected>800x800</option>
+            <option value="1024">1024x1024</option>
+            <option value="custom">Maxsus (px)</option>
+          </select>
+          <input type="number" id="customSizeInput" placeholder="px" style="display: none; width: 85px;" min="100" max="2000">
+        </div>
       </div>
-      <div class="panel-body">
 
-        <!-- Fon rangi -->
-        <div class="control-group">
-          <div class="control-label">Fon rangi (chiqish)</div>
-          <div class="bg-presets" id="bgPresets">
-            <div class="bg-preset active" data-bg="#000000" style="background:#000;" title="Qora"></div>
-            <div class="bg-preset" data-bg="#0a1628" style="background:#0a1628;" title="Dark ko'k"></div>
-            <div class="bg-preset" data-bg="#0f1e2e" style="background:#0f1e2e;" title="Dukoni foni"></div>
-            <div class="bg-preset" data-bg="#152538" style="background:#152538;" title="Sidebar foni"></div>
-            <div class="bg-preset" data-bg="#1a2d42" style="background:#1a2d42;" title="Panel foni"></div>
-            <div class="bg-preset" data-bg="transparent" style="background:repeating-conic-gradient(#888 0% 25%,#555 0% 50%) 0 0/12px 12px;" title="Transparent"></div>
-          </div>
-        </div>
-
-        <!-- Tolerance -->
-        <div class="control-group">
-          <div class="control-label">
-            Fon aniqlash sezgirlik
-            <span id="tolVal">35</span>
-          </div>
-          <input type="range" id="tolerance" min="5" max="100" value="35" oninput="document.getElementById('tolVal').textContent=this.value;processImage()">
-        </div>
-
-        <!-- Soft edge -->
-        <div class="control-group">
-          <div class="control-label">
-            Yumshoq chegara
-            <span id="softVal">15</span>
-          </div>
-          <input type="range" id="softEdge" min="0" max="60" value="15" oninput="document.getElementById('softVal').textContent=this.value;processImage()">
-        </div>
-
-        <!-- Padding -->
-        <div class="control-group">
-          <div class="control-label">
-            Chet bo'shliq (%)
-            <span id="padVal">8</span>
-          </div>
-          <input type="range" id="padding" min="0" max="25" value="8" oninput="document.getElementById('padVal').textContent=this.value;processImage()">
-        </div>
-
-        <!-- Output size -->
-        <div class="control-group">
-          <div class="control-label">
-            Chiqish o'lchami (px)
-            <span id="sizeVal">400</span>
-          </div>
-          <input type="range" id="outSize" min="200" max="800" step="50" value="400" oninput="document.getElementById('sizeVal').textContent=this.value;processImage()">
-        </div>
-
-        <div id="stats" class="stat-row" style="display:none;">
-          <div class="stat-box">
-            <div class="stat-val" id="statW">—</div>
-            <div class="stat-lbl">KENGLIK</div>
-          </div>
-          <div class="stat-box">
-            <div class="stat-val" id="statH">—</div>
-            <div class="stat-lbl">BALANDLIK</div>
-          </div>
-          <div class="stat-box">
-            <div class="stat-val" id="statRem">—</div>
-            <div class="stat-lbl">OLIB TASHLANDI</div>
-          </div>
-        </div>
-
+      <!-- fon tozalash sezgirligi -->
+      <div>
+        <div class="ctrl-label">🎯 FON TOZALASH <span id="tolValue">38</span></div>
+        <input type="range" id="toleranceSlider" min="8" max="110" value="38">
       </div>
+
+      <!-- qirralar yumshoqligi -->
+      <div>
+        <div class="ctrl-label">✨ QIRRA YUMSHATISH <span id="softValue">6</span></div>
+        <input type="range" id="softEdgeSlider" min="0" max="35" value="6">
+      </div>
+
+      <!-- zoom slayder -->
+      <div>
+        <div class="ctrl-label">🔍 ZOOM <span id="zoomPercent">100</span>%</div>
+        <input type="range" id="zoomSlider" min="30" max="220" value="100">
+      </div>
+
+      <!-- koordinata va harakat tugmalari mini -->
+      <div style="display: flex; gap: 6px; justify-content: space-between;">
+        <button class="btn-sm" id="moveUp">⬆️</button>
+        <button class="btn-sm" id="moveLeft">⬅️</button>
+        <button class="btn-sm" id="moveDown">⬇️</button>
+        <button class="btn-sm" id="moveRight">➡️</button>
+        <button class="btn-sm" id="resetPosBtn">⟳ QAYTA</button>
+      </div>
+      <div style="font-size: 10px; text-align: center; padding-top: 2px;">📍 sudrab ham siljiting</div>
     </div>
   </div>
 
-  <!-- O'NG: Preview + Yuklab olish -->
-  <div>
-    <div class="panel" style="margin-bottom:16px;">
-      <div class="panel-head">
-        <div class="panel-title">👁️ ASL RASM</div>
-      </div>
-      <div class="panel-body">
-        <div class="source-wrap" id="sourceWrap">
-          <div class="preview-empty"><span>📷</span>Rasm yuklanmagan</div>
-        </div>
-      </div>
+  <!-- O'ng panel: muharrir + natija -->
+  <div class="editor-panel">
+    <div class="editor-header">
+      <span>✋ SICHQONCHA BILAN SURANG</span>
+      <span id="editorStatus" class="status-badge">⚡ tayyor</span>
     </div>
-
-    <div class="panel">
-      <div class="panel-head">
-        <div class="panel-title">✨ TAYYOR RASM</div>
-        <div id="processStatus" class="status">—</div>
+    <div class="canvas-zone">
+      <div class="drag-container" id="dragContainer">
+        <canvas id="editorCanvas" width="500" height="500"></canvas>
       </div>
-      <div class="panel-body">
-        <div class="preview-wrap" id="previewWrap">
-          <div class="preview-empty"><span>🖼️</span>Bu yerda tayyor rasm chiqadi</div>
-        </div>
 
-        <div class="btn-row">
-          <button class="btn btn-cyan btn-full" onclick="downloadResult()" id="downloadBtn" disabled>
-            ⬇️ PNG Yuklab olish
-          </button>
+      <div class="action-buttons">
+        <button id="downloadBtnFinal">⬇️ PNG YUKLAB OLISH</button>
+        <button id="copyClipBtn">📋 CLIPBOARD</button>
+      </div>
+
+      <!-- kichik preview + stat -->
+      <div class="preview-mini">
+        <div class="mini-canvas-box" id="miniPreviewBox">
+          <canvas id="miniCanvas" width="50" height="50" style="width:50px;height:50px;border-radius: 12px;"></canvas>
         </div>
-        <div class="btn-row">
-          <button class="btn btn-ghost btn-full" onclick="copyToClipboard()" id="copyBtn" disabled>
-            📋 Clipboard ga nusxalash
-          </button>
-        </div>
-        <div style="margin-top:12px;font-size:11px;color:var(--muted);text-align:center;line-height:1.6;">
-          Yuklab olgandan keyin mahsulot qo'shishda<br>shu rasmni tanlang
-        </div>
+        <div style="font-size: 11px;">✅ tayyor rasm | bir ekranda barcha funksiyalar</div>
       </div>
     </div>
   </div>
-
 </div>
-
-<!-- Hidden canvas for processing -->
-<canvas id="workCanvas" style="display:none;"></canvas>
 
 <script>
-var sourceImg = null;
-var resultCanvas = null;
-var selectedBg = '#000000';
+  (function(){
+    // ----- DOM elementlari ------
+    const fileInput = document.getElementById('fileImage');
+    const uploadTrigger = document.getElementById('uploadTrigger');
+    const editorCanvas = document.getElementById('editorCanvas');
+    const ctx = editorCanvas.getContext('2d');
+    const dragContainer = document.getElementById('dragContainer');
+    const toleranceSlider = document.getElementById('toleranceSlider');
+    const softEdgeSlider = document.getElementById('softEdgeSlider');
+    const zoomSlider = document.getElementById('zoomSlider');
+    const tolSpan = document.getElementById('tolValue');
+    const softSpan = document.getElementById('softValue');
+    const zoomPercentSpan = document.getElementById('zoomPercent');
+    const sizeSelect = document.getElementById('sizeSelect');
+    const customSizeInput = document.getElementById('customSizeInput');
+    const bgChips = document.querySelectorAll('.bg-chip');
+    const moveUp = document.getElementById('moveUp');
+    const moveLeft = document.getElementById('moveLeft');
+    const moveDown = document.getElementById('moveDown');
+    const moveRight = document.getElementById('moveRight');
+    const resetPosBtn = document.getElementById('resetPosBtn');
+    const downloadBtn = document.getElementById('downloadBtnFinal');
+    const copyBtn = document.getElementById('copyClipBtn');
+    const editorStatusSpan = document.getElementById('editorStatus');
+    const miniCanvas = document.getElementById('miniCanvas');
+    const miniCtx = miniCanvas.getContext('2d');
 
-// Drag & drop
-var zone = document.getElementById('uploadZone');
-zone.addEventListener('dragover', function(e){ e.preventDefault(); zone.classList.add('drag'); });
-zone.addEventListener('dragleave', function(){ zone.classList.remove('drag'); });
-zone.addEventListener('drop', function(e){
-  e.preventDefault(); zone.classList.remove('drag');
-  var file = e.dataTransfer.files[0];
-  if(file && file.type.startsWith('image/')) loadFile(file);
-});
+    // rasm holati
+    let originalImage = null;        // original img
+    let cleanedCanvas = null;        // foni tozalangan canvas (transparent)
+    let outputResultCanvas = null;    // tayyor chiqish rasm (tanlangan fon, zoom, offset bilan)
 
-// BG presets
-document.querySelectorAll('.bg-preset').forEach(function(el){
-  el.addEventListener('click', function(){
-    document.querySelectorAll('.bg-preset').forEach(function(x){ x.classList.remove('active'); });
-    el.classList.add('active');
-    selectedBg = el.dataset.bg;
-    // Preview wrap foni
-    document.getElementById('previewWrap').style.background = selectedBg==='transparent'?'repeating-conic-gradient(#444 0% 25%,#222 0% 50%) 0 0/16px 16px':selectedBg;
-    processImage();
-  });
-});
+    // editor parametrlari
+    let offsetX = 0, offsetY = 0;
+    let zoom = 1.0;
+    let selectedBgColor = '#ffffff';   // default oq fon
+    let isDragging = false;
+    let dragStartX = 0, dragStartY = 0;
+    let editorWidth = 500, editorHeight = 500;
 
-function loadImage(input){
-  if(!input.files[0]) return;
-  loadFile(input.files[0]);
-}
+    // UI sync
+    editorCanvas.width = editorWidth;
+    editorCanvas.height = editorHeight;
+    miniCanvas.width = 64;
+    miniCanvas.height = 64;
 
-function loadFile(file){
-  var reader = new FileReader();
-  reader.onload = function(e){
-    var img = new Image();
-    img.onload = function(){
-      sourceImg = img;
-      // Asl rasm ko'rsatish
-      var srcWrap = document.getElementById('sourceWrap');
-      srcWrap.innerHTML = '<img src="' + e.target.result + '" style="max-width:100%;max-height:250px;object-fit:contain;">';
-      document.getElementById('stats').style.display = 'flex';
-      document.getElementById('statW').textContent = img.width;
-      document.getElementById('statH').textContent = img.height;
-      processImage();
-    };
-    img.src = e.target.result;
-  };
-  reader.readAsDataURL(file);
-}
+    // Zoom va offsetni boshqarish
+    function updateZoomFromSlider() {
+      zoom = parseFloat(zoomSlider.value) / 100;
+      zoomPercentSpan.innerText = zoomSlider.value;
+      drawEditorCanvas();
+      generateFinalOutputAndPreview();
+    }
 
-function processImage(){
-  if(!sourceImg) return;
+    function setZoom(valuePercent) {
+      zoomSlider.value = Math.min(220, Math.max(30, valuePercent));
+      updateZoomFromSlider();
+    }
 
-  var tolerance = parseInt(document.getElementById('tolerance').value);
-  var softEdge  = parseInt(document.getElementById('softEdge').value);
-  var padding   = parseInt(document.getElementById('padding').value) / 100;
-  var outSize   = parseInt(document.getElementById('outSize').value);
+    function moveStep(dx, dy) {
+      offsetX += dx;
+      offsetY += dy;
+      drawEditorCanvas();
+      generateFinalOutputAndPreview();
+    }
 
-  var status = document.getElementById('processStatus');
-  status.textContent = '⏳ Ishlanmoqda...';
-  status.className = 'status';
+    function resetPosition() {
+      offsetX = 0;
+      offsetY = 0;
+      zoomSlider.value = 100;
+      updateZoomFromSlider();
+      drawEditorCanvas();
+      generateFinalOutputAndPreview();
+    }
 
-  setTimeout(function(){
-    try {
-      var canvas = document.getElementById('workCanvas');
-      canvas.width  = sourceImg.naturalWidth;
-      canvas.height = sourceImg.naturalHeight;
-      var ctx = canvas.getContext('2d');
-      ctx.drawImage(sourceImg, 0, 0);
+    // ----- Fonni tozalash (alpha mask) -----
+    function removeBackgroundFromImage(img, tolerance, softEdge) {
+      const canvas = document.createElement('canvas');
+      canvas.width = img.width;
+      canvas.height = img.height;
+      const ctxTemp = canvas.getContext('2d');
+      ctxTemp.drawImage(img, 0, 0);
+      const imageData = ctxTemp.getImageData(0, 0, canvas.width, canvas.height);
+      const data = imageData.data;
+      const w = canvas.width, h = canvas.height;
 
-      var imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-      var data = imageData.data;
-      var W = canvas.width, H = canvas.height;
-
-      // Fon rangini 4 burchak + qirra o'rtachasidan topamiz
-      var samples = [];
-      var samplePoints = [
-        0, W-1, (H-1)*W, H*W-1, // 4 burchak
-        Math.floor(W/2), Math.floor(H/2)*W, // top va bottom o'rta
-        W-1 + Math.floor(H/2)*W*4/4 // o'ng o'rta
-      ];
-
-      // Qirra piksellarini sample qilamiz
-      for(var x=0; x<W; x+=4){
-        samples.push({r:data[x*4], g:data[x*4+1], b:data[x*4+2]});
-        var bot = ((H-1)*W+x)*4;
-        samples.push({r:data[bot], g:data[bot+1], b:data[bot+2]});
+      // fon rangini chekka piksellardan aniqlash
+      let samples = [];
+      for (let x = 0; x < w; x += Math.max(1, Math.floor(w/25))) {
+        samples.push({r: data[x*4], g: data[x*4+1], b: data[x*4+2]});
+        let bottom = ((h-1)*w + x)*4;
+        samples.push({r: data[bottom], g: data[bottom+1], b: data[bottom+2]});
       }
-      for(var y=0; y<H; y+=4){
-        var left = y*W*4;
-        samples.push({r:data[left], g:data[left+1], b:data[left+2]});
-        var right = (y*W+W-1)*4;
-        samples.push({r:data[right], g:data[right+1], b:data[right+2]});
+      for (let y = 0; y < h; y += Math.max(1, Math.floor(h/25))) {
+        let left = y*w*4;
+        samples.push({r: data[left], g: data[left+1], b: data[left+2]});
+        let right = (y*w + w-1)*4;
+        samples.push({r: data[right], g: data[right+1], b: data[right+2]});
       }
 
-      // Eng ko'p uchraydigan rang (rounded to 20)
-      var freq = {};
-      samples.forEach(function(s){
-        var key = Math.round(s.r/20)*20 + ',' + Math.round(s.g/20)*20 + ',' + Math.round(s.b/20)*20;
-        freq[key] = (freq[key]||0) + 1;
+      let freq = {};
+      samples.forEach(s => {
+        let key = Math.round(s.r/12)*12 + ',' + Math.round(s.g/12)*12 + ',' + Math.round(s.b/12)*12;
+        freq[key] = (freq[key]||0)+1;
       });
-      var bgKey = Object.keys(freq).sort(function(a,b){ return freq[b]-freq[a]; })[0];
-      var bgParts = bgKey.split(',').map(Number);
-      var bgR = bgParts[0], bgG = bgParts[1], bgB = bgParts[2];
+      let sorted = Object.keys(freq).sort((a,b)=> freq[b]-freq[a]);
+      let [bgR, bgG, bgB] = sorted[0].split(',').map(Number);
 
-      // Har bir pikselni tekshirish
-      var removed = 0;
-      for(var i=0; i<data.length; i+=4){
-        var r=data[i], g=data[i+1], b=data[i+2];
-        var diff = Math.sqrt(Math.pow(r-bgR,2)+Math.pow(g-bgG,2)+Math.pow(b-bgB,2));
-        if(diff < tolerance){
+      let removedCount = 0;
+      for (let i=0; i<data.length; i+=4) {
+        let r=data[i], g=data[i+1], b=data[i+2];
+        let diff = Math.hypot(r-bgR, g-bgG, b-bgB);
+        if (diff < tolerance) {
           data[i+3] = 0;
-          removed++;
-        } else if(diff < tolerance + softEdge){
-          var alpha = Math.round(((diff-tolerance)/softEdge)*255);
+          removedCount++;
+        } else if (diff < tolerance + softEdge && softEdge > 0) {
+          let alpha = Math.floor(((diff - tolerance) / softEdge) * 255);
+          alpha = Math.min(255, Math.max(0, alpha));
           data[i+3] = Math.min(data[i+3], alpha);
         }
       }
+      ctxTemp.putImageData(imageData, 0, 0);
+      return canvas;
+    }
 
-      ctx.putImageData(imageData, 0, 0);
+    // ----- asosiy processing (tozalash) -----
+    function processCleaning() {
+      if (!originalImage) return null;
+      const tolerance = parseInt(toleranceSlider.value);
+      const softEdge = parseInt(softEdgeSlider.value);
+      const cleaned = removeBackgroundFromImage(originalImage, tolerance, softEdge);
+      return cleaned;
+    }
 
-      // Output canvas — padding bilan
-      var out = document.createElement('canvas');
-      out.width = outSize;
-      out.height = outSize;
-      var octx = out.getContext('2d');
+    // Editor canvasga chizish (faqat cleaned + zoom + offset + fon)
+    function drawEditorCanvas() {
+      if (!cleanedCanvas) {
+        ctx.fillStyle = selectedBgColor;
+        ctx.fillRect(0, 0, editorWidth, editorHeight);
+        return;
+      }
+      // fon
+      ctx.fillStyle = selectedBgColor;
+      ctx.fillRect(0, 0, editorWidth, editorHeight);
 
-      // Fon chizish
-      if(selectedBg !== 'transparent'){
-        octx.fillStyle = selectedBg;
-        octx.fillRect(0, 0, outSize, outSize);
+      const imgW = cleanedCanvas.width;
+      const imgH = cleanedCanvas.height;
+      let drawW = imgW * zoom;
+      let drawH = imgH * zoom;
+      let drawX = (editorWidth - drawW) / 2 + offsetX;
+      let drawY = (editorHeight - drawH) / 2 + offsetY;
+      ctx.drawImage(cleanedCanvas, drawX, drawY, drawW, drawH);
+    }
+
+    // chiqish rasmni generatsiya qilish (tanlangan chiqish o'lchamida)
+    function generateFinalOutputAndPreview() {
+      if (!cleanedCanvas) {
+        outputResultCanvas = null;
+        if(miniCtx) miniCtx.clearRect(0,0,64,64);
+        return null;
       }
 
-      // Rasmni markazga, padding bilan
-      var pad = Math.round(outSize * padding);
-      var drawSize = outSize - pad*2;
+      // chiqish o'lchamini aniqlash
+      let outW, outH;
+      const selected = sizeSelect.value;
+      if (selected === 'original' && originalImage) {
+        outW = originalImage.width;
+        outH = originalImage.height;
+      } else if (selected === 'custom') {
+        let cust = parseInt(customSizeInput.value);
+        if (isNaN(cust) || cust < 20) cust = 800;
+        outW = outH = cust;
+      } else {
+        let sz = parseInt(selected);
+        if (isNaN(sz)) sz = 800;
+        outW = outH = sz;
+      }
 
-      // Aspect ratio saqlash
-      var aspect = canvas.width / canvas.height;
-      var dw, dh;
-      if(aspect > 1){ dw=drawSize; dh=Math.round(drawSize/aspect); }
-      else { dh=drawSize; dw=Math.round(drawSize*aspect); }
-      var dx = Math.round((outSize-dw)/2);
-      var dy = Math.round((outSize-dh)/2);
+      const resultCanvas = document.createElement('canvas');
+      resultCanvas.width = outW;
+      resultCanvas.height = outH;
+      const rctx = resultCanvas.getContext('2d');
+      // fon
+      rctx.fillStyle = selectedBgColor;
+      rctx.fillRect(0, 0, outW, outH);
 
-      octx.drawImage(canvas, dx, dy, dw, dh);
+      const imgW = cleanedCanvas.width;
+      const imgH = cleanedCanvas.height;
+      let drawW = imgW * zoom;
+      let drawH = imgH * zoom;
+      const editorSize = editorWidth;
+      const scale = outW / editorSize;
+      let drawX = ((editorSize - drawW) / 2 + offsetX) * scale;
+      let drawY = ((editorSize - drawH) / 2 + offsetY) * scale;
 
-      resultCanvas = out;
+      rctx.drawImage(cleanedCanvas, drawX, drawY, drawW * scale, drawH * scale);
+      outputResultCanvas = resultCanvas;
 
-      // Preview
-      var wrap = document.getElementById('previewWrap');
-      out.style.cssText = 'max-width:100%;max-height:260px;border-radius:6px;';
-      wrap.innerHTML = '';
-      wrap.appendChild(out);
-
-      // Stats
-      var pct = Math.round(removed/(W*H)*100);
-      document.getElementById('statRem').textContent = pct + '%';
-
-      status.textContent = '✅ Tayyor!';
-      status.className = 'status ok';
-
-      document.getElementById('downloadBtn').disabled = false;
-      document.getElementById('copyBtn').disabled = false;
-
-    } catch(e) {
-      status.textContent = '❌ Xato: ' + e.message;
-      status.className = 'status err';
+      // mini preview
+      if (miniCtx) {
+        miniCtx.clearRect(0,0,64,64);
+        miniCtx.drawImage(resultCanvas, 0, 0, 64, 64);
+      }
+      return resultCanvas;
     }
-  }, 50);
-}
 
-function downloadResult(){
-  if(!resultCanvas) return;
-  var link = document.createElement('a');
-  link.download = 'mahsulot-' + Date.now() + '.png';
-  link.href = resultCanvas.toDataURL('image/png');
-  link.click();
-  toast('✅ PNG yuklab olindi!');
-}
+    // To'liq yangilash (tozalash -> editor -> chiqish)
+    function fullRefresh() {
+      if (!originalImage) return;
+      editorStatusSpan.innerText = '⏳ tozalanmoqda...';
+      setTimeout(() => {
+        const cleaned = processCleaning();
+        if (cleaned) {
+          cleanedCanvas = cleaned;
+          drawEditorCanvas();
+          generateFinalOutputAndPreview();
+          editorStatusSpan.innerText = '✅ tayyor';
+        } else {
+          editorStatusSpan.innerText = '⚠️ rasm yo‘q';
+        }
+      }, 20);
+    }
 
-function copyToClipboard(){
-  if(!resultCanvas) return;
-  resultCanvas.toBlob(function(blob){
-    try {
-      var item = new ClipboardItem({'image/png': blob});
-      navigator.clipboard.write([item]).then(function(){
-        toast('✅ Clipboard ga nusxalandi!');
+    // yangi rasm yuklanganda
+    function setNewImage(imgElement) {
+      originalImage = imgElement;
+      cleanedCanvas = null;
+      offsetX = 0;
+      offsetY = 0;
+      zoomSlider.value = 100;
+      updateZoomFromSlider();
+      fullRefresh();
+    }
+
+    // File yuklash
+    function loadImageFromFile(file) {
+      if (!file || !file.type.match('image.*')) return;
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const img = new Image();
+        img.onload = () => {
+          setNewImage(img);
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    // ---- Drag & drop va UI eventlari ----
+    uploadTrigger.addEventListener('click', () => fileInput.click());
+    fileInput.addEventListener('change', (e) => {
+      if (e.target.files && e.target.files[0]) loadImageFromFile(e.target.files[0]);
+    });
+
+    // Drag and drop zonasi
+    dragContainer.addEventListener('dragover', (e) => { e.preventDefault(); });
+    dragContainer.addEventListener('drop', (e) => {
+      e.preventDefault();
+      const file = e.dataTransfer.files[0];
+      if (file) loadImageFromFile(file);
+    });
+
+    // Sichqoncha bilan sudrash
+    dragContainer.addEventListener('mousedown', (e) => {
+      if (!cleanedCanvas) return;
+      isDragging = true;
+      dragStartX = e.clientX - offsetX;
+      dragStartY = e.clientY - offsetY;
+      dragContainer.style.cursor = 'grabbing';
+    });
+    window.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      offsetX = e.clientX - dragStartX;
+      offsetY = e.clientY - dragStartY;
+      drawEditorCanvas();
+      generateFinalOutputAndPreview();
+    });
+    window.addEventListener('mouseup', () => {
+      isDragging = false;
+      dragContainer.style.cursor = 'grab';
+    });
+    // touch
+    dragContainer.addEventListener('touchstart', (e) => {
+      if (!cleanedCanvas) return;
+      e.preventDefault();
+      const touch = e.touches[0];
+      isDragging = true;
+      dragStartX = touch.clientX - offsetX;
+      dragStartY = touch.clientY - offsetY;
+    });
+    window.addEventListener('touchmove', (e) => {
+      if (!isDragging) return;
+      e.preventDefault();
+      const touch = e.touches[0];
+      offsetX = touch.clientX - dragStartX;
+      offsetY = touch.clientY - dragStartY;
+      drawEditorCanvas();
+      generateFinalOutputAndPreview();
+    });
+    window.addEventListener('touchend', () => { isDragging = false; });
+
+    // Sliderlar va rang o'zgarishi
+    toleranceSlider.addEventListener('input', () => {
+      tolSpan.innerText = toleranceSlider.value;
+      fullRefresh();
+    });
+    softEdgeSlider.addEventListener('input', () => {
+      softSpan.innerText = softEdgeSlider.value;
+      fullRefresh();
+    });
+    zoomSlider.addEventListener('input', () => {
+      updateZoomFromSlider();
+      generateFinalOutputAndPreview();
+    });
+    sizeSelect.addEventListener('change', () => {
+      if (sizeSelect.value === 'custom') customSizeInput.style.display = 'inline-block';
+      else customSizeInput.style.display = 'none';
+      generateFinalOutputAndPreview();
+    });
+    customSizeInput.addEventListener('input', () => generateFinalOutputAndPreview());
+
+    // Fon ranglari
+    bgChips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        bgChips.forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        selectedBgColor = chip.getAttribute('data-bg');
+        drawEditorCanvas();
+        generateFinalOutputAndPreview();
       });
-    } catch(e){
-      toast('❌ Clipboard ishlamadi — yuklab oling');
-    }
-  });
-}
+    });
 
-function toast(msg){
-  var t = document.getElementById('toast');
-  t.textContent = msg;
-  t.className = 'toast ok show';
-  setTimeout(function(){ t.className='toast'; }, 2500);
-}
+    // Harakat tugmalari
+    moveUp.addEventListener('click', () => moveStep(0, -15));
+    moveLeft.addEventListener('click', () => moveStep(-15, 0));
+    moveDown.addEventListener('click', () => moveStep(0, 15));
+    moveRight.addEventListener('click', () => moveStep(15, 0));
+    resetPosBtn.addEventListener('click', resetPosition);
 
-// ═══ UNIVERSAL FULLSCREEN ═══
-function tbFS(){
-  if(!document.fullscreenElement){
-    document.documentElement.requestFullscreen().catch(function(){});
-  } else {
-    document.exitFullscreen();
-  }
-}
-function posFS(){ tbFS(); }
-function _fsUpdate(){
-  var isFs=!!document.fullscreenElement;
-  ['fsBtn','navF11','tbF11','navF11Btn'].forEach(function(id){
-    var b=document.getElementById(id);
-    if(!b)return;
-    b.innerHTML=isFs?'&#x2715; ESC':'&#x26F6; F11';
-    b.style.color=isFs?'#00ffe7':'';
-    b.style.borderColor=isFs?'#00ffe7':'';
-  });
-}
-document.addEventListener('fullscreenchange',_fsUpdate);
-document.addEventListener('keydown',function(e){
-  if(e.key==='F11'){e.preventDefault();tbFS();}
-});
+    // Yuklab olish va clipboard
+    downloadBtn.addEventListener('click', () => {
+      if (!outputResultCanvas) return;
+      const link = document.createElement('a');
+      link.download = `sellflow_${Date.now()}.png`;
+      link.href = outputResultCanvas.toDataURL('image/png');
+      link.click();
+      editorStatusSpan.innerText = '✅ yuklandi';
+      setTimeout(()=> editorStatusSpan.innerText = 'tayyor', 1200);
+    });
+    copyBtn.addEventListener('click', () => {
+      if (!outputResultCanvas) return;
+      outputResultCanvas.toBlob(blob => {
+        try {
+          navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
+          editorStatusSpan.innerText = '📋 clipboardga';
+          setTimeout(()=> editorStatusSpan.innerText = 'tayyor', 1000);
+        } catch(e){ editorStatusSpan.innerText = '❌ xato'; }
+      });
+    });
 
+    // boshlang'ich holatda rasm yo'q, lekin fon ko'rinadi
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0,0,editorWidth,editorHeight);
+    miniCtx.fillStyle = '#ccc';
+    miniCtx.fillRect(0,0,64,64);
+
+    // back button
+    document.getElementById('backBtn').addEventListener('click', () => {
+      if (confirm("Asosiy katalogga o'tish?")) window.location.href = "products.html";
+    });
+
+    // default bg active
+    selectedBgColor = "#ffffff";
+  })();
 </script>
 </body>
 </html>

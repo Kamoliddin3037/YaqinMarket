@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SellFlowUZ — Integratsiyalar</title>
+<link rel="stylesheet" href="style.css">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--sidebar:var(--sidebar-w);}
+html,body{height:100%;overflow-x:hidden}
+body{background:linear-gradient(135deg,#0d1b2a,#152538);font-family:var(--font-body);color:var(--text);display:flex;min-height:100vh;}
+body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(circle,rgba(0,229,255,.05) 1px,transparent 1px);background-size:32px 32px;pointer-events:none;z-index:0;}
+
+.sidebar{width:var(--sidebar);min-height:100vh;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;position:fixed;left:0;top:0;bottom:0;z-index:100;transition:transform .3s;}
+.sidebar-logo{padding:20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;}
+.logo-icon{width:38px;height:38px;background:linear-gradient(135deg,var(--cyan),var(--cyan2));border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:var(--glow-sm);}
+.logo-text{font-family:var(--font-mono);font-size:11px;color:var(--cyan);letter-spacing:1.5px;line-height:1.3;}
+.sidebar-nav{flex:1;padding:12px 0;overflow-y:auto;}
+.nav-item{display:flex;align-items:center;gap:12px;padding:11px 20px;color:var(--muted);cursor:pointer;transition:all .2s;border-left:2px solid transparent;font-size:14px;font-weight:600;}
+.nav-item:hover{color:var(--text);background:rgba(0,229,255,.04);}
+.nav-item.active{color:var(--cyan);background:rgba(0,229,255,.07);border-left-color:var(--cyan);}
+.nav-icon{font-size:17px;width:22px;text-align:center;}
+.sidebar-bottom{padding:14px;border-top:1px solid var(--border);}
+.sidebar-user{display:flex;align-items:center;gap:10px;padding:8px;margin-bottom:10px;}
+.user-avatar{width:34px;height:34px;background:linear-gradient(135deg,var(--cyan3),var(--cyan2));border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;}
+.user-info-name{font-size:13px;font-weight:700;color:var(--text);}
+.user-info-role{font-size:10px;color:var(--cyan);font-family:var(--font-mono);letter-spacing:1px;}
+.logout-btn{width:100%;padding:9px;background:rgba(255,45,85,.1);border:1px solid rgba(255,45,85,.3);color:var(--red);border-radius:4px;font-family:var(--font-body);font-size:13px;font-weight:700;cursor:pointer;}
+.logout-btn:hover{background:rgba(255,45,85,.2);}
+
+.main{margin-left:var(--sidebar);flex:1;padding:28px 28px 40px;position:relative;z-index:1;}
+
+.page-header{margin-bottom:28px;}
+.page-title{font-family:var(--font-mono);font-size:20px;color:var(--text);letter-spacing:2px;margin-bottom:6px;}
+.page-sub{font-size:13px;color:var(--muted);}
+
+.top-actions{display:flex;gap:10px;margin-bottom:24px;flex-wrap:wrap;}
+.btn-reset{padding:9px 18px;background:rgba(255,255,255,.06);border:1px solid var(--border);color:var(--muted);border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font-body);}
+.btn-reset:hover{background:rgba(255,255,255,.1);}
+.btn-save-all{padding:9px 18px;background:linear-gradient(135deg,var(--cyan),var(--cyan2));border:none;color:#0d1b2a;border-radius:8px;font-size:13px;font-weight:800;cursor:pointer;font-family:var(--font-body);}
+.btn-save-all:hover{filter:brightness(1.1);}
+
+.warn-box{background:rgba(255,183,3,.08);border:1px solid rgba(255,183,3,.3);border-radius:10px;padding:12px 16px;margin-bottom:24px;font-size:13px;color:var(--amber);display:flex;align-items:flex-start;gap:10px;}
+.warn-box-close{margin-left:auto;background:none;border:none;color:var(--amber);font-size:18px;cursor:pointer;opacity:.6;flex-shrink:0;line-height:1;padding:0 2px;}
+.warn-box-close:hover{opacity:1;}
+
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:18px;}
+
+.int-card{background:var(--bg2);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:border-color .2s;}
+.int-card.active-card{border-color:var(--cyan);}
+.int-card-head{padding:18px 20px 14px;display:flex;align-items:center;gap:14px;border-bottom:1px solid var(--border);}
+.int-card-ico{width:46px;height:46px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
+.int-card-ico.tg{background:rgba(0,136,204,.18);border:1px solid rgba(0,136,204,.3);}
+.int-card-ico.gs{background:rgba(52,168,83,.18);border:1px solid rgba(52,168,83,.3);}
+.int-card-ico.bk{background:rgba(255,183,3,.18);border:1px solid rgba(255,183,3,.3);}
+.int-card-ico.pay{background:rgba(139,92,246,.18);border:1px solid rgba(139,92,246,.3);}
+.int-card-ico.sms{background:rgba(0,229,100,.18);border:1px solid rgba(0,229,100,.3);}
+.int-card-ico.xl{background:rgba(33,150,243,.18);border:1px solid rgba(33,150,243,.3);}
+.int-card-info{flex:1;}
+.int-card-name{font-size:15px;font-weight:800;color:var(--text);margin-bottom:2px;}
+.int-card-type{font-size:10px;color:var(--muted);font-family:var(--font-mono);letter-spacing:1px;}
+.int-card-status{padding:4px 10px;border-radius:20px;font-size:10px;font-weight:800;font-family:var(--font-mono);}
+.int-card-status.on{background:rgba(0,229,100,.15);color:#00e564;border:1px solid rgba(0,229,100,.3);}
+.int-card-status.off{background:rgba(255,255,255,.06);color:var(--muted);border:1px solid var(--border);}
+.int-card-body{padding:16px 20px;}
+.int-card-desc{font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:14px;}
+.int-card-fields{display:flex;flex-direction:column;gap:8px;margin-bottom:14px;}
+.int-field-lbl{font-size:10px;color:var(--muted);font-weight:700;letter-spacing:.8px;margin-bottom:3px;}
+.int-field-input{width:100%;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:8px;padding:8px 12px;color:var(--text);font-family:var(--font-body);font-size:13px;outline:none;}
+.int-field-input:focus{border-color:var(--cyan);}
+.int-field-input::placeholder{color:var(--muted2);}
+.int-field-select{width:100%;background:rgba(10,22,40,.8);border:1px solid var(--border);border-radius:8px;padding:8px 12px;color:var(--text);font-family:var(--font-body);font-size:13px;outline:none;cursor:pointer;}
+.int-card-actions{display:flex;gap:8px;flex-wrap:wrap;}
+.btn-settings{padding:7px 14px;background:rgba(255,255,255,.06);border:1px solid var(--border);color:var(--muted);border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font-body);}
+.btn-settings:hover{background:rgba(255,255,255,.1);color:var(--text);}
+.btn-toggle-on{padding:7px 14px;background:linear-gradient(135deg,var(--cyan),var(--cyan2));border:none;color:#0d1b2a;border-radius:8px;font-size:12px;font-weight:800;cursor:pointer;font-family:var(--font-body);}
+.btn-toggle-off{padding:7px 14px;background:rgba(255,45,85,.12);border:1px solid rgba(255,45,85,.3);color:var(--red);border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font-body);}
+.btn-test{padding:7px 14px;background:rgba(255,183,3,.1);border:1px solid rgba(255,183,3,.3);color:var(--amber);border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font-body);}
+.btn-test:hover{background:rgba(255,183,3,.2);}
+
+.roadmap{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:20px 24px;margin-top:24px;}
+.roadmap-title{font-family:var(--font-mono);font-size:12px;color:var(--cyan);letter-spacing:1.5px;margin-bottom:16px;}
+.roadmap-steps{display:flex;gap:0;flex-wrap:wrap;}
+.roadmap-step{flex:1;min-width:160px;padding:14px 16px;border-right:1px solid var(--border);position:relative;}
+.roadmap-step:last-child{border-right:none;}
+.roadmap-num{font-family:var(--font-mono);font-size:11px;color:var(--cyan);margin-bottom:6px;}
+.roadmap-step-title{font-size:13px;font-weight:800;color:var(--text);margin-bottom:4px;}
+.roadmap-step-sub{font-size:11px;color:var(--muted);line-height:1.5;}
+.roadmap-step.done .roadmap-num{color:var(--cyan);}
+.roadmap-step.done::before{content:'✔';position:absolute;top:14px;right:14px;font-size:12px;color:var(--cyan);}
+
+@media(max-width:768px){
+  .sidebar{transform:translateX(-100%);}
+  .sidebar.open{transform:translateX(0);}
+  .main{margin-left:0;}
+  .roadmap-steps{flex-direction:column;}
+  .roadmap-step{border-right:none;border-bottom:1px solid var(--border);}
+}
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:99;}
+.sidebar-overlay.open{display:block;}
+</style>
+</head>
+<body>
+
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-icon">🏪</div>
+    <div class="logo-text">SellFlowUZ</div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-item" onclick="location.href='/dashboard'"><span class="nav-icon">📅</span>Asosiy</div>
+    <div class="nav-item" onclick="location.href='/buyurtmalar'"><span class="nav-icon">📋</span>Buyurtmalar</div>
+    <div class="nav-item" onclick="location.href='/mahsulotlar'"><span class="nav-icon">📦</span>Mahsulotlar</div>
+    <div class="nav-item" onclick="location.href='/ombor'"><span class="nav-icon">🏭</span>Ombor</div>
+    <div class="nav-item" onclick="location.href='/daromad'"><span class="nav-icon">📈</span>Daromad</div>
+    <div class="nav-item" onclick="location.href='/pos'"><span class="nav-icon">🏪</span>POS</div>
+    <div class="nav-item" onclick="location.href='/mijozlar'"><span class="nav-icon">👥</span>Mijozlar</div>
+    <div class="nav-item" onclick="location.href='/xodimlar'"><span class="nav-icon">👔</span>Xodimlar</div>
+    <div class="nav-item" onclick="location.href='/bannerlar'"><span class="nav-icon">🖼️</span>Bannerlar</div>
+    <div class="nav-item" onclick="location.href='/shop'"><span class="nav-icon">🛒</span>Do'kon</div>
+    <div class="nav-item active" onclick="location.href='/integratsiya'"><span class="nav-icon">🔗</span>Integratsiyalar</div>
+  </nav>
+  <div class="sidebar-bottom">
+    <div class="sidebar-user">
+      <div class="user-avatar">⚙️</div>
+      <div><div class="user-info-name" id="sbUserName">Admin</div><div class="user-info-role" id="sbUserRole">ADMIN</div></div>
+    </div>
+    <button class="logout-btn" onclick="logout()">CHIQISH</button>
+  </div>
+</aside>
+
+<main class="main">
+  <div class="page-header">
+    <div class="page-title">🔗 INTEGRATSIYALAR</div>
+    <div class="page-sub">Telegram, Google Sheets, Backup va to'lov tizimlari uchun sozlamalar</div>
+  </div>
+
+  <div class="top-actions">
+    <button class="btn-save-all" onclick="saveAll()">💾 Barchasini saqlash</button>
+  </div>
+
+  <div class="warn-box" id="warnBox">
+    ⚠️ <span>Hozircha real API chaqirilmaydi. Sozlamalar <b>localStorage</b>da saqlanadi. Server versiyaga o'tganda shu konfiguratsiyalar backend API orqali ulanadi.</span>
+    <button class="warn-box-close" onclick="document.getElementById('warnBox').style.display='none'" title="Yopish">✕</button>
+  </div>
+
+  <div class="cards">
+
+    <!-- TELEGRAM -->
+    <div class="int-card" id="card-telegram">
+      <div class="int-card-head">
+        <div class="int-card-ico tg">🤖</div>
+        <div class="int-card-info">
+          <div class="int-card-name">Telegram Bot</div>
+          <div class="int-card-type">XABAR VA HISOBOT</div>
+        </div>
+        <span class="int-card-status off" id="tg-status">Nofaol</span>
+      </div>
+      <div class="int-card-body">
+        <div class="int-card-desc">Kunlik hisobot, smena yopilishi, kam qoldiq va qarzdorlik ogohlantirishlarini Telegram orqali yuborish.</div>
+        <div class="int-card-fields" id="tg-fields" style="display:none;">
+          <div>
+            <div class="int-field-lbl">BOT TOKEN</div>
+            <input class="int-field-input" id="tg-token" placeholder="123456789:AABBcc..." type="password">
+          </div>
+          <div>
+            <div class="int-field-lbl">CHAT ID</div>
+            <input class="int-field-input" id="tg-chat" placeholder="-100123456789 yoki @username">
+          </div>
+          <div>
+            <div class="int-field-lbl">QACHON YUBORSIN</div>
+            <select class="int-field-select" id="tg-when">
+              <option value="smena">Smena yopilganda</option>
+              <option value="daily">Har kuni (soat 22:00)</option>
+              <option value="sale">Har savdoda</option>
+              <option value="low_stock">Kam qoldiqda</option>
+              <option value="debt">Yangi qarzda</option>
+            </select>
+          </div>
+        </div>
+        <div class="int-card-actions">
+          <button class="btn-settings" onclick="toggleFields('tg')">⚙️ Sozlash</button>
+          <button class="btn-toggle-on" id="tg-toggle" onclick="toggleIntegration('telegram')">Faollashtirish</button>
+          <button class="btn-test" onclick="testIntegration('telegram')">🧪 Sinash</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- GOOGLE SHEETS -->
+    <div class="int-card" id="card-sheets">
+      <div class="int-card-head">
+        <div class="int-card-ico gs">📊</div>
+        <div class="int-card-info">
+          <div class="int-card-name">Google Sheets</div>
+          <div class="int-card-type">BULUTLI JADVAL</div>
+        </div>
+        <span class="int-card-status off" id="sheets-status">Nofaol</span>
+      </div>
+      <div class="int-card-body">
+        <div class="int-card-desc">Sotuvlar, ombor qoldig'i, qarzlar va kirimlarni Google Sheets jadvaliga sinxronlash uchun tayyor sozlama.</div>
+        <div class="int-card-fields" id="sheets-fields" style="display:none;">
+          <div>
+            <div class="int-field-lbl">SPREADSHEET ID</div>
+            <input class="int-field-input" id="sheets-id" placeholder="1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgVE2upms">
+          </div>
+          <div>
+            <div class="int-field-lbl">SERVICE ACCOUNT JSON (fayl nomi)</div>
+            <input class="int-field-input" id="sheets-cred" placeholder="credentials.json">
+          </div>
+          <div>
+            <div class="int-field-lbl">SINXRONLASH VAQTI</div>
+            <select class="int-field-select" id="sheets-when">
+              <option value="smena">Smena yopilganda</option>
+              <option value="daily">Har kuni (00:00)</option>
+              <option value="realtime">Real vaqtda (har savdoda)</option>
+            </select>
+          </div>
+        </div>
+        <div class="int-card-actions">
+          <button class="btn-settings" onclick="toggleFields('sheets')">⚙️ Sozlash</button>
+          <button class="btn-toggle-on" id="sheets-toggle" onclick="toggleIntegration('sheets')">Faollashtirish</button>
+          <button class="btn-test" onclick="testIntegration('sheets')">🧪 Sinash</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- BACKUP -->
+    <div class="int-card active-card" id="card-backup">
+      <div class="int-card-head">
+        <div class="int-card-ico bk">💾</div>
+        <div class="int-card-info">
+          <div class="int-card-name">Backup</div>
+          <div class="int-card-type">ZAXIRA NUSXA</div>
+        </div>
+        <span class="int-card-status on" id="backup-status">Faol</span>
+      </div>
+      <div class="int-card-body">
+        <div class="int-card-desc">Ma'lumotlarni JSON zaxira sifatida saqlash, avtomatik backup vaqtini belgilash va tiklash jarayonini boshqarish.</div>
+        <div class="int-card-fields" id="backup-fields" style="display:none;">
+          <div>
+            <div class="int-field-lbl">BACKUP ORALIG'I (soat)</div>
+            <input class="int-field-input" id="backup-interval" type="number" min="1" max="24" value="6" placeholder="6">
+          </div>
+          <div>
+            <div class="int-field-lbl">SAQLASH JOYI</div>
+            <input class="int-field-input" id="backup-path" value="logs/backups/" placeholder="logs/backups/">
+          </div>
+          <div>
+            <div class="int-field-lbl">NECHA KUNLIK SAQLASH</div>
+            <input class="int-field-input" id="backup-keep" type="number" min="1" max="90" value="30" placeholder="30">
+          </div>
+        </div>
+        <div class="int-card-actions">
+          <button class="btn-settings" onclick="toggleFields('backup')">⚙️ Sozlash</button>
+          <button class="btn-toggle-off" id="backup-toggle" onclick="toggleIntegration('backup')">Nofaol qilish</button>
+          <button class="btn-test" onclick="testIntegration('backup')">🧪 Sinash</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TO'LOV TIZIMLARI -->
+    <div class="int-card" id="card-payment">
+      <div class="int-card-head">
+        <div class="int-card-ico pay">💳</div>
+        <div class="int-card-info">
+          <div class="int-card-name">To'lov tizimlari</div>
+          <div class="int-card-type">CLICK / PAYME / TERMINAL</div>
+        </div>
+        <span class="int-card-status off" id="payment-status">Nofaol</span>
+      </div>
+      <div class="int-card-body">
+        <div class="int-card-desc">Naqd, terminal, Click, Payme va Uzum Bank kabi to'lov usullarini keyingi API ulashga tayyorlash.</div>
+        <div class="int-card-fields" id="payment-fields" style="display:none;">
+          <div>
+            <div class="int-field-lbl">CLICK MERCHANT ID</div>
+            <input class="int-field-input" id="payment-click" placeholder="12345">
+          </div>
+          <div>
+            <div class="int-field-lbl">PAYME KASSA ID</div>
+            <input class="int-field-input" id="payment-payme" placeholder="5e730e8e0b852980">
+          </div>
+          <div>
+            <div class="int-field-lbl">AKTIV TO'LOV USULLARI</div>
+            <select class="int-field-select" id="payment-methods" multiple style="height:80px;">
+              <option value="cash" selected>💵 Naqd</option>
+              <option value="card" selected>💳 Karta/Terminal</option>
+              <option value="click">📱 Click</option>
+              <option value="payme">📲 Payme</option>
+              <option value="uzum">🟠 Uzum Bank</option>
+            </select>
+          </div>
+        </div>
+        <div class="int-card-actions">
+          <button class="btn-settings" onclick="toggleFields('payment')">⚙️ Sozlash</button>
+          <button class="btn-toggle-on" id="payment-toggle" onclick="toggleIntegration('payment')">Faollashtirish</button>
+          <button class="btn-test" onclick="testIntegration('payment')">🧪 Sinash</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SMS (Eskiz) -->
+    <div class="int-card" id="card-sms">
+      <div class="int-card-head">
+        <div class="int-card-ico sms">💬</div>
+        <div class="int-card-info">
+          <div class="int-card-name">SMS (Eskiz)</div>
+          <div class="int-card-type">XABAR YUBORISH</div>
+        </div>
+        <span class="int-card-status off" id="sms-status">Nofaol</span>
+      </div>
+      <div class="int-card-body">
+        <div class="int-card-desc">Eskiz.uz API orqali mijozlarga chek, qarz eslatmasi va aksiya xabarlarini yuborish.</div>
+        <div class="int-card-fields" id="sms-fields" style="display:none;">
+          <div>
+            <div class="int-field-lbl">API TOKEN</div>
+            <input class="int-field-input" id="sms-token" placeholder="your-eskiz-api-token" type="password">
+          </div>
+          <div>
+            <div class="int-field-lbl">JO'NATUVCHI NOMI (maks 11 belgi)</div>
+            <input class="int-field-input" id="sms-sender" placeholder="SellFlow" maxlength="11">
+          </div>
+          <div>
+            <div class="int-field-lbl">QACHON YUBORSIN</div>
+            <select class="int-field-select" id="sms-when">
+              <option value="sale">Har savdoda (chek)</option>
+              <option value="debt">Yangi qarzda</option>
+              <option value="manual">Faqat qo'lda</option>
+            </select>
+          </div>
+        </div>
+        <div class="int-card-actions">
+          <button class="btn-settings" onclick="toggleFields('sms')">⚙️ Sozlash</button>
+          <button class="btn-toggle-on" id="sms-toggle" onclick="toggleIntegration('sms')">Faollashtirish</button>
+          <button class="btn-test" onclick="testIntegration('sms')">🧪 Sinash</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- EXCEL EKSPORT -->
+    <div class="int-card" id="card-excel">
+      <div class="int-card-head">
+        <div class="int-card-ico xl">📄</div>
+        <div class="int-card-info">
+          <div class="int-card-name">Excel Eksport</div>
+          <div class="int-card-type">HISOBOT YUKLAB OLISH</div>
+        </div>
+        <span class="int-card-status off" id="excel-status">Nofaol</span>
+      </div>
+      <div class="int-card-body">
+        <div class="int-card-desc">Sotuvlar, ombor qoldig'i va qarzlarni CSV/Excel formatida yuklab olish. Brauzerda ishlaydi — server kerak emas.</div>
+        <div class="int-card-fields" id="excel-fields" style="display:none;">
+          <div>
+            <div class="int-field-lbl">BOSHLANISH SANASI</div>
+            <input class="int-field-input" id="excel-from" type="date">
+          </div>
+          <div>
+            <div class="int-field-lbl">TUGASH SANASI</div>
+            <input class="int-field-input" id="excel-to" type="date">
+          </div>
+          <div>
+            <div class="int-field-lbl">NIMA EKSPORT QILINSIN</div>
+            <select class="int-field-select" id="excel-what">
+              <option value="sales">📊 Sotuvlar</option>
+              <option value="products">📦 Mahsulotlar (ombor)</option>
+              <option value="debts">💳 Qarzlar</option>
+              <option value="all">📋 Hammasi</option>
+            </select>
+          </div>
+        </div>
+        <div class="int-card-actions">
+          <button class="btn-settings" onclick="toggleFields('excel')">⚙️ Sozlash</button>
+          <button class="btn-toggle-on" id="excel-toggle" onclick="toggleIntegration('excel')">Faollashtirish</button>
+          <button class="btn-test" onclick="downloadExcel()">⬇️ Yuklab olish</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ROADMAP -->
+</main>
+
+<script src="data.js"></script>
+<script>
+var _cfg = {};
+var _DEFAULTS = {
+  telegram: { enabled:false, token:'', chat:'', when:'smena' },
+  sheets:   { enabled:false, id:'', cred:'credentials.json', when:'smena' },
+  backup:   { enabled:true,  interval:6, path:'logs/backups/', keep:30 },
+  payment:  { enabled:false, click:'', payme:'', methods:['cash','card'] },
+  sms:      { enabled:false, token:'', sender:'SellFlow', when:'sale' },
+  excel:    { enabled:false, from:'', to:'', what:'sales' }
+};
+
+function init(){
+  var s = DB.getSession();
+  if(!s || s.role !== 'admin'){ location.href='/login'; return; }
+  var n = document.getElementById('sbUserName');
+  var r = document.getElementById('sbUserRole');
+  if(n) n.textContent = s.name || 'Admin';
+  if(r) r.textContent = (s.role||'admin').toUpperCase();
+  _cfg = JSON.parse(localStorage.getItem('sfu_integrations') || 'null') || JSON.parse(JSON.stringify(_DEFAULTS));
+  loadUI();
+}
+
+function loadUI(){
+  // Telegram
+  document.getElementById('tg-token').value = _cfg.telegram.token || '';
+  document.getElementById('tg-chat').value  = _cfg.telegram.chat  || '';
+  document.getElementById('tg-when').value  = _cfg.telegram.when  || 'smena';
+  setCardState('telegram', _cfg.telegram.enabled);
+  // Sheets
+  document.getElementById('sheets-id').value   = _cfg.sheets.id   || '';
+  document.getElementById('sheets-cred').value = _cfg.sheets.cred || 'credentials.json';
+  document.getElementById('sheets-when').value = _cfg.sheets.when || 'smena';
+  setCardState('sheets', _cfg.sheets.enabled);
+  // Backup
+  document.getElementById('backup-interval').value = _cfg.backup.interval || 6;
+  document.getElementById('backup-path').value      = _cfg.backup.path     || 'logs/backups/';
+  document.getElementById('backup-keep').value      = _cfg.backup.keep     || 30;
+  setCardState('backup', _cfg.backup.enabled);
+  // Payment
+  document.getElementById('payment-click').value  = _cfg.payment.click  || '';
+  document.getElementById('payment-payme').value  = _cfg.payment.payme  || '';
+  setCardState('payment', _cfg.payment.enabled);
+  // SMS
+  document.getElementById('sms-token').value  = _cfg.sms.token  || '';
+  document.getElementById('sms-sender').value = _cfg.sms.sender || 'SellFlow';
+  document.getElementById('sms-when').value   = _cfg.sms.when   || 'sale';
+  setCardState('sms', _cfg.sms.enabled);
+  // Excel
+  var today = new Date().toISOString().slice(0,10);
+  var monthAgo = new Date(Date.now()-30*86400000).toISOString().slice(0,10);
+  document.getElementById('excel-from').value = _cfg.excel.from || monthAgo;
+  document.getElementById('excel-to').value   = _cfg.excel.to   || today;
+  document.getElementById('excel-what').value = _cfg.excel.what || 'sales';
+  setCardState('excel', _cfg.excel.enabled);
+}
+
+function setCardState(key, enabled){
+  var card   = document.getElementById('card-' + key);
+  var status = document.getElementById(key + '-status');
+  var toggle = document.getElementById(key + '-toggle');
+  if(!card) return;
+  if(enabled){
+    card.classList.add('active-card');
+    status.textContent = 'Faol';
+    status.className   = 'int-card-status on';
+    toggle.textContent = 'Nofaol qilish';
+    toggle.className   = 'btn-toggle-off';
+  } else {
+    card.classList.remove('active-card');
+    status.textContent = 'Nofaol';
+    status.className   = 'int-card-status off';
+    toggle.textContent = 'Faollashtirish';
+    toggle.className   = 'btn-toggle-on';
+  }
+}
+
+function toggleFields(key){
+  var f = document.getElementById(key + '-fields');
+  f.style.display = f.style.display === 'none' ? 'block' : 'none';
+}
+
+function toggleIntegration(key){
+  _cfg[key].enabled = !_cfg[key].enabled;
+  setCardState(key, _cfg[key].enabled);
+  saveCfg();
+  showToast(_cfg[key].enabled ? '✅ ' + key + ' faollashtirildi!' : '⏹ ' + key + ' o\'chirildi', _cfg[key].enabled ? '' : 'warning');
+}
+
+function saveAll(){
+  _cfg.telegram.token = document.getElementById('tg-token').value.trim();
+  _cfg.telegram.chat  = document.getElementById('tg-chat').value.trim();
+  _cfg.telegram.when  = document.getElementById('tg-when').value;
+  _cfg.sheets.id   = document.getElementById('sheets-id').value.trim();
+  _cfg.sheets.cred = document.getElementById('sheets-cred').value.trim();
+  _cfg.sheets.when = document.getElementById('sheets-when').value;
+  _cfg.backup.interval = parseInt(document.getElementById('backup-interval').value) || 6;
+  _cfg.backup.path     = document.getElementById('backup-path').value.trim();
+  _cfg.backup.keep     = parseInt(document.getElementById('backup-keep').value) || 30;
+  _cfg.payment.click = document.getElementById('payment-click').value.trim();
+  _cfg.payment.payme = document.getElementById('payment-payme').value.trim();
+  _cfg.sms.token  = document.getElementById('sms-token').value.trim();
+  _cfg.sms.sender = document.getElementById('sms-sender').value.trim();
+  _cfg.sms.when   = document.getElementById('sms-when').value;
+  _cfg.excel.from = document.getElementById('excel-from').value;
+  _cfg.excel.to   = document.getElementById('excel-to').value;
+  _cfg.excel.what = document.getElementById('excel-what').value;
+  saveCfg();
+  showToast('💾 Barcha sozlamalar saqlandi!');
+}
+
+function saveCfg(){
+  localStorage.setItem('sfu_integrations', JSON.stringify(_cfg));
+}
+
+function resetAll(){
+  if(!confirm('Barcha sozlamalarni standartga qaytarasizmi?')) return;
+  _cfg = JSON.parse(JSON.stringify(_DEFAULTS));
+  saveCfg();
+  loadUI();
+  showToast('↻ Standart holat tiklandi', 'warning');
+}
+
+function testIntegration(key){
+  var msgs = {
+    telegram: '🤖 Telegram test: Bot token va Chat ID to\'g\'ri bo\'lsa xabar yuboriladi. Hozircha: ✅ Sozlama saqlandi.',
+    sheets:   '📊 Google Sheets test: Spreadsheet ID kiritilgan — real sinash uchun server kerak.',
+    backup:   '💾 Backup test: logs/backups/ papkasiga db.json nusxasi yozilmoqda...',
+    payment:  '💳 To\'lov test: Merchant ID larni saqlang — real API serverda ulanadi.',
+    sms:      '💬 SMS test: Eskiz token saqlandi. Real xabar uchun server kerak.',
+    excel:    '📄 "Yuklab olish" tugmasini bosing — CSV fayl yuklanadi.'
+  };
+  showToast(msgs[key] || 'Sinash...');
+}
+
+function downloadExcel(){
+  var what = document.getElementById('excel-what').value;
+  var from = document.getElementById('excel-from').value;
+  var to   = document.getElementById('excel-to').value;
+  var rows = [];
+  var fname = 'sfu_' + what + '_' + (from||'all') + '.csv';
+
+  function dateOk(d){
+    var day = (d||'').slice(0,10);
+    return (!from || day >= from) && (!to || day <= to);
+  }
+
+  if(what === 'sales' || what === 'all'){
+    var sales = (DB.getSales ? DB.getSales() : []).filter(function(s){ return dateOk(s.date); });
+    rows.push(['=== SOTUVLAR ===']);
+    rows.push(['Sana','Chek ID','Mahsulot','Miqdor','Narx','Jami','To\'lov turi']);
+    sales.forEach(function(s){
+      (s.items||[]).forEach(function(item){
+        rows.push([s.date||'', s.id||'', item.name||'', item.qty||1, item.price||0, (item.qty||1)*(item.price||0), s.payType||'naqd']);
+      });
+    });
+    rows.push([]);
+  }
+
+  if(what === 'products' || what === 'all'){
+    var prods = DB.getProducts ? DB.getProducts() : [];
+    rows.push(['=== MAHSULOTLAR (OMBOR) ===']);
+    rows.push(['Nom','Kategoriya','Narx','Ombor','Birlik']);
+    prods.forEach(function(p){
+      rows.push([p.name||'', p.category||'', p.price||0, p.stock||0, p.unit||'dona']);
+    });
+    rows.push([]);
+  }
+
+  if(what === 'debts' || what === 'all'){
+    var custs = (DB.getCustomers ? DB.getCustomers() : []).filter(function(c){ return (c.debt||0) > 0; });
+    rows.push(['=== QARZLAR ===']);
+    rows.push(['Mijoz','Telefon','Qarz (so\'m)']);
+    custs.forEach(function(c){ rows.push([c.name||'', c.phone||'', c.debt||0]); });
+    rows.push([]);
+  }
+
+  if(!rows.length){ showToast('⚠️ Ma\'lumot topilmadi', 'warning'); return; }
+
+  var csv = rows.map(function(r){
+    return r.map(function(cell){
+      var s = String(cell == null ? '' : cell);
+      if(s.indexOf(',') > -1 || s.indexOf('"') > -1 || s.indexOf('\n') > -1)
+        s = '"' + s.replace(/"/g,'""') + '"';
+      return s;
+    }).join(',');
+  }).join('\n');
+
+  var blob = new Blob(['﻿' + csv], {type:'text/csv;charset=utf-8;'});
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url; a.download = fname;
+  document.body.appendChild(a); a.click();
+  document.body.removeChild(a); URL.revokeObjectURL(url);
+  showToast('📄 ' + fname + ' yuklab olindi!');
+}
+
+function logout(){
+  DB.clearSession();
+  location.href = '/login';
+}
+
+function toggleSidebar(){
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('sidebarOverlay').classList.toggle('open');
+}
+function closeSidebar(){
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebarOverlay').classList.remove('open');
+}
+
+// Toast
+var _toastTimer;
+function showToast(msg, type){
+  var t = document.getElementById('toast');
+  if(!t){ t = document.createElement('div'); t.id='toast'; t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(60px);background:#1a2e22;color:#fff;padding:12px 22px;border-radius:12px;font-size:13px;font-weight:700;z-index:9999;transition:transform .3s;white-space:nowrap;'; document.body.appendChild(t); }
+  t.textContent = msg;
+  t.style.background = type==='warning'?'#e65100':type==='error'?'#c62828':'#1a2e22';
+  t.style.transform = 'translateX(-50%) translateY(0)';
+  clearTimeout(_toastTimer);
+  _toastTimer = setTimeout(function(){ t.style.transform='translateX(-50%) translateY(60px)'; }, 3000);
+}
+
+init();
+
+// ═══ IFRAME NAV ═══
+(function(){
+  if(window.parent===window) return;
+  document.addEventListener('click',function(e){
+    var a=e.target.closest('a[href]');
+    if(!a||a.target) return;
+    var h=a.getAttribute('href');
+    if(!h||h==='#'||h.startsWith('javascript')) return;
+    if(h.startsWith('/')){e.preventDefault();window.parent.postMessage({sfuNav:h},'*');}
+  },true);
+  document.addEventListener('keydown',function(e){
+    if(e.key==='F11'){e.preventDefault();window.parent.postMessage({sfuF11:true},'*');}
+    if(e.key==='Escape'){window.parent.postMessage({sfuEsc:true},'*');}
+  },true);
+})();
+</script>
+</body>
+</html>

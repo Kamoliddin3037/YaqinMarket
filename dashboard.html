@@ -4,50 +4,44 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SellFlowUZ — Admin</title>
+<link rel="stylesheet" href="style.css">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;900&family=Rajdhani:wght@400;500;600;700&display=swap');
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --bg:#0d1b2a; --bg2:#1a2d42; --panel:#1e3448; --panelS:#1e3448;
-  --border:#2a4a6a; --border2:#2d5278;
-  --cyan:#00ffe7; --cyan2:#00b4d8; --cyan3:#006d8f;
-  --amber:#ffb703; --red:#ff2d55; --green:#39ff14; --purple:#b44cf5;
-  --text:#e0f2fe; --muted:#7ab3cc; --muted2:#3a6080;
-  --glow:0 0 20px rgba(0,255,231,.3);
-  --glow-sm:0 0 10px rgba(0,255,231,.2);
-  --sidebar:220px;
+  --panelS:var(--panel);
+  --sidebar:var(--sidebar-w);
 }
 html,body{height:100%;overflow-x:hidden}
-body{background:linear-gradient(135deg,#0d1b2a,#152538);font-family:'Rajdhani',sans-serif;color:var(--text);display:flex;min-height:100vh;}
-body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(circle,rgba(0,255,231,.05) 1px,transparent 1px);background-size:32px 32px;pointer-events:none;z-index:0;}
+body{background:linear-gradient(135deg,#0d1b2a,#152538);font-family:var(--font-body);color:var(--text);display:flex;min-height:100vh;}
+body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(circle,rgba(0,229,255,.05) 1px,transparent 1px);background-size:32px 32px;pointer-events:none;z-index:0;}
 
 /* SIDEBAR */
-.sidebar{width:var(--sidebar);min-height:100vh;background:#152030;border-right:1px solid var(--border);display:flex;flex-direction:column;position:fixed;left:0;top:0;bottom:0;z-index:100;transition:transform .3s;}
+.sidebar{width:var(--sidebar);min-height:100vh;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;position:fixed;left:0;top:0;bottom:0;z-index:100;transition:transform .3s;}
 .sidebar-logo{padding:20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;}
 .logo-icon{width:38px;height:38px;background:linear-gradient(135deg,var(--cyan),var(--cyan2));border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:var(--glow-sm);}
-.logo-text{font-family:'Orbitron',monospace;font-size:11px;color:var(--cyan);letter-spacing:1.5px;line-height:1.3;}
+.logo-text{font-family:var(--font-mono);font-size:11px;color:var(--cyan);letter-spacing:1.5px;line-height:1.3;}
 .sidebar-nav{flex:1;padding:12px 0;overflow-y:auto;}
 .nav-section{padding:10px 16px 4px;font-size:10px;color:var(--muted2);font-weight:700;letter-spacing:3px;text-transform:uppercase;}
 .nav-item{display:flex;align-items:center;gap:12px;padding:11px 20px;color:var(--muted);cursor:pointer;transition:all .2s;border-left:2px solid transparent;font-size:14px;font-weight:600;}
-.nav-item:hover{color:var(--text);background:rgba(0,255,231,.04);}
-.nav-item.active{color:var(--cyan);background:rgba(0,255,231,.07);border-left-color:var(--cyan);}
-.nav-item .badge{margin-left:auto;background:var(--red);color:white;font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;}
+.nav-item:hover{color:var(--text);background:rgba(0,229,255,.04);}
+.nav-item.active{color:var(--cyan);background:rgba(0,229,255,.07);border-left-color:var(--cyan);}
+.nav-item .badge{margin-left:auto;background:var(--red);color:var(--text);font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;}
 .nav-icon{font-size:17px;width:22px;text-align:center;}
 .sidebar-bottom{padding:14px;border-top:1px solid var(--border);}
 .sidebar-user{display:flex;align-items:center;gap:10px;padding:8px;margin-bottom:10px;}
 .user-avatar{width:34px;height:34px;background:linear-gradient(135deg,var(--cyan3),var(--cyan2));border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;}
-.user-info-name{font-size:13px;font-weight:700;color:white;}
-.user-info-role{font-size:10px;color:var(--cyan);font-family:'Orbitron',monospace;letter-spacing:1px;}
-.logout-btn{width:100%;padding:9px;background:rgba(255,45,85,.1);border:1px solid rgba(255,45,85,.3);color:var(--red);border-radius:4px;font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;}
+.user-info-name{font-size:13px;font-weight:700;color:var(--text);}
+.user-info-role{font-size:10px;color:var(--cyan);font-family:var(--font-mono);letter-spacing:1px;}
+.logout-btn{width:100%;padding:9px;background:rgba(255,45,85,.1);border:1px solid rgba(255,45,85,.3);color:var(--red);border-radius:4px;font-family:var(--font-body);font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;}
 .logout-btn:hover{background:rgba(255,45,85,.2);}
 
 /* MAIN */
 .main{margin-left:var(--sidebar);flex:1;min-width:0;display:flex;flex-direction:column;}
-.topbar{background:#152030;border-bottom:1px solid var(--border);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;}
+.topbar{background:rgba(10,22,40,.95);border-bottom:1px solid var(--border);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;}
 :fullscreen .topbar,:-webkit-full-screen .topbar{top:14px;}
 .topbar-left{display:flex;align-items:center;gap:14px;}
 .hamburger{display:none;background:none;border:none;color:var(--text);font-size:24px;cursor:pointer;}
-.page-title{font-family:'Orbitron',monospace;font-size:13px;color:white;letter-spacing:2px;}
+.page-title{font-family:var(--font-mono);font-size:13px;color:var(--text);letter-spacing:2px;}
 .page-breadcrumb{font-size:12px;color:var(--muted);}
 .topbar-right{display:flex;align-items:center;gap:10px;flex:1;justify-content:center;}
 
@@ -58,13 +52,13 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
 .ticker-item .disc-badge{background:rgba(255,45,85,.2);border:1px solid rgba(255,45,85,.4);color:var(--red);font-size:10px;font-weight:700;padding:1px 7px;border-radius:20px;}
 @keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 
-.topbar-time{font-family:'Orbitron',monospace;font-size:13px;color:var(--cyan);letter-spacing:2px;}
+.topbar-time{font-family:var(--font-mono);font-size:13px;color:var(--cyan);letter-spacing:2px;}
 .icon-action{width:36px;height:36px;background:var(--panelS);border:1px solid var(--border);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:17px;cursor:pointer;transition:all .2s;}
 .icon-action:hover{border-color:var(--cyan);}
 
 /* FULLSCREEN BTN */
-.fs-btn{background:transparent;border:1px solid var(--border2);color:var(--muted);padding:7px 14px;border-radius:6px;cursor:pointer;font-size:13px;font-weight:700;transition:all .2s;display:flex;align-items:center;gap:5px;font-family:'Orbitron',monospace;letter-spacing:1px;}
-.fs-btn:hover{border-color:var(--cyan);color:var(--cyan);box-shadow:0 0 8px rgba(0,255,231,.2);}
+.fs-btn{background:transparent;border:1px solid var(--border2);color:var(--muted);padding:7px 14px;border-radius:6px;cursor:pointer;font-size:13px;font-weight:700;transition:all .2s;display:flex;align-items:center;gap:5px;font-family:var(--font-mono);letter-spacing:1px;}
+.fs-btn:hover{border-color:var(--cyan);color:var(--cyan);box-shadow:0 0 8px rgba(0,229,255,.2);}
 
 .content{padding:20px 24px;flex:1;position:relative;z-index:1;}
 
@@ -79,7 +73,7 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
 .stat-card.c5::before{background:linear-gradient(90deg,var(--red),#cc0033);}
 .stat-card:hover{border-color:var(--border2);transform:translateY(-2px);}
 .stat-label{font-size:10px;color:var(--muted);font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;}
-.stat-value{font-family:'Orbitron',monospace;font-size:18px;font-weight:700;color:white;margin-bottom:2px;}
+.stat-value{font-family:var(--font-mono);font-size:18px;font-weight:700;color:var(--text);margin-bottom:2px;}
 .stat-sub{font-size:11px;color:var(--muted);}
 .stat-sub-dual{font-size:10px;color:var(--muted);margin-top:2px;}
 
@@ -92,10 +86,10 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
 /* PANEL CARD */
 .panel-card{background:var(--bg2);border:1px solid var(--border);border-radius:6px;overflow:hidden;}
 .panel-head{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
-.panel-head-title{font-family:'Orbitron',monospace;font-size:12px;color:var(--cyan);letter-spacing:2px;}
+.panel-head-title{font-family:var(--font-mono);font-size:12px;color:var(--cyan);letter-spacing:2px;}
 
 /* BUTTONS */
-.btn{padding:8px 16px;border-radius:4px;font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;border:none;display:inline-flex;align-items:center;gap:6px;}
+.btn{padding:8px 16px;border-radius:4px;font-family:var(--font-body);font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;border:none;display:inline-flex;align-items:center;gap:6px;}
 .btn-cyan{background:linear-gradient(135deg,var(--cyan),var(--cyan2));color:var(--bg);}
 .btn-cyan:hover{box-shadow:var(--glow);}
 .btn-ghost{background:transparent;border:1px solid var(--border);color:var(--text);}
@@ -109,8 +103,8 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
 .data-table{width:100%;border-collapse:collapse;}
 .data-table th{padding:11px 13px;background:rgba(0,0,0,.2);color:var(--muted);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;text-align:left;border-bottom:1px solid var(--border);}
 .data-table td{padding:11px 13px;border-bottom:1px solid rgba(42,74,106,.4);font-size:13px;}
-.data-table tr:hover td{background:rgba(0,255,231,.025);}
-.stock-edit{width:70px;padding:5px 8px;background:var(--bg);border:1px solid var(--border);border-radius:4px;color:white;font-family:'Rajdhani',sans-serif;font-size:13px;text-align:center;}
+.data-table tr:hover td{background:rgba(0,229,255,.025);}
+.stock-edit{width:70px;padding:5px 8px;background:var(--bg);border:1px solid var(--border);border-radius:4px;color:var(--text);font-family:var(--font-body);font-size:13px;text-align:center;}
 .stock-edit:focus{border-color:var(--cyan);outline:none;}
 
 /* ORDERS */
@@ -124,7 +118,7 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
 .order-card.status-cancelled::before{background:var(--red);}
 .order-card:hover{border-color:var(--border2);transform:translateY(-2px);}
 .order-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
-.order-id{font-family:'Orbitron',monospace;font-size:13px;color:white;}
+.order-id{font-family:var(--font-mono);font-size:13px;color:var(--text);}
 .status-badge{padding:3px 10px;border-radius:20px;font-size:10px;font-weight:700;letter-spacing:1px;}
 .sb-new{background:rgba(0,180,216,.15);color:var(--cyan2);}
 .sb-accepted{background:rgba(255,183,3,.15);color:var(--amber);}
@@ -135,7 +129,7 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
 .tb-online{background:rgba(0,180,216,.1);color:var(--cyan2);}
 .tb-offline{background:rgba(255,183,3,.1);color:var(--amber);}
 .order-customer{background:rgba(0,0,0,.3);border:1px solid var(--border);border-radius:4px;padding:9px 12px;margin:8px 0;}
-.oc-name{font-size:13px;font-weight:700;color:white;margin-bottom:2px;}
+.oc-name{font-size:13px;font-weight:700;color:var(--text);margin-bottom:2px;}
 .oc-detail{font-size:11px;color:var(--muted);}
 .order-items-list{margin:6px 0;max-height:90px;overflow-y:auto;}
 .order-item-row{display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid var(--border);font-size:12px;}
@@ -143,7 +137,7 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
 .order-item-name{color:var(--text);}
 .order-item-price{color:var(--cyan);font-weight:600;}
 .order-footer{display:flex;justify-content:space-between;align-items:center;margin-top:10px;padding-top:10px;border-top:1px solid var(--border);flex-wrap:wrap;gap:8px;}
-.order-total-label{font-size:15px;font-weight:700;color:white;}
+.order-total-label{font-size:15px;font-weight:700;color:var(--text);}
 .order-profit{font-size:11px;color:var(--green);}
 .order-actions{display:flex;gap:6px;flex-wrap:wrap;}
 
@@ -153,32 +147,32 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
 .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;}
 .cal-day{background:var(--bg);border:1px solid var(--border);border-radius:4px;padding:8px 6px;text-align:center;cursor:pointer;transition:all .2s;min-height:64px;display:flex;flex-direction:column;align-items:center;}
 .cal-day:hover{border-color:var(--cyan2);}
-.cal-day.today{border-color:var(--cyan);background:rgba(0,255,231,.06);}
+.cal-day.today{border-color:var(--cyan);background:rgba(0,229,255,.06);}
 .cal-day.empty{background:transparent;border-color:transparent;cursor:default;}
-.cal-num{font-size:16px;font-weight:700;color:white;margin-bottom:3px;}
-.cal-day.today .cal-num{color:var(--cyan);text-shadow:0 0 8px rgba(0,255,231,.4);}
+.cal-num{font-size:16px;font-weight:700;color:var(--text);margin-bottom:3px;}
+.cal-day.today .cal-num{color:var(--cyan);text-shadow:0 0 8px rgba(0,229,255,.4);}
 .cal-day-stat{font-size:10px;color:var(--muted);line-height:1.4;}
 .cal-day.has-data .cal-day-stat{color:var(--amber);}
 
 /* OFFLINE SALE */
-.off-search{width:100%;padding:10px 14px;background:var(--bg);border:1px solid var(--border);border-radius:4px;color:white;font-family:'Rajdhani',sans-serif;font-size:14px;outline:none;margin-bottom:12px;}
+.off-search{width:100%;padding:10px 14px;background:var(--bg);border:1px solid var(--border);border-radius:4px;color:var(--text);font-family:var(--font-body);font-size:14px;outline:none;margin-bottom:12px;}
 .off-search:focus{border-color:var(--cyan);}
 .offline-product{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border);gap:8px;}
 .off-prod-info{flex:1;}
-.off-prod-name{font-size:13px;font-weight:600;color:white;}
+.off-prod-name{font-size:13px;font-weight:600;color:var(--text);}
 .off-prod-price{font-size:12px;color:var(--cyan);}
 .off-prod-stock{font-size:10px;color:var(--muted);}
 .qty-controls{display:flex;align-items:center;gap:8px;flex-shrink:0;}
 .qbtn{width:44px;height:44px;border-radius:8px;border:none;font-size:22px;font-weight:700;cursor:pointer;transition:all .2s;}
 .qbtn.minus{background:rgba(255,45,85,.15);color:var(--red);}
-.qbtn.plus{background:rgba(0,255,231,.1);color:var(--cyan);}
+.qbtn.plus{background:rgba(0,229,255,.1);color:var(--cyan);}
 .qbtn:hover{transform:scale(1.1);}
-.qty-num{font-size:15px;font-weight:700;color:white;min-width:18px;text-align:center;}
+.qty-num{font-size:15px;font-weight:700;color:var(--text);min-width:18px;text-align:center;}
 
 /* BARCODE */
 .barcode-row{display:flex;gap:8px;}
 .barcode-row input{flex:1;}
-.gen-barcode-btn{padding:10px 14px;background:rgba(0,255,231,.08);border:1px solid var(--border);border-radius:4px;color:var(--cyan);font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;white-space:nowrap;}
+.gen-barcode-btn{padding:10px 14px;background:rgba(0,229,255,.08);border:1px solid var(--border);border-radius:4px;color:var(--cyan);font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;white-space:nowrap;}
 .gen-barcode-btn:hover{border-color:var(--cyan);}
 
 /* IMAGE UPLOAD */
@@ -192,14 +186,14 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
 .wb-label{font-size:11px;color:var(--muted);white-space:nowrap;}
 .wb-track{flex:1;height:8px;background:rgba(0,0,0,.3);border-radius:4px;overflow:hidden;border:1px solid var(--border);}
 .wb-fill{height:100%;border-radius:4px;transition:width .5s ease;}
-.wb-val{font-size:12px;font-weight:700;color:white;white-space:nowrap;min-width:36px;text-align:right;}
+.wb-val{font-size:12px;font-weight:700;color:var(--text);white-space:nowrap;min-width:36px;text-align:right;}
 .wh-card{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:14px;margin-bottom:10px;transition:all .2s;}
 .wh-card:hover{border-color:var(--border2);background:rgba(26,45,66,.8);}
 .wh-card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;}
-.wh-card-name{font-size:14px;font-weight:700;color:white;}
+.wh-card-name{font-size:14px;font-weight:700;color:var(--text);}
 .wh-card-cat{font-size:10px;color:var(--muted);margin-top:2px;}
 .wh-card-stock{text-align:right;}
-.wh-card-qty{font-family:'Orbitron',monospace;font-size:16px;font-weight:700;}
+.wh-card-qty{font-family:var(--font-mono);font-size:16px;font-weight:700;}
 .wh-card-unit{font-size:11px;color:var(--muted);}
 .wh-card-stats{display:flex;gap:16px;margin-bottom:8px;}
 .wh-stat{font-size:11px;color:var(--muted);}
@@ -216,11 +210,11 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
 /* MODAL */
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(6px);z-index:500;display:none;align-items:center;justify-content:center;padding:20px;}
 .modal.open{display:flex;animation:fadeIn .2s ease;}
-.modal-box{background:var(--bg2);border:1px solid var(--border);border-radius:6px;width:100%;max-width:520px;max-height:92vh;overflow-y:auto;box-shadow:0 0 50px rgba(0,255,231,.1);animation:modalIn .25s ease;}
+.modal-box{background:var(--bg2);border:1px solid var(--border);border-radius:6px;width:100%;max-width:520px;max-height:92vh;overflow-y:auto;box-shadow:0 0 50px rgba(0,229,255,.1);animation:modalIn .25s ease;}
 @keyframes modalIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
 .modal-box.wide{max-width:800px;}
 .modal-head{padding:16px 18px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:var(--bg2);z-index:1;}
-.modal-title{font-family:'Orbitron',monospace;font-size:11px;color:var(--cyan);letter-spacing:2px;}
+.modal-title{font-family:var(--font-mono);font-size:11px;color:var(--cyan);letter-spacing:2px;}
 .modal-close{background:none;border:none;color:var(--muted);font-size:22px;cursor:pointer;transition:color .2s;}
 .modal-close:hover{color:var(--red);}
 .modal-body{padding:18px;}
@@ -229,55 +223,55 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
 .offline-fullscreen{position:fixed;inset:0;background:var(--bg);z-index:400;display:none;flex-direction:column;}
 .offline-fullscreen.open{display:flex;}
 .ofs-head{background:#152030;border-bottom:1px solid var(--border);padding:0 20px;height:56px;display:flex;align-items:center;justify-content:space-between;}
-.ofs-title{font-family:'Orbitron',monospace;font-size:14px;color:var(--cyan);letter-spacing:2px;}
+.ofs-title{font-family:var(--font-mono);font-size:14px;color:var(--cyan);letter-spacing:2px;}
 .ofs-body{display:grid;grid-template-columns:1fr 340px;flex:1;overflow:hidden;}
 .ofs-left{overflow-y:auto;padding:16px;}
 .ofs-right{background:#152030;border-left:1px solid var(--border);display:flex;flex-direction:column;padding:0;overflow:hidden;}
-.ofs-cart-title{font-family:'Orbitron',monospace;font-size:11px;color:var(--cyan);letter-spacing:2px;padding:12px 16px 8px;border-bottom:1px solid var(--border);flex-shrink:0;}
+.ofs-cart-title{font-family:var(--font-mono);font-size:11px;color:var(--cyan);letter-spacing:2px;padding:12px 16px 8px;border-bottom:1px solid var(--border);flex-shrink:0;}
 .ofs-cart-list{flex:1;overflow-y:auto;padding:12px 16px;}
 .ofs-cart-item{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;}
-.ofs-cart-name{color:white;flex:1;}
+.ofs-cart-name{color:var(--text);flex:1;}
 .ofs-cart-qty{color:var(--cyan);margin:0 10px;font-weight:700;}
 .ofs-cart-price{color:var(--amber);font-weight:700;font-size:12px;}
 .ofs-cart-rm{background:none;border:none;color:var(--red);font-size:16px;cursor:pointer;padding:0 4px;}
 .ofs-total{border-top:2px solid var(--border);padding:14px 16px;background:#0f1e2e;flex-shrink:0;}
-.ofs-total-row{display:flex;justify-content:space-between;font-size:16px;font-weight:700;color:white;margin-bottom:10px;}
-.ofs-total-amount{font-family:'Orbitron',monospace;color:var(--cyan);}
+.ofs-total-row{display:flex;justify-content:space-between;font-size:16px;font-weight:700;color:var(--text);margin-bottom:10px;}
+.ofs-total-amount{font-family:var(--font-mono);color:var(--cyan);}
 .ofs-prod-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;}
 .ofs-prod-card{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:12px;cursor:pointer;transition:all .2s;position:relative;}
 .ofs-prod-card:hover{border-color:var(--cyan2);transform:translateY(-2px);}
 .ofs-prod-card.in-cart{border-color:var(--cyan3);}
 .ofs-prod-emoji{font-size:28px;display:block;text-align:center;margin-bottom:8px;}
-.ofs-prod-name{font-size:12px;font-weight:700;color:white;margin-bottom:4px;line-height:1.3;}
+.ofs-prod-name{font-size:12px;font-weight:700;color:var(--text);margin-bottom:4px;line-height:1.3;}
 .ofs-prod-price{font-size:13px;color:var(--cyan);font-weight:700;}
 .ofs-prod-stock{font-size:10px;color:var(--muted);margin-top:2px;}
 .ofs-cart-badge{position:absolute;top:6px;right:6px;background:var(--cyan);color:var(--bg);width:20px;height:20px;border-radius:50%;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;}
-.scan-input{width:100%;padding:10px 14px;background:rgba(0,255,231,.06);border:1px solid var(--cyan2);border-radius:4px;color:white;font-family:'Rajdhani',sans-serif;font-size:14px;outline:none;margin-bottom:12px;}
+.scan-input{width:100%;padding:10px 14px;background:rgba(0,229,255,.06);border:1px solid var(--cyan2);border-radius:4px;color:var(--text);font-family:var(--font-body);font-size:14px;outline:none;margin-bottom:12px;}
 .scan-input:focus{border-color:var(--cyan);box-shadow:var(--glow-sm);}
 .scan-input::placeholder{color:var(--muted);}
 
 /* FORM */
 .form-group{margin-bottom:16px;}
 .form-label{display:block;font-size:11px;font-weight:700;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:7px;}
-.form-input,.form-select,.form-textarea{width:100%;padding:11px 13px;background:var(--bg);border:1px solid var(--border);border-radius:4px;color:white;font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:500;transition:all .2s;outline:none;}
+.form-input,.form-select,.form-textarea{width:100%;padding:11px 13px;background:var(--bg);border:1px solid var(--border);border-radius:4px;color:var(--text);font-family:var(--font-body);font-size:14px;font-weight:500;transition:all .2s;outline:none;}
 .form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--cyan);box-shadow:var(--glow-sm);}
 .form-input::placeholder{color:var(--muted);}
 .form-select option{background:var(--bg2);}
 .form-textarea{resize:vertical;min-height:70px;}
-.submit-btn{width:100%;padding:13px;background:linear-gradient(135deg,var(--cyan),var(--cyan2));color:var(--bg);border:none;border-radius:4px;font-family:'Orbitron',monospace;font-size:11px;font-weight:700;letter-spacing:3px;cursor:pointer;transition:all .25s;margin-top:4px;}
+.submit-btn{width:100%;padding:13px;background:linear-gradient(135deg,var(--cyan),var(--cyan2));color:var(--bg);border:none;border-radius:4px;font-family:var(--font-mono);font-size:11px;font-weight:700;letter-spacing:3px;cursor:pointer;transition:all .25s;margin-top:4px;}
 .submit-btn:hover{box-shadow:var(--glow);transform:translateY(-1px);}
-.total-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-top:1px solid var(--border);margin-top:12px;font-size:16px;font-weight:700;color:white;}
-.total-amount{font-family:'Orbitron',monospace;color:var(--cyan);font-size:15px;}
+.total-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-top:1px solid var(--border);margin-top:12px;font-size:16px;font-weight:700;color:var(--text);}
+.total-amount{font-family:var(--font-mono);color:var(--cyan);font-size:15px;}
 
 /* FILTER TABS */
 .filter-tabs{display:flex;gap:8px;flex-wrap:wrap;}
-.ftab{padding:6px 14px;background:transparent;border:1px solid var(--border);border-radius:4px;color:var(--muted);font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;}
+.ftab{padding:6px 14px;background:transparent;border:1px solid var(--border);border-radius:4px;color:var(--muted);font-family:var(--font-body);font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;}
 .ftab:hover{border-color:var(--cyan2);color:var(--text);}
-.ftab.active{background:rgba(0,255,231,.08);border-color:var(--cyan);color:var(--cyan);}
+.ftab.active{background:rgba(0,229,255,.08);border-color:var(--cyan);color:var(--cyan);}
 
 /* USERS */
 .user-stats-box{background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:14px 18px;margin-bottom:18px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px;text-align:center;}
-.us-val{font-family:'Orbitron',monospace;font-size:18px;color:var(--cyan);}
+.us-val{font-family:var(--font-mono);font-size:18px;color:var(--cyan);}
 .us-label{font-size:11px;color:var(--muted);margin-top:3px;}
 
 /* TOAST */
@@ -317,9 +311,9 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
 
 /* PIN */
 #pinDots span{width:16px;height:16px;border-radius:50%;border:2px solid #2a4a6a;background:transparent;transition:all .2s;display:inline-block;}
-#pinDots span.filled{background:#00ffe7;border-color:#00ffe7;box-shadow:0 0 10px rgba(0,255,231,.6);}
+#pinDots span.filled{background:#00ffe7;border-color:#00ffe7;box-shadow:0 0 10px rgba(0,229,255,.6);}
 #pinDots span.err{background:#ff2d55;border-color:#ff2d55;box-shadow:0 0 10px rgba(255,45,85,.6);}
-.pin-btn{background:#1a2d42;border:1px solid #2a4a6a;color:#e0f2fe;font-size:20px;font-weight:700;border-radius:12px;padding:16px;cursor:pointer;font-family:'Rajdhani',sans-serif;transition:all .15s;}
+.pin-btn{background:#1a2d42;border:1px solid #2a4a6a;color:#e0f2fe;font-size:20px;font-weight:700;border-radius:12px;padding:16px;cursor:pointer;font-family:var(--font-body);transition:all .15s;}
 .pin-btn:hover{background:#22405e;border-color:#00ffe7;color:#00ffe7;}
 .pin-btn:active{transform:scale(.93);}
 .pin-cancel{color:#ff2d55;border-color:rgba(255,45,85,.3);}
@@ -334,7 +328,7 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
 .cal-nav{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
 .cal-nav-btn{background:linear-gradient(135deg,rgba(57,255,20,.15),rgba(0,200,80,.08));border:1px solid rgba(57,255,20,.35);border-radius:8px;color:#7fff6e;width:34px;height:34px;cursor:pointer;font-size:16px;font-weight:900;transition:all .2s;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 8px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.08);text-shadow:0 0 8px rgba(57,255,20,.4);}
 .cal-nav-btn:hover{background:linear-gradient(135deg,rgba(57,255,20,.25),rgba(0,200,80,.15));border-color:rgba(57,255,20,.6);box-shadow:0 4px 14px rgba(57,255,20,.25),inset 0 1px 0 rgba(255,255,255,.1);color:#39ff14;transform:translateY(-1px);}
-.cal-nav-title{font-family:'Orbitron',monospace;font-size:14px;color:#7fff6e;letter-spacing:3px;flex:1;text-align:center;text-shadow:0 0 12px rgba(57,255,20,.35),0 1px 2px rgba(0,0,0,.5);font-weight:800;}
+.cal-nav-title{font-family:var(--font-mono);font-size:14px;color:#7fff6e;letter-spacing:3px;flex:1;text-align:center;text-shadow:0 0 12px rgba(57,255,20,.35),0 1px 2px rgba(0,0,0,.5);font-weight:800;}
 .cal-wrap{background:var(--bg2);border-radius:8px;overflow:hidden;display:flex;flex-direction:column;}
 .cal-header{display:grid;grid-template-columns:repeat(7,1fr);border-bottom:1px solid var(--border);}
 .cal-header-day{text-align:center;font-size:12px;font-weight:800;letter-spacing:1px;padding:8px 0;background:linear-gradient(135deg,rgba(57,255,20,.12),rgba(0,200,80,.07));border-radius:6px;color:#7fff6e;text-shadow:0 0 10px rgba(57,255,20,.3),0 1px 2px rgba(0,0,0,.5);box-shadow:0 2px 6px rgba(0,0,0,.25),inset 0 1px 0 rgba(255,255,255,.06);}
@@ -351,10 +345,10 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
   display:flex;flex-direction:column;
   position:relative;
 }
-.cal-day:hover{background:rgba(0,255,231,.04);}
+.cal-day:hover{background:rgba(0,229,255,.04);}
 .cal-day.empty{cursor:default;background:rgba(0,0,0,.15);}
-.cal-day.today{background:rgba(0,255,231,.07);}
-.cal-day.today .cal-num{color:var(--cyan);background:rgba(0,255,231,.15);border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;font-size:12px;}
+.cal-day.today{background:rgba(0,229,255,.07);}
+.cal-day.today .cal-num{color:var(--cyan);background:rgba(0,229,255,.15);border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;font-size:12px;}
 .cal-day.has-debt{background:rgba(255,45,85,.04);}
 .cal-day.debt-due{background:rgba(255,45,85,.1);}
 .cal-day.debt-soon{background:rgba(255,183,3,.05);}
@@ -377,7 +371,7 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
 .note-modal.open{display:flex;}
 .note-box{background:var(--bg2);border:1px solid var(--border);border-radius:8px;width:100%;max-width:480px;max-height:90vh;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,.4);}
 .note-head{padding:12px 16px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:var(--bg2);}
-.note-title{font-family:'Orbitron',monospace;font-size:10px;color:var(--cyan);letter-spacing:2px;}
+.note-title{font-family:var(--font-mono);font-size:10px;color:var(--cyan);letter-spacing:2px;}
 .note-close{background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer;line-height:1;}
 .note-close:hover{color:var(--red);}
 .note-body{padding:14px;}
@@ -390,15 +384,15 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
 .note-item-del{background:none;border:none;color:var(--muted2);font-size:14px;cursor:pointer;flex-shrink:0;}
 .note-item-del:hover{color:var(--red);}
 .note-add-area{margin-top:10px;padding-top:10px;border-top:1px solid var(--border);}
-.note-textarea{width:100%;padding:9px 11px;background:var(--bg);border:1px solid var(--border);border-radius:6px;color:white;font-family:'Rajdhani',sans-serif;font-size:13px;resize:vertical;min-height:60px;outline:none;}
+.note-textarea{width:100%;padding:9px 11px;background:var(--bg);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:var(--font-body);font-size:13px;resize:vertical;min-height:60px;outline:none;}
 .note-textarea:focus{border-color:var(--cyan);}
 .note-type-row{display:flex;gap:6px;margin:8px 0;}
-.note-type-btn{padding:5px 12px;border-radius:4px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:'Rajdhani',sans-serif;font-size:12px;font-weight:700;cursor:pointer;transition:all .15s;}
-.note-type-btn.active{border-color:var(--cyan);color:var(--cyan);background:rgba(0,255,231,.06);}
+.note-type-btn{padding:5px 12px;border-radius:4px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:var(--font-body);font-size:12px;font-weight:700;cursor:pointer;transition:all .15s;}
+.note-type-btn.active{border-color:var(--cyan);color:var(--cyan);background:rgba(0,229,255,.06);}
 .note-type-btn.debt-type.active{border-color:var(--red);color:var(--red);background:rgba(255,45,85,.06);}
 
 /* NOTIFICATION BELL */
-.notif-badge{position:absolute;top:-4px;right:-4px;background:var(--red);color:white;font-size:9px;font-weight:800;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;}
+.notif-badge{position:absolute;top:-4px;right:-4px;background:var(--red);color:var(--text);font-size:9px;font-weight:800;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;}
 
 /* BANNERS INLINE */
 .bnr-card{background:var(--bg2);border:1px solid var(--border);border-radius:14px;margin-bottom:14px;overflow:hidden;transition:border .2s;}
@@ -406,7 +400,7 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
 .bnr-preview{height:80px;overflow:hidden;position:relative;}
 .bnr-body{padding:16px;}
 .bnr-label{font-size:10px;color:var(--muted);font-weight:700;letter-spacing:1px;margin-bottom:4px;text-transform:uppercase;}
-.bnr-input{width:100%;padding:9px 12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'Rajdhani',sans-serif;font-size:14px;outline:none;transition:border .2s;box-sizing:border-box;}
+.bnr-input{width:100%;padding:9px 12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--font-body);font-size:14px;outline:none;transition:border .2s;box-sizing:border-box;}
 .bnr-input:focus{border-color:var(--cyan);}
 .bnr-grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;}
 .bnr-grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:12px;}
@@ -415,13 +409,15 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
 .bnr-swatch.selected{border-color:#fff;}
 .bnr-swrow{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;}
 .bnr-upload{border:2px dashed var(--border);border-radius:10px;padding:16px;text-align:center;cursor:pointer;transition:all .2s;margin-bottom:8px;}
-.bnr-upload:hover{border-color:var(--cyan);background:rgba(0,255,231,.03);}
-.bnr-upload.dragover{border-color:var(--cyan);background:rgba(0,255,231,.06);}
+.bnr-upload:hover{border-color:var(--cyan);background:rgba(0,229,255,.03);}
+.bnr-upload.dragover{border-color:var(--cyan);background:rgba(0,229,255,.06);}
 .bnr-savebar{position:sticky;bottom:0;background:rgba(13,27,42,.95);border-top:1px solid var(--border);padding:14px 20px;display:flex;gap:12px;backdrop-filter:blur(10px);margin:0 -20px;}
 
 </style>
 </head>
 <body>
+<div class="sfu-bg"></div>
+<div class="sfu-grid"></div>
 <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
 <div class="toast" id="toast"></div>
 
@@ -432,15 +428,17 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
     <div class="logo-text">SellFlowUZ</div>
   </div>
   <nav class="sidebar-nav">
-    <div class="nav-item active" data-tab="calendar" onclick="switchTab('calendar',this)"><span class="nav-icon">📅</span>Kalendar</div>
-    <div class="nav-item" onclick="window.location.href='pos.html'"><span class="nav-icon">🏪</span>Do'konda savdo</div>
-    <div class="nav-item" data-tab="orders" onclick="switchTab('orders',this)"><span class="nav-icon">📋</span>Buyurtmalar<span class="badge" id="newOrdersBadge" style="display:none">0</span></div>
-    <div class="nav-item" data-tab="products" onclick="switchTab('products',this)"><span class="nav-icon">📦</span>Mahsulotlar</div>
-    <div class="nav-item" data-tab="income" onclick="switchTab('income',this)"><span class="nav-icon">📥</span>Kirim</div>
-    <div class="nav-item" data-tab="users" onclick="switchTab('users',this)"><span class="nav-icon">👥</span>Mijozlar</div>
-    <div class="nav-item" data-tab="staff" onclick="switchTab('staff',this)"><span class="nav-icon">👔</span>Xodimlar</div>
-    <div class="nav-item" data-tab="banners" onclick="switchTab('banners',this)"><span class="nav-icon">🖼️</span>Bannerlar</div>
-    <div class="nav-item" data-tab="shop" onclick="switchTab('shop',this)"><span class="nav-icon">🛒</span>Shop ko'rinishi</div>
+    <div class="nav-item active" id="navCalendar" onclick="window.location.href='/dashboard'"><span class="nav-icon">📅</span>Asosiy</div>
+    <div class="nav-item" onclick="window.location.href='/buyurtmalar'"><span class="nav-icon">📋</span>Buyurtmalar<span class="badge" id="newOrdersBadge" style="display:none">0</span></div>
+    <div class="nav-item" onclick="window.location.href='/mahsulotlar'"><span class="nav-icon">📦</span>Mahsulotlar</div>
+    <div class="nav-item" onclick="window.location.href='/ombor'"><span class="nav-icon">🏭</span>Ombor</div>
+    <div class="nav-item" onclick="window.location.href='/daromad'"><span class="nav-icon">📈</span>Daromad</div>
+    <div class="nav-item" onclick="window.location.href='/pos'"><span class="nav-icon">🏪</span>POS</div>
+    <div class="nav-item" onclick="window.location.href='/mijozlar'"><span class="nav-icon">👥</span>Mijozlar</div>
+    <div class="nav-item" onclick="window.location.href='/xodimlar'"><span class="nav-icon">👔</span>Xodimlar</div>
+    <div class="nav-item" onclick="window.location.href='/bannerlar'"><span class="nav-icon">🖼️</span>Bannerlar</div>
+    <div class="nav-item" onclick="window.location.href='/shop'"><span class="nav-icon">🛒</span>Do'kon</div>
+    <div class="nav-item" onclick="window.location.href='/integratsiya'"><span class="nav-icon">🔗</span>Integratsiyalar</div>
   </nav>
   <div class="sidebar-bottom">
     <div class="sidebar-user">
@@ -467,10 +465,10 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
       <div class="ticker-wrap"><div class="ticker-inner" id="tickerInner"></div></div>
     </div>
     <div style="display:flex;align-items:center;gap:10px;margin-left:14px;">
-      <button onclick="openOfflineFS()" style="padding:7px 14px;background:linear-gradient(135deg,rgba(0,255,231,.18),rgba(0,180,216,.1));border:1.5px solid rgba(0,255,231,.4);color:var(--cyan);border-radius:8px;font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;">🏪 Savdo</button>
-      <button onclick="showReportModal()" style="padding:7px 14px;background:rgba(255,183,3,.1);border:1.5px solid rgba(255,183,3,.4);color:var(--amber);border-radius:8px;font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;" title="Hisobot">📊 Hisobot</button>
+      <button onclick="openOfflineFS()" style="padding:7px 14px;background:linear-gradient(135deg,rgba(0,229,255,.18),rgba(0,180,216,.1));border:1.5px solid rgba(0,229,255,.4);color:var(--cyan);border-radius:8px;font-family:var(--font-body);font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;">🏪 Savdo</button>
+      <button onclick="showReportModal()" style="padding:7px 14px;background:rgba(255,183,3,.1);border:1.5px solid rgba(255,183,3,.4);color:var(--amber);border-radius:8px;font-family:var(--font-body);font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;" title="Hisobot">📊 Hisobot</button>
       <button onclick="showNotifs()" style="padding:7px 12px;background:none;border:1.5px solid var(--border);color:var(--muted);border-radius:8px;cursor:pointer;font-size:18px;" title="Ogohlantirishlar">🔔</button>
-      <button id="fsBtn" onclick="tbFS()" style="padding:7px 12px;background:none;border:1.5px solid var(--border);color:var(--muted);border-radius:8px;cursor:pointer;font-size:13px;font-family:'Orbitron',monospace;letter-spacing:1px;" title="To'liq ekran (F11)">⛶ F11</button>
+      <button id="fsBtn" onclick="tbFS()" style="padding:7px 12px;background:none;border:1.5px solid var(--border);color:var(--muted);border-radius:8px;cursor:pointer;font-size:13px;font-family:var(--font-mono);letter-spacing:1px;" title="To'liq ekran (F11)">⛶ F11</button>
       <div class="topbar-time" id="clock">00:00:00</div>
     </div>
   </div>
@@ -509,17 +507,17 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
 
   <!-- TEPA PANEL -->
   <div style="padding:10px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;background:var(--bg2);flex-shrink:0;">
-    <div style="font-family:'Orbitron',monospace;font-size:13px;color:var(--cyan);white-space:nowrap;">🏪 DO'KONDA SAVDO</div>
+    <div style="font-family:var(--font-mono);font-size:13px;color:var(--cyan);white-space:nowrap;">🏪 DO'KONDA SAVDO</div>
     <div class="ticker-wrap" style="flex:1;max-width:400px;overflow:hidden;">
       <div class="ticker-inner" id="ofsTickerInner"></div>
     </div>
-    <select id="ofs-payment" style="padding:7px 10px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);font-family:'Rajdhani',sans-serif;font-size:13px;">
+    <select id="ofs-payment" style="padding:7px 10px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);font-family:var(--font-body);font-size:13px;">
       <option value="cash">💵 Naqd</option>
       <option value="card">💳 Karta</option>
       <option value="click">📱 Click</option>
       <option value="payme">📲 Payme</option>
     </select>
-    <button onclick="closeOfflineFS()" style="padding:7px 16px;background:rgba(255,45,85,.15);border:1px solid rgba(255,45,85,.4);color:var(--red);border-radius:8px;font-weight:700;cursor:pointer;font-family:'Rajdhani',sans-serif;font-size:13px;white-space:nowrap;">✕ Yopish</button>
+    <button onclick="closeOfflineFS()" style="padding:7px 16px;background:rgba(255,45,85,.15);border:1px solid rgba(255,45,85,.4);color:var(--red);border-radius:8px;font-weight:700;cursor:pointer;font-family:var(--font-body);font-size:13px;white-space:nowrap;">✕ Yopish</button>
   </div>
 
   <!-- ASOSIY QISM -->
@@ -531,7 +529,7 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
       <!-- Qidiruv -->
       <div style="padding:10px 12px;border-bottom:1px solid var(--border);flex-shrink:0;display:flex;gap:8px;">
         <input id="ofsSearch" placeholder="🔍 Mahsulot nomi yoki barcode..." oninput="renderOfsProducts()" autocomplete="off"
-          style="flex:1;padding:9px 14px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);font-size:14px;font-family:'Rajdhani',sans-serif;outline:none;">
+          style="flex:1;padding:9px 14px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);font-size:14px;font-family:var(--font-body);outline:none;">
         <button onclick="document.getElementById('ofsSearch').value='';renderOfsProducts();" style="padding:9px 12px;background:rgba(255,45,85,.1);border:1px solid rgba(255,45,85,.3);border-radius:8px;color:var(--red);cursor:pointer;font-size:14px;">✕</button>
       </div>
 
@@ -548,15 +546,19 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
       <!-- Mijoz ma'lumoti -->
       <div style="padding:10px 14px;border-bottom:1px solid var(--border);flex-shrink:0;">
         <input id="ofs-name" placeholder="👤 Mijoz ismi (ixtiyoriy)"
-          style="width:100%;margin-bottom:7px;padding:8px 12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'Rajdhani',sans-serif;font-size:13px;outline:none;">
-        <input id="ofs-phone" placeholder="📱 Telefon raqami (ixtiyoriy)"
-          style="width:100%;padding:8px 12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'Rajdhani',sans-serif;font-size:13px;outline:none;">
+          style="width:100%;margin-bottom:7px;padding:8px 12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--font-body);font-size:13px;outline:none;">
+        <div class="phone-wrap" style="border-color:var(--border);">
+          <div class="phone-prefix">🇺🇿 <span>+998</span></div>
+          <input id="ofs-phone" type="tel" inputmode="numeric" maxlength="12" placeholder="90 123 45 67"
+            oninput="uzPhoneMask(this)"
+            style="flex:1;border:none;outline:none;padding:8px 10px;background:transparent;color:var(--text);font-family:var(--font-body);font-size:13px;">
+        </div>
       </div>
 
       <!-- Savat sarlavha -->
       <div style="padding:8px 14px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);flex-shrink:0;">
-        <div style="font-family:'Orbitron',monospace;font-size:10px;color:var(--cyan);letter-spacing:2px;">🛒 SAVAT</div>
-        <button onclick="ofsCart={};renderOfsCart();renderOfsProducts();" style="font-size:11px;padding:4px 10px;background:rgba(255,45,85,.1);border:1px solid rgba(255,45,85,.3);border-radius:6px;color:var(--red);cursor:pointer;font-family:'Rajdhani',sans-serif;font-weight:700;">Tozalash</button>
+        <div style="font-family:var(--font-mono);font-size:10px;color:var(--cyan);letter-spacing:2px;">🛒 SAVAT</div>
+        <button onclick="ofsCart={};renderOfsCart();renderOfsProducts();" style="font-size:11px;padding:4px 10px;background:rgba(255,45,85,.1);border:1px solid rgba(255,45,85,.3);border-radius:6px;color:var(--red);cursor:pointer;font-family:var(--font-body);font-weight:700;">Tozalash</button>
       </div>
 
       <!-- Savat elementlari -->
@@ -567,15 +569,15 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
           <span style="font-size:12px;color:var(--muted);white-space:nowrap;">Chegirma %:</span>
           <input id="ofs-discount" type="number" min="0" max="100" value="0" oninput="renderOfsCart()"
-            style="width:70px;padding:6px 8px;background:var(--bg);border:1px solid var(--border);border-radius:6px;color:var(--amber);font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:700;text-align:center;outline:none;">
+            style="width:70px;padding:6px 8px;background:var(--bg);border:1px solid var(--border);border-radius:6px;color:var(--amber);font-family:var(--font-body);font-size:14px;font-weight:700;text-align:center;outline:none;">
           <span id="ofs-discount-amt" style="font-size:12px;color:var(--red);"></span>
         </div>
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
           <span style="font-size:15px;font-weight:700;color:var(--muted);">JAMI:</span>
-          <span id="ofsTotal" style="font-family:'Orbitron',monospace;font-size:18px;color:var(--cyan);font-weight:700;">0 so'm</span>
+          <span id="ofsTotal" style="font-family:var(--font-mono);font-size:18px;color:var(--cyan);font-weight:700;">0 so'm</span>
         </div>
         <button onclick="completeOfflineFS()"
-          style="width:100%;padding:14px;background:linear-gradient(135deg,var(--green),#00cc00);border:none;border-radius:10px;color:#000;font-weight:800;font-size:16px;cursor:pointer;font-family:'Rajdhani',sans-serif;letter-spacing:1px;">
+          style="width:100%;padding:14px;background:linear-gradient(135deg,var(--green),#00cc00);border:none;border-radius:10px;color:#000;font-weight:800;font-size:16px;cursor:pointer;font-family:var(--font-body);letter-spacing:1px;">
           ✅ SAVDONI YAKUNLASH
         </button>
       </div>
@@ -588,7 +590,7 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
   <div style="background:var(--bg2);border:1px solid var(--border);border-radius:14px;width:420px;max-width:95vw;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.5);">
     <div style="padding:14px 18px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
       <div>
-        <div style="font-family:'Orbitron',monospace;font-size:11px;color:var(--cyan);letter-spacing:2px;" id="noteModalTitle">📅 KUN</div>
+        <div style="font-family:var(--font-mono);font-size:11px;color:var(--cyan);letter-spacing:2px;" id="noteModalTitle">📅 KUN</div>
         <div style="font-size:12px;color:var(--muted);margin-top:2px;" id="noteModalDate"></div>
       </div>
       <button onclick="closeNoteModal()" style="background:none;border:none;color:var(--muted);font-size:22px;cursor:pointer;">✕</button>
@@ -597,22 +599,27 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
       <div id="noteModalItems" style="margin-bottom:12px;"></div>
       <div id="noteSaleItems" style="margin-bottom:14px;"></div>
       <div style="display:flex;gap:6px;margin-bottom:10px;">
-        <button id="noteTypeBtnNote" class="note-type-btn active" onclick="setNoteType('note')" style="flex:1;padding:7px;background:rgba(0,255,231,.1);border:1px solid rgba(0,255,231,.3);color:var(--cyan);border-radius:6px;font-weight:700;cursor:pointer;font-size:12px;">📝 Eslatma</button>
+        <button id="noteTypeBtnNote" class="note-type-btn active" onclick="setNoteType('note')" style="flex:1;padding:7px;background:rgba(0,229,255,.1);border:1px solid rgba(0,229,255,.3);color:var(--cyan);border-radius:6px;font-weight:700;cursor:pointer;font-size:12px;">📝 Eslatma</button>
         <button id="noteTypeBtnTask" class="note-type-btn" onclick="setNoteType('task')" style="flex:1;padding:7px;background:none;border:1px solid var(--border);color:var(--muted);border-radius:6px;font-weight:700;cursor:pointer;font-size:12px;">✅ Vazifa</button>
         <button id="noteTypeBtnDebt" class="note-type-btn debt-type" onclick="setNoteType('debt')" style="flex:1;padding:7px;background:none;border:1px solid var(--border);color:var(--muted);border-radius:6px;font-weight:700;cursor:pointer;font-size:12px;">💳 Qarz</button>
       </div>
       <div id="debtPersonRow" style="display:none;margin-bottom:8px;">
-        <input id="debtPersonName" placeholder="Ism" style="width:100%;margin-bottom:6px;padding:8px 12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'Rajdhani',sans-serif;font-size:13px;">
-        <input id="debtPersonPhone" placeholder="Telefon" style="width:100%;padding:8px 12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'Rajdhani',sans-serif;font-size:13px;">
+        <input id="debtPersonName" placeholder="Ism" style="width:100%;margin-bottom:6px;padding:8px 12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--font-body);font-size:13px;">
+        <div style="display:flex;align-items:center;border:1px solid var(--border);border-radius:8px;overflow:hidden;background:var(--bg);">
+          <div style="padding:8px 10px;background:rgba(0,229,255,.06);border-right:1px solid var(--border);white-space:nowrap;font-size:13px;font-weight:700;color:var(--text);flex-shrink:0;user-select:none;">🇺🇿 <span style="color:var(--cyan);">+998</span></div>
+          <input id="debtPersonPhone" type="tel" inputmode="numeric" maxlength="12" placeholder="90 123 45 67"
+            oninput="uzPhoneMask(this)"
+            style="flex:1;border:none;outline:none;padding:8px 10px;background:transparent;color:var(--text);font-family:var(--font-body);font-size:13px;">
+        </div>
       </div>
-      <textarea id="noteText" rows="3" placeholder="Eslatma yozing..." style="width:100%;padding:10px 12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'Rajdhani',sans-serif;font-size:13px;resize:none;margin-bottom:8px;"></textarea>
+      <textarea id="noteText" rows="3" placeholder="Eslatma yozing..." style="width:100%;padding:10px 12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--font-body);font-size:13px;resize:none;margin-bottom:8px;"></textarea>
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
-        <input type="time" id="noteTime" style="padding:7px 10px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'Rajdhani',sans-serif;font-size:13px;flex:1;">
+        <input type="time" id="noteTime" style="padding:7px 10px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--font-body);font-size:13px;flex:1;">
         <label style="display:flex;align-items:center;gap:5px;font-size:12px;color:var(--muted);cursor:pointer;white-space:nowrap;">
           <input type="checkbox" id="notifyCheck"> Eslatma
         </label>
       </div>
-      <button onclick="saveNote()" style="width:100%;padding:10px;background:linear-gradient(135deg,var(--cyan),var(--cyan2));border:none;border-radius:8px;color:#000;font-weight:800;cursor:pointer;font-family:'Rajdhani',sans-serif;font-size:14px;">💾 SAQLASH</button>
+      <button onclick="saveNote()" style="width:100%;padding:10px;background:linear-gradient(135deg,var(--cyan),var(--cyan2));border:none;border-radius:8px;color:#000;font-weight:800;cursor:pointer;font-family:var(--font-body);font-size:14px;">💾 SAQLASH</button>
     </div>
   </div>
 </div>
@@ -621,7 +628,7 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
 <div class="modal" id="notifModal" style="z-index:400;background:rgba(0,0,0,.6);">
   <div style="background:var(--bg2);border:1px solid var(--border);border-radius:14px;width:420px;max-width:95vw;max-height:80vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.5);">
     <div style="padding:14px 18px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
-      <div style="font-family:'Orbitron',monospace;font-size:11px;color:var(--amber);letter-spacing:2px;">🔔 OGOHLANTIRISHLAR</div>
+      <div style="font-family:var(--font-mono);font-size:11px;color:var(--amber);letter-spacing:2px;">🔔 OGOHLANTIRISHLAR</div>
       <button onclick="document.getElementById('notifModal').classList.remove('open')" style="background:none;border:none;color:var(--muted);font-size:22px;cursor:pointer;">✕</button>
     </div>
     <div id="notifList" style="padding:14px 18px;"></div>
@@ -632,41 +639,41 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
 <div class="modal" id="modalProduct" style="z-index:400;background:rgba(0,0,0,.6);">
   <div style="background:var(--bg2);border:1px solid var(--border);border-radius:14px;width:460px;max-width:95vw;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.5);">
     <div style="padding:14px 18px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
-      <div style="font-family:'Orbitron',monospace;font-size:11px;color:var(--cyan);letter-spacing:2px;" id="modalProductTitle">YANGI MAHSULOT</div>
+      <div style="font-family:var(--font-mono);font-size:11px;color:var(--cyan);letter-spacing:2px;" id="modalProductTitle">YANGI MAHSULOT</div>
       <button onclick="closeModal('modalProduct')" style="background:none;border:none;color:var(--muted);font-size:22px;cursor:pointer;">✕</button>
     </div>
     <div style="padding:16px 18px;display:flex;flex-direction:column;gap:10px;">
       <input type="hidden" id="editId">
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-        <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px;">Nomi *</label><input class="form-input" id="p-name" placeholder="Mahsulot nomi" style="width:100%;padding:9px 12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'Rajdhani',sans-serif;font-size:13px;"></div>
-        <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px;">Barcode</label><input class="form-input" id="p-barcode" placeholder="Avtomatik" style="width:100%;padding:9px 12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'Rajdhani',sans-serif;font-size:13px;" oninput="generateBarcodeAuto()"></div>
+        <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px;">Nomi *</label><input class="form-input" id="p-name" placeholder="Mahsulot nomi" style="width:100%;padding:9px 12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--font-body);font-size:13px;"></div>
+        <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px;">Barcode</label><input class="form-input" id="p-barcode" placeholder="Avtomatik" style="width:100%;padding:9px 12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--font-body);font-size:13px;" oninput="generateBarcodeAuto()"></div>
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-        <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px;">Kirim narxi *</label><input class="form-input" id="p-cost" type="number" placeholder="0" oninput="calcProfit()" style="width:100%;padding:9px 12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'Rajdhani',sans-serif;font-size:13px;"></div>
-        <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px;">Sotuv narxi *</label><input class="form-input" id="p-sell" type="number" placeholder="0" oninput="calcProfit()" style="width:100%;padding:9px 12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'Rajdhani',sans-serif;font-size:13px;"></div>
+        <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px;">Kirim narxi *</label><input class="form-input" id="p-cost" type="number" placeholder="0" oninput="calcProfit()" style="width:100%;padding:9px 12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--font-body);font-size:13px;"></div>
+        <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px;">Sotuv narxi *</label><input class="form-input" id="p-sell" type="number" placeholder="0" oninput="calcProfit()" style="width:100%;padding:9px 12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--font-body);font-size:13px;"></div>
       </div>
-      <div id="profitBox" style="display:none;font-size:13px;padding:8px 12px;background:rgba(0,255,231,.06);border:1px solid rgba(0,255,231,.2);border-radius:8px;"></div>
+      <div id="profitBox" style="display:none;font-size:13px;padding:8px 12px;background:rgba(0,229,255,.06);border:1px solid rgba(0,229,255,.2);border-radius:8px;"></div>
       <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
         <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px;">Birlik</label>
-          <select id="p-unit" style="width:100%;padding:9px 10px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'Rajdhani',sans-serif;font-size:13px;">
+          <select id="p-unit" style="width:100%;padding:9px 10px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--font-body);font-size:13px;">
             <option value="dona">dona</option><option value="kg">kg</option><option value="litr">litr</option><option value="paket">paket</option><option value="quti">quti</option><option value="banka">banka</option>
           </select>
         </div>
-        <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px;">Miqdor</label><input class="form-input" id="p-stock" type="number" value="0" style="width:100%;padding:9px 12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'Rajdhani',sans-serif;font-size:13px;"></div>
+        <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px;">Miqdor</label><input class="form-input" id="p-stock" type="number" value="0" style="width:100%;padding:9px 12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--font-body);font-size:13px;"></div>
         <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px;">Kategoriya</label>
-          <select id="p-cat" style="width:100%;padding:9px 10px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'Rajdhani',sans-serif;font-size:13px;">
+          <select id="p-cat" style="width:100%;padding:9px 10px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--font-body);font-size:13px;">
             <option value="Gosht">🥩 Go'sht</option><option value="Sut">🥛 Sut</option><option value="Non">🍞 Non</option><option value="Meva">🍎 Meva</option><option value="Sabzavot">🥦 Sabzavot</option><option value="Ichimlik">🥤 Ichimlik</option><option value="Oziq">🛒 Oziq-ovqat</option><option value="Kimyo">🧴 Kimyo</option><option value="Bolalar">👶 Bolalar</option><option value="Gigiena">🧼 Gigiena</option><option value="Aksiya">🔥 Aksiya</option><option value="Boshqa">📦 Boshqa</option>
           </select>
         </div>
       </div>
-      <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px;">Yaroqlilik muddati</label><input class="form-input" id="p-expiry" type="date" style="width:100%;padding:9px 12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'Rajdhani',sans-serif;font-size:13px;"></div>
+      <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px;">Yaroqlilik muddati</label><input class="form-input" id="p-expiry" type="date" style="width:100%;padding:9px 12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--font-body);font-size:13px;"></div>
       <div>
         <label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px;">Rasm</label>
         <img id="p-img-preview" style="display:none;width:80px;height:80px;object-fit:cover;border-radius:8px;margin-bottom:8px;">
         <div id="p-img-hint" style="font-size:11px;color:var(--muted);margin-bottom:6px;">Rasm tanlang (ixtiyoriy)</div>
         <input type="file" accept="image/*" onchange="handleProductImg(this)" style="font-size:12px;color:var(--muted);">
       </div>
-      <button onclick="saveProduct()" style="width:100%;padding:12px;background:linear-gradient(135deg,var(--cyan),var(--cyan2));border:none;border-radius:10px;color:#000;font-weight:800;font-size:14px;cursor:pointer;font-family:'Rajdhani',sans-serif;">💾 SAQLASH</button>
+      <button onclick="saveProduct()" style="width:100%;padding:12px;background:linear-gradient(135deg,var(--cyan),var(--cyan2));border:none;border-radius:10px;color:#000;font-weight:800;font-size:14px;cursor:pointer;font-family:var(--font-body);">💾 SAQLASH</button>
     </div>
   </div>
 </div>
@@ -675,22 +682,22 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
 <div class="modal" id="modalIncome" style="z-index:400;background:rgba(0,0,0,.6);">
   <div style="background:var(--bg2);border:1px solid var(--border);border-radius:14px;width:420px;max-width:95vw;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.5);">
     <div style="padding:14px 18px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
-      <div style="font-family:'Orbitron',monospace;font-size:11px;color:var(--cyan);letter-spacing:2px;">📥 YANGI KIRIM</div>
+      <div style="font-family:var(--font-mono);font-size:11px;color:var(--cyan);letter-spacing:2px;">📥 YANGI KIRIM</div>
       <button onclick="closeModal('modalIncome')" style="background:none;border:none;color:var(--muted);font-size:22px;cursor:pointer;">✕</button>
     </div>
     <div style="padding:16px 18px;display:flex;flex-direction:column;gap:10px;">
       <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px;">Mahsulot</label>
-        <select id="i-product" onchange="fillIncomeProduct()" style="width:100%;padding:9px 10px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'Rajdhani',sans-serif;font-size:13px;"><option value="">— Tanlang —</option></select>
+        <select id="i-product" onchange="fillIncomeProduct()" style="width:100%;padding:9px 10px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--font-body);font-size:13px;"><option value="">— Tanlang —</option></select>
       </div>
       <div id="incomeFields" style="display:none;flex-direction:column;gap:10px;">
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-          <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px;">Soni</label><input id="i-qty" type="number" min="1" value="1" style="width:100%;padding:9px 12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'Rajdhani',sans-serif;font-size:13px;"></div>
-          <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px;">Narxi (birlik)</label><input id="i-price" type="number" style="width:100%;padding:9px 12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'Rajdhani',sans-serif;font-size:13px;"></div>
+          <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px;">Soni</label><input id="i-qty" type="number" min="1" value="1" style="width:100%;padding:9px 12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--font-body);font-size:13px;"></div>
+          <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px;">Narxi (birlik)</label><input id="i-price" type="number" style="width:100%;padding:9px 12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--font-body);font-size:13px;"></div>
         </div>
-        <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px;">Yetkazuvchi</label><input id="i-supplier" placeholder="Kompaniya yoki ism" style="width:100%;padding:9px 12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'Rajdhani',sans-serif;font-size:13px;"></div>
-        <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px;">Yaroqlilik muddati</label><input id="i-expiry" type="date" style="width:100%;padding:9px 12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'Rajdhani',sans-serif;font-size:13px;"></div>
+        <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px;">Yetkazuvchi</label><input id="i-supplier" placeholder="Kompaniya yoki ism" style="width:100%;padding:9px 12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--font-body);font-size:13px;"></div>
+        <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px;">Yaroqlilik muddati</label><input id="i-expiry" type="date" style="width:100%;padding:9px 12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--font-body);font-size:13px;"></div>
       </div>
-      <button onclick="saveIncome()" style="width:100%;padding:12px;background:linear-gradient(135deg,var(--cyan),var(--cyan2));border:none;border-radius:10px;color:#000;font-weight:800;font-size:14px;cursor:pointer;font-family:'Rajdhani',sans-serif;">💾 SAQLASH</button>
+      <button onclick="saveIncome()" style="width:100%;padding:12px;background:linear-gradient(135deg,var(--cyan),var(--cyan2));border:none;border-radius:10px;color:#000;font-weight:800;font-size:14px;cursor:pointer;font-family:var(--font-body);">💾 SAQLASH</button>
     </div>
   </div>
 </div>
@@ -721,27 +728,27 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
 <div class="modal" id="modalReport" style="z-index:400;background:rgba(0,0,0,.8);">
   <div style="background:var(--bg2);border:1px solid var(--border);border-radius:14px;width:480px;max-width:95vw;max-height:90vh;overflow-y:auto;">
     <div style="padding:14px 18px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
-      <div style="font-family:'Orbitron',monospace;font-size:11px;color:var(--amber);letter-spacing:2px;">📊 HISOBOT YARATISH</div>
+      <div style="font-family:var(--font-mono);font-size:11px;color:var(--amber);letter-spacing:2px;">📊 HISOBOT YARATISH</div>
       <button onclick="closeModal('modalReport')" style="background:none;border:none;color:var(--muted);font-size:22px;cursor:pointer;">✕</button>
     </div>
     <div style="padding:16px 18px;display:flex;flex-direction:column;gap:12px;">
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
         <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px;">Boshlanish</label>
-          <input type="date" id="rep-from" style="width:100%;padding:9px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'Rajdhani',sans-serif;font-size:13px;">
+          <input type="date" id="rep-from" style="width:100%;padding:9px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--font-body);font-size:13px;">
         </div>
         <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px;">Tugash</label>
-          <input type="date" id="rep-to" style="width:100%;padding:9px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'Rajdhani',sans-serif;font-size:13px;">
+          <input type="date" id="rep-to" style="width:100%;padding:9px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--font-body);font-size:13px;">
         </div>
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
-        <button onclick="setRepRange('today')" style="padding:8px;background:rgba(0,255,231,.08);border:1px solid rgba(0,255,231,.2);border-radius:8px;color:var(--cyan);font-size:12px;font-weight:700;cursor:pointer;">Bugun</button>
-        <button onclick="setRepRange('week')" style="padding:8px;background:rgba(0,255,231,.08);border:1px solid rgba(0,255,231,.2);border-radius:8px;color:var(--cyan);font-size:12px;font-weight:700;cursor:pointer;">Bu hafta</button>
-        <button onclick="setRepRange('month')" style="padding:8px;background:rgba(0,255,231,.08);border:1px solid rgba(0,255,231,.2);border-radius:8px;color:var(--cyan);font-size:12px;font-weight:700;cursor:pointer;">Bu oy</button>
+        <button onclick="setRepRange('today')" style="padding:8px;background:rgba(0,229,255,.08);border:1px solid rgba(0,229,255,.2);border-radius:8px;color:var(--cyan);font-size:12px;font-weight:700;cursor:pointer;">Bugun</button>
+        <button onclick="setRepRange('week')" style="padding:8px;background:rgba(0,229,255,.08);border:1px solid rgba(0,229,255,.2);border-radius:8px;color:var(--cyan);font-size:12px;font-weight:700;cursor:pointer;">Bu hafta</button>
+        <button onclick="setRepRange('month')" style="padding:8px;background:rgba(0,229,255,.08);border:1px solid rgba(0,229,255,.2);border-radius:8px;color:var(--cyan);font-size:12px;font-weight:700;cursor:pointer;">Bu oy</button>
       </div>
       <div id="rep-preview" style="background:rgba(0,0,0,.3);border:1px solid var(--border);border-radius:8px;padding:12px;min-height:80px;font-size:13px;"></div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-        <button onclick="exportPDF()" style="padding:12px;background:linear-gradient(135deg,rgba(255,45,85,.2),rgba(180,0,0,.1));border:1.5px solid rgba(255,45,85,.4);border-radius:10px;color:#ff6b6b;font-weight:800;font-size:13px;cursor:pointer;font-family:'Rajdhani',sans-serif;">🖨️ PDF chop etish</button>
-        <button onclick="exportCSV()" style="padding:12px;background:linear-gradient(135deg,rgba(57,255,20,.15),rgba(0,150,0,.1));border:1.5px solid rgba(57,255,20,.4);border-radius:10px;color:var(--green);font-weight:800;font-size:13px;cursor:pointer;font-family:'Rajdhani',sans-serif;">📥 Excel (CSV)</button>
+        <button onclick="exportPDF()" style="padding:12px;background:linear-gradient(135deg,rgba(255,45,85,.2),rgba(180,0,0,.1));border:1.5px solid rgba(255,45,85,.4);border-radius:10px;color:#ff6b6b;font-weight:800;font-size:13px;cursor:pointer;font-family:var(--font-body);">🖨️ PDF chop etish</button>
+        <button onclick="exportCSV()" style="padding:12px;background:linear-gradient(135deg,rgba(57,255,20,.15),rgba(0,150,0,.1));border:1.5px solid rgba(57,255,20,.4);border-radius:10px;color:var(--green);font-weight:800;font-size:13px;cursor:pointer;font-family:var(--font-body);">📥 Excel (CSV)</button>
       </div>
     </div>
   </div>
@@ -758,7 +765,7 @@ const EMOJIS={'Non':'🍞','Sut':'🥛','Gosht':'🥩','Meva':'🍎','Sabzavot':
 
 function init(){
   const s=DB.getSession();
-  if(!s||(s.role!=='admin'&&s.role!=='seller')){window.location.href='login.html';return;}
+  if(!s||(s.role!=='admin'&&s.role!=='seller')){(window.top||window).location.href='/login';return;}
   // Server tokenni tekshir (restart bo'lsa login ga qaytarish uchun)
   const token=localStorage.getItem('sfu_v1_token')||'';
   if(token){
@@ -768,7 +775,7 @@ function init(){
         if(!d.ok){
           DB.clearSession();
           localStorage.removeItem('sfu_v1_token');
-          window.location.href='login.html';
+          (window.top||window).location.href='/login';
         }
       })
       .catch(function(){}); // server ishlamasa — tekshirmasdan davom et
@@ -786,6 +793,8 @@ function init(){
     }, 50);
   }
   products=DB.getProducts();orders=DB.getOrders();
+  // offline keshni tozalab serverdan yangi o'qish (debt_pay ma'lumotlari uchun)
+  try{ localStorage.removeItem('sfu_v1_offline'); delete DB._cache['offline']; }catch(e){}
   offlineSales=DB.getOffline();users=DB.getUsers();incomes=DB.getIncomes();
   // Update sidebar name
   const sn=document.getElementById('sidebarUserName');
@@ -793,10 +802,8 @@ function init(){
   if(sn)sn.textContent=s.name||'Admin';
   if(sr)sr.textContent=s.role==='seller'?'SOTUVCHI':'ADMIN';
   updateStats();startClock();buildTicker();
-  var savedTab=localStorage.getItem('dashboard_tab')||'calendar';
-  if(savedTab==='shop'||!VALID_TABS[savedTab]) savedTab='calendar';
-  var savedEl=document.querySelector('.nav-item[data-tab="'+savedTab+'"]');
-  switchTab(savedTab, savedEl);
+  localStorage.setItem('dashboard_tab','calendar');
+  switchTab('calendar', document.getElementById('navCalendar'));
   setTimeout(checkNotifications,500);
   startNoteTimer();
   // Brauzer notification ruxsati so'raymiz
@@ -921,7 +928,7 @@ function _bnrRender(){
 
   // Guide
   var guide=document.createElement('div');
-  guide.style.cssText='background:rgba(0,255,231,.05);border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:16px;font-size:12px;color:var(--muted2);line-height:2;';
+  guide.style.cssText='background:rgba(0,229,255,.05);border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:16px;font-size:12px;color:var(--muted2);line-height:2;';
   guide.innerHTML='📝 <b style="color:var(--text);">Rang+Matn</b> — fon rangi, sarlavha, emoji (rasm kerak emas)<br>🖼️ <b style="color:var(--text);">Rasm</b> — JPG, PNG, WEBP (max 5MB)<br>🎞️ <b style="color:var(--text);">GIF</b> — animatsiyali rasm (max 5MB)<br>🎬 <b style="color:var(--text);">Video</b> — MP4 format (max 20MB)<br><span style="color:var(--amber);">⚡ Saqlash tugmasini bosishni unutmang!</span>';
   wrap.appendChild(guide);
 
@@ -939,7 +946,7 @@ function _bnrRender(){
   var sbar=document.createElement('div');
   sbar.className='bnr-savebar';
   sbar.innerHTML='<button onclick="_bnrSave()" style="flex:1;padding:12px;background:linear-gradient(135deg,var(--cyan),var(--cyan2));color:#000;border:none;border-radius:6px;font-family:\'Rajdhani\',sans-serif;font-weight:700;font-size:14px;cursor:pointer;">💾 Saqlash</button>'+
-    '<button onclick="_bnrAdd()" style="padding:12px 20px;background:rgba(0,255,231,.08);border:1px solid rgba(0,255,231,.2);color:var(--cyan);border-radius:6px;font-family:\'Rajdhani\',sans-serif;font-weight:700;font-size:13px;cursor:pointer;">+ Yangi</button>';
+    '<button onclick="_bnrAdd()" style="padding:12px 20px;background:rgba(0,229,255,.08);border:1px solid rgba(0,229,255,.2);color:var(--cyan);border-radius:6px;font-family:\'Rajdhani\',sans-serif;font-weight:700;font-size:13px;cursor:pointer;">+ Yangi</button>';
   wrap.appendChild(sbar);
 
   sec.innerHTML='';
@@ -1091,7 +1098,7 @@ function _bnrBtn(txt,cls){
   var b=document.createElement('button');
   b.style.cssText='padding:5px 12px;border-radius:6px;font-family:\'Rajdhani\',sans-serif;font-size:12px;font-weight:700;cursor:pointer;transition:all .2s;';
   if(cls==='danger') b.style.cssText+='background:rgba(255,45,85,.15);border:1px solid rgba(255,45,85,.3);color:var(--red);';
-  else b.style.cssText+='background:rgba(0,255,231,.08);border:1px solid rgba(0,255,231,.2);color:var(--cyan);';
+  else b.style.cssText+='background:rgba(0,229,255,.08);border:1px solid rgba(0,229,255,.2);color:var(--cyan);';
   b.textContent=txt;
   return b;
 }
@@ -1165,7 +1172,7 @@ function renderShopPreview(){
   var sec=document.getElementById('sec-shop');
   sec.innerHTML=
     '<div style="display:flex;align-items:center;justify-content:center;height:calc(100vh - 130px);">' +
-    '<div id="shopPinBox" style="background:#0d1b2a;border:1px solid #2a4a6a;border-radius:20px;padding:36px 32px;width:300px;text-align:center;box-shadow:0 0 40px rgba(0,255,231,.15);">' +
+    '<div id="shopPinBox" style="background:#0d1b2a;border:1px solid #2a4a6a;border-radius:20px;padding:36px 32px;width:300px;text-align:center;box-shadow:0 0 40px rgba(0,229,255,.15);">' +
       '<div style="font-family:\'Orbitron\',monospace;font-size:13px;color:#00ffe7;letter-spacing:2px;margin-bottom:4px;">SHOP KO\'RINISHI</div>' +
       '<div style="font-size:12px;color:#7ab3cc;margin-bottom:24px;">Admin PIN kodini kiriting</div>' +
       '<div id="pinDots" style="display:flex;justify-content:center;gap:14px;margin-bottom:8px;"><span></span><span></span><span></span><span></span></div>' +
@@ -1510,7 +1517,7 @@ function renderSalesForDay(isoDate){
   html += '<div style="background:rgba(57,255,20,.06);border:1px solid rgba(57,255,20,.25);border-radius:8px;padding:12px;margin-bottom:10px;">';
   html += '<div style="font-family:Orbitron,monospace;font-size:10px;color:var(--green);letter-spacing:2px;margin-bottom:8px;">📊 SAVDO STATISTIKASI</div>';
   html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">';
-  html += '<div style="font-size:12px;color:var(--muted);">Jami savdo: <span style="color:white;font-weight:700;">'+daySales.length+' ta</span></div>';
+  html += '<div style="font-size:12px;color:var(--muted);">Jami savdo: <span style="color:var(--text);font-weight:700;">'+daySales.length+' ta</span></div>';
   html += '<div style="font-size:12px;color:var(--muted);">Jami summa: <span style="color:var(--amber);font-weight:700;">'+fmt(total)+" so'm</span></div>";
   html += '<div style="font-size:12px;color:var(--muted);">📱 Online: <span style="color:var(--cyan2);font-weight:700;">'+onlineS.length+' ta</span></div>';
   html += '<div style="font-size:12px;color:var(--muted);">🏪 Do\'kon: <span style="color:var(--amber);font-weight:700;">'+offlineS.length+' ta</span></div>';
@@ -1588,7 +1595,8 @@ function saveNote(){
   };
   if(calNoteType==='debt'){
     note.person = document.getElementById('debtPersonName').value.trim();
-    note.phone  = document.getElementById('debtPersonPhone').value.trim();
+    var _dph=document.getElementById('debtPersonPhone').value.replace(/\D/g,'');
+    note.phone  = _dph ? '+998'+_dph : '';
   }
   notes[calActiveDate].push(note);
   saveNotes(notes);
@@ -1710,7 +1718,39 @@ function renderOrders(filter='all'){
 
 function renderOrderCard(o){
   const sl={new:'YANGI',accepted:'QABUL',delivering:'YETKAZILMOQDA',done:'BAJARILDI',cancelled:'BEKOR'};
-  const time=new Date(o.time).toLocaleString('uz-UZ');
+  const d=new Date(o.time);
+  const days=['Yakshanba','Dushanba','Seshanba','Chorshanba','Payshanba','Juma','Shanba'];
+  const months=['Yanvar','Fevral','Mart','Aprel','May','Iyun','Iyul','Avgust','Sentabr','Oktabr','Noyabr','Dekabr'];
+  const time=days[d.getDay()]+', '+d.getDate()+' '+months[d.getMonth()]+' '+d.getFullYear()+' — '+d.toLocaleTimeString('uz-UZ',{hour:'2-digit',minute:'2-digit'});
+
+  // Qarz to'lov cheki — alohida ko'rinish (type YOKI ID bo'yicha)
+  if(o.type==='debt_pay' || (o.id&&o.id.startsWith&&o.id.startsWith('DP#'))){
+    const paid = o.paidSum||0;
+    const prev = o.prevDebt||(paid>0 ? paid+(o.remainDebt||0) : 0);
+    const remain = (o.remainDebt!=null) ? o.remainDebt : (o.debt>0 ? o.debt : 0);
+    const isFull = remain<=0;
+    const methodIco={click:'📲',payme:'💜',card:'💳',cash:'💵'}[o.payMethods&&o.payMethods[0]&&o.payMethods[0].method]||'💵';
+    return`<div class="order-card status-done" style="border-left:3px solid ${isFull?'#22c55e':'#f59e0b'};">
+      <div class="order-top"><span class="order-id">${o.id}</span><span class="status-badge" style="background:${isFull?'rgba(34,197,94,.15)':'rgba(245,158,11,.15)'};color:${isFull?'#16a34a':'#92400e'};">${isFull?'✅ QARZ YOPILDI':'💳 QARZ TO\'LOV'}</span></div>
+      <span class="type-badge tb-offline">💳 NASIYA TO'LOV</span>
+      <div class="order-customer">
+        <div class="oc-name">👤 ${o.userName||'Mijoz'}</div>
+        <div class="oc-detail">📱 ${o.userPhone||'—'} &nbsp; ⏱ ${time}</div>
+      </div>
+      <div style="margin:8px 0;padding:8px 12px;background:rgba(0,0,0,.15);border-radius:6px;font-size:12px;line-height:2;">
+        <div style="display:flex;justify-content:space-between;"><span style="color:var(--muted);">Avvalgi qarz:</span><span style="color:var(--red);font-weight:700;">${fmt(prev)} so'm</span></div>
+        <div style="display:flex;justify-content:space-between;"><span style="color:var(--muted);">${methodIco} To'langan:</span><span style="color:var(--green);font-weight:700;font-size:14px;">${fmt(paid)} so'm</span></div>
+        ${isFull
+          ? `<div style="text-align:center;color:#22c55e;font-weight:700;margin-top:2px;">✅ Qarz to'liq yopildi!</div>`
+          : `<div style="display:flex;justify-content:space-between;"><span style="color:var(--muted);">Qolgan qarz:</span><span style="color:var(--amber);font-weight:700;">${fmt(remain)} so'm</span></div>`
+        }
+      </div>
+      <div class="order-footer"><div style="font-size:11px;color:var(--muted);">${time}</div>
+        <div class="order-actions"><button class="btn btn-ghost btn-sm" onclick="printDebtPayReceiptById('${o.id}')">🖨️</button></div>
+      </div>
+    </div>`;
+  }
+
   const actions=o.type==='online'?(()=>{
     if(o.status==='new')return`<button class="btn btn-ghost btn-sm" onclick="updateStatus('${o.id}','accepted')">✔ Qabul</button><button class="btn btn-danger btn-sm" onclick="updateStatus('${o.id}','cancelled')">✕ Bekor</button>`;
     if(o.status==='accepted')return`<button class="btn btn-ghost btn-sm" onclick="updateStatus('${o.id}','delivering')">🚴 Yetkazish</button>`;
@@ -1758,12 +1798,12 @@ function renderProducts(){
                 if(isExpired)expiryCell=`<span style="color:var(--red);font-weight:700;">🚫 Tugagan</span>`;
                 else if(isWarn)expiryCell=`<span style="color:var(--amber);font-weight:700;">⏳ ${daysLeft} kun (${ds})</span>`;
                 else expiryCell=`<span style="color:var(--green);">${ds}</span>`;}
-              const discCell=disc.discount>0?`<div style="color:var(--amber);font-weight:700;font-family:'Orbitron',monospace;font-size:11px;">${fmt(disc.finalPrice)}</div><div style="font-size:10px;color:var(--red);">-${disc.discount}%</div>`:'<span style="color:var(--muted);font-size:12px;">—</span>';
+              const discCell=disc.discount>0?`<div style="color:var(--amber);font-weight:700;font-family:var(--font-mono);font-size:11px;">${fmt(disc.finalPrice)}</div><div style="font-size:10px;color:var(--red);">-${disc.discount}%</div>`:'<span style="color:var(--muted);font-size:12px;">—</span>';
               const stockCell=`<input class="stock-edit" type="number" value="${p.stock}" onchange="quickUpdateStock(${p.id},this.value)" style="${isLow?'border-color:var(--amber);color:var(--amber);':''}">${isLow?`<div style="font-size:9px;color:var(--amber);margin-top:1px;">⚠️ kam</div>`:''}`;
               const imgEl=p.img?`<img src="${p.img}" style="width:36px;height:36px;object-fit:cover;border-radius:4px;">`:`<span style="font-size:24px;">${EMOJIS[p.category]||'📦'}</span>`;
               return`<tr style="${isExpired?'opacity:.5':''}">
                 <td>${imgEl}</td>
-                <td style="font-weight:700;color:white;">${p.name}</td>
+                <td style="font-weight:700;color:var(--text);">${p.name}</td>
                 <td style="font-family:monospace;font-size:11px;color:var(--muted);">${p.barcode||'—'}</td>
                 <td style="color:var(--muted);">${fmt(p.costPrice)}</td>
                 <td style="color:var(--cyan);">${fmt(p.sellPrice)}</td>
@@ -1807,7 +1847,7 @@ function renderWarehouse(){
           return`<div class="wh-card">
             <div class="wh-card-top">
               <div style="display:flex;align-items:center;gap:10px;">
-                ${p.img?`<img src="${p.img}" style="width:44px;height:44px;object-fit:cover;border-radius:8px;flex-shrink:0;">`:`<div style="width:44px;height:44px;background:rgba(0,255,231,.06);border:1px solid var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;">${EMOJIS[p.category]||'📦'}</div>`}
+                ${p.img?`<img src="${p.img}" style="width:44px;height:44px;object-fit:cover;border-radius:8px;flex-shrink:0;">`:`<div style="width:44px;height:44px;background:rgba(0,229,255,.06);border:1px solid var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;">${EMOJIS[p.category]||'📦'}</div>`}
                 <div>
                   <div class="wh-card-name">${p.name}</div>
                   <div class="wh-card-cat">${p.category} · ${p.barcode||'—'}</div>
@@ -1820,7 +1860,7 @@ function renderWarehouse(){
             </div>
             <div class="wh-card-stats">
               <div class="wh-stat">Sotildi: <span style="color:var(--green);">${sold}</span></div>
-              <div class="wh-stat">Kirim: <span style="color:white;">${fmt(p.costPrice)}</span></div>
+              <div class="wh-stat">Kirim: <span style="color:var(--text);">${fmt(p.costPrice)}</span></div>
               <div class="wh-stat">Sotuv: <span style="color:var(--cyan);">${fmt(disc.finalPrice)}</span></div>
               ${disc.discount>0?`<div class="wh-stat" style="color:var(--red);">-${disc.discount}%</div>`:''}
             </div>
@@ -1930,7 +1970,7 @@ function renderIncome(){
           <tbody>${incomes.length>0?incomes.slice().reverse().map(i=>`
             <tr>
               <td style="color:var(--muted);font-size:11px;">${new Date(i.date).toLocaleDateString('uz-UZ')}</td>
-              <td style="font-weight:600;color:white;">${i.productName}</td>
+              <td style="font-weight:600;color:var(--text);">${i.productName}</td>
               <td style="color:var(--cyan);">${i.qty} ${i.unit}</td>
               <td>${fmt(i.price)} so'm</td>
               <td style="color:var(--muted);">${i.supplier||'—'}</td>
@@ -2026,7 +2066,8 @@ function renderOfsCart(){
 function completeOfflineFS(){
   if(!Object.keys(ofsCart).length){showToast('❌ Mahsulot tanlang','error');return;}
   const name=document.getElementById('ofs-name').value.trim()||'Mijoz';
-  const phone=document.getElementById('ofs-phone').value.trim()||'—';
+  const phoneDigits=document.getElementById('ofs-phone').value.replace(/\D/g,'');
+  const phone=phoneDigits?'+998'+phoneDigits:'—';
   const items=[];let total=0,profit=0;
   for(const[id,qty]of Object.entries(ofsCart)){
     const p=products.find(x=>x.id==id);const disc=calcDiscount(p);const price=disc.finalPrice;
@@ -2044,6 +2085,54 @@ function completeOfflineFS(){
 }
 
 /* RECEIPT — ID orqali topish (single quote bug dan himoya) */
+function printDebtPayReceiptById(id){
+  const o = (DB.getOffline()||[]).find(x=>x.id===id || x.id===id.split('#OFF')[0]);
+  if(!o) return;
+  const d = new Date(o.time);
+  const days=['Yakshanba','Dushanba','Seshanba','Chorshanba','Payshanba','Juma','Shanba'];
+  const months=['Yanvar','Fevral','Mart','Aprel','May','Iyun','Iyul','Avgust','Sentabr','Oktabr','Noyabr','Dekabr'];
+  const dateStr=days[d.getDay()]+', '+d.getDate()+' '+months[d.getMonth()]+' '+d.getFullYear();
+  const timeStr=d.toLocaleTimeString('uz-UZ',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  const paid=o.paidSum||0, prev=o.prevDebt||0, remain=o.remainDebt||0;
+  const isFull=remain<=0;
+  const lbl={click:'📲 Click',payme:'💜 Payme',card:'💳 Karta',cash:'💵 Naqd pul'};
+  const method=o.payMethods&&o.payMethods[0]?o.payMethods[0].method:'cash';
+
+  const w=window.open('','_blank','width=380,height=600');
+  if(!w) return;
+  w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Qarz to'lov</title><style>
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{font-family:"Courier New",monospace;font-size:13px;background:#fff;padding:20px;max-width:320px;margin:0 auto;}
+    .c{text-align:center;}.b{font-weight:700;}.row{display:flex;justify-content:space-between;margin:5px 0;}
+    .line{border-top:1px dashed #666;margin:10px 0;}
+    .stamp{border:3px solid ${isFull?'#16a34a':'#f59e0b'};border-radius:8px;padding:10px;text-align:center;margin:12px 0;color:${isFull?'#16a34a':'#92400e'};font-weight:700;font-size:15px;}
+    @media print{button{display:none;}}
+  </style></head><body>
+  <div class="c"><div style="font-size:22px;">🏪</div>
+  <div class="b" style="font-size:16px;margin:4px 0;">SellFlowUZ</div>
+  <div style="font-size:11px;color:#666;">QARZ TO'LOV CHEKI</div></div>
+  <div class="line"></div>
+  <div class="row"><span>Chek №:</span><span class="b">${o.id}</span></div>
+  <div class="row"><span>Sana:</span><span class="b">${dateStr}</span></div>
+  <div class="row"><span>Vaqt:</span><span class="b">${timeStr}</span></div>
+  <div class="row"><span>Mijoz:</span><span class="b">${o.userName||'—'}</span></div>
+  <div class="row"><span>Telefon:</span><span>${o.userPhone||'—'}</span></div>
+  <div class="line"></div>
+  <div class="row"><span>Avvalgi qarz:</span><span style="color:#dc2626;font-weight:700;">${fmt(prev)} so'm</span></div>
+  <div class="row b" style="font-size:15px;"><span>TO'LANGAN:</span><span style="color:#16a34a;">${fmt(paid)} so'm</span></div>
+  <div class="row"><span>To'lov usuli:</span><span>${lbl[method]||method}</span></div>
+  <div class="line"></div>
+  <div class="stamp">${isFull?'✅ QARZ TO\'LIQ YOPILDI':'⚠️ Qolgan qarz: '+fmt(remain)+' so\'m'}</div>
+  <div class="line"></div>
+  <div class="c" style="font-size:11px;color:#666;">${isFull?'Barcha qarzingiz tozalandi! Rahmat!':'Qolgan qarzni imkon topilganda to\'lang'}</div>
+  <div class="c" style="margin-top:14px;">
+    <button onclick="window.print()" style="padding:8px 20px;background:#16a34a;color:#fff;border:none;border-radius:6px;cursor:pointer;font-weight:700;margin-right:8px;">🖨 Chop</button>
+    <button onclick="window.close()" style="padding:8px 20px;background:#f1f5f9;border:1px solid #ddd;border-radius:6px;cursor:pointer;">Yopish</button>
+  </div>
+  </body></html>`);
+  w.document.close();
+}
+
 function showReceiptById(id){
   const o=[...orders,...offlineSales].find(x=>x.id===id);
   if(!o){showToast('Chek topilmadi','error');return;}
@@ -2164,7 +2253,7 @@ function renderUsers(){
             const total=uO.reduce((a,o)=>a+o.total,0);
             return`<tr onclick="showUser(${u.id})" style="cursor:pointer;">
               <td style="color:var(--muted);">${i+1}</td>
-              <td style="font-weight:700;color:white;">${u.name}</td>
+              <td style="font-weight:700;color:var(--text);">${u.name}</td>
               <td style="font-family:monospace;">${u.phone}</td>
               <td style="font-size:11px;color:var(--muted);">${new Date(u.registeredAt).toLocaleDateString('uz-UZ')}</td>
               <td style="color:var(--cyan);">${uO.length}</td>
@@ -2196,6 +2285,7 @@ function closeModal(id){document.getElementById(id).classList.remove('open');}
 document.querySelectorAll('.modal').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)closeModal(m.id);}));
 
 /* TOAST */
+function uzPhoneMask(inp){var d=inp.value.replace(/\D/g,'').slice(0,9);var r='';if(d.length>0)r+=d.slice(0,2);if(d.length>2)r+=' '+d.slice(2,5);if(d.length>5)r+=' '+d.slice(5,7);if(d.length>7)r+=' '+d.slice(7,9);inp.value=r;}
 function showToast(msg,type=''){const t=document.getElementById('toast');t.textContent=msg;t.className='toast show '+type;setTimeout(()=>t.className='toast',3000);}
 
 /* LOGOUT */
@@ -2206,7 +2296,7 @@ function logout(){
   DB.clearSession();
   localStorage.removeItem('sfu_fs_locked');
   localStorage.removeItem('sfu_v1_token');
-  var go = function(){ window._logoutInProgress=false; window.location.href='login.html'; };
+  var go = function(){ window._logoutInProgress=false; (window.top||window).location.href='/login'; };
   if(document.fullscreenElement){ document.exitFullscreen().then(go).catch(go); } else { go(); }
 }
 
@@ -2245,7 +2335,7 @@ function buildRepPreview(){
   var offline=allS.filter(function(s){return s.type!=='online';}).length;
   document.getElementById('rep-preview').innerHTML=
     '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">'+
-    '<div style="color:var(--muted);font-size:12px;">Jami savdo: <span style="color:white;font-weight:700;">'+allS.length+' ta</span></div>'+
+    '<div style="color:var(--muted);font-size:12px;">Jami savdo: <span style="color:var(--text);font-weight:700;">'+allS.length+' ta</span></div>'+
     '<div style="color:var(--muted);font-size:12px;">Jami summa: <span style="color:var(--amber);font-weight:700;">'+fmt(total)+" so'm</span></div>"+
     '<div style="color:var(--muted);font-size:12px;">Foyda: <span style="color:var(--green);font-weight:700;">'+fmt(profit)+" so'm</span></div>"+
     '<div style="color:var(--muted);font-size:12px;">Online/Do\'kon: <span style="color:var(--cyan);font-weight:700;">'+online+'/'+offline+'</span></div>'+
@@ -2449,12 +2539,49 @@ function _fsUpdate(){
     b.style.borderColor=isFs?'#00ffe7':'';
   });
 }
+function _enterFS(){
+  localStorage.setItem('sfu_fs_locked','1');
+  document.documentElement.requestFullscreen().then(function(){
+    if(navigator.keyboard&&navigator.keyboard.lock)navigator.keyboard.lock(['F11']).catch(function(){});
+  }).catch(function(){});
+}
+(function(){
+  if(localStorage.getItem('sfu_fs_locked')==='1'){
+    document.documentElement.requestFullscreen().then(function(){
+      if(navigator.keyboard&&navigator.keyboard.lock)navigator.keyboard.lock(['F11']).catch(function(){});
+    }).catch(function(){
+      function _r(){_enterFS();document.removeEventListener('keydown',_r,true);document.removeEventListener('click',_r,true);}
+      document.addEventListener('keydown',_r,{capture:true,once:true});
+      document.addEventListener('click',_r,{capture:true,once:true});
+    });
+  }
+})();
 document.addEventListener('fullscreenchange',_fsUpdate);
+document.addEventListener('fullscreenchange',function(){
+  if(!document.fullscreenElement&&navigator.keyboard&&navigator.keyboard.unlock)navigator.keyboard.unlock();
+});
 document.addEventListener('keydown',function(e){
-  if(e.key==='F11'){e.preventDefault();tbFS();}
+  if(e.key==='F11'){e.preventDefault();if(!document.fullscreenElement)_enterFS();}
+  if(e.key==='Escape'){localStorage.removeItem('sfu_fs_locked');if(navigator.keyboard&&navigator.keyboard.unlock)navigator.keyboard.unlock();}
 });
 
 
+
+// ═══ IFRAME NAV ═══
+(function(){
+  if(window.parent===window) return;
+  document.addEventListener('click',function(e){
+    var a=e.target.closest('a[href]');
+    if(!a||a.target) return;
+    var h=a.getAttribute('href');
+    if(!h||h==='#'||h.startsWith('javascript')) return;
+    if(h.startsWith('/')){e.preventDefault();window.parent.postMessage({sfuNav:h},'*');}
+  },true);
+  document.addEventListener('keydown',function(e){
+    if(e.key==='F11'){e.preventDefault();window.parent.postMessage({sfuF11:true},'*');}
+    if(e.key==='Escape'){window.parent.postMessage({sfuEsc:true},'*');}
+  },true);
+})();
 </script>
 </body>
 </html>
